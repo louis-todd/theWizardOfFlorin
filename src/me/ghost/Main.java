@@ -21,7 +21,7 @@ public class Main {
 
         //Load texture
         try {
-            wizardText.loadFromFile(Paths.get("smileyface.png"));
+            wizardText.loadFromFile(Paths.get("resources/smileyface.png"));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
