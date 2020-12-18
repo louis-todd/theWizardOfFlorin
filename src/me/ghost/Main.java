@@ -2,12 +2,10 @@ package me.ghost;
 
 import org.jsfml.graphics.*;
 import org.jsfml.system.Vector2f;
-import org.jsfml.system.Vector2i;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.KeyEvent;
-
 import java.io.IOException;
 import java.nio.file.Paths;
 
@@ -54,17 +52,24 @@ public class Main {
                         break;
                     case KEY_PRESSED:
                         KeyEvent keyEvent = event.asKeyEvent();
-                        if (keyEvent.key == Keyboard.Key.RIGHT) {
-                            wizard.move(2, 0);
-                        } else if (keyEvent.key == Keyboard.Key.LEFT) {
-                            wizard.move(-2, 0);
-                        } else if (keyEvent.key == Keyboard.Key.UP) {
-                            wizard.move(0, -2);
-                        } else if (keyEvent.key == Keyboard.Key.DOWN) {
-                            wizard.move(0, 2);
+                        if(keyEvent.key == Keyboard.Key.RIGHT || keyEvent.key == Keyboard.Key.LEFT || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN){
+                            wizardMovement(wizard, keyEvent);
                         }
                 }
             }
         }
     }
-}
+    public static void wizardMovement(Sprite wizard, KeyEvent movementKey){
+        if (movementKey.key == Keyboard.Key.RIGHT) {
+            wizard.move(2, 0);
+        } else if (movementKey.key == Keyboard.Key.LEFT) {
+            wizard.move(-2, 0);
+        } else if (movementKey.key == Keyboard.Key.UP) {
+            wizard.move(0, -2);
+        } else if (movementKey.key == Keyboard.Key.DOWN) {
+            wizard.move(0, 2);
+        }
+
+        }
+
+    }
