@@ -75,6 +75,10 @@ public class Main {
         }
     }
 
+    /**
+     * Moves the wizard if the direction flags are true
+     * @param wizard wizard sprite
+     */
     public static void moveWizard(Sprite wizard){
         if (RIGHT) {
             wizard.move(1, 0);
@@ -90,6 +94,10 @@ public class Main {
         }
     }
 
+    /**
+     * Sets direction flags to true if direction key is pressed
+     * @param movementKey direction key
+     */
     public static void arrowPressed(KeyEvent movementKey) {
         if (movementKey.key == Keyboard.Key.RIGHT) {
             RIGHT = true;
@@ -105,6 +113,10 @@ public class Main {
         }
     }
 
+    /**
+     * Sets direction flag to false if direction key is released
+     * @param movementKey direction key
+     */
     public static void arrowReleased(KeyEvent movementKey) {
         if (movementKey.key == Keyboard.Key.RIGHT) {
             RIGHT = false;
