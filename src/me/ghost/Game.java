@@ -10,13 +10,16 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 public class Game {
-    private RenderWindow window;
+    private final RenderWindow window;
     private Sprite wizard;
-    boolean RIGHT = false;
-    boolean LEFT = false;
-    boolean UP = false;
-    boolean DOWN = false;
+    private boolean RIGHT = false;
+    private boolean LEFT = false;
+    private boolean UP = false;
+    private boolean DOWN = false;
 
+    /**
+     * Constructor for the game class
+     */
     public Game() {
         //Create the window
         window = new RenderWindow(new VideoMode(640, 480), "Hello JSFML!");
@@ -42,36 +45,42 @@ public class Game {
 
     }
 
+    /**
+     * Runs the window including inputs and updating the window
+     */
     public void run() {
         while (window.isOpen()) {
-            window.clear(Color.RED);
+            handleEvents();
 
             moveWizard(wizard);
 
-            window.draw(wizard);
+            updateWindow();
+        }
+    }
 
-            window.display();
+    /**
+     * Handles the input events
+     */
+    private void handleEvents(){
+        //Handle events
+        for (Event event : window.pollEvents()) {
+            switch (event.type) {
+                case CLOSED:
+                    window.close();
+                    break;
 
-            //Handle events
-            for (Event event : window.pollEvents()) {
-                switch (event.type) {
-                    case CLOSED:
-                        window.close();
-                        break;
-
-                    case KEY_RELEASED:
-                        KeyEvent keyRelease = event.asKeyEvent();
-                        if (keyRelease.key == Keyboard.Key.RIGHT || keyRelease.key == Keyboard.Key.LEFT || keyRelease.key == Keyboard.Key.UP || keyRelease.key == Keyboard.Key.DOWN) {
-                            handleArrowPress(keyRelease, false);
-                        }
-                        break;
-                    case KEY_PRESSED:
-                        KeyEvent keyEvent = event.asKeyEvent();
-                        if (keyEvent.key == Keyboard.Key.RIGHT || keyEvent.key == Keyboard.Key.LEFT || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN) {
-                            handleArrowPress(keyEvent, true);
-                        }
-                        break;
-                }
+                case KEY_RELEASED:
+                    KeyEvent keyRelease = event.asKeyEvent();
+                    if (keyRelease.key == Keyboard.Key.RIGHT || keyRelease.key == Keyboard.Key.LEFT || keyRelease.key == Keyboard.Key.UP || keyRelease.key == Keyboard.Key.DOWN) {
+                        handleArrowPress(keyRelease, false);
+                    }
+                    break;
+                case KEY_PRESSED:
+                    KeyEvent keyEvent = event.asKeyEvent();
+                    if (keyEvent.key == Keyboard.Key.RIGHT || keyEvent.key == Keyboard.Key.LEFT || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN) {
+                        handleArrowPress(keyEvent, true);
+                    }
+                    break;
             }
         }
     }
@@ -93,6 +102,17 @@ public class Game {
         if (DOWN) {
             wizard.move(0, 1);
         }
+    }
+
+    /**
+     * Updates the window
+     */
+    private void updateWindow(){
+        window.clear(Color.RED);
+
+        window.draw(wizard);
+
+        window.display();
     }
 
     /**
