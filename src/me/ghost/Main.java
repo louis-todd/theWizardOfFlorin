@@ -10,6 +10,11 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 public class Main {
+    static boolean RIGHT = false;
+    static boolean LEFT = false;
+    static boolean UP = false;
+    static boolean DOWN = false;
+
     public static void main(String[] args) {
         //Create the window
         RenderWindow window = new RenderWindow();
@@ -33,12 +38,14 @@ public class Main {
 
 
         //Limit the framerate
-        window.setFramerateLimit(30);
+        window.setFramerateLimit(120);
 
         //me.ghost.Main loop
         while (window.isOpen()) {
 
             window.clear(Color.RED);
+
+            moveWizard(wizard);
 
             window.draw(wizard);
 
@@ -50,26 +57,67 @@ public class Main {
                     case CLOSED:
                         window.close();
                         break;
+
+                    case KEY_RELEASED:
+                        KeyEvent keyRelease = event.asKeyEvent();
+                        if (keyRelease.key == Keyboard.Key.RIGHT || keyRelease.key == Keyboard.Key.LEFT || keyRelease.key == Keyboard.Key.UP || keyRelease.key == Keyboard.Key.DOWN) {
+                            arrowReleased(keyRelease);
+                        }
+                        break;
                     case KEY_PRESSED:
                         KeyEvent keyEvent = event.asKeyEvent();
-                        if(keyEvent.key == Keyboard.Key.RIGHT || keyEvent.key == Keyboard.Key.LEFT || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN){
-                            wizardMovement(wizard, keyEvent);
+                        if (keyEvent.key == Keyboard.Key.RIGHT || keyEvent.key == Keyboard.Key.LEFT || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN) {
+                            arrowPressed(keyEvent);
                         }
+                        break;
                 }
             }
         }
     }
-    public static void wizardMovement(Sprite wizard, KeyEvent movementKey){
-        if (movementKey.key == Keyboard.Key.RIGHT) {
-            wizard.move(2, 0);
-        } else if (movementKey.key == Keyboard.Key.LEFT) {
-            wizard.move(-2, 0);
-        } else if (movementKey.key == Keyboard.Key.UP) {
-            wizard.move(0, -2);
-        } else if (movementKey.key == Keyboard.Key.DOWN) {
-            wizard.move(0, 2);
-        }
 
+    public static void moveWizard(Sprite wizard){
+        if (RIGHT) {
+            wizard.move(1, 0);
         }
-
+        if (LEFT) {
+            wizard.move(-1, 0);
+        }
+        if (UP) {
+            wizard.move(0, -1);
+        }
+        if (DOWN) {
+            wizard.move(0, 1);
+        }
     }
+
+    public static void arrowPressed(KeyEvent movementKey) {
+        if (movementKey.key == Keyboard.Key.RIGHT) {
+            RIGHT = true;
+        }
+        if (movementKey.key == Keyboard.Key.LEFT) {
+            LEFT = true;
+        }
+        if (movementKey.key == Keyboard.Key.UP) {
+            UP = true;
+        }
+        if (movementKey.key == Keyboard.Key.DOWN) {
+            DOWN = true;
+        }
+    }
+
+    public static void arrowReleased(KeyEvent movementKey) {
+        if (movementKey.key == Keyboard.Key.RIGHT) {
+            RIGHT = false;
+        }
+        if (movementKey.key == Keyboard.Key.LEFT) {
+            LEFT = false;
+        }
+        if (movementKey.key == Keyboard.Key.UP) {
+            UP = false;
+        }
+        if (movementKey.key == Keyboard.Key.DOWN) {
+            DOWN = false;
+        }
+    }
+}
+
