@@ -33,6 +33,7 @@ public class Game {
             ex.printStackTrace();
         }
 
+        //Create wizard sprite with wizardText texture
         wizard = new Sprite(wizardText);
 
         //Set its origin to its center and put it at the center of the screen
@@ -68,7 +69,6 @@ public class Game {
                 case CLOSED:
                     window.close();
                     break;
-
                 case KEY_RELEASED:
                     KeyEvent keyRelease = event.asKeyEvent();
                     if (keyRelease.key == Keyboard.Key.RIGHT || keyRelease.key == Keyboard.Key.LEFT || keyRelease.key == Keyboard.Key.UP || keyRelease.key == Keyboard.Key.DOWN) {
@@ -119,7 +119,7 @@ public class Game {
      * Sets direction flags to true if direction key is pressed
      *
      * @param movementKey direction key
-     * @param pressed     boolean - whether the key is pressed or not
+     * @param pressed boolean - whether the key is pressed or not
      */
     private void handleArrowPress(KeyEvent movementKey, boolean pressed) {
         switch (movementKey.key) {
