@@ -18,7 +18,6 @@ public class Game {
     private boolean DOWN = false;
     private boolean FIRSTSPACE = false;
     private Text dialogueWindowText;
-    private Texture tmpTexture;
 
     /**
      * Constructor for the game class
@@ -67,7 +66,7 @@ public class Game {
 
             moveWizard(wizard);
 
-            isDialogue(wizard);
+            isDialogue();
 
             updateWindow();
         }
@@ -123,7 +122,7 @@ public class Game {
         }
     }
 
-    private void isDialogue(Sprite wizard) {
+    private void isDialogue() {
 
         //If its the first time space is pressed, draw the text
         if(FIRSTSPACE){
