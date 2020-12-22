@@ -76,14 +76,24 @@ public class Game {
                     break;
                 case KEY_RELEASED:
                     KeyEvent keyRelease = event.asKeyEvent();
-                    if (keyRelease.key == Keyboard.Key.RIGHT || keyRelease.key == Keyboard.Key.LEFT || keyRelease.key == Keyboard.Key.UP || keyRelease.key == Keyboard.Key.DOWN || keyRelease.key == Keyboard.Key.SPACE) {
+                    if (keyRelease.key == Keyboard.Key.RIGHT || keyRelease.key == Keyboard.Key.LEFT || keyRelease.key == Keyboard.Key.UP || keyRelease.key == Keyboard.Key.DOWN) {
                         handleArrowPress(keyRelease, false);
                     }
                     break;
                 case KEY_PRESSED:
                     KeyEvent keyEvent = event.asKeyEvent();
-                    if (keyEvent.key == Keyboard.Key.RIGHT || keyEvent.key == Keyboard.Key.LEFT || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN || keyEvent.key == Keyboard.Key.SPACE) {
+                    if (keyEvent.key == Keyboard.Key.RIGHT || keyEvent.key == Keyboard.Key.LEFT || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN) {
                         handleArrowPress(keyEvent, true);
+                    }
+
+                    //Special case for when space is pressed
+                    if (keyEvent.key == Keyboard.Key.SPACE) {
+                        if(!FIRSTSPACE) {
+                            handleArrowPress(keyEvent, true);
+                        }
+                        else{
+                            handleArrowPress(keyEvent, false);
+                        }
                     }
                     break;
             }
@@ -138,8 +148,7 @@ public class Game {
         window.clear(Color.RED);
 
         window.draw(wizard);
-
-        //CAN EITHER DO IF PRESSED DISPLAY TEXT, OR SET TO NULL AND JUST UPDATE ON PRESS
+        
         if(FIRSTSPACE) {
             window.draw(dialogueWindowText);
         }
