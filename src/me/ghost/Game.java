@@ -27,7 +27,7 @@ public class Game {
         //Create the window
         window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");
 
-        /********** CREATE WIZARD ***********/
+        //Create Wizard
         Texture wizardText = new Texture();
 
         //Load texture
@@ -40,7 +40,7 @@ public class Game {
         //Create wizard sprite with wizardText texture
         wizard = new Sprite(wizardText);
         addCharacter(wizard, wizardText);
-        /********** END CREATING WIZARD ***********/
+        //End Wizard
 
         //Limit the framerate
         window.setFramerateLimit(120);
