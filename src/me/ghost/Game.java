@@ -126,20 +126,8 @@ public class Game {
 
         //If its the first time space is pressed, draw the text
         if(FIRSTSPACE){
-            //Create a font
-            Font simpleFont = new Font();
-
-            //Set the font to the downloaded file
-            try {
-                simpleFont.loadFromFile(Paths.get("resources/Roboto-Regular.ttf"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            //Set text, size, and position
-            dialogueWindowText = new Text("Welcome to the game!", simpleFont, 20){{
-                this.setPosition(20, 400);
-            }};
+            Dialogue genericText = new Dialogue("resources/Roboto-Regular.ttf", "Hello Wizards!");
+            dialogueWindowText = genericText.getText();
         }
 
     }
