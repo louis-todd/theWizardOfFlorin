@@ -47,8 +47,12 @@ public class Game {
 
     }
 
+    /**
+     * Set the characters origin to it's centre and put it at the centre of the screen
+     * @param characterToAdd The character to add
+     * @param resourcePath The texture of the sprite
+     */
     public void addCharacter(Sprite characterToAdd, Texture resourcePath){
-        //Set its origin to its center and put it at the center of the screen
         characterToAdd.setOrigin(Vector2f.div(new Vector2f(resourcePath.getSize()), 2));
         characterToAdd.setScale(0.05f, 0.05f);
         characterToAdd.setPosition(320, 240);
