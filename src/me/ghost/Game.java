@@ -86,23 +86,18 @@ public class Game {
                 case KEY_RELEASED:
                     KeyEvent keyRelease = event.asKeyEvent();
                     if (keyRelease.key == Keyboard.Key.RIGHT || keyRelease.key == Keyboard.Key.LEFT || keyRelease.key == Keyboard.Key.UP || keyRelease.key == Keyboard.Key.DOWN) {
-                        handleArrowPress(keyRelease, false);
+                        handleKeyPress(keyRelease, false);
                     }
                     break;
                 case KEY_PRESSED:
                     KeyEvent keyEvent = event.asKeyEvent();
                     if (keyEvent.key == Keyboard.Key.RIGHT || keyEvent.key == Keyboard.Key.LEFT || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN) {
-                        handleArrowPress(keyEvent, true);
+                        handleKeyPress(keyEvent, true);
                     }
 
                     //Special case for when space is pressed
                     if (keyEvent.key == Keyboard.Key.SPACE) {
-                        if(!FIRSTSPACE) {
-                            handleArrowPress(keyEvent, true);
-                        }
-                        else{
-                            handleArrowPress(keyEvent, false);
-                        }
+                        handleKeyPress(keyEvent, !FIRSTSPACE);
                     }
                     break;
             }
@@ -172,7 +167,7 @@ public class Game {
      * @param movementKey direction key
      * @param pressed boolean - whether the key is pressed or not
      */
-    private void handleArrowPress(KeyEvent movementKey, boolean pressed) {
+    private void handleKeyPress(KeyEvent movementKey, boolean pressed) {
         switch (movementKey.key) {
             case RIGHT:
                 RIGHT = pressed;
