@@ -18,6 +18,7 @@ public class Game {
     private boolean DOWN = false;
     private boolean FIRSTSPACE = false;
     private Text dialogueWindowText;
+    private Texture tmpTexture;
 
     /**
      * Constructor for the game class
@@ -26,6 +27,7 @@ public class Game {
         //Create the window
         window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");
 
+        /********** CREATE WIZARD ***********/
         Texture wizardText = new Texture();
 
         //Load texture
@@ -37,15 +39,19 @@ public class Game {
 
         //Create wizard sprite with wizardText texture
         wizard = new Sprite(wizardText);
-
-        //Set its origin to its center and put it at the center of the screen
-        wizard.setOrigin(Vector2f.div(new Vector2f(wizardText.getSize()), 2));
-        wizard.setScale(0.05f, 0.05f);
-        wizard.setPosition(320, 240);
+        addCharacter(wizard, wizardText);
+        /********** END CREATING WIZARD ***********/
 
         //Limit the framerate
         window.setFramerateLimit(120);
 
+    }
+
+    public void addCharacter(Sprite characterToAdd, Texture resourcePath){
+        //Set its origin to its center and put it at the center of the screen
+        characterToAdd.setOrigin(Vector2f.div(new Vector2f(resourcePath.getSize()), 2));
+        characterToAdd.setScale(0.05f, 0.05f);
+        characterToAdd.setPosition(320, 240);
     }
 
     /**
