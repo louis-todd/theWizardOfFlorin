@@ -17,13 +17,14 @@ public class Game {
     private boolean UP = false;
     private boolean DOWN = false;
     private boolean SPACE = false;
+    private Text dialogueWindowText;
 
     /**
      * Constructor for the game class
      */
     public Game() {
         //Create the window
-        window = new RenderWindow(new VideoMode(640, 480), "Hello JSFML!");
+        window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");
 
         Texture wizardText = new Texture();
 
@@ -108,15 +109,26 @@ public class Game {
     }
 
     private void isDialogue(Sprite wizard) {
+        //Create a font
         Font simpleFont = new Font();
+
+        //Set the font to the downloaded file
         try {
             simpleFont.loadFromFile(Paths.get("resources/Roboto-Regular.ttf"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Text exampleText = new Text("firstText", simpleFont, 20);
+
+        //Set text, size, and position
+        dialogueWindowText = new Text("firstText", simpleFont, 20){{
+            this.setPosition(320, 240);
+        }};
+
+
+        //Display text when space is pressed
         if (SPACE){
-            window.draw(exampleText);
+            System.out.println("I should be showin text");
+            //draw text
         }
     }
 
@@ -127,6 +139,8 @@ public class Game {
         window.clear(Color.RED);
 
         window.draw(wizard);
+
+        window.draw(dialogueWindowText);
 
         window.display();
     }
