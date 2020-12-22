@@ -19,7 +19,6 @@ public class Game {
     private boolean DOWN = false;
     private boolean FIRSTSPACE = false;
     private Text dialogueWindowText;
-    private Texture tmpTexture;
 
     /**
      * Constructor for the game class
@@ -28,7 +27,7 @@ public class Game {
         //Create the window
         window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");
 
-        /********** CREATE WIZARD ***********/
+        //Create Wizard
         Texture wizardText = new Texture();
 
         //Load texture
@@ -38,15 +37,15 @@ public class Game {
             ex.printStackTrace();
         }
 
+
         wizard = new Character(wizardText, 320, 240, 0.05f);
 
-        /********** END CREATING WIZARD ***********/
 
         //Limit the framerate
         window.setFramerateLimit(120);
 
     }
-
+/*
     /**
      * Set the characters origin to it's centre and put it at the centre of the screen
      * @param characterToAdd The character to add
@@ -56,7 +55,7 @@ public class Game {
         characterToAdd.setOrigin(Vector2f.div(new Vector2f(resourcePath.getSize()), 2));
         characterToAdd.setScale(0.05f, 0.05f);
         characterToAdd.setPosition(320, 240);
-    }
+    }/*
 
     /**
      * Runs the window including inputs and updating the window
@@ -67,7 +66,7 @@ public class Game {
 
             moveWizard(wizard);
 
-            isDialogue(wizard);
+            isDialogue();
 
             updateWindow();
         }
@@ -123,24 +122,12 @@ public class Game {
         }
     }
 
-    private void isDialogue(Sprite wizard) {
+    private void isDialogue() {
 
         //If its the first time space is pressed, draw the text
         if(FIRSTSPACE){
-            //Create a font
-            Font simpleFont = new Font();
-
-            //Set the font to the downloaded file
-            try {
-                simpleFont.loadFromFile(Paths.get("resources/Roboto-Regular.ttf"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            //Set text, size, and position
-            dialogueWindowText = new Text("Welcome to the game!", simpleFont, 20){{
-                this.setPosition(20, 400);
-            }};
+            Dialogue genericText = new Dialogue("resources/Roboto-Regular.ttf", "Hello Wizards!");
+            dialogueWindowText = genericText.getText();
         }
 
     }
