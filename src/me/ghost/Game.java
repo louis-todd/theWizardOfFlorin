@@ -11,8 +11,8 @@ import java.nio.file.Paths;
 
 public class Game {
     private final RenderWindow window;
-    private Sprite wizard;
-    private Character wizardFromClass;
+
+    private Character wizard;
     private boolean RIGHT = false;
     private boolean LEFT = false;
     private boolean UP = false;
@@ -38,11 +38,8 @@ public class Game {
             ex.printStackTrace();
         }
 
-        wizardFromClass = new Character(wizardText, 320, 240, 0.05f);
+        wizard = new Character(wizardText, 320, 240, 0.05f);
 
-        //Create wizard sprite with wizardText texture
-       // wizard = new Sprite(wizardText);
-       // addCharacter(wizard, wizardText);
         /********** END CREATING WIZARD ***********/
 
         //Limit the framerate
@@ -68,12 +65,9 @@ public class Game {
         while (window.isOpen()) {
             handleEvents();
 
-           // moveWizard(wizard);
-            moveWizard(wizardFromClass);
+            moveWizard(wizard);
 
-           // isDialogue(wizard);
-
-            isDialogue(wizardFromClass);
+            isDialogue(wizard);
 
             updateWindow();
         }
@@ -157,8 +151,7 @@ public class Game {
     private void updateWindow(){
         window.clear(Color.RED);
 
-       // window.draw(wizard);
-        window.draw(wizardFromClass);
+        window.draw(wizard);
 
         //Only draw if it is the first space
         if(FIRSTSPACE) {

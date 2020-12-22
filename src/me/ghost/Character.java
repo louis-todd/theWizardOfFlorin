@@ -9,7 +9,7 @@ public class Character extends Sprite {
     private Texture spriteTexture;
 
     public Character (Texture setSpriteTexture, float xPosition, float yPosition, float scale){
-        spriteTexture = setSpriteTexture;
+        this.setTexture(setSpriteTexture);
         this.setOrigin(Vector2f.div(new Vector2f(setSpriteTexture.getSize()), 2));
         this.setPosition(xPosition, yPosition);
         this.setScale(scale, scale);
