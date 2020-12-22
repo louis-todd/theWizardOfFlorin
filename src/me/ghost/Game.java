@@ -16,7 +16,8 @@ public class Game {
     private boolean LEFT = false;
     private boolean UP = false;
     private boolean DOWN = false;
-    private boolean SPACE = false;
+    private boolean FIRSTSPACE = false;
+    private boolean SECONDSPACE = false;
     private Text dialogueWindowText;
 
     /**
@@ -109,27 +110,25 @@ public class Game {
     }
 
     private void isDialogue(Sprite wizard) {
-        //Create a font
-        Font simpleFont = new Font();
 
-        //Set the font to the downloaded file
-        try {
-            simpleFont.loadFromFile(Paths.get("resources/Roboto-Regular.ttf"));
-        } catch (IOException e) {
-            e.printStackTrace();
+        //If its the first time space is pressed, draw the text
+        if(FIRSTSPACE){
+            //Create a font
+            Font simpleFont = new Font();
+
+            //Set the font to the downloaded file
+            try {
+                simpleFont.loadFromFile(Paths.get("resources/Roboto-Regular.ttf"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            //Set text, size, and position
+            dialogueWindowText = new Text("firstText", simpleFont, 20){{
+                this.setPosition(320, 240);
+            }};
         }
 
-        //Set text, size, and position
-        dialogueWindowText = new Text("firstText", simpleFont, 20){{
-            this.setPosition(320, 240);
-        }};
-
-
-        //Display text when space is pressed
-        if (SPACE){
-            System.out.println("I should be showin text");
-            //draw text
-        }
     }
 
     /**
@@ -140,7 +139,10 @@ public class Game {
 
         window.draw(wizard);
 
-        window.draw(dialogueWindowText);
+        //CAN EITHER DO IF PRESSED DISPLAY TEXT, OR SET TO NULL AND JUST UPDATE ON PRESS
+        if(FIRSTSPACE) {
+            window.draw(dialogueWindowText);
+        }
 
         window.display();
     }
@@ -166,7 +168,7 @@ public class Game {
                 DOWN = pressed;
                 break;
             case SPACE:
-                SPACE = pressed;
+                FIRSTSPACE = pressed;
                 break;
         }
     }
