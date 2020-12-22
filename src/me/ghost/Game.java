@@ -16,6 +16,7 @@ public class Game {
     private boolean LEFT = false;
     private boolean UP = false;
     private boolean DOWN = false;
+    private boolean SPACE = false;
 
     /**
      * Constructor for the game class
@@ -55,6 +56,8 @@ public class Game {
 
             moveWizard(wizard);
 
+            isDialogue(wizard);
+
             updateWindow();
         }
     }
@@ -71,13 +74,13 @@ public class Game {
                     break;
                 case KEY_RELEASED:
                     KeyEvent keyRelease = event.asKeyEvent();
-                    if (keyRelease.key == Keyboard.Key.RIGHT || keyRelease.key == Keyboard.Key.LEFT || keyRelease.key == Keyboard.Key.UP || keyRelease.key == Keyboard.Key.DOWN) {
+                    if (keyRelease.key == Keyboard.Key.RIGHT || keyRelease.key == Keyboard.Key.LEFT || keyRelease.key == Keyboard.Key.UP || keyRelease.key == Keyboard.Key.DOWN || keyRelease.key == Keyboard.Key.SPACE) {
                         handleArrowPress(keyRelease, false);
                     }
                     break;
                 case KEY_PRESSED:
                     KeyEvent keyEvent = event.asKeyEvent();
-                    if (keyEvent.key == Keyboard.Key.RIGHT || keyEvent.key == Keyboard.Key.LEFT || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN) {
+                    if (keyEvent.key == Keyboard.Key.RIGHT || keyEvent.key == Keyboard.Key.LEFT || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN || keyEvent.key == Keyboard.Key.SPACE) {
                         handleArrowPress(keyEvent, true);
                     }
                     break;
@@ -100,6 +103,12 @@ public class Game {
             wizard.move(0, -1);
         }
         if (DOWN) {
+            wizard.move(0, 1);
+        }
+    }
+
+    private void isDialogue(Sprite wizard) {
+        if (SPACE){
             wizard.move(0, 1);
         }
     }
@@ -134,6 +143,9 @@ public class Game {
                 break;
             case DOWN:
                 DOWN = pressed;
+                break;
+            case SPACE:
+                SPACE = pressed;
                 break;
         }
     }
