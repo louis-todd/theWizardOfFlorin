@@ -108,8 +108,15 @@ public class Game {
     }
 
     private void isDialogue(Sprite wizard) {
+        Font simpleFont = new Font();
+        try {
+            simpleFont.loadFromFile(Paths.get("resources/Roboto-Regular.ttf"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Text exampleText = new Text("firstText", simpleFont, 20);
         if (SPACE){
-            wizard.move(0, 1);
+            window.draw(exampleText);
         }
     }
 
