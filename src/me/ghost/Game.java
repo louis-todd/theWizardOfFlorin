@@ -17,7 +17,6 @@ public class Game {
     private boolean UP = false;
     private boolean DOWN = false;
     private boolean FIRSTSPACE = false;
-    private boolean SECONDSPACE = false;
     private Text dialogueWindowText;
 
     /**
@@ -134,8 +133,8 @@ public class Game {
             }
 
             //Set text, size, and position
-            dialogueWindowText = new Text("firstText", simpleFont, 20){{
-                this.setPosition(320, 240);
+            dialogueWindowText = new Text("Welcome to the game!", simpleFont, 20){{
+                this.setPosition(20, 400);
             }};
         }
 
@@ -148,7 +147,8 @@ public class Game {
         window.clear(Color.RED);
 
         window.draw(wizard);
-        
+
+        //Only draw if it is the first space
         if(FIRSTSPACE) {
             window.draw(dialogueWindowText);
         }
