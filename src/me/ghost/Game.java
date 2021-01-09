@@ -13,6 +13,7 @@ public class Game {
     private final RenderWindow window;
 
     private Character wizard;
+    private Character npc;
     private boolean RIGHT = false;
     private boolean LEFT = false;
     private boolean UP = false;
@@ -29,6 +30,7 @@ public class Game {
         window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");
 
         wizard = new Character(320, 240, 0.05f, "resources/smileyface.png");
+        npc = new Character(250, 300, 0.05f, "resources/smileyface.png");
 
         //Limit the framerate
         window.setFramerateLimit(120);
@@ -119,6 +121,7 @@ public class Game {
         window.clear(Color.RED);
 
         window.draw(wizard);
+        window.draw(npc);
 
         //Only draw if it is the first space
         if(FIRSTSPACE) {
