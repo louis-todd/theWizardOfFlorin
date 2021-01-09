@@ -25,38 +25,15 @@ public class Game {
      * Constructor for the game class
      */
     public Game() {
-        //Create the window
+        //Create the window and set window name to: 'Welcome Wizards'
         window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");
 
-        //Create Wizard
-        Texture wizardText = new Texture();
-
-        //Load texture
-        try {
-            wizardText.loadFromFile(Paths.get("resources/smileyface.png"));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
-
-        wizard = new Character(wizardText, 320, 240, 0.05f);
-
+        wizard = new Character(320, 240, 0.05f, "resources/smileyface.png");
 
         //Limit the framerate
         window.setFramerateLimit(120);
 
     }
-/*
-    /**
-     * Set the characters origin to it's centre and put it at the centre of the screen
-     * @param characterToAdd The character to add
-     * @param resourcePath The texture of the sprite
-     */
-    public void addCharacter(Sprite characterToAdd, Texture resourcePath){
-        characterToAdd.setOrigin(Vector2f.div(new Vector2f(resourcePath.getSize()), 2));
-        characterToAdd.setScale(0.05f, 0.05f);
-        characterToAdd.setPosition(320, 240);
-    }/*
 
     /**
      * Runs the window including inputs and updating the window
@@ -65,6 +42,7 @@ public class Game {
         while (window.isOpen()) {
             handleEvents();
 
+            //instead of moveWizard have draw sprites which draws all sprites in their updated positions
             moveWizard(wizard);
 
             isDialogue();
@@ -125,7 +103,7 @@ public class Game {
 
     private void isDialogue() {
 
-        //If its the first time space is pressed, draw the text
+        //If its the first time space is pressed, set the text
         if(FIRSTSPACE){
             Dialogue genericText = new Dialogue("resources/Roboto-Regular.ttf", "Hello Wizards!");
             dialogueWindowText = genericText.getText();
