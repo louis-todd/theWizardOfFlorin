@@ -54,7 +54,7 @@ public class Dialogue implements Drawable {
 
     @Override
     public void draw(RenderTarget renderTarget, RenderStates renderStates) {
-        renderTarget.draw(getText());
         renderTarget.draw(getTextBackground());
+        renderTarget.draw(getText());
     }
 }
