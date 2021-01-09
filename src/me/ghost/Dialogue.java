@@ -1,18 +1,17 @@
 package me.ghost;
 
-import org.jsfml.graphics.Font;
-import org.jsfml.graphics.RectangleShape;
-import org.jsfml.graphics.Text;
+import org.jsfml.graphics.*;
 import org.jsfml.system.Vector2f;
 
 import java.io.IOException;
 import java.nio.file.Paths;
 
-public class Dialogue {
+public class Dialogue implements Drawable {
     private Font simpleFont;
     private String resource;
     private Text text;
     private String toWrite;
+    private RectangleShape textBackground;
 
     public Dialogue(String fontPath, String textToWrite) {
         resource = fontPath;
@@ -39,11 +38,23 @@ public class Dialogue {
     }
 
     public void formatText(){
-        Vector2f dimensions = new Vector2f(3,3);
-        RectangleShape textBackground = new RectangleShape(dimensions);
+        Vector2f dimensions = new Vector2f(600,50);
+        textBackground = new RectangleShape(dimensions){{
+            this.setPosition(20,400);
+            this.setSize(dimensions);
+            this.setFillColor(Color.BLACK);
+        }};
     }
 
     public Text getText(){
         return text;
+    }
+    public RectangleShape getTextBackground() {return textBackground;}
+
+
+    @Override
+    public void draw(RenderTarget renderTarget, RenderStates renderStates) {
+        renderTarget.draw(getText());
+        renderTarget.draw(getTextBackground());
     }
 }

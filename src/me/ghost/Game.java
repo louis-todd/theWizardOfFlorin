@@ -19,6 +19,7 @@ public class Game {
     private boolean DOWN = false;
     private boolean FIRSTSPACE = false;
     private Text dialogueWindowText;
+    private Dialogue interaction;
 
     /**
      * Constructor for the game class
@@ -128,6 +129,7 @@ public class Game {
         if(FIRSTSPACE){
             Dialogue genericText = new Dialogue("resources/Roboto-Regular.ttf", "Hello Wizards!");
             dialogueWindowText = genericText.getText();
+            interaction = new Dialogue("resources/Roboto-Regular.ttf", "Hello Wizards!");
         }
 
     }
@@ -143,6 +145,7 @@ public class Game {
         //Only draw if it is the first space
         if(FIRSTSPACE) {
             window.draw(dialogueWindowText);
+            interaction.draw(window, null);
         }
 
         window.display();
