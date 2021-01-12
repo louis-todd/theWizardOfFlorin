@@ -1,13 +1,15 @@
 package me.ghost;
 
+import java.util.ArrayList;
+
 import org.jsfml.graphics.*;
-import org.jsfml.system.Vector2f;
+// import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.KeyEvent;
-import java.io.IOException;
-import java.nio.file.Paths;
+// import java.io.IOException;
+// import java.nio.file.Paths;
 
 public class Game {
     private final RenderWindow window;
@@ -19,8 +21,8 @@ public class Game {
     private boolean UP = false;
     private boolean DOWN = false;
     private boolean FIRSTSPACE = false;
-    private Text dialogueWindowText;
     private Dialogue interaction;
+    private ArrayList<Drawable> toDraw;
 
     /**
      * Constructor for the game class
@@ -28,9 +30,13 @@ public class Game {
     public Game() {
         //Create the window and set window name to: 'Welcome Wizards'
         window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");
+        toDraw = new ArrayList<Drawable>();
 
         wizard = new Character(320, 240, 0.05f, "resources/smileyface.png");
+        toDraw.add(wizard);
+
         npc = new Character(250, 300, 0.05f, "resources/smileyface.png");
+        toDraw.add(npc);
 
         //Limit the framerate
         window.setFramerateLimit(120);
@@ -43,12 +49,7 @@ public class Game {
     public void run() {
         while (window.isOpen()) {
             handleEvents();
-
-            //instead of moveWizard have draw sprites which draws all sprites in their updated positions
             moveWizard(wizard);
-
-            isDialogue();
-
             updateWindow();
         }
     }
@@ -65,13 +66,13 @@ public class Game {
                     break;
                 case KEY_RELEASED:
                     KeyEvent keyRelease = event.asKeyEvent();
-                    if (keyRelease.key == Keyboard.Key.RIGHT || keyRelease.key == Keyboard.Key.LEFT || keyRelease.key == Keyboard.Key.UP || keyRelease.key == Keyboard.Key.DOWN) {
+                    if ((keyRelease.key == Keyboard.Key.RIGHT || keyRelease.key == Keyboard.Key.LEFT || keyRelease.key == Keyboard.Key.UP || keyRelease.key == Keyboard.Key.DOWN)) {
                         handleKeyPress(keyRelease, false);
                     }
                     break;
                 case KEY_PRESSED:
                     KeyEvent keyEvent = event.asKeyEvent();
-                    if (keyEvent.key == Keyboard.Key.RIGHT || keyEvent.key == Keyboard.Key.LEFT || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN) {
+                    if ((keyEvent.key == Keyboard.Key.RIGHT || keyEvent.key == Keyboard.Key.LEFT || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN) && !FIRSTSPACE) {
                         handleKeyPress(keyEvent, true);
                     }
 
@@ -79,6 +80,8 @@ public class Game {
                     if (keyEvent.key == Keyboard.Key.SPACE) {
                         handleKeyPress(keyEvent, !FIRSTSPACE);
                     }
+                    break;
+                default:
                     break;
             }
         }
@@ -108,8 +111,8 @@ public class Game {
         //If its the first time space is pressed, set the text
         if(FIRSTSPACE){
             interaction = new Dialogue("resources/Roboto-Regular.ttf", "resources/DialogueBoard.png", "Name Placeholder", "Content Placeholder");
+            interaction.draw(window, null);
         }
-
     }
 
     /**
@@ -118,12 +121,9 @@ public class Game {
     private void updateWindow(){
         window.clear(Color.RED);
 
-        window.draw(wizard);
-        window.draw(npc);
-
-        //Only draw if it is the first space
-        if(FIRSTSPACE) {
-            interaction.draw(window, null);
+        isDialogue();
+        for(Drawable item : toDraw){
+            window.draw(item);
         }
 
         window.display();
