@@ -42,7 +42,7 @@ public class Dialogue implements Drawable {
         textBackground = new RectangleShape(dimensions){{
             this.setPosition(20,400);
             this.setSize(dimensions);
-            this.setFillColor(Color.BLACK);
+            this.setFillColor(new Color(98,52,18));
         }};
     }
 
