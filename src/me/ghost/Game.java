@@ -107,9 +107,7 @@ public class Game {
 
         //If its the first time space is pressed, set the text
         if(FIRSTSPACE){
-            Dialogue genericText = new Dialogue("resources/Roboto-Regular.ttf", "Hello Wizards!");
-            dialogueWindowText = genericText.getText();
-            interaction = new Dialogue("resources/Roboto-Regular.ttf", "Hello Wizards!");
+            interaction = new Dialogue("resources/Roboto-Regular.ttf", "resources/DialogueBoard.png", "Name Placeholder", "Content Placeholder");
         }
 
     }
@@ -125,7 +123,6 @@ public class Game {
 
         //Only draw if it is the first space
         if(FIRSTSPACE) {
-            window.draw(dialogueWindowText);
             interaction.draw(window, null);
         }
 
@@ -154,6 +151,8 @@ public class Game {
                 break;
             case SPACE:
                 FIRSTSPACE = pressed;
+                break;
+            default:
                 break;
         }
     }
