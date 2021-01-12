@@ -21,6 +21,7 @@ public class Game {
     private boolean FIRSTSPACE = false;
     private Text dialogueWindowText;
     private Dialogue interaction;
+    private RectangleShape rectangleBoundsTest;
 
     /**
      * Constructor for the game class
@@ -29,8 +30,11 @@ public class Game {
         //Create the window and set window name to: 'Welcome Wizards'
         window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");
 
-        wizard = new Character(320, 240, 0.05f, "resources/smileyface.png");
-        npc = new Character(250, 300, 0.05f, "resources/smileyface.png");
+        wizard = new Character(320, 240, "resources/square-16.png");
+        npc = new Character(250, 300, "resources/square-16.png");
+        rectangleBoundsTest = new RectangleShape(new Vector2f(250, 300));
+        rectangleBoundsTest.setPosition(npc.getGlobalBounds().left, npc.getGlobalBounds().top);
+        rectangleBoundsTest.setSize(new Vector2f(npc.getGlobalBounds().height, npc.getGlobalBounds().width));
 
         //Limit the framerate
         window.setFramerateLimit(120);
@@ -88,19 +92,21 @@ public class Game {
      * Moves the wizard if the direction flags are true
      * @param wizard wizard sprite
      */
-    private void moveWizard(Sprite wizard) {
-        if (RIGHT) {
-            wizard.move(1, 0);
-        }
-        if (LEFT) {
-            wizard.move(-1, 0);
-        }
-        if (UP) {
-            wizard.move(0, -1);
-        }
-        if (DOWN) {
-            wizard.move(0, 1);
-        }
+    private void moveWizard(Character wizard) {
+       if(!(wizard.collides(npc))) {
+           if (RIGHT) {
+               wizard.move(1, 0);
+           }
+           if (LEFT) {
+               wizard.move(-1, 0);
+           }
+           if (UP) {
+               wizard.move(0, -1);
+           }
+           if (DOWN) {
+               wizard.move(0, 1);
+           }
+       }
     }
 
     private void isDialogue() {
@@ -122,6 +128,7 @@ public class Game {
 
         window.draw(wizard);
         window.draw(npc);
+        window.draw(this.rectangleBoundsTest);
 
         //Only draw if it is the first space
         if(FIRSTSPACE) {

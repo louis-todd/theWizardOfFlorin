@@ -1,5 +1,7 @@
 package me.ghost;
 
+import org.jsfml.graphics.CircleShape;
+import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
@@ -11,7 +13,8 @@ public class Character extends Sprite {
 
     private Texture spriteTexture;
 
-    public Character (float xPosition, float yPosition, float scale, String imagePath){
+
+    public Character(float xPosition, float yPosition, String imagePath) {
 
         //Set picture for the sprite
         spriteTexture = new Texture();
@@ -22,10 +25,12 @@ public class Character extends Sprite {
         }
 
         this.setTexture(spriteTexture);
-        this.setOrigin(Vector2f.div(new Vector2f(spriteTexture.getSize()), 2));
         this.setPosition(xPosition, yPosition);
-        this.setScale(scale, scale);
 
+    }
+
+    public boolean collides(Sprite npc) {
+        return this.getGlobalBounds().intersection(npc.getGlobalBounds()) != null;
     }
 
 
