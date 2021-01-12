@@ -1,6 +1,8 @@
 package me.ghost;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.jsfml.graphics.*;
 // import org.jsfml.system.Vector2f;
@@ -16,18 +18,26 @@ public class Game {
 
     private Character wizard;
     private Character npc;
-    private boolean RIGHT = false;
-    private boolean LEFT = false;
-    private boolean UP = false;
-    private boolean DOWN = false;
-    private boolean FIRSTSPACE = false;
+    private boolean somethingPressed = false;
     private Dialogue interaction;
     private ArrayList<Drawable> toDraw;
+    private Map<String, Boolean> keyPresses;
 
     /**
      * Constructor for the game class
      */
     public Game() {
+        //Add the keypresses to a hashmap with their respective direction
+        keyPresses = new HashMap<String, Boolean>() {
+            private static final long serialVersionUID = 1L;
+            {
+            put("RIGHT", false);
+            put("LEFT", false);
+            put("UP", false);
+            put("DOWN", false);
+            put("FIRSTSPACE", false);
+        }};
+
         //Create the window and set window name to: 'Welcome Wizards'
         window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");
         toDraw = new ArrayList<Drawable>();
@@ -72,13 +82,21 @@ public class Game {
                     break;
                 case KEY_PRESSED:
                     KeyEvent keyEvent = event.asKeyEvent();
-                    if ((keyEvent.key == Keyboard.Key.RIGHT || keyEvent.key == Keyboard.Key.LEFT || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN) && !FIRSTSPACE) {
+                    if ((keyEvent.key == Keyboard.Key.RIGHT || keyEvent.key == Keyboard.Key.LEFT || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN) && !(keyPresses.get("FIRSTSPACE"))) {
                         handleKeyPress(keyEvent, true);
                     }
 
                     //Special case for when space is pressed
                     if (keyEvent.key == Keyboard.Key.SPACE) {
-                        handleKeyPress(keyEvent, !FIRSTSPACE);
+                        somethingPressed=false;
+                        for (Map.Entry<String, Boolean> entry : keyPresses.entrySet()) {
+                            if(entry.getValue() && entry.getKey()!="SPACE"){
+                                somethingPressed=true;
+                            }
+                        }
+                        if(!somethingPressed || keyPresses.get("FIRSTSPACE")){
+                            handleKeyPress(keyEvent, !(keyPresses.get("FIRSTSPACE")));
+                        }
                     }
                     break;
                 default:
@@ -92,16 +110,16 @@ public class Game {
      * @param wizard wizard sprite
      */
     private void moveWizard(Sprite wizard) {
-        if (RIGHT) {
+        if ((keyPresses.get("RIGHT"))) {
             wizard.move(1, 0);
         }
-        if (LEFT) {
+        if ((keyPresses.get("LEFT"))) {
             wizard.move(-1, 0);
         }
-        if (UP) {
+        if ((keyPresses.get("UP"))) {
             wizard.move(0, -1);
         }
-        if (DOWN) {
+        if ((keyPresses.get("DOWN"))) {
             wizard.move(0, 1);
         }
     }
@@ -109,7 +127,7 @@ public class Game {
     private void isDialogue() {
 
         //If its the first time space is pressed, set the text
-        if(FIRSTSPACE){
+        if((keyPresses.get("FIRSTSPACE"))){
             interaction = new Dialogue("resources/Roboto-Regular.ttf", "resources/DialogueBoard.png", "Name Placeholder", "Content Placeholder");
             interaction.draw(window, null);
         }
@@ -138,19 +156,24 @@ public class Game {
     private void handleKeyPress(KeyEvent movementKey, boolean pressed) {
         switch (movementKey.key) {
             case RIGHT:
-                RIGHT = pressed;
+                keyPresses.put("RIGHT", pressed);
+                // RIGHT = pressed;
                 break;
             case LEFT:
-                LEFT = pressed;
+                keyPresses.put("LEFT", pressed);
+                // LEFT = pressed;
                 break;
             case UP:
-                UP = pressed;
+                keyPresses.put("UP", pressed);
+                // UP = pressed;
                 break;
             case DOWN:
-                DOWN = pressed;
+                keyPresses.put("DOWN", pressed);
+                // DOWN = pressed;
                 break;
             case SPACE:
-                FIRSTSPACE = pressed;
+                keyPresses.put("FIRSTSPACE", pressed);
+                // FIRSTSPACE = pressed;
                 break;
             default:
                 break;
