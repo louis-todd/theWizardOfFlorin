@@ -89,11 +89,13 @@ public class Game {
                     //Special case for when space is pressed
                     if (keyEvent.key == Keyboard.Key.SPACE) {
                         somethingPressed=false;
+                        //Check if anything else is being pressed
                         for (Map.Entry<String, Boolean> entry : keyPresses.entrySet()) {
                             if(entry.getValue() && entry.getKey()!="SPACE"){
                                 somethingPressed=true;
                             }
                         }
+                        //only if something else isn't being pressed, handle space
                         if(!somethingPressed || keyPresses.get("FIRSTSPACE")){
                             handleKeyPress(keyEvent, !(keyPresses.get("FIRSTSPACE")));
                         }
