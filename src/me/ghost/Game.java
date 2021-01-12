@@ -158,23 +158,18 @@ public class Game {
         switch (movementKey.key) {
             case RIGHT:
                 keyPresses.put("RIGHT", pressed);
-                // RIGHT = pressed;
                 break;
             case LEFT:
                 keyPresses.put("LEFT", pressed);
-                // LEFT = pressed;
                 break;
             case UP:
                 keyPresses.put("UP", pressed);
-                // UP = pressed;
                 break;
             case DOWN:
                 keyPresses.put("DOWN", pressed);
-                // DOWN = pressed;
                 break;
             case SPACE:
                 keyPresses.put("FIRSTSPACE", pressed);
-                // FIRSTSPACE = pressed;
                 break;
             default:
                 break;
