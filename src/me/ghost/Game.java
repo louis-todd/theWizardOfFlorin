@@ -6,8 +6,10 @@ import org.jsfml.window.Keyboard;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.KeyEvent;
-import java.io.IOException;
+
+import java.io.*;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
 public class Game {
     private final RenderWindow window;
@@ -48,6 +50,8 @@ public class Game {
             moveWizard(wizard);
 
             isDialogue();
+
+            loadMap();
 
             updateWindow();
         }
@@ -155,6 +159,29 @@ public class Game {
             case SPACE:
                 FIRSTSPACE = pressed;
                 break;
+        }
+    }
+
+    private void loadMap() {
+        File csvFile = new File("resources/map._House.csv");
+        if (csvFile.isFile()) {
+            String row;
+            try {
+                BufferedReader csvReader = new BufferedReader(new FileReader("resources/map._House.csv"));
+                while ((row = csvReader.readLine()) != null) {
+                    String[] data = row.split(",");
+                    int imageNo = Integer.valueOf(data[0]);
+                    switch (imageNo){
+                        case 0:
+                            //draw grass
+                        default:
+                            //draw nothing
+                    }
+                }
+                csvReader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
