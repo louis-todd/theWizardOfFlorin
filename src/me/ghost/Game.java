@@ -141,11 +141,10 @@ public class Game {
     private void updateWindow(){
         window.clear(Color.RED);
 
-        isDialogue();
         for(Drawable item : toDraw){
             window.draw(item);
         }
-
+        isDialogue();
         window.display();
     }
 
