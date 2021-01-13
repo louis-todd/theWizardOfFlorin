@@ -83,21 +83,29 @@ public class Game {
                     break;
                 case KEY_PRESSED:
                     KeyEvent keyEvent = event.asKeyEvent();
-                    if ((keyEvent.key == Keyboard.Key.RIGHT || keyEvent.key == Keyboard.Key.LEFT || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN) && !(keyPresses.get("FIRSTSPACE"))) {
-                        handleKeyPress(keyEvent, true);
-                    }
-
-                    //Special case for when space is pressed
-                    if (keyEvent.key == Keyboard.Key.SPACE) {
-                        somethingPressed=false;
-                        //Check if anything else is being pressed
-                        for (Map.Entry<String, Boolean> entry : keyPresses.entrySet()) {
-                            if(entry.getValue() && entry.getKey()!="SPACE"){
-                                somethingPressed=true;
-                            }
+                    //disable key presses if in space-prompted dialogue
+                    if(!keyPresses.get("FIRSTSPACE")){
+                        
+                        //manage arrow key presses
+                        if ((keyEvent.key == Keyboard.Key.RIGHT || keyEvent.key == Keyboard.Key.LEFT || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN)) {
+                            handleKeyPress(keyEvent, true);
                         }
-                        //only if something else isn't being pressed, handle space
-                        if(!somethingPressed || keyPresses.get("FIRSTSPACE")){
+
+                        //manage first space press
+                        if(keyEvent.key == Keyboard.Key.SPACE){
+                            // Check if anything else is being pressed. and if so release it
+                            for (Map.Entry<String, Boolean> entry : keyPresses.entrySet()) {
+                                if(entry.getValue() && entry.getKey()!="SPACE"){
+                                    keyPresses.put(entry.getKey(), false);
+                                }
+                            }
+                            //register that space has been pressed
+                            handleKeyPress(keyEvent, !(keyPresses.get("FIRSTSPACE")));
+                        }
+                    }
+                    //if its the second space
+                    else{
+                        if(keyEvent.key == Keyboard.Key.SPACE){
                             handleKeyPress(keyEvent, !(keyPresses.get("FIRSTSPACE")));
                         }
                     }
@@ -106,7 +114,7 @@ public class Game {
                     break;
             }
         }
-    }
+        }
 
     /**
      * Moves the wizard if the direction flags are true
