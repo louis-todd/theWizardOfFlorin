@@ -85,7 +85,7 @@ public class Game {
                     KeyEvent keyEvent = event.asKeyEvent();
                     //disable key presses if in space-prompted dialogue
                     if(!keyPresses.get("FIRSTSPACE")){
-                        
+
                         //manage arrow key presses
                         if ((keyEvent.key == Keyboard.Key.RIGHT || keyEvent.key == Keyboard.Key.LEFT || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN)) {
                             handleKeyPress(keyEvent, true);
@@ -94,11 +94,11 @@ public class Game {
                         //manage first space press
                         if(keyEvent.key == Keyboard.Key.SPACE){
                             // Check if anything else is being pressed. and if so release it
-                            for (Map.Entry<String, Boolean> entry : keyPresses.entrySet()) {
-                                if(entry.getValue() && entry.getKey()!="SPACE"){
-                                    keyPresses.put(entry.getKey(), false);
-                                }
-                            }
+                            // for (Map.Entry<String, Boolean> entry : keyPresses.entrySet()) {
+                            //     if(entry.getValue() && entry.getKey()!="SPACE"){
+                            //         keyPresses.put(entry.getKey(), false);
+                            //     }
+                            // }
                             //register that space has been pressed
                             handleKeyPress(keyEvent, !(keyPresses.get("FIRSTSPACE")));
                         }
@@ -121,16 +121,16 @@ public class Game {
      * @param wizard wizard sprite
      */
     private void moveWizard(Sprite wizard) {
-        if ((keyPresses.get("RIGHT"))) {
+        if ((keyPresses.get("RIGHT") && !keyPresses.get("FIRSTSPACE"))) {
             wizard.move(1, 0);
         }
-        if ((keyPresses.get("LEFT"))) {
+        if ((keyPresses.get("LEFT") && !keyPresses.get("FIRSTSPACE"))) {
             wizard.move(-1, 0);
         }
-        if ((keyPresses.get("UP"))) {
+        if ((keyPresses.get("UP") && !keyPresses.get("FIRSTSPACE"))) {
             wizard.move(0, -1);
         }
-        if ((keyPresses.get("DOWN"))) {
+        if ((keyPresses.get("DOWN") && !keyPresses.get("FIRSTSPACE"))) {
             wizard.move(0, 1);
         }
     }
