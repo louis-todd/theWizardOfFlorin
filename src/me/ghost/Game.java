@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.jsfml.graphics.*;
-import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
@@ -15,10 +14,11 @@ import org.jsfml.window.event.KeyEvent;
 public class Game {
 
     private final RenderWindow window;
-
     private final Character wizard = new Character(320, 240, "resources/square-16.png");
+    private final Character npc = new Character(250, 300, "resources/square-16.png");
     private final List<Drawable> toDraw;
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
+    private boolean wizardColliding = false;
 
     /**
      * Constructor for the game class
@@ -26,20 +26,14 @@ public class Game {
     public Game() {
         this.initKeyPressesMap();
 
-
         //Create the window and set window name to: 'Welcome Wizards'
         window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");
         toDraw = new ArrayList<>();
 
-        Character npc = new Character(250, 300, "resources/square-16.png");
-        RectangleShape rectangleBoundsTest = new RectangleShape(new Vector2f(250, 300));
-        rectangleBoundsTest.setPosition(npc.getGlobalBounds().left, npc.getGlobalBounds().top);
-        rectangleBoundsTest.setSize(new Vector2f(npc.getGlobalBounds().height, npc.getGlobalBounds().width));
         toDraw.add(wizard);
         toDraw.add(npc);
         //Limit the framerate
         window.setFramerateLimit(120);
-
     }
 
     private void initKeyPressesMap() {
@@ -109,23 +103,47 @@ public class Game {
      * Moves the wizard if the direction flags are true
      * @param wizard wizard sprite
      */
-    private void moveWizard(Sprite wizard) {
-        if ((keyPresses.get("RIGHT"))) {
-            wizard.move(1, 0);
+    private void moveWizard(Character wizard) {
+        Sprite npcCollide = null;
+
+        for (Drawable npcs : toDraw) {
+            if (wizard.collides((Sprite) npcs) && (!npcs.equals(wizard))) {
+                wizardColliding = true;
+                npcCollide = npc;
+            }
         }
-        if ((keyPresses.get("LEFT"))) {
-            wizard.move(-1, 0);
-        }
-        if ((keyPresses.get("UP"))) {
-            wizard.move(0, -1);
-        }
-        if ((keyPresses.get("DOWN"))) {
-            wizard.move(0, 1);
+        if (!wizardColliding) {
+            if ((keyPresses.get("RIGHT"))) {
+                wizard.move(1, 0);
+            }
+            if ((keyPresses.get("LEFT"))) {
+                wizard.move(-1, 0);
+            }
+            if ((keyPresses.get("UP"))) {
+                wizard.move(0, -1);
+            }
+            if ((keyPresses.get("DOWN"))) {
+                wizard.move(0, 1);
+            }
+        } else {
+            assert npcCollide != null;
+            if(npcCollide.getPosition().x> wizard.getPosition().x){
+                wizard.move(-0.1f, 0);
+            }
+            if (npcCollide.getPosition().x < wizard.getPosition().x) {
+                wizard.move(0.1f, 0);
+            }
+             if (npcCollide.getPosition().y > wizard.getPosition().y) {
+                 wizard.move(0, -0.1f);
+             }
+             if (npcCollide.getPosition().y < wizard.getPosition().y) {
+                wizard.move(0, 0.1f);
+            }
+            wizardColliding = false;
         }
     }
 
     private void isDialogue() {
-
         //If its the first time space is pressed, set the text
         if((keyPresses.get("FIRSTSPACE"))){
             Dialogue interaction = new Dialogue("resources/Roboto-Regular.ttf", "resources/DialogueBoard.png", "Name Placeholder", "Content Placeholder");

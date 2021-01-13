@@ -33,5 +33,9 @@ public class Character extends Sprite {
         return this.getGlobalBounds().intersection(npc.getGlobalBounds()) != null;
     }
 
+    public void move(){
+
+    }
+
 
 }
