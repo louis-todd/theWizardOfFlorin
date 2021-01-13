@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 public class Game {
+
     private final RenderWindow window;
 
     private Character wizard;
@@ -21,22 +22,14 @@ public class Game {
     private boolean somethingPressed = false;
     private Dialogue interaction;
     private ArrayList<Drawable> toDraw;
-    private Map<String, Boolean> keyPresses;
+    private Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
 
     /**
      * Constructor for the game class
      */
     public Game() {
-        //Add the keypresses to a hashmap with their respective direction
-        keyPresses = new HashMap<String, Boolean>() {
-            private static final long serialVersionUID = 1L;
-            {
-            put("RIGHT", false);
-            put("LEFT", false);
-            put("UP", false);
-            put("DOWN", false);
-            put("FIRSTSPACE", false);
-        }};
+        this.initKeyPressesMap();
+
 
         //Create the window and set window name to: 'Welcome Wizards'
         window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");
@@ -51,6 +44,14 @@ public class Game {
         //Limit the framerate
         window.setFramerateLimit(120);
 
+    }
+
+    private void initKeyPressesMap() {
+        this.keyPresses.put("RIGHT", false);
+        this.keyPresses.put("LEFT", false);
+        this.keyPresses.put("UP", false);
+        this.keyPresses.put("DOWN", false);
+        this.keyPresses.put("FIRSTSPACE", false);
     }
 
     /**
