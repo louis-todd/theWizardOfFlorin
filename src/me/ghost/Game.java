@@ -23,6 +23,10 @@ public class Game {
     private ArrayList<Drawable> toDraw;
     private Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
 
+    private String[] testSpriteText = {"Page 1", "Page 2", "Page 3"};
+    private int charsCurrentIndex = 1;
+    private int charsMaxPages = 3;
+
     /**
      * Constructor for the game class
      */
@@ -85,12 +89,21 @@ public class Game {
                             handleKeyPress(keyEvent, true);
                         }
                         if(keyEvent.key == Keyboard.Key.SPACE){
-                            interaction.setTextContent("Content Placeholder");
+                            interaction.setTextContent(testSpriteText[0]);
                             handleKeyPress(keyEvent, !(keyPresses.get("FIRSTSPACE")));
                         }
                     break;
                 case MOUSE_BUTTON_PRESSED:
-                    interaction.setTextContent("clicking has changed this text");
+                    //if still tiles left to show, step through them
+                    if(charsCurrentIndex<charsMaxPages){
+                        interaction.setTextContent(String.valueOf(testSpriteText[charsCurrentIndex]));
+                        charsCurrentIndex++;
+                    }
+                    //if have read all tiles, act as if space has been clicked to close the dialogue box
+                    else{
+                        keyPresses.put("FIRSTSPACE", !(keyPresses.get("FIRSTSPACE")));
+                        charsCurrentIndex=1;
+                    }
                 default:
                     break;
             }

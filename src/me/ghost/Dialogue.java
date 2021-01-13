@@ -83,6 +83,14 @@ public class Dialogue implements Drawable {
         characterName.setString(nameToWrite);
     }
 
+    public String getTextContent(){
+        return toWrite.getString();
+    }
+
+    public String getCharacterName(){
+        return characterName.getString();
+    }
+
 
     @Override
     public void draw(RenderTarget renderTarget, RenderStates renderStates) {
