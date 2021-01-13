@@ -26,7 +26,6 @@ public class Game {
 
     private String[] testSpriteText = {"Page 1", "Page 2", "Page 3"};
     private int charsCurrentIndex = 1;
-    private int charsMaxPages = 3;
 
     /**
      * Constructor for the game class
@@ -93,7 +92,7 @@ public class Game {
                             //If space has already been pressed
                             if(keyPresses.get("SPACE")){
                                 //if still tiles to step through do
-                                if(charsCurrentIndex<charsMaxPages){
+                                if(charsCurrentIndex<testSpriteText.length){
                                     interaction.setTextContent(String.valueOf(testSpriteText[charsCurrentIndex]));
                                     charsCurrentIndex++;
                                 }
@@ -112,12 +111,12 @@ public class Game {
                     break;
                 case MOUSE_BUTTON_PRESSED:
                     //if still tiles left to show, step through them
-                    if(charsCurrentIndex<charsMaxPages && keyPresses.get("SPACE")){
+                    if(charsCurrentIndex<testSpriteText.length && keyPresses.get("SPACE")){
                         interaction.setTextContent(String.valueOf(testSpriteText[charsCurrentIndex]));
                         charsCurrentIndex++;
                     }
                     //if have read all tiles, act as if space has been clicked to close the dialogue box
-                    else if (charsCurrentIndex>=charsMaxPages && keyPresses.get("SPACE")){
+                    else if (charsCurrentIndex>=testSpriteText.length && keyPresses.get("SPACE")){
                         keyPresses.put("SPACE", !(keyPresses.get("SPACE")));
                         charsCurrentIndex=1;
                     }
