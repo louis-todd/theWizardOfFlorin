@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import me.ghost.Characters.MoveableCharacter;
+import me.ghost.Characters.Npc;
 import org.jsfml.graphics.*;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.VideoMode;
@@ -14,8 +16,8 @@ import org.jsfml.window.event.KeyEvent;
 public class Game {
 
     private final RenderWindow window;
-    private final Character wizard = new Character(320, 240, "resources/square-16.png");
-    private final Character npc = new Character(250, 300, "resources/square-16.png");
+    private final MoveableCharacter wizard = new MoveableCharacter(320, 240, "resources/square-16.png");
+    private final Npc npc = new Npc(250, 300, "resources/square-16.png");
     private final List<Drawable> toDraw;
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
     private boolean wizardColliding = false;
@@ -103,7 +105,7 @@ public class Game {
      * Moves the wizard if the direction flags are true
      * @param wizard wizard sprite
      */
-    private void moveWizard(Character wizard) {
+    private void moveWizard(MoveableCharacter wizard) {
         Sprite npcCollide = null;
 
         for (Drawable npcs : toDraw) {
@@ -126,7 +128,7 @@ public class Game {
                 wizard.move(0, 1);
             }
         } else {
-            assert npcCollide != null;
+           assert npcCollide != null;
             if(npcCollide.getPosition().x> wizard.getPosition().x){
                 wizard.move(-0.1f, 0);
             }

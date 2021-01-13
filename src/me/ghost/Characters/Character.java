@@ -1,15 +1,12 @@
-package me.ghost;
+package me.ghost.Characters;
 
-import org.jsfml.graphics.CircleShape;
-import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
-import org.jsfml.system.Vector2f;
 
 import java.io.IOException;
 import java.nio.file.Paths;
 
-public class Character extends Sprite {
+public abstract class Character extends Sprite {
 
     private Texture spriteTexture;
 
@@ -17,7 +14,7 @@ public class Character extends Sprite {
     public Character(float xPosition, float yPosition, String imagePath) {
 
         //Set picture for the sprite
-        spriteTexture = new Texture();
+        Texture spriteTexture = new Texture();
         try {
             spriteTexture.loadFromFile(Paths.get(imagePath));
         } catch (IOException ex) {
@@ -29,13 +26,10 @@ public class Character extends Sprite {
 
     }
 
-    public boolean collides(Sprite npc) {
-        return this.getGlobalBounds().intersection(npc.getGlobalBounds()) != null;
-    }
 
-    public void move(){
+    public abstract void move();
 
-    }
+
 
 
 }
