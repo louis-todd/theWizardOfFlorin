@@ -53,7 +53,7 @@ public class Game {
         this.keyPresses.put("LEFT", false);
         this.keyPresses.put("UP", false);
         this.keyPresses.put("DOWN", false);
-        this.keyPresses.put("FIRSTSPACE", false);
+        this.keyPresses.put("SPACE", false);
     }
 
     /**
@@ -90,7 +90,8 @@ public class Game {
                         }
                         if(keyEvent.key == Keyboard.Key.SPACE){
                             interaction.setTextContent(testSpriteText[0]);
-                            handleKeyPress(keyEvent, !(keyPresses.get("FIRSTSPACE")));
+                            handleKeyPress(keyEvent, !(keyPresses.get("SPACE")));
+                            charsCurrentIndex=1;
                         }
                     break;
                 case MOUSE_BUTTON_PRESSED:
@@ -100,8 +101,8 @@ public class Game {
                         charsCurrentIndex++;
                     }
                     //if have read all tiles, act as if space has been clicked to close the dialogue box
-                    else{
-                        keyPresses.put("FIRSTSPACE", !(keyPresses.get("FIRSTSPACE")));
+                    else if (charsCurrentIndex>=charsMaxPages && keyPresses.get("SPACE")){
+                        keyPresses.put("SPACE", !(keyPresses.get("SPACE")));
                         charsCurrentIndex=1;
                     }
                 default:
@@ -115,16 +116,16 @@ public class Game {
      * @param wizard wizard sprite
      */
     private void moveWizard(Sprite wizard) {
-        if ((keyPresses.get("RIGHT") && !keyPresses.get("FIRSTSPACE"))) {
+        if ((keyPresses.get("RIGHT") && !keyPresses.get("SPACE"))) {
             wizard.move(1, 0);
         }
-        if ((keyPresses.get("LEFT") && !keyPresses.get("FIRSTSPACE"))) {
+        if ((keyPresses.get("LEFT") && !keyPresses.get("SPACE"))) {
             wizard.move(-1, 0);
         }
-        if ((keyPresses.get("UP") && !keyPresses.get("FIRSTSPACE"))) {
+        if ((keyPresses.get("UP") && !keyPresses.get("SPACE"))) {
             wizard.move(0, -1);
         }
-        if ((keyPresses.get("DOWN") && !keyPresses.get("FIRSTSPACE"))) {
+        if ((keyPresses.get("DOWN") && !keyPresses.get("SPACE"))) {
             wizard.move(0, 1);
         }
     }
@@ -132,7 +133,7 @@ public class Game {
     private void isDialogue() {
 
         //If its the first time space is pressed, set the text
-        if((keyPresses.get("FIRSTSPACE"))){
+        if((keyPresses.get("SPACE"))){
             interaction.draw(window, null);
         }
     }
@@ -171,7 +172,7 @@ public class Game {
                 keyPresses.put("DOWN", pressed);
                 break;
             case SPACE:
-                keyPresses.put("FIRSTSPACE", pressed);
+                keyPresses.put("SPACE", pressed);
                 break;
             default:
                 break;
