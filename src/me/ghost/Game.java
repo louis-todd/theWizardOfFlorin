@@ -112,7 +112,7 @@ public class Game {
                     break;
                 case MOUSE_BUTTON_PRESSED:
                     //if still tiles left to show, step through them
-                    if(charsCurrentIndex<charsMaxPages){
+                    if(charsCurrentIndex<charsMaxPages && keyPresses.get("SPACE")){
                         interaction.setTextContent(String.valueOf(testSpriteText[charsCurrentIndex]));
                         charsCurrentIndex++;
                     }
