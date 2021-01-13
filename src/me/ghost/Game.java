@@ -22,6 +22,7 @@ public class Game {
     private Dialogue interaction;
     private ArrayList<Drawable> toDraw;
     private Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
+    private String textForTesting = "Content Placeholder";
 
     /**
      * Constructor for the game class
@@ -85,9 +86,12 @@ public class Game {
                             handleKeyPress(keyEvent, true);
                         }
                         if(keyEvent.key == Keyboard.Key.SPACE){
+                            textForTesting = "Content Placeholder";
                             handleKeyPress(keyEvent, !(keyPresses.get("FIRSTSPACE")));
                         }
                     break;
+                case MOUSE_BUTTON_PRESSED:
+                    textForTesting = "clicking has changed this text";
                 default:
                     break;
             }
@@ -117,7 +121,7 @@ public class Game {
 
         //If its the first time space is pressed, set the text
         if((keyPresses.get("FIRSTSPACE"))){
-            interaction = new Dialogue("resources/Roboto-Regular.ttf", "resources/DialogueBoard.png", "Name Placeholder", "Content Placeholder");
+            interaction = new Dialogue("resources/Roboto-Regular.ttf", "resources/DialogueBoard.png", "Name Placeholder", textForTesting);
             interaction.draw(window, null);
         }
     }
