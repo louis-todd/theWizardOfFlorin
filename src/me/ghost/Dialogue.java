@@ -75,6 +75,14 @@ public class Dialogue implements Drawable {
         toDraw.add(textBackground);
     }
 
+    public void setTextContent(String contentToWrite){
+        toWrite.setString(contentToWrite);
+    }
+
+    public void setCharacterName(String nameToWrite){
+        characterName.setString(nameToWrite);
+    }
+
 
     @Override
     public void draw(RenderTarget renderTarget, RenderStates renderStates) {
