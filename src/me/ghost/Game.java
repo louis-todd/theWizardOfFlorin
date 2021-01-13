@@ -12,6 +12,7 @@ import org.jsfml.window.event.Event;
 import org.jsfml.window.event.KeyEvent;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.text.CharacterIterator;
 
 public class Game {
 
@@ -89,9 +90,24 @@ public class Game {
                             handleKeyPress(keyEvent, true);
                         }
                         if(keyEvent.key == Keyboard.Key.SPACE){
-                            interaction.setTextContent(testSpriteText[0]);
-                            handleKeyPress(keyEvent, !(keyPresses.get("SPACE")));
-                            charsCurrentIndex=1;
+                            //If space has already been pressed
+                            if(keyPresses.get("SPACE")){
+                                //if still tiles to step through do
+                                if(charsCurrentIndex<charsMaxPages){
+                                    interaction.setTextContent(String.valueOf(testSpriteText[charsCurrentIndex]));
+                                    charsCurrentIndex++;
+                                }
+                                //if at tile limit, close
+                                else{
+                                    keyPresses.put("SPACE", false);
+                                    charsCurrentIndex=1;
+                                }
+                            }
+                            //if first space, set to display first tile
+                            else{
+                                interaction.setTextContent(testSpriteText[0]);
+                                handleKeyPress(keyEvent, true);
+                            }
                         }
                     break;
                 case MOUSE_BUTTON_PRESSED:
