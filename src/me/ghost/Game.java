@@ -19,7 +19,6 @@ public class Game {
 
     private Character wizard;
     private Character npc;
-    private boolean somethingPressed = false;
     private Dialogue interaction;
     private ArrayList<Drawable> toDraw;
     private Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
@@ -29,7 +28,6 @@ public class Game {
      */
     public Game() {
         this.initKeyPressesMap();
-
 
         //Create the window and set window name to: 'Welcome Wizards'
         window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");
@@ -83,32 +81,12 @@ public class Game {
                     break;
                 case KEY_PRESSED:
                     KeyEvent keyEvent = event.asKeyEvent();
-                    //disable key presses if in space-prompted dialogue
-                    if(!keyPresses.get("FIRSTSPACE")){
-
-                        //manage arrow key presses
                         if ((keyEvent.key == Keyboard.Key.RIGHT || keyEvent.key == Keyboard.Key.LEFT || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN)) {
                             handleKeyPress(keyEvent, true);
                         }
-
-                        //manage first space press
-                        if(keyEvent.key == Keyboard.Key.SPACE){
-                            // Check if anything else is being pressed. and if so release it
-                            // for (Map.Entry<String, Boolean> entry : keyPresses.entrySet()) {
-                            //     if(entry.getValue() && entry.getKey()!="SPACE"){
-                            //         keyPresses.put(entry.getKey(), false);
-                            //     }
-                            // }
-                            //register that space has been pressed
-                            handleKeyPress(keyEvent, !(keyPresses.get("FIRSTSPACE")));
-                        }
-                    }
-                    //if its the second space
-                    else{
                         if(keyEvent.key == Keyboard.Key.SPACE){
                             handleKeyPress(keyEvent, !(keyPresses.get("FIRSTSPACE")));
                         }
-                    }
                     break;
                 default:
                     break;
