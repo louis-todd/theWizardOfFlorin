@@ -128,19 +128,26 @@ public class Game {
                 wizard.move(0, 1);
             }
         } else {
-           assert npcCollide != null;
-            if(npcCollide.getPosition().x> wizard.getPosition().x){
-                wizard.move(-0.1f, 0);
+            assert npcCollide != null;
+            float xDifference = wizard.collisionRectangle(npcCollide).width;
+            float yDifference = wizard.collisionRectangle(npcCollide).height;
+
+            if (Math.abs(npcCollide.getPosition().y - wizard.getPosition().y) < 15) {
+                if (npcCollide.getPosition().x > wizard.getPosition().x) {
+                    wizard.move(-(xDifference), 0);
+                }
+                if (npcCollide.getPosition().x < wizard.getPosition().x) {
+                    wizard.move(xDifference, 0);
+                }
+            } else {
+                if (npcCollide.getPosition().y > wizard.getPosition().y) {
+                    wizard.move(0, -yDifference);
+                }
+                if (npcCollide.getPosition().y < wizard.getPosition().y) {
+                    wizard.move(0, yDifference);
+                }
             }
-            if (npcCollide.getPosition().x < wizard.getPosition().x) {
-                wizard.move(0.1f, 0);
-            }
-             if (npcCollide.getPosition().y > wizard.getPosition().y) {
-                 wizard.move(0, -0.1f);
-             }
-             if (npcCollide.getPosition().y < wizard.getPosition().y) {
-                wizard.move(0, 0.1f);
-            }
+
             wizardColliding = false;
         }
     }

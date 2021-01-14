@@ -1,6 +1,6 @@
 package me.ghost.Characters;
 
-import me.ghost.Characters.Character;
+import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
 
 public class MoveableCharacter extends Character {
@@ -17,5 +17,9 @@ public class MoveableCharacter extends Character {
 
     public boolean collides(Sprite npc) {
         return this.getGlobalBounds().intersection(npc.getGlobalBounds()) != null;
+    }
+
+    public FloatRect collisionRectangle(Sprite npc){
+        return this.getGlobalBounds().intersection((npc.getGlobalBounds()));
     }
 }

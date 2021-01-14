@@ -26,10 +26,6 @@ public abstract class Character extends Sprite {
 
     }
 
-
     public abstract void move();
-
-
-
 
 }
