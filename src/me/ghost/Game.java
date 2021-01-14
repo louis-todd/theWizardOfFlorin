@@ -17,7 +17,6 @@ public class Game {
 
     private final RenderWindow window;
     private final MoveableCharacter wizard = new MoveableCharacter(320, 240, "resources/square-16.png");
-    private final Npc npc = new Npc(250, 300, "resources/square-16.png");
     private final List<Drawable> toDraw;
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
 
@@ -32,6 +31,7 @@ public class Game {
         toDraw = new ArrayList<>();
 
         toDraw.add(wizard);
+        Npc npc = new Npc(250, 300, "resources/square-16.png");
         toDraw.add(npc);
         //Limit the framerate
         window.setFramerateLimit(120);

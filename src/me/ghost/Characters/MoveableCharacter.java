@@ -10,6 +10,7 @@ import java.util.Map;
 public class MoveableCharacter extends Character {
 
     private boolean wizardColliding;
+    private boolean dialogueCollide;
 
     public MoveableCharacter(float xPosition, float yPosition, String imagePath) {
         super(xPosition, yPosition, imagePath);
@@ -17,12 +18,18 @@ public class MoveableCharacter extends Character {
     }
 
     public void moveCharacter(Map<String, Boolean> keyPresses, List<Drawable> toDraw) {
-        Sprite npcCollide = null;
+        Npc npcCollide = null;
 
         for (Drawable npcs : toDraw) {
-            if (this.collides((Sprite) npcs) && (!npcs.equals(this))) {
-                wizardColliding = true;
-                npcCollide = (Sprite)npcs;
+            if (npcs instanceof Npc) {
+                if (this.collides((Npc) npcs)) {
+                    wizardColliding = true;
+                    npcCollide = (Npc) npcs;
+                }
+
+                if (this.dialogueArea((Npc) npcs)) {
+                    System.out.println("Colliding with dialogue");
+                }
             }
         }
         if (!wizardColliding) {
@@ -63,11 +70,15 @@ public class MoveableCharacter extends Character {
         }
     }
 
-    public boolean collides(Sprite npc) {
+    public boolean collides(Npc npc) {
         return this.getGlobalBounds().intersection(npc.getGlobalBounds()) != null;
     }
 
-    public FloatRect collisionRectangle(Sprite npc){
+    public FloatRect collisionRectangle(Npc npc){
         return this.getGlobalBounds().intersection((npc.getGlobalBounds()));
+    }
+
+    public boolean dialogueArea(Npc npc){
+        return this.getGlobalBounds().intersection(npc.dialogueArea()) != null;
     }
 }
