@@ -2,7 +2,6 @@ package me.ghost.Characters;
 
 import org.jsfml.graphics.Drawable;
 import org.jsfml.graphics.FloatRect;
-import org.jsfml.graphics.Sprite;
 
 import java.util.List;
 import java.util.Map;
@@ -27,7 +26,7 @@ public class MoveableCharacter extends Character {
                     npcCollide = (Npc) npcs;
                 }
 
-                if (this.dialogueArea((Npc) npcs)) {
+                if (this.dialogueAreaCollide((Npc) npcs)) {
                     System.out.println("Colliding with dialogue");
                 }
             }
@@ -70,15 +69,15 @@ public class MoveableCharacter extends Character {
         }
     }
 
-    public boolean collides(Npc npc) {
+    private boolean collides(Npc npc) {
         return this.getGlobalBounds().intersection(npc.getGlobalBounds()) != null;
     }
 
-    public FloatRect collisionRectangle(Npc npc){
+    private FloatRect collisionRectangle(Npc npc){
         return this.getGlobalBounds().intersection((npc.getGlobalBounds()));
     }
 
-    public boolean dialogueArea(Npc npc){
+    public boolean dialogueAreaCollide(Npc npc){
         return this.getGlobalBounds().intersection(npc.dialogueArea()) != null;
     }
 }
