@@ -20,7 +20,6 @@ public class Game {
     private final Npc npc = new Npc(250, 300, "resources/square-16.png");
     private final List<Drawable> toDraw;
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
-    private boolean wizardColliding = false;
 
     /**
      * Constructor for the game class
@@ -52,7 +51,7 @@ public class Game {
     public void run() {
         while (window.isOpen()) {
             handleEvents();
-            moveWizard(wizard);
+            wizard.moveCharacter(keyPresses, toDraw);
             updateWindow();
         }
     }
@@ -101,56 +100,6 @@ public class Game {
         }
     }
 
-    /**
-     * Moves the wizard if the direction flags are true
-     * @param wizard wizard sprite
-     */
-    private void moveWizard(MoveableCharacter wizard) {
-        Sprite npcCollide = null;
-
-        for (Drawable npcs : toDraw) {
-            if (wizard.collides((Sprite) npcs) && (!npcs.equals(wizard))) {
-                wizardColliding = true;
-                npcCollide = npc;
-            }
-        }
-        if (!wizardColliding) {
-            if ((keyPresses.get("RIGHT"))) {
-                wizard.move(1, 0);
-            }
-            if ((keyPresses.get("LEFT"))) {
-                wizard.move(-1, 0);
-            }
-            if ((keyPresses.get("UP"))) {
-                wizard.move(0, -1);
-            }
-            if ((keyPresses.get("DOWN"))) {
-                wizard.move(0, 1);
-            }
-        } else {
-            assert npcCollide != null;
-            float xDifference = wizard.collisionRectangle(npcCollide).width;
-            float yDifference = wizard.collisionRectangle(npcCollide).height;
-
-            if (Math.abs(npcCollide.getPosition().y - wizard.getPosition().y) < 15) {
-                if (npcCollide.getPosition().x > wizard.getPosition().x) {
-                    wizard.move(-(xDifference), 0);
-                }
-                if (npcCollide.getPosition().x < wizard.getPosition().x) {
-                    wizard.move(xDifference, 0);
-                }
-            } else {
-                if (npcCollide.getPosition().y > wizard.getPosition().y) {
-                    wizard.move(0, -yDifference);
-                }
-                if (npcCollide.getPosition().y < wizard.getPosition().y) {
-                    wizard.move(0, yDifference);
-                }
-            }
-
-            wizardColliding = false;
-        }
-    }
 
     private void isDialogue() {
         //If its the first time space is pressed, set the text
