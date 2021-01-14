@@ -14,6 +14,6 @@ public class Npc extends Character {
         float newTop = this.getGlobalBounds().top - (this.getGlobalBounds().height) / 2;
         float newHeight = this.getGlobalBounds().height * 2;
         float newWidth = this.getGlobalBounds().width * 2;
-        return dialogue = new FloatRect(newLeft, newTop, newWidth, newHeight);
+        return new FloatRect(newLeft, newTop, newWidth, newHeight);
     }
 }

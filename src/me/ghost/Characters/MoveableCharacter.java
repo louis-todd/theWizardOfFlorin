@@ -9,7 +9,6 @@ import java.util.Map;
 public class MoveableCharacter extends Character {
 
     private boolean wizardColliding;
-    private boolean dialogueCollide;
 
     public MoveableCharacter(float xPosition, float yPosition, String imagePath) {
         super(xPosition, yPosition, imagePath);
