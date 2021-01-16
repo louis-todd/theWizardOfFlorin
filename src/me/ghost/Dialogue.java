@@ -22,8 +22,7 @@ public class Dialogue implements Drawable {
 
     private ArrayList<Drawable> toDraw;
 
-    public Dialogue(String fontPath, Texture setBoardTexture, String textspeakingCharacter, String dialogueMessage) {
-        resource = fontPath;
+    public Dialogue(Font font, Texture setBoardTexture, String textspeakingCharacter, String dialogueMessage) {
         simpleFont = new Font();                                    //Set the font
         speakingCharacter = textspeakingCharacter;
         dialogueText = dialogueMessage;
@@ -32,11 +31,10 @@ public class Dialogue implements Drawable {
         toDraw = new ArrayList<Drawable>();
 
         boardTexture = setBoardTexture;
-        this.setFont(fontPath);
+        this.setFont(font);
         formatText();
         writeText();
     }
-
 
 
     public void writeText() {
@@ -55,12 +53,8 @@ public class Dialogue implements Drawable {
 
     }
 
-    private void setFont(String font){
-        try {
-            this.simpleFont.loadFromStream(Game.class.getClassLoader().getResourceAsStream(font));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void setFont(Font font){
+       simpleFont = font;
     }
 
     public void formatText(){

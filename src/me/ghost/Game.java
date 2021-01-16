@@ -6,6 +6,8 @@ import java.util.Map;
 
 import me.ghost.Characters.MoveableCharacter;
 import me.ghost.Characters.Npc;
+import me.ghost.ResourceEnum.FontType;
+import me.ghost.ResourceEnum.TextureType;
 import org.jsfml.graphics.*;
 
 import org.jsfml.window.Keyboard;
@@ -105,7 +107,7 @@ public class Game {
     private void isDialogue() {
         //If its the first time space is pressed, set the text
         if((keyPresses.get("FIRSTSPACE"))){
-            Dialogue interaction = new Dialogue("Roboto-Regular.ttf", TextureType.BOARD.getTexture(), "Name Placeholder", "Content Placeholder");
+            Dialogue interaction = new Dialogue(FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "Name Placeholder", "Content Placeholder");
             interaction.draw(window, null);
         }
     }
