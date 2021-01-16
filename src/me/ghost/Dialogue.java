@@ -32,6 +32,7 @@ public class Dialogue implements Drawable {
         toDraw = new ArrayList<Drawable>();
 
         boardTexture = setBoardTexture;
+        this.setFont("Roboto-Regular.ttf");
         formatText();
         writeText();
     }
@@ -39,9 +40,6 @@ public class Dialogue implements Drawable {
 
 
     public void writeText(){
-
-            //Set the font to the downloaded file
-            setFont("Roboto-Regular.ttf");
 
             //Set characterName, size, and position
             characterName = new Text(speakingCharacter, simpleFont, 20){{
