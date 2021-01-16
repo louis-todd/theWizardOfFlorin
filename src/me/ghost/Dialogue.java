@@ -25,7 +25,7 @@ public class Dialogue implements Drawable {
         toDraw = new ArrayList<>();
 
         boardTexture = setBoardTexture;
-        this.setFont(font);
+        simpleFont = font;
         formatText();
         writeText();
     }
@@ -45,10 +45,6 @@ public class Dialogue implements Drawable {
         }};
         toDraw.add(toWrite);
 
-    }
-
-    private void setFont(Font font){
-       simpleFont = font;
     }
 
     public void formatText(){
