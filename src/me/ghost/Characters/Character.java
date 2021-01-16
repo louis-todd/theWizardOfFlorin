@@ -8,9 +8,6 @@ import java.nio.file.Paths;
 
 public abstract class Character extends Sprite {
 
-    private Texture spriteTexture;
-
-
     public Character(float xPosition, float yPosition, Texture characterTexture) {
 
         this.setTexture(characterTexture);

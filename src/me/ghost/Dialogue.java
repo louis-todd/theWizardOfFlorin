@@ -39,19 +39,19 @@ public class Dialogue implements Drawable {
 
 
 
-    public void writeText(){
+    public void writeText() {
 
-            //Set characterName, size, and position
-            characterName = new Text(speakingCharacter, simpleFont, 20){{
-                this.setPosition(120, 320);
-            }};
-            toDraw.add(characterName);
+        //Set characterName, size, and position
+        characterName = new Text(speakingCharacter, simpleFont, 20) {{
+            this.setPosition(120, 320);
+        }};
+        toDraw.add(characterName);
 
-            //Set Message
-            toWrite = new Text(dialogueText, simpleFont, 20){{
-                this.setPosition(60, 370);
-            }};
-            toDraw.add(toWrite);
+        //Set Message
+        toWrite = new Text(dialogueText, simpleFont, 20) {{
+            this.setPosition(60, 370);
+        }};
+        toDraw.add(toWrite);
 
     }
 

@@ -10,7 +10,6 @@ public class Npc extends Character {
     }
 
     public FloatRect dialogueArea(){
-       FloatRect dialogue;
         float newLeft = this.getGlobalBounds().left - (this.getGlobalBounds().width) / 2;
         float newTop = this.getGlobalBounds().top - (this.getGlobalBounds().height) / 2;
         float newHeight = this.getGlobalBounds().height * 2;
