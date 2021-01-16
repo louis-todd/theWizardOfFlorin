@@ -1,28 +1,25 @@
 package me.ghost;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import me.ghost.Characters.MoveableCharacter;
+import me.ghost.Characters.Npc;
 import org.jsfml.graphics.*;
-import org.jsfml.system.Vector2f;
+
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.KeyEvent;
-import java.io.IOException;
-import java.nio.file.Paths;
+
 
 public class Game {
 
     private final RenderWindow window;
-
-    private Character wizard;
-    private Character npc;
-    private boolean somethingPressed = false;
-    private Dialogue interaction;
-    private ArrayList<Drawable> toDraw;
-    private Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
+    private final MoveableCharacter wizard = new MoveableCharacter(320, 240, "resources/square-16.png");
+    private final List<Drawable> toDraw;
+    private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
 
     /**
      * Constructor for the game class
@@ -30,20 +27,15 @@ public class Game {
     public Game() {
         this.initKeyPressesMap();
 
-
         //Create the window and set window name to: 'Welcome Wizards'
         window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");
-        toDraw = new ArrayList<Drawable>();
+        toDraw = new ArrayList<>();
 
-        wizard = new Character(320, 240, 0.05f, "resources/smileyface.png");
         toDraw.add(wizard);
-
-        npc = new Character(250, 300, 0.05f, "resources/smileyface.png");
+        Npc npc = new Npc(250, 300, "resources/square-16.png");
         toDraw.add(npc);
-
         //Limit the framerate
         window.setFramerateLimit(120);
-
     }
 
     private void initKeyPressesMap() {
@@ -60,7 +52,7 @@ public class Game {
     public void run() {
         while (window.isOpen()) {
             handleEvents();
-            moveWizard(wizard);
+            wizard.moveCharacter(keyPresses, toDraw);
             updateWindow();
         }
     }
@@ -89,11 +81,12 @@ public class Game {
 
                     //Special case for when space is pressed
                     if (keyEvent.key == Keyboard.Key.SPACE) {
-                        somethingPressed=false;
+                        boolean somethingPressed = false;
                         //Check if anything else is being pressed
                         for (Map.Entry<String, Boolean> entry : keyPresses.entrySet()) {
-                            if(entry.getValue() && entry.getKey()!="SPACE"){
-                                somethingPressed=true;
+                            if (entry.getValue() && !entry.getKey().equals("SPACE")) {
+                                somethingPressed = true;
+                                break;
                             }
                         }
                         //only if something else isn't being pressed, handle space
@@ -108,30 +101,11 @@ public class Game {
         }
     }
 
-    /**
-     * Moves the wizard if the direction flags are true
-     * @param wizard wizard sprite
-     */
-    private void moveWizard(Sprite wizard) {
-        if ((keyPresses.get("RIGHT"))) {
-            wizard.move(1, 0);
-        }
-        if ((keyPresses.get("LEFT"))) {
-            wizard.move(-1, 0);
-        }
-        if ((keyPresses.get("UP"))) {
-            wizard.move(0, -1);
-        }
-        if ((keyPresses.get("DOWN"))) {
-            wizard.move(0, 1);
-        }
-    }
 
     private void isDialogue() {
-
         //If its the first time space is pressed, set the text
         if((keyPresses.get("FIRSTSPACE"))){
-            interaction = new Dialogue("resources/Roboto-Regular.ttf", "resources/DialogueBoard.png", "Name Placeholder", "Content Placeholder");
+            Dialogue interaction = new Dialogue("resources/Roboto-Regular.ttf", "resources/DialogueBoard.png", "Name Placeholder", "Content Placeholder");
             interaction.draw(window, null);
         }
     }
