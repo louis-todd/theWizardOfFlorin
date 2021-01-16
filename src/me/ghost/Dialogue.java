@@ -22,7 +22,7 @@ public class Dialogue implements Drawable {
         dialogueText = dialogueMessage;
         boardTexture = new Texture();                               //Set image for dialogue box background
 
-        toDraw = new ArrayList<Drawable>();
+        toDraw = new ArrayList<>();
 
         boardTexture = setBoardTexture;
         this.setFont(font);
