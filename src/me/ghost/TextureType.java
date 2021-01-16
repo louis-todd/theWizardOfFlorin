@@ -1,8 +1,6 @@
 import me.ghost.Game;
 import org.jsfml.graphics.Texture;
 
-import java.nio.file.Paths;
-
 public enum TextureType {
     SQUARE16("resources/square-16.png")
 
