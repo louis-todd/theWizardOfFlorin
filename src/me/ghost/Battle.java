@@ -7,7 +7,7 @@ import java.util.Map;
 import org.jsfml.graphics.*;
 import org.jsfml.window.VideoMode;
 
-
+/*
 public class Battle {
     Texture texture = new Texture();
 
@@ -44,3 +44,4 @@ public class Battle {
 
 
 }
+*/
