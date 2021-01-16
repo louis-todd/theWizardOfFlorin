@@ -17,7 +17,7 @@ import org.jsfml.window.event.KeyEvent;
 public class Game {
 
     private final RenderWindow window;
-    private final MoveableCharacter wizard = new MoveableCharacter(320, 240, "resources/square-16.png");
+    private final MoveableCharacter wizard = new MoveableCharacter(320, 240, TextureType.SQUARE16.getTexture());
     private final List<Drawable> toDraw;
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
 
@@ -32,7 +32,7 @@ public class Game {
         toDraw = new ArrayList<>();
 
         toDraw.add(wizard);
-        Npc npc = new Npc(250, 300, "resources/square-16.png");
+        Npc npc = new Npc(250, 300, TextureType.SQUARE16.getTexture());
         toDraw.add(npc);
         //Limit the framerate
         window.setFramerateLimit(120);
@@ -105,7 +105,7 @@ public class Game {
     private void isDialogue() {
         //If its the first time space is pressed, set the text
         if((keyPresses.get("FIRSTSPACE"))){
-            Dialogue interaction = new Dialogue("resources/Roboto-Regular.ttf", "resources/DialogueBoard.png", "Name Placeholder", "Content Placeholder");
+            Dialogue interaction = new Dialogue("resources/Roboto-Regular.ttf", TextureType.BOARD.getTexture(), "Name Placeholder", "Content Placeholder");
             interaction.draw(window, null);
         }
     }

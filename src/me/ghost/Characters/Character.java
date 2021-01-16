@@ -11,17 +11,9 @@ public abstract class Character extends Sprite {
     private Texture spriteTexture;
 
 
-    public Character(float xPosition, float yPosition, String imagePath) {
+    public Character(float xPosition, float yPosition, Texture characterTexture) {
 
-        //Set picture for the sprite
-        Texture spriteTexture = new Texture();
-        try {
-            spriteTexture.loadFromFile(Paths.get(imagePath));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
-        this.setTexture(spriteTexture);
+        this.setTexture(characterTexture);
         this.setPosition(xPosition, yPosition);
 
     }

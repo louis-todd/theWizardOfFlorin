@@ -2,6 +2,7 @@ package me.ghost.Characters;
 
 import org.jsfml.graphics.Drawable;
 import org.jsfml.graphics.FloatRect;
+import org.jsfml.graphics.Texture;
 
 import java.util.List;
 import java.util.Map;
@@ -10,8 +11,8 @@ public class MoveableCharacter extends Character {
 
     private boolean wizardColliding;
 
-    public MoveableCharacter(float xPosition, float yPosition, String imagePath) {
-        super(xPosition, yPosition, imagePath);
+    public MoveableCharacter(float xPosition, float yPosition, Texture characterTexture) {
+        super(xPosition, yPosition, characterTexture);
         wizardColliding = false;
     }
 

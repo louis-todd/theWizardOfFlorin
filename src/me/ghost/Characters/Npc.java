@@ -1,11 +1,12 @@
 package me.ghost.Characters;
 
 import org.jsfml.graphics.FloatRect;
+import org.jsfml.graphics.Texture;
 
 
 public class Npc extends Character {
-    public Npc(float xPosition, float yPosition, String imagePath) {
-        super(xPosition, yPosition, imagePath);
+    public Npc(float xPosition, float yPosition, Texture npcTexture) {
+        super(xPosition, yPosition, npcTexture);
     }
 
     public FloatRect dialogueArea(){

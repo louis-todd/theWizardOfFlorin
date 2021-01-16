@@ -1,8 +1,11 @@
+package me.ghost;
+
 import me.ghost.Game;
 import org.jsfml.graphics.Texture;
 
 public enum TextureType {
-    SQUARE16("resources/square-16.png")
+    SQUARE16("square-16.png"),
+    BOARD("DialogueBoard.png")
 
     ;
 

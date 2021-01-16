@@ -22,7 +22,7 @@ public class Dialogue implements Drawable {
 
     private ArrayList<Drawable> toDraw;
 
-    public Dialogue(String fontPath, String boardTexturePath, String textspeakingCharacter, String dialogueMessage) {
+    public Dialogue(String fontPath, Texture setBoardTexture, String textspeakingCharacter, String dialogueMessage) {
         resource = fontPath;
         simpleFont = new Font();                                    //Set the font
         speakingCharacter = textspeakingCharacter;
@@ -31,23 +31,17 @@ public class Dialogue implements Drawable {
 
         toDraw = new ArrayList<Drawable>();
 
-        try {
-            boardTexture.loadFromFile(Paths.get(boardTexturePath));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        boardTexture = setBoardTexture;
         formatText();
         writeText();
     }
 
+
+
     public void writeText(){
 
             //Set the font to the downloaded file
-            try {
-                simpleFont.loadFromFile(Paths.get(resource));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            setFont("Roboto-Regular.ttf");
 
             //Set characterName, size, and position
             characterName = new Text(speakingCharacter, simpleFont, 20){{
@@ -61,6 +55,14 @@ public class Dialogue implements Drawable {
             }};
             toDraw.add(toWrite);
 
+    }
+
+    private void setFont(String font){
+        try {
+            this.simpleFont.loadFromStream(Game.class.getClassLoader().getResourceAsStream(font));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void formatText(){
