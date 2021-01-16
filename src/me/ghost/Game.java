@@ -105,7 +105,7 @@ public class Game {
     private void isDialogue() {
         //If its the first time space is pressed, set the text
         if((keyPresses.get("FIRSTSPACE"))){
-            Dialogue interaction = new Dialogue("resources/Roboto-Regular.ttf", TextureType.BOARD.getTexture(), "Name Placeholder", "Content Placeholder");
+            Dialogue interaction = new Dialogue("Roboto-Regular.ttf", TextureType.BOARD.getTexture(), "Name Placeholder", "Content Placeholder");
             interaction.draw(window, null);
         }
     }
@@ -116,10 +116,12 @@ public class Game {
     private void updateWindow(){
         window.clear(Color.RED);
 
+
         for(Drawable item : toDraw){
             window.draw(item);
         }
         isDialogue();
+
         window.display();
     }
 

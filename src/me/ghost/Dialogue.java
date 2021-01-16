@@ -32,7 +32,7 @@ public class Dialogue implements Drawable {
         toDraw = new ArrayList<Drawable>();
 
         boardTexture = setBoardTexture;
-        this.setFont("Roboto-Regular.ttf");
+        this.setFont(fontPath);
         formatText();
         writeText();
     }
