@@ -22,7 +22,6 @@ public class Game {
     private final MoveableCharacter wizard = new MoveableCharacter(320, 240, TextureType.SQUARE16.getTexture());
     private final List<Drawable> toDraw;
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
-
     private String[] testSpriteText = {"Page 1", "Page 2", "Page 3"};
     private int charsCurrentIndex = 1;
 
@@ -39,6 +38,7 @@ public class Game {
         toDraw.add(wizard);
         Npc npc = new Npc(250, 300, TextureType.SQUARE16.getTexture());
         toDraw.add(npc);
+
         //Limit the framerate
         window.setFramerateLimit(120);
     }
@@ -49,6 +49,7 @@ public class Game {
         this.keyPresses.put("UP", false);
         this.keyPresses.put("DOWN", false);
         this.keyPresses.put("SPACE", false);
+        this.keyPresses.put("B", false);
     }
 
     /**
@@ -62,11 +63,6 @@ public class Game {
         }
     }
 
-
-
-
-
-    
     /**
      * Handles the input events
      */
@@ -108,6 +104,26 @@ public class Game {
                                 handleKeyPress(keyEvent, true);
                             }
                         }
+                        if(keyEvent.key == Keyboard.Key.B){
+                            //If space has already been pressed
+                            if(keyPresses.get("B")){
+                                //if still tiles to step through do
+                                if(charsCurrentIndex<testSpriteText.length){
+                                    interaction.setTextContent(String.valueOf(testSpriteText[charsCurrentIndex]));
+                                    charsCurrentIndex++;
+                                }
+                                //if at tile limit, close
+                                else{
+                                    keyPresses.put("B", false);
+                                    charsCurrentIndex=1;
+                                }
+                            }
+                            //if first space, set to display first tile
+                            else{
+                                interaction.setTextContent(testSpriteText[0]);
+                                handleKeyPress(keyEvent, true);
+                            }
+                        }
                     break;
                 case MOUSE_BUTTON_PRESSED:
                     //if still tiles left to show, step through them
@@ -130,6 +146,9 @@ public class Game {
     private void isDialogue() {
         //If its the first time space is pressed, set the text
         if((keyPresses.get("SPACE"))){
+            interaction.draw(window, null);
+        }
+        if((keyPresses.get("B"))){
             interaction.draw(window, null);
         }
     }
@@ -171,6 +190,9 @@ public class Game {
                 break;
             case SPACE:
                 keyPresses.put("SPACE", pressed);
+                break;
+            case B:
+                keyPresses.put("B", pressed);
                 break;
             default:
                 break;
