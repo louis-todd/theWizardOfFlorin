@@ -32,16 +32,16 @@ public class MoveableCharacter extends Character {
             }
         }
         if (!wizardColliding) {
-            if ((keyPresses.get("RIGHT"))) {
+            if ((keyPresses.get("RIGHT") && !keyPresses.get("SPACE"))) {
                 this.move(1, 0);
             }
-            if ((keyPresses.get("LEFT"))) {
+            if ((keyPresses.get("LEFT") && !keyPresses.get("SPACE"))) {
                 this.move(-1, 0);
             }
-            if ((keyPresses.get("UP"))) {
+            if ((keyPresses.get("UP") && !keyPresses.get("SPACE"))) {
                 this.move(0, -1);
             }
-            if ((keyPresses.get("DOWN"))) {
+            if ((keyPresses.get("DOWN") && !keyPresses.get("SPACE"))) {
                 this.move(0, 1);
             }
         } else {
