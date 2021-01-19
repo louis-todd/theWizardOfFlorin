@@ -25,6 +25,7 @@ public class Game {
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
     private String[] testSpriteText = {"Page 1", "Page 2", "Page 3"};
     private int charsCurrentIndex = 1;
+    private Npc npc = new Npc(250, 300, TextureType.SQUARE16.getTexture());
 
     /**
      * Constructor for the game class
@@ -37,7 +38,6 @@ public class Game {
         toDraw = new ArrayList<>();
 
         toDraw.add(wizard);
-        Npc npc = new Npc(250, 300, TextureType.SQUARE16.getTexture());
         toDraw.add(npc);
 
         //Limit the framerate
@@ -85,7 +85,7 @@ public class Game {
                         if ((keyEvent.key == Keyboard.Key.RIGHT || keyEvent.key == Keyboard.Key.LEFT || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN)) {
                             handleKeyPress(keyEvent, true);
                         }
-                        if(keyEvent.key == Keyboard.Key.SPACE){
+                        if(keyEvent.key == Keyboard.Key.SPACE && wizard.dialogueAreaCollide(npc)){
                             //If space has already been pressed
                             if(keyPresses.get("SPACE")){
                                 //if still tiles to step through do
