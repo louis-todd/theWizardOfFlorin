@@ -19,6 +19,7 @@ public class Game {
 
     private final RenderWindow window;
     private Dialogue interaction = new Dialogue(FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "Name Placeholder", "Content Placeholder");
+    private BattleWindow battleWindow = new BattleWindow();
     private final MoveableCharacter wizard = new MoveableCharacter(320, 240, TextureType.SQUARE16.getTexture());
     private final List<Drawable> toDraw;
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
@@ -104,26 +105,19 @@ public class Game {
                                 handleKeyPress(keyEvent, true);
                             }
                         }
+                        //CODE FOR OPENING BATTLE WINDOW
                         if(keyEvent.key == Keyboard.Key.B){
                             //If space has already been pressed
                             if(keyPresses.get("B")){
                                 //if still tiles to step through do
-                                if(charsCurrentIndex<testSpriteText.length){
-                                    interaction.setTextContent(String.valueOf(testSpriteText[charsCurrentIndex]));
-                                    charsCurrentIndex++;
-                                }
-                                //if at tile limit, close
-                                else{
-                                    keyPresses.put("B", false);
-                                    charsCurrentIndex=1;
-                                }
+                                keyPresses.put("B", false);
                             }
                             //if first space, set to display first tile
                             else{
-                                interaction.setTextContent(testSpriteText[0]);
                                 handleKeyPress(keyEvent, true);
                             }
                         }
+                        //CODE END FOR OPENING BATTLE WINDOW
                     break;
                 case MOUSE_BUTTON_PRESSED:
                     //if still tiles left to show, step through them
@@ -149,7 +143,7 @@ public class Game {
             interaction.draw(window, null);
         }
         if((keyPresses.get("B"))){
-            interaction.draw(window, null);
+            battleWindow.draw(window, null);
         }
     }
 
