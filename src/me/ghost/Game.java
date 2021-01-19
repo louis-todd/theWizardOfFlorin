@@ -1,28 +1,27 @@
 package me.ghost;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import me.ghost.Characters.MoveableCharacter;
+import me.ghost.Characters.Npc;
+import me.ghost.ResourceEnum.FontType;
+import me.ghost.ResourceEnum.TextureType;
 import org.jsfml.graphics.*;
-import org.jsfml.system.Vector2f;
+
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.KeyEvent;
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.text.CharacterIterator;
 
 public class Game {
 
     private final RenderWindow window;
-
-    private Character wizard;
-    private Character npc;
-    private Dialogue interaction = new Dialogue("resources/Roboto-Regular.ttf", "resources/DialogueBoard.png", "Name Placeholder", "Content Placeholder");
-    private ArrayList<Drawable> toDraw;
-    private Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
+    private Dialogue interaction = new Dialogue(FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "Name Placeholder", "Content Placeholder");
+    private final MoveableCharacter wizard = new MoveableCharacter(320, 240, TextureType.SQUARE16.getTexture());
+    private final List<Drawable> toDraw;
+    private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
 
     private String[] testSpriteText = {"Page 1", "Page 2", "Page 3"};
     private int charsCurrentIndex = 1;
@@ -35,17 +34,13 @@ public class Game {
 
         //Create the window and set window name to: 'Welcome Wizards'
         window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");
-        toDraw = new ArrayList<Drawable>();
+        toDraw = new ArrayList<>();
 
-        wizard = new Character(320, 240, 0.05f, "resources/smileyface.png");
         toDraw.add(wizard);
-
-        npc = new Character(250, 300, 0.05f, "resources/smileyface.png");
+        Npc npc = new Npc(250, 300, TextureType.SQUARE16.getTexture());
         toDraw.add(npc);
-
         //Limit the framerate
         window.setFramerateLimit(120);
-
     }
 
     private void initKeyPressesMap() {
@@ -62,7 +57,7 @@ public class Game {
     public void run() {
         while (window.isOpen()) {
             handleEvents();
-            moveWizard(wizard);
+            wizard.moveCharacter(keyPresses, toDraw);
             updateWindow();
         }
     }
@@ -126,27 +121,8 @@ public class Game {
         }
         }
 
-    /**
-     * Moves the wizard if the direction flags are true
-     * @param wizard wizard sprite
-     */
-    private void moveWizard(Sprite wizard) {
-        if ((keyPresses.get("RIGHT") && !keyPresses.get("SPACE"))) {
-            wizard.move(1, 0);
-        }
-        if ((keyPresses.get("LEFT") && !keyPresses.get("SPACE"))) {
-            wizard.move(-1, 0);
-        }
-        if ((keyPresses.get("UP") && !keyPresses.get("SPACE"))) {
-            wizard.move(0, -1);
-        }
-        if ((keyPresses.get("DOWN") && !keyPresses.get("SPACE"))) {
-            wizard.move(0, 1);
-        }
-    }
 
     private void isDialogue() {
-
         //If its the first time space is pressed, set the text
         if((keyPresses.get("SPACE"))){
             interaction.draw(window, null);
@@ -159,10 +135,12 @@ public class Game {
     private void updateWindow(){
         window.clear(Color.RED);
 
+
         for(Drawable item : toDraw){
             window.draw(item);
         }
         isDialogue();
+
         window.display();
     }
 
