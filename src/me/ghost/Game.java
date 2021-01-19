@@ -18,13 +18,12 @@ import org.jsfml.window.event.KeyEvent;
 public class Game {
 
     private final RenderWindow window;
-    private Dialogue interaction = new Dialogue(FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "Name Placeholder", "Content Placeholder");
+    private Dialogue interaction = new Dialogue(FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME", "Content Placeholder");
     private BattleWindow battleWindow = new BattleWindow();
-    private final MoveableCharacter wizard = new MoveableCharacter(320, 240, TextureType.SQUARE16.getTexture());
+    private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 240, TextureType.SQUARE16.getTexture());
     private final List<Drawable> toDraw;
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
-    private String[] testSpriteText = {"Page 1", "Page 2", "Page 3"};
-    private int charsCurrentIndex = 1;
+    private Npc npc = new Npc("Name Placeholder", 250, 300, TextureType.SQUARE16.getTexture());
 
     /**
      * Constructor for the game class
@@ -37,8 +36,8 @@ public class Game {
         toDraw = new ArrayList<>();
 
         toDraw.add(wizard);
-        Npc npc = new Npc(250, 300, TextureType.SQUARE16.getTexture());
         toDraw.add(npc);
+        interaction.setCharacterName(npc.getName());
 
         //Limit the framerate
         window.setFramerateLimit(120);
@@ -89,19 +88,19 @@ public class Game {
                             //If space has already been pressed
                             if(keyPresses.get("SPACE")){
                                 //if still tiles to step through do
-                                if(charsCurrentIndex<testSpriteText.length){
-                                    interaction.setTextContent(String.valueOf(testSpriteText[charsCurrentIndex]));
-                                    charsCurrentIndex++;
+                                if(npc.getCurrentIndex()<npc.getScript().length){
+                                    interaction.setTextContent(String.valueOf(npc.getScript()[npc.getCurrentIndex()]));
+                                    npc.incrementCurrentIndex();;
                                 }
                                 //if at tile limit, close
                                 else{
                                     keyPresses.put("SPACE", false);
-                                    charsCurrentIndex=1;
+                                    npc.resetScript();;
                                 }
                             }
                             //if first space, set to display first tile
                             else{
-                                interaction.setTextContent(testSpriteText[0]);
+                                interaction.setTextContent(npc.getScript()[0]);
                                 handleKeyPress(keyEvent, true);
                             }
                         }
@@ -121,14 +120,14 @@ public class Game {
                     break;
                 case MOUSE_BUTTON_PRESSED:
                     //if still tiles left to show, step through them
-                    if(charsCurrentIndex<testSpriteText.length && keyPresses.get("SPACE")){
-                        interaction.setTextContent(String.valueOf(testSpriteText[charsCurrentIndex]));
-                        charsCurrentIndex++;
+                    if(npc.getCurrentIndex()<npc.getScript().length && keyPresses.get("SPACE")){
+                        interaction.setTextContent(String.valueOf(npc.getScript()[npc.getCurrentIndex()]));
+                        npc.incrementCurrentIndex();
                     }
                     //if have read all tiles, act as if space has been clicked to close the dialogue box
-                    else if (charsCurrentIndex>=testSpriteText.length && keyPresses.get("SPACE")){
+                    else if (npc.getCurrentIndex()>=npc.getScript().length && keyPresses.get("SPACE")){
                         keyPresses.put("SPACE", !(keyPresses.get("SPACE")));
-                        charsCurrentIndex=1;
+                        npc.resetScript();;
                     }
                 default:
                     break;

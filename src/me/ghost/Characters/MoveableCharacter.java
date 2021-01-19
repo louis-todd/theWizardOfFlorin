@@ -11,8 +11,8 @@ public class MoveableCharacter extends Character {
 
     private boolean wizardColliding;
 
-    public MoveableCharacter(float xPosition, float yPosition, Texture characterTexture) {
-        super(xPosition, yPosition, characterTexture);
+    public MoveableCharacter(String characterName, float xPosition, float yPosition, Texture characterTexture) {
+        super(characterName, xPosition, yPosition, characterTexture);
         wizardColliding = false;
     }
 
