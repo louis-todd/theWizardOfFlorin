@@ -172,8 +172,23 @@ public class Game {
                     String[] data = row.split(",");
                     int imageNo = Integer.valueOf(data[0]);
                     switch (imageNo){
-                        case 0:
-                            //draw grass
+                        case -1:
+                            Texture texture2 = new Texture();
+
+                            try {
+                                //Load the image.
+                                Image image = new Image();
+                                image.loadFromFile(Paths.get("resources/tiles/tile6.png"));
+
+                                //Apply the color mask
+                                //image.createMaskFromColor(Color.BLUE);
+
+                                //Load the masked image into the texture
+                                texture2.loadFromImage(image);
+                            } catch(IOException|TextureCreationException ex) {
+                                System.err.println("Something went wrong:");
+                                ex.printStackTrace();
+                            }
                         default:
                             //draw nothing
                     }
