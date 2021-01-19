@@ -78,6 +78,6 @@ public class MoveableCharacter extends Character {
     }
 
     private boolean dialogueAreaCollide(Npc npc){
-        return this.getGlobalBounds().intersection(npc.dialogueArea()) != null;
+        return this.getGlobalBounds().intersection(npc.dialogueArea(8)) != null;
     }
 }
