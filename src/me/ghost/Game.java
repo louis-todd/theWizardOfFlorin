@@ -10,6 +10,7 @@ import me.ghost.ResourceEnum.FontType;
 import me.ghost.ResourceEnum.TextureType;
 import org.jsfml.graphics.*;
 
+import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
@@ -27,6 +28,8 @@ public class Game {
     private int charsCurrentIndex = 1;
     private Npc npc = new Npc(250, 300, TextureType.SQUARE16.getTexture());
 
+    private RectangleShape dialogueAreaTest;
+
     /**
      * Constructor for the game class
      */
@@ -36,6 +39,7 @@ public class Game {
         //Create the window and set window name to: 'Welcome Wizards'
         window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");
         toDraw = new ArrayList<>();
+
 
         toDraw.add(wizard);
         toDraw.add(npc);
