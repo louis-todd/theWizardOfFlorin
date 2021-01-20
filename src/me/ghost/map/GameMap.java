@@ -70,7 +70,6 @@ public class GameMap {
 
                     cell.add(rowNumber, rowData);
                     rowNumber++;
-                    cell.add(new ArrayList<Integer>());
                 }
             }
         } catch (IOException ex){
