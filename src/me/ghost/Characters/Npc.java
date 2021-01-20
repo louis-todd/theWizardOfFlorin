@@ -1,10 +1,8 @@
 package me.ghost.Characters;
 
-import org.jsfml.graphics.CircleShape;
 import org.jsfml.graphics.FloatRect;
-import org.jsfml.graphics.RectangleShape;
 import org.jsfml.graphics.Texture;
-import org.jsfml.system.Vector2f;
+
 
 
 public class Npc extends Character {
