@@ -24,11 +24,11 @@ public class GameMap {
             int rowNumber = 0;
             while((row = csvReader.readLine()) != null){
                 String[] data = row.split(",");
-                for(int index = 0; index < data.length; index++){
-
-                    cell.get(rowNumber).add(extractDigits(data[index]));
+                for (String dataElement : data) {
+                    cell.get(rowNumber).add(extractDigits(dataElement));
                     rowIndex++;
-                    if(rowIndex == 50) {
+
+                    if (rowIndex == 50) {
                         rowNumber++;
                         rowIndex = 0;
                         cell.add(new ArrayList<>());
