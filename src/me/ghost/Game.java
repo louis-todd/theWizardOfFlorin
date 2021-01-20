@@ -1,12 +1,14 @@
 
 package me.ghost;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import me.ghost.characters.MoveableCharacter;
 import me.ghost.characters.Npc;
+import me.ghost.map.GameMap;
 import me.ghost.resourceEnum.FontType;
 import me.ghost.resourceEnum.TextureType;
 import org.jsfml.graphics.*;
@@ -30,7 +32,7 @@ public class Game {
     /**
      * Constructor for the game class
      */
-    public Game() {
+    public Game() throws FileNotFoundException {
         this.initKeyPressesMap();
 
         //Create the window and set window name to: 'Welcome Wizards'
@@ -42,6 +44,7 @@ public class Game {
         toDraw.add(npc);
         //Limit the framerate
         window.setFramerateLimit(120);
+        GameMap mapHouse = new GameMap("resources/map._House.csv");
     }
 
     private void initKeyPressesMap() {

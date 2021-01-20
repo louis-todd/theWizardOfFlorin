@@ -6,11 +6,17 @@ import org.jsfml.graphics.TextureCreationException;
 
 import java.io.*;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameMap {
     String fileName;
-    public GameMap(String setFileName) {
+    private List<List<Integer>> cell;
+    public GameMap(String setFileName) throws FileNotFoundException {
+        cell = new ArrayList<>();
         this.fileName = setFileName;
+        this.newLoadMap(returnBufferedReader());
+        System.out.println(cell);
     }
 
     private void loadMap() {
@@ -51,14 +57,42 @@ public class GameMap {
         }
     }
 
-    private void newLoadMap(){
+    private void newLoadMap(BufferedReader csvReader){
+        try {
+            String row;
+            while((row = csvReader.readLine()) != null){
+                String[] data = row.split(",");
+                int rowNumber = 0;
+                for(String tempStr : data){
+                    List<Integer> rowData = new ArrayList<>();
 
+                    rowData.add(extractDigits(tempStr));
+
+                    cell.add(rowNumber, rowData);
+                    rowNumber++;
+                    cell.add(new ArrayList<Integer>());
+                }
+            }
+        } catch (IOException ex){
+            ex.printStackTrace();
+        }
     }
 
-    private BufferedReader returnBufferedReader(InputStream input){
-        return new BufferedReader(new InputStreamReader(input));
+    private BufferedReader returnBufferedReader() throws FileNotFoundException {
+        return new BufferedReader(new InputStreamReader(getFileStream()));
     }
     private InputStream getFileStream() throws FileNotFoundException {
         return new DataInputStream(new FileInputStream(fileName));
+    }
+
+    public int extractDigits(String dataElement) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < dataElement.length(); i++) {
+            char c = dataElement.charAt(i);
+            if (Character.isDigit(c) || c == '-') {
+                builder.append(c);
+            }
+        }
+        return Integer.parseInt(builder.toString());
     }
 }
