@@ -72,6 +72,7 @@ public class GameMap {
                     rowNumber++;
                 }
             }
+            csvReader.close();
         } catch (IOException ex){
             ex.printStackTrace();
         }
