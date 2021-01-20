@@ -1,4 +1,4 @@
-package me.ghost;
+package me.ghost.map;
 
 import org.jsfml.graphics.Image;
 import org.jsfml.graphics.Texture;

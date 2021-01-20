@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import me.ghost.Characters.MoveableCharacter;
-import me.ghost.Characters.Npc;
-import me.ghost.ResourceEnum.FontType;
-import me.ghost.ResourceEnum.TextureType;
+import me.ghost.characters.MoveableCharacter;
+import me.ghost.characters.Npc;
+import me.ghost.resourceEnum.FontType;
+import me.ghost.resourceEnum.TextureType;
 import org.jsfml.graphics.*;
 
 import org.jsfml.window.Keyboard;

@@ -1,4 +1,4 @@
-package me.ghost.Characters;
+package me.ghost.characters;
 
 import org.jsfml.graphics.Drawable;
 import org.jsfml.graphics.FloatRect;

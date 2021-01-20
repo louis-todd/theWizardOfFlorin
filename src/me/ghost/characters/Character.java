@@ -1,10 +1,7 @@
-package me.ghost.Characters;
+package me.ghost.characters;
 
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
-
-import java.io.IOException;
-import java.nio.file.Paths;
 
 public abstract class Character extends Sprite {
 
