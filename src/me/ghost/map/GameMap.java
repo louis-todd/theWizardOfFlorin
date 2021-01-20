@@ -4,15 +4,13 @@ import org.jsfml.graphics.Image;
 import org.jsfml.graphics.Texture;
 import org.jsfml.graphics.TextureCreationException;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Paths;
 
 public class GameMap {
-    public GameMap() {
-
+    String fileName;
+    public GameMap(String setFileName) {
+        this.fileName = setFileName;
     }
 
     private void loadMap() {
@@ -51,5 +49,16 @@ public class GameMap {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void newLoadMap(){
+
+    }
+
+    private BufferedReader returnBufferedReader(InputStream input){
+        return new BufferedReader(new InputStreamReader(input));
+    }
+    private InputStream getFileStream() throws FileNotFoundException {
+        return new DataInputStream(new FileInputStream(fileName));
     }
 }
