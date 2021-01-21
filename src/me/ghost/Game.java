@@ -28,6 +28,7 @@ public class Game {
 
     private String[] testSpriteText = {"Page 1", "Page 2", "Page 3"};
     private int charsCurrentIndex = 1;
+    GameMap mapHouse;
 
     /**
      * Constructor for the game class
@@ -45,8 +46,8 @@ public class Game {
 
         //Limit the framerate
         window.setFramerateLimit(120);
-        GameMap mapHouse = new GameMap("resources/map._House.csv");
-        toDraw.add(mapHouse.getTile(3, 3));
+        mapHouse = new GameMap("resources/map._House.csv");
+
     }
 
     private void initKeyPressesMap() {
@@ -147,6 +148,8 @@ public class Game {
             window.draw(item);
         }
         isDialogue();
+
+        mapHouse.getTile(3, 3).draw(window, RenderStates.DEFAULT);
 
         window.display();
     }
