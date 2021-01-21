@@ -6,7 +6,6 @@ import org.jsfml.graphics.Texture;
 public enum TextureType {
     SQUARE16("square-16.png"),
     BOARD("DialogueBoard.png")
-
     ;
 
 private final Texture texture = new Texture();

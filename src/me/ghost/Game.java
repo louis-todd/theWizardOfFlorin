@@ -42,9 +42,11 @@ public class Game {
         toDraw.add(wizard);
         Npc npc = new Npc(250, 300, TextureType.SQUARE16.getTexture());
         toDraw.add(npc);
+
         //Limit the framerate
         window.setFramerateLimit(120);
         GameMap mapHouse = new GameMap("resources/map._House.csv");
+        toDraw.add(mapHouse.getTile(3, 3));
     }
 
     private void initKeyPressesMap() {
