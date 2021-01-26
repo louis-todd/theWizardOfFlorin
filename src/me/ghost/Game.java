@@ -21,7 +21,7 @@ public class Game {
     private final List<Drawable> toDraw = new ArrayList<>();;
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
     private Npc npc = new Npc("Name Placeholder", 250, 300, TextureType.SQUARE16.getTexture());
-    private Mechanics game = new Mechanics(keyPresses, window, npc, interaction);
+    private Mechanics game = new Mechanics(keyPresses, window, npc, interaction, battleWindow);
     private Drawable[] itemsToDraw = {wizard, npc};
 
     /**
@@ -47,28 +47,16 @@ public class Game {
         }
     }
 
-
-    private void isDialogue() {
-        //If its the first time space is pressed, set the text
-        if((keyPresses.get("SPACE"))){
-            interaction.draw(window, null);
-        }
-        if((keyPresses.get("B"))){
-            battleWindow.draw(window, null);
-        }
-    }
-
     /**
      * Updates the window
      */
     private void updateWindow(){
         window.clear(Color.RED);
 
-
         for(Drawable item : toDraw){
             window.draw(item);
         }
-        isDialogue();
+        game.isDialogue();
 
         window.display();
     }

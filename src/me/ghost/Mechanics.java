@@ -19,12 +19,14 @@ public class Mechanics {
     private RenderWindow window;
     private Dialogue interaction;
     private Npc npc;
+    private BattleWindow battleWindow;
 
-    public Mechanics(Map<String, Boolean> keyPresses, RenderWindow window, Npc npc, Dialogue interaction){
+    public Mechanics(Map<String, Boolean> keyPresses, RenderWindow window, Npc npc, Dialogue interaction, BattleWindow battleWindow){
         this.keyPresses = keyPresses;
         this.window = window;
         this.interaction = interaction;
         this.npc = npc;
+        this.battleWindow = battleWindow;
     }
 
     public void initKeyPressesMap() {
@@ -138,4 +140,15 @@ public class Mechanics {
             }
         }
     }
+
+    public void isDialogue() {
+        //If its the first time space is pressed, set the text
+        if((keyPresses.get("SPACE"))){
+            interaction.draw(window, null);
+        }
+        if((keyPresses.get("B"))){
+            battleWindow.draw(window, null);
+        }
+    }
+
 }
