@@ -8,7 +8,6 @@ import org.jsfml.system.Vector2f;
 
 import java.io.*;
 
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +61,7 @@ public class GameMap {
         tileMap.add(new ArrayList<>());
         for(int i = 0; i < cell.size(); i++){
             for(int j = 0; j < 50; j++){
-                tileMap.get(i).add(new Tile(new Vector2f(i*16, j*16), TextureType.SQUARE16.getTexture()));
+                tileMap.get(i).add(new Tile(new Vector2f(i*16, j*16), TextureType.TEST.getTexture()));
             }
             tileMap.add(new ArrayList<>());
         }

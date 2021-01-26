@@ -17,10 +17,4 @@ public class Tile extends RectangleShape implements Drawable {
         toDraw.add(this);
     }
 
-/*
-    @Override
-    public void draw(RenderTarget renderTarget, RenderStates renderStates) {
-        renderTarget.draw(this);
-    }
-*/
 }

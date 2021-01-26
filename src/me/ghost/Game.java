@@ -22,7 +22,7 @@ public class Game {
 
     private final RenderWindow window;
     private Dialogue interaction = new Dialogue(FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "Name Placeholder", "Content Placeholder");
-    private final MoveableCharacter wizard = new MoveableCharacter(320, 240, TextureType.SQUARE16.getTexture());
+    private final MoveableCharacter wizard = new MoveableCharacter(320, 240, TextureType.TEST.getTexture());
     private final List<Drawable> toDraw;
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
 
@@ -150,6 +150,11 @@ public class Game {
         isDialogue();
 
         mapHouse.getTile(3, 3).draw(window, RenderStates.DEFAULT);
+        for(int i = 0; i <= 10; i++){
+            for(int j = 0; j <= 10; j++){
+                mapHouse.getTile(i, j).draw(window, RenderStates.DEFAULT);
+            }
+        }
 
         window.display();
     }
