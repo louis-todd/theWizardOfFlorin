@@ -11,7 +11,7 @@ public class BattleWindow implements Drawable{
     private final ArrayList<Drawable> toDraw;
 
     public BattleWindow(){
-        
+
         toDraw = new ArrayList<>();
         rectangle(640,480,0,0,0,0,0);// background
         rectangle(500,180,70,10,255,255,255);//ghost area
@@ -24,44 +24,38 @@ public class BattleWindow implements Drawable{
             healthCircle(i, 340);
 
         }
-
         rectangle(620,100,10, 370,98,52,18);//dialogue box
-
-
-
-
-
     }
 
-
     private void rectangle(int vectorDi1, int vectorDi2,int Pos1, int Pos2, int colour1, int colour2, int colour3){
-        //Set the rectangle for the text to sit in
         Vector2f dimensions = new Vector2f(vectorDi1,vectorDi2);
         RectangleShape textBackground = new RectangleShape(dimensions) {{
             this.setPosition(Pos1, Pos2);
             this.setSize(dimensions);
             this.setFillColor(new Color(colour1,colour2,colour3));
-            //this.setFillColor(Color.BLACK);
-            //this.setOutlineColor(Color.BLUE);
             this.setOutlineThickness(1);
         }};
         toDraw.add(textBackground);
     }
 
     private void healthCircle(int Pos1, int Pos2){
-        //Set the rectangle for the text to sit in
-        //Vector2f dimensions = new Vector2f(vectorDi1,vectorDi2);
+
         CircleShape circle = new CircleShape(10) {{
 
             this.setPosition(Pos1, Pos2);
-            //this.setSize(dimensions);
-            //this.setFillColor(Color.BLUE);
             this.setFillColor(new Color(255,0,255));
             this.setOutlineThickness(1);
         }};
         toDraw.add(circle);
     }
 
+    @Override
+    public void draw(RenderTarget renderTarget, RenderStates renderStates) {
+        for(Drawable item : toDraw) {
+            renderTarget.draw(item);
+        }
+    }
+}
 
 
 //    private void battleSquare(){
@@ -106,15 +100,6 @@ public class BattleWindow implements Drawable{
 //        }};
 //        toDraw.add(textBackground);
 //    }
-
-    @Override
-    public void draw(RenderTarget renderTarget, RenderStates renderStates) {
-        for(Drawable item : toDraw) {
-            renderTarget.draw(item);
-        }
-    }
-}
-
 // public class Battle {
 //     Texture texture = new Texture();
 
