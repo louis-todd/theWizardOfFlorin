@@ -12,41 +12,64 @@ public class BattleWindow implements Drawable{
 
     public BattleWindow(){
         toDraw = new ArrayList<>();
-        battleSquare2(400,300,40,300);
-        battleSquare();
+        rectangle(640,480,0,0,0,0,0);// background
+        rectangle(500,180,70,10,255,255,255);//ghost area
+        rectangle(350,100,150,210,255,255,255); // player area
+
+        rectangle(620,100,10, 370,255,0,0);//health label
+        
+
+        rectangle(620,100,10, 370,98,52,18);//dialogue box
+
+        healthCircle(30,200);
+
+        //battleSquare();
        // CharterHealthRectangle();
 //        CharterCircle();
     }
 
-    private void battleSquare(){
+
+    private void rectangle(int vectorDi1, int vectorDi2,int Pos1, int Pos2, int colour1, int colour2, int colour3){
         //Set the rectangle for the text to sit in
-        Vector2f dimensions = new Vector2f(620,100);
-        RectangleShape textBackground = new RectangleShape(dimensions) {{
-            this.setPosition(10, 370);
-            this.setSize(dimensions);
-            this.setFillColor(new Color(98,52,18));
-            //this.setFillColor(color.Black);
-        }};
-        toDraw.add(textBackground);
-    }
-    private void battleSquare2(int vectorPos1, int vectorPos2,int Pos1, int Pos2/*, int colour1, int colour2, int colour3*/){
-        //Set the rectangle for the text to sit in
-        Vector2f dimensions = new Vector2f(vectorPos1,vectorPos2);
+        Vector2f dimensions = new Vector2f(vectorDi1,vectorDi2);
         RectangleShape textBackground = new RectangleShape(dimensions) {{
             this.setPosition(Pos1, Pos2);
             this.setSize(dimensions);
-            //this.setFillColor(new Color(colour1,colour2,colour3));
-            this.setFillColor(Color.BLACK);
-            this.setOutlineColor(Color.BLUE);
+            this.setFillColor(new Color(colour1,colour2,colour3));
+            //this.setFillColor(Color.BLACK);
+            //this.setOutlineColor(Color.BLUE);
             this.setOutlineThickness(5);
         }};
         toDraw.add(textBackground);
     }
 
+    private void healthCircle(int Pos1, int Pos2){
+        //Set the rectangle for the text to sit in
+        //Vector2f dimensions = new Vector2f(vectorDi1,vectorDi2);
+        CircleShape circle = new CircleShape(5) {{
+
+            this.setPosition(Pos1, Pos2);
+            //this.setSize(dimensions);
+            //this.setFillColor(Color.BLUE);
+            this.setFillColor(new Color(255,0,255));
+            this.setOutlineThickness(1);
+        }};
+        toDraw.add(circle);
+    }
 
 
 
-
+//    private void battleSquare(){
+//        //Set the rectangle for the text to sit in
+//        Vector2f dimensions = new Vector2f(620,100);
+//        RectangleShape textBackground = new RectangleShape(dimensions) {{
+//            this.setPosition(10, 370);
+//            this.setSize(dimensions);
+//            //this.setFillColor(new Color(98,52,18));
+//            this.setFillColor(getFillColor().BLACK);
+//        }};
+//        toDraw.add(textBackground);
+//    }
 
 
 //        private void rectangle (int x, int y, int xPosition, int yPosition)
@@ -68,16 +91,16 @@ public class BattleWindow implements Drawable{
 //        toDraw.add(textBackground);
 //    }
 
-    private void CharterHealthRectangle(){
-        //Set the rectangle for the text to sit in
-        Vector2f dimensions = new Vector2f(800,600);
-        RectangleShape textBackground = new RectangleShape(dimensions) {{
-            this.setPosition(20, 300);
-            this.setSize(dimensions);
-            this.setFillColor(new Color(98,52,18));
-        }};
-        toDraw.add(textBackground);
-    }
+//    private void CharterHealthRectangle(){
+//        //Set the rectangle for the text to sit in
+//        Vector2f dimensions = new Vector2f(800,600);
+//        RectangleShape textBackground = new RectangleShape(dimensions) {{
+//            this.setPosition(20, 300);
+//            this.setSize(dimensions);
+//            this.setFillColor(new Color(98,52,18));
+//        }};
+//        toDraw.add(textBackground);
+//    }
 
     @Override
     public void draw(RenderTarget renderTarget, RenderStates renderStates) {
