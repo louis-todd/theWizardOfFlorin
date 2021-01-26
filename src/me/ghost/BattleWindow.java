@@ -11,21 +11,26 @@ public class BattleWindow implements Drawable{
     private final ArrayList<Drawable> toDraw;
 
     public BattleWindow(){
+        
         toDraw = new ArrayList<>();
         rectangle(640,480,0,0,0,0,0);// background
         rectangle(500,180,70,10,255,255,255);//ghost area
         rectangle(350,100,150,210,255,255,255); // player area
 
-        rectangle(620,100,10, 370,255,0,0);//health label
-        
+        rectangle(30,20,10, 340,255,30,0);//health label
+        // for health circles
+        for (int i=50; i<=100 ; i+=25)
+        {
+            healthCircle(i, 340);
+
+        }
 
         rectangle(620,100,10, 370,98,52,18);//dialogue box
 
-        healthCircle(30,200);
 
-        //battleSquare();
-       // CharterHealthRectangle();
-//        CharterCircle();
+
+
+
     }
 
 
@@ -38,7 +43,7 @@ public class BattleWindow implements Drawable{
             this.setFillColor(new Color(colour1,colour2,colour3));
             //this.setFillColor(Color.BLACK);
             //this.setOutlineColor(Color.BLUE);
-            this.setOutlineThickness(5);
+            this.setOutlineThickness(1);
         }};
         toDraw.add(textBackground);
     }
@@ -46,7 +51,7 @@ public class BattleWindow implements Drawable{
     private void healthCircle(int Pos1, int Pos2){
         //Set the rectangle for the text to sit in
         //Vector2f dimensions = new Vector2f(vectorDi1,vectorDi2);
-        CircleShape circle = new CircleShape(5) {{
+        CircleShape circle = new CircleShape(10) {{
 
             this.setPosition(Pos1, Pos2);
             //this.setSize(dimensions);
