@@ -11,8 +11,8 @@ public class MoveableCharacter extends Character {
 
     private boolean wizardColliding;
 
-    public MoveableCharacter(float xPosition, float yPosition, Texture characterTexture) {
-        super(xPosition, yPosition, characterTexture);
+    public MoveableCharacter(String characterName, float xPosition, float yPosition, Texture characterTexture) {
+        super(characterName, xPosition, yPosition, characterTexture);
         wizardColliding = false;
     }
 
@@ -25,10 +25,7 @@ public class MoveableCharacter extends Character {
                     wizardColliding = true;
                     npcCollide = (Npc) npcs;
                 }
-
-                if (this.dialogueAreaCollide((Npc) npcs)) {
-                    System.out.println("Colliding with dialogue");
-                }
+                
             }
         }
         if (!wizardColliding) {
@@ -77,7 +74,7 @@ public class MoveableCharacter extends Character {
         return this.getGlobalBounds().intersection((npc.getGlobalBounds()));
     }
 
-    private boolean dialogueAreaCollide(Npc npc){
-        return this.getGlobalBounds().intersection(npc.dialogueArea()) != null;
+    public boolean dialogueAreaCollide(Npc npc){
+        return this.getGlobalBounds().intersection(npc.dialogueArea(4)) != null;
     }
 }
