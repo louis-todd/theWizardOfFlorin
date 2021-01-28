@@ -39,7 +39,7 @@ public class Game {
         toDraw.addAll(Arrays.asList(itemsToDraw));
         interaction.setCharacterName(npc.getName());
 
-        mapHouse = new GameMap("resources/map._House.csv");
+        mapHouse = new GameMap("resources/map._House.csv", 50);
         //Limit the framerate
         window.setFramerateLimit(120);
     }

@@ -15,7 +15,9 @@ public class GameMap {
     String fileName;
     private final List<List<Integer>> cell;
     private final List<List<Tile>> tileMap;
-    public GameMap(String setFileName) throws FileNotFoundException {
+    private int csvWidth;
+    public GameMap(String setFileName, int setCsvWidth) throws FileNotFoundException {
+        this.csvWidth = setCsvWidth;
         cell = new ArrayList<>();
         cell.add(new ArrayList<>());
         this.fileName = setFileName;
@@ -36,7 +38,7 @@ public class GameMap {
                     cell.get(rowNumber).add(Integer.parseInt(dataElement));
                     rowIndex++;
 
-                    if (rowIndex == 50) {
+                    if (rowIndex == csvWidth) {
                         rowNumber++;
                         rowIndex = 0;
                         cell.add(new ArrayList<>());
@@ -60,7 +62,7 @@ public class GameMap {
         System.out.println(cell.size());
         tileMap.add(new ArrayList<>());
         for(int i = 0; i < cell.size(); i++){
-            for(int j = 0; j < 50; j++){
+            for(int j = 0; j < csvWidth; j++){
                 tileMap.get(i).add(new Tile(new Vector2f(i*16, j*16), TextureType.TEST.getTexture()));
             }
             tileMap.add(new ArrayList<>());
