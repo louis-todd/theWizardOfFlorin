@@ -110,19 +110,16 @@ public class Mechanics {
                                 handleKeyPress(keyEvent, true);
                             }
                         }
-                        //CODE FOR OPENING BATTLE WINDOW
-                        if(keyEvent.key == Keyboard.Key.B){
-                            //If space has already been pressed
+                        if(keyEvent.key == Keyboard.Key.B && wizard.dialogueAreaCollide(npc)){
+                            //If B has already been pressed
                             if(keyPresses.get("B")){
-                                //if still tiles to step through do
                                 keyPresses.put("B", false);
                             }
-                            //if first space, set to display first tile
+                            //if first B, set to display battle window
                             else{
                                 handleKeyPress(keyEvent, true);
                             }
                         }
-                        //CODE END FOR OPENING BATTLE WINDOW
                     break;
                 case MOUSE_BUTTON_PRESSED:
                     //if still tiles left to show, step through them
