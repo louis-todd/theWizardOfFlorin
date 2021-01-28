@@ -6,8 +6,8 @@ import org.jsfml.graphics.Texture;
 
 
 public class Npc extends Character {
-    public Npc(float xPosition, float yPosition, Texture npcTexture) {
-        super(xPosition, yPosition, npcTexture);
+    public Npc(String characterName, float xPosition, float yPosition, Texture npcTexture) {
+        super(characterName, xPosition, yPosition, npcTexture);
     }
 
     public FloatRect dialogueArea(float scaleFactor){
