@@ -1,16 +1,13 @@
 package me.ghost;
 
 import java.util.Map;
+
+import me.ghost.characters.Npc;
 import org.jsfml.window.Keyboard;
-import org.jsfml.window.VideoMode;
+
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
-import me.ghost.Characters.MoveableCharacter;
-import me.ghost.Characters.Npc;
-import me.ghost.ResourceEnum.FontType;
-import me.ghost.ResourceEnum.TextureType;
+
 import org.jsfml.graphics.*;
 
 public class Mechanics {
