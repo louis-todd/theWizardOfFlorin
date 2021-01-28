@@ -59,7 +59,6 @@ public class GameMap {
     }
 
     private void createTiles(){
-        System.out.println(cell.size());
         tileMap.add(new ArrayList<>());
         for(int i = 0; i < cell.size(); i++){
             for(int j = 0; j < csvWidth; j++){

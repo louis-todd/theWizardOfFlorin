@@ -10,8 +10,10 @@ import java.util.Map;
 import me.ghost.characters.MoveableCharacter;
 import me.ghost.characters.Npc;
 import me.ghost.map.GameMap;
+import me.ghost.map.Tile;
 import me.ghost.resourceEnum.FontType;
 import me.ghost.resourceEnum.TextureType;
+import me.ghost.resourceEnum.TileLoader;
 import org.jsfml.graphics.*;
 
 import org.jsfml.window.VideoMode;
@@ -35,6 +37,7 @@ public class Game {
      */
     public Game() throws FileNotFoundException {
 
+        TileLoader tileLoader = new TileLoader();
         game.initKeyPressesMap();
         toDraw.addAll(Arrays.asList(itemsToDraw));
         interaction.setCharacterName(npc.getName());
