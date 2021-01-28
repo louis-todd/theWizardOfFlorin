@@ -25,10 +25,7 @@ public class MoveableCharacter extends Character {
                     wizardColliding = true;
                     npcCollide = (Npc) npcs;
                 }
-
-                if (this.dialogueAreaCollide((Npc) npcs)) {
-                    System.out.println("Colliding with dialogue");
-                }
+                
             }
         }
         if (!wizardColliding) {
