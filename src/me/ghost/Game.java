@@ -45,7 +45,7 @@ public class Game {
      */
     public void run() {
         while (window.isOpen()) {
-            game.handleEvents();
+            game.handleEvents(wizard);
             wizard.moveCharacter(keyPresses, toDraw);
             updateWindow();
         }

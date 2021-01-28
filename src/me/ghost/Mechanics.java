@@ -72,7 +72,7 @@ public class Mechanics {
     /**
      * Handles the input events
      */
-    public void handleEvents(){
+    public void handleEvents(MoveableCharacter wizard){
         //Handle events
         for (Event event : window.pollEvents()) {
             switch (event.type) {
@@ -90,7 +90,7 @@ public class Mechanics {
                         if ((keyEvent.key == Keyboard.Key.RIGHT || keyEvent.key == Keyboard.Key.LEFT || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN)) {
                             handleKeyPress(keyEvent, true);
                         }
-                        if(keyEvent.key == Keyboard.Key.SPACE){
+                        if(keyEvent.key == Keyboard.Key.SPACE && wizard.dialogueAreaCollide(npc)){
                             //If space has already been pressed
                             if(keyPresses.get("SPACE")){
                                 //if still tiles to step through do
