@@ -1,36 +1,32 @@
 package me.ghost.resourceEnum;
 
-import java.io.File;
-import java.util.Objects;
-
+import me.ghost.Game;
+import org.jsfml.graphics.Texture;
 
 public class TileLoader {
-    private final File[] tileTexture;
+    private final Texture[] tileTexture;
     public TileLoader() {
-        File folder = new File("resources/tiles");
-        tileTexture = new File[3421];
-        loadTextureToArray(folder);
-        for(int i = 0; i <= 3420; i++){
-            System.out.println(tileTexture[i]);
+        tileTexture = new Texture[3421];
+
+        for(int i = 0; i < 3420; i++){
+            tileTexture[i] = loadTexture(getTilePath(i));
         }
 
     }
 
-    private void loadTextureToArray(final File folder){
-      try {
-          int i = 0;
-          for (File f : Objects.requireNonNull(folder.listFiles())) {
-              if(f.isDirectory()){
-                  loadTextureToArray(f);
-              } else {
-                  tileTexture[i] = f;
-              }
-              i++;
-          }
-      } catch (Exception e) {
-          e.printStackTrace();
-      }
+    private Texture loadTexture(String path){
+        Texture texture = new Texture();
+        try {
+            texture.loadFromStream(Game.class.getClassLoader().getResourceAsStream(path));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return texture;
     }
 
+
+    public String getTilePath(int index){
+        return("tiles/tile"+index+".png32");
+    }
 
 }
