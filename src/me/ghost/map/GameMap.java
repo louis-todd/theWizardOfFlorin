@@ -16,8 +16,8 @@ public class GameMap {
     String fileName;
     private final List<List<Integer>> cell;
     private final List<List<Tile>> tileMap;
-    private int csvWidth;
-    private TileLoader tileLoader;
+    private final int csvWidth;
+    private final TileLoader tileLoader;
     public GameMap(String setFileName, int setCsvWidth, TileLoader setTileLoader) throws FileNotFoundException {
         this.tileLoader = setTileLoader;
         this.csvWidth = setCsvWidth;
@@ -74,16 +74,6 @@ public class GameMap {
             }
                 tileMap.add(new ArrayList<>());
         }
-    }
-
-    private Texture getTileTexture(String textureLocation){
-        Texture tileTexture = new Texture();
-        try {
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return tileTexture;
     }
 
     public Tile getTile(int x, int y){
