@@ -10,7 +10,6 @@ import java.util.Map;
 import me.ghost.characters.MoveableCharacter;
 import me.ghost.characters.Npc;
 import me.ghost.map.GameMap;
-import me.ghost.map.Tile;
 import me.ghost.resourceEnum.FontType;
 import me.ghost.resourceEnum.TextureType;
 import me.ghost.resourceEnum.TileLoader;
@@ -20,7 +19,7 @@ import org.jsfml.window.VideoMode;
 
 public class Game {
 
-    private final RenderWindow window = new RenderWindow(new VideoMode(1000, 1000), "Welcome Wizards");;
+    private final RenderWindow window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");;
     private Dialogue interaction = new Dialogue(FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME", "Content Placeholder");
     private BattleWindow battleWindow = new BattleWindow();
     private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 240, TextureType.SQUARE16.getTexture());
@@ -30,12 +29,14 @@ public class Game {
     private Mechanics game = new Mechanics(keyPresses, window, npc, interaction, battleWindow);
     private Drawable[] itemsToDraw = {wizard, npc};
     GameMap mapHouse;
+    View worldView;
 
 
     /**
      * Constructor for the game class
      */
     public Game() throws FileNotFoundException {
+
 
         TileLoader tileLoader = new TileLoader();
         game.initKeyPressesMap();
@@ -45,6 +46,8 @@ public class Game {
         mapHouse = new GameMap("resources/map._House.csv", 50, tileLoader);
         //Limit the framerate
         window.setFramerateLimit(120);
+        worldView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
+        worldView.setCenter(wizard.getPosition());
     }
 
     /**
@@ -53,7 +56,7 @@ public class Game {
     public void run() {
         while (window.isOpen()) {
             game.handleEvents(wizard);
-            wizard.moveCharacter(keyPresses, toDraw);
+            wizard.moveCharacter(keyPresses, toDraw, worldView);
             updateWindow();
         }
     }
@@ -65,18 +68,18 @@ public class Game {
     private void updateWindow(){
         window.clear(Color.RED);
 
+        for(int i = 0; i <= 49; i++){
+            for(int j = 0; j <= 49; j++){
+                mapHouse.getTile(i, j).draw(window, RenderStates.DEFAULT);
+            }
+        }
+
         for(Drawable item : toDraw){
             window.draw(item);
         }
         game.isDialogue();
 
-        for(int i = 0; i <= 49; i++){
-            for(int j = 0; j <= 49; j++){
-                System.out.println("draw " + i + " " + j);
-                mapHouse.getTile(i, j).draw(window, RenderStates.DEFAULT);
-            }
-        }
-
+        window.setView(worldView);
         window.display();
     }
 }

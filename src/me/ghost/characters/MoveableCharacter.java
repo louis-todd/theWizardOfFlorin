@@ -3,6 +3,7 @@ package me.ghost.characters;
 import org.jsfml.graphics.Drawable;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Texture;
+import org.jsfml.graphics.View;
 
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ public class MoveableCharacter extends Character {
         wizardColliding = false;
     }
 
-    public void moveCharacter(Map<String, Boolean> keyPresses, List<Drawable> toDraw) {
+    public void moveCharacter(Map<String, Boolean> keyPresses, List<Drawable> toDraw, View worldView) {
         Npc npcCollide = null;
 
         for (Drawable npcs : toDraw) {
@@ -31,16 +32,21 @@ public class MoveableCharacter extends Character {
         if (!wizardColliding) {
             if ((keyPresses.get("RIGHT") && !keyPresses.get("SPACE"))) {
                 this.move(1, 0);
+                worldView.move(-1, 0);
             }
             if ((keyPresses.get("LEFT") && !keyPresses.get("SPACE"))) {
                 this.move(-1, 0);
+                worldView.move(1, 0);
             }
             if ((keyPresses.get("UP") && !keyPresses.get("SPACE"))) {
                 this.move(0, -1);
+                worldView.move(0, 1);
             }
             if ((keyPresses.get("DOWN") && !keyPresses.get("SPACE"))) {
                 this.move(0, 1);
+                worldView.move(0, -1);
             }
+            worldView.setCenter(this.getPosition());
         } else {
             assert npcCollide != null;
             float xDifference = this.collisionRectangle(npcCollide).width;

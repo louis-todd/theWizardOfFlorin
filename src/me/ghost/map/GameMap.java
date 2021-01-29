@@ -1,10 +1,7 @@
 package me.ghost.map;
 
 
-import me.ghost.Game;
-import me.ghost.resourceEnum.TextureType;
 import me.ghost.resourceEnum.TileLoader;
-import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
 
 import java.io.*;
@@ -25,7 +22,6 @@ public class GameMap {
         cell.add(new ArrayList<>());
         this.fileName = setFileName;
         this.LoadMap(returnBufferedReader());
-        System.out.println(cell);
         tileMap = new ArrayList<>();
         createTiles();
     }
@@ -67,7 +63,7 @@ public class GameMap {
         for(int i = 0; i < cell.size() - 1; i++){
             for(int j = 0; j <= csvWidth - 1; j++){
                 if(cell.get(i).get(j) == -1){
-                    tileMap.get(i).add(new Tile(new Vector2f(j*16, i*16), TextureType.SQUARE16.getTexture()));
+                    tileMap.get(i).add(new Tile(new Vector2f(j*16, i*16), tileLoader.getTileTexture(10)));
                 } else {
                     tileMap.get(i).add(new Tile(new Vector2f(j * 16, i * 16), tileLoader.getTileTexture(cell.get(i).get(j))));
                 }
