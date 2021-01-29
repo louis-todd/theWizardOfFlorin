@@ -3,6 +3,7 @@ package me.ghost.map;
 
 import me.ghost.Game;
 import me.ghost.resourceEnum.TextureType;
+import me.ghost.resourceEnum.TileLoader;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
 
@@ -16,7 +17,9 @@ public class GameMap {
     private final List<List<Integer>> cell;
     private final List<List<Tile>> tileMap;
     private int csvWidth;
-    public GameMap(String setFileName, int setCsvWidth) throws FileNotFoundException {
+    private TileLoader tileLoader;
+    public GameMap(String setFileName, int setCsvWidth, TileLoader setTileLoader) throws FileNotFoundException {
+        this.tileLoader = setTileLoader;
         this.csvWidth = setCsvWidth;
         cell = new ArrayList<>();
         cell.add(new ArrayList<>());
@@ -60,11 +63,16 @@ public class GameMap {
 
     private void createTiles(){
         tileMap.add(new ArrayList<>());
-        for(int i = 0; i < cell.size(); i++){
-            for(int j = 0; j < csvWidth; j++){
-                tileMap.get(i).add(new Tile(new Vector2f(i*16, j*16), TextureType.TEST.getTexture()));
+
+        for(int i = 0; i < cell.size() - 1; i++){
+            for(int j = 0; j <= csvWidth - 1; j++){
+                if(cell.get(i).get(j) == -1){
+                    tileMap.get(i).add(new Tile(new Vector2f(j*16, i*16), TextureType.SQUARE16.getTexture()));
+                } else {
+                    tileMap.get(i).add(new Tile(new Vector2f(j * 16, i * 16), tileLoader.getTileTexture(cell.get(i).get(j))));
+                }
             }
-            tileMap.add(new ArrayList<>());
+                tileMap.add(new ArrayList<>());
         }
     }
 
