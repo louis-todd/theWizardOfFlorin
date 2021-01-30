@@ -2,6 +2,7 @@
 package me.ghost;
 
 import java.io.FileNotFoundException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +31,7 @@ public class Game {
     private Drawable[] itemsToDraw = {wizard, npc};
     GameMap mapHouse;
     View worldView;
-
+    private int[] drawingBounds;
 
     /**
      * Constructor for the game class
@@ -48,6 +49,7 @@ public class Game {
         window.setFramerateLimit(120);
         worldView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
         worldView.setCenter(wizard.getPosition());
+        drawingBounds = new int[4];
     }
 
     /**
@@ -68,8 +70,9 @@ public class Game {
     private void updateWindow(){
         window.clear(Color.RED);
 
-        for(int i = 0; i <= 49; i++){
-            for(int j = 0; j <= 49; j++){
+        drawingBounds();
+        for(int i = drawingBounds[2]; i <= drawingBounds[3]; i++){
+            for(int j = drawingBounds[0]; j <= drawingBounds[1]; j++){
                 mapHouse.getTile(i, j).draw(window, RenderStates.DEFAULT);
             }
         }
@@ -81,6 +84,13 @@ public class Game {
 
         window.setView(worldView);
         window.display();
+    }
+
+    private void drawingBounds(){
+        drawingBounds[0] = Math.max((int) (wizard.getPosition().x / 16) - 20, 0);
+        drawingBounds[1] = Math.min((int) (wizard.getPosition().x / 16) + 20, 49);
+        drawingBounds[2] = Math.max((int) (wizard.getPosition().y / 16) - 20, 0);
+        drawingBounds[3] = Math.min((int) (wizard.getPosition().y / 16) + 20, 49);
     }
 }
 

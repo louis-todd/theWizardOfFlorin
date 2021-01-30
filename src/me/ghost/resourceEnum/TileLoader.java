@@ -11,7 +11,6 @@ public class TileLoader {
         for(int i = 0; i < 3420; i++){
             tileTexture[i] = loadTexture(getTilePath(i));
         }
-
     }
 
     private Texture loadTexture(String path){
