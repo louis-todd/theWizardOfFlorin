@@ -95,9 +95,9 @@ public class Game {
 
     private void drawingBounds(){
         drawingBounds[0] = Math.max((int) (wizard.getPosition().x / 16) - 20, 0);
-        drawingBounds[1] = Math.min((int) (wizard.getPosition().x / 16) + 20, currentMap.getCsvWidth() - 1);
+        drawingBounds[1] = Math.min((int) (wizard.getPosition().x / 16) + 20, currentMap.getDrawWidth());
         drawingBounds[2] = Math.max((int) (wizard.getPosition().y / 16) - 20, 0);
-        drawingBounds[3] = Math.min((int) (wizard.getPosition().y / 16) + 20, currentMap.getCsvHeight());
+        drawingBounds[3] = Math.min((int) (wizard.getPosition().y / 16) + 20, currentMap.getDrawHeight());
     }
 }
 

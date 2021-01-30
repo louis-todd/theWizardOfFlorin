@@ -74,11 +74,11 @@ public class GameMap {
         return tileMap.get(x).get(y);
     }
 
-    public int getCsvWidth() {
-        return csvWidth;
+    public int getDrawWidth() {
+        return csvWidth - 1;
     }
 
-    public int getCsvHeight() {
+    public int getDrawHeight() {
         return cell.size() - 2;
     }
 }
