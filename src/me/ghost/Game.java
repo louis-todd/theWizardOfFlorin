@@ -30,6 +30,7 @@ public class Game {
     private Mechanics game = new Mechanics(keyPresses, window, npc, interaction, battleWindow);
     private Drawable[] itemsToDraw = {wizard, npc};
     GameMap mapHouse;
+    GameMap currentMap;
     View worldView;
     private final int[] drawingBounds;
 
@@ -50,6 +51,7 @@ public class Game {
         worldView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
         worldView.setCenter(wizard.getPosition());
         drawingBounds = new int[4];
+        currentMap = mapHouse;
     }
 
     /**
@@ -86,16 +88,16 @@ public class Game {
 
         for(int i = drawingBounds[2]; i <= drawingBounds[3]; i++){
             for(int j = drawingBounds[0]; j <= drawingBounds[1]; j++){
-                mapHouse.getTile(i, j).draw(window, RenderStates.DEFAULT);
+                currentMap.getTile(i, j).draw(window, RenderStates.DEFAULT);
             }
         }
     }
 
     private void drawingBounds(){
         drawingBounds[0] = Math.max((int) (wizard.getPosition().x / 16) - 20, 0);
-        drawingBounds[1] = Math.min((int) (wizard.getPosition().x / 16) + 20, 49);
+        drawingBounds[1] = Math.min((int) (wizard.getPosition().x / 16) + 20, currentMap.getCsvWidth() - 1);
         drawingBounds[2] = Math.max((int) (wizard.getPosition().y / 16) - 20, 0);
-        drawingBounds[3] = Math.min((int) (wizard.getPosition().y / 16) + 20, 49);
+        drawingBounds[3] = Math.min((int) (wizard.getPosition().y / 16) + 20, currentMap.getCsvHeight());
     }
 }
 
