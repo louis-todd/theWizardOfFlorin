@@ -20,10 +20,11 @@ public class GameMap {
         this.csvWidth = setCsvWidth;
         cell = new ArrayList<>();
         cell.add(new ArrayList<>());
+        tileMap = new ArrayList<>();
+        tileMap.add(new ArrayList<>());
         this.fileName = setFileName;
         this.LoadMap(returnBufferedReader());
-        tileMap = new ArrayList<>();
-        createTiles();
+
     }
 
     private void LoadMap(BufferedReader csvReader){
@@ -35,12 +36,16 @@ public class GameMap {
                 String[] data = row.split(",");
                 for (String dataElement : data) {
                     cell.get(rowNumber).add(Integer.parseInt(dataElement));
+
+                    createTiles(rowNumber, rowIndex);
+
                     rowIndex++;
 
                     if (rowIndex == csvWidth) {
                         rowNumber++;
                         rowIndex = 0;
                         cell.add(new ArrayList<>());
+                        tileMap.add(new ArrayList<>());
                     }
                 }
             }
@@ -57,18 +62,11 @@ public class GameMap {
         return new DataInputStream(new FileInputStream(fileName));
     }
 
-    private void createTiles(){
-        tileMap.add(new ArrayList<>());
-
-        for(int i = 0; i < cell.size() - 1; i++){
-            for(int j = 0; j <= csvWidth - 1; j++){
-                if(cell.get(i).get(j) == -1){
-                    tileMap.get(i).add(new Tile(new Vector2f(j*16, i*16), tileLoader.getTileTexture(10)));
-                } else {
-                    tileMap.get(i).add(new Tile(new Vector2f(j * 16, i * 16), tileLoader.getTileTexture(cell.get(i).get(j))));
-                }
-            }
-                tileMap.add(new ArrayList<>());
+    private void createTiles(int rowNumber, int rowIndex){
+        if(cell.get(rowNumber).get(rowIndex) == -1){
+            tileMap.get(rowNumber).add(new Tile(new Vector2f(rowIndex*16, rowNumber*16), tileLoader.getTileTexture(10)));
+        } else {
+            tileMap.get(rowNumber).add(new Tile(new Vector2f(rowIndex * 16, rowNumber * 16), tileLoader.getTileTexture(cell.get(rowNumber).get(rowIndex))));
         }
     }
 
