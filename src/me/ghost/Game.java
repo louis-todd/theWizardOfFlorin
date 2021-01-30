@@ -20,18 +20,18 @@ import org.jsfml.window.VideoMode;
 
 public class Game {
 
-    private final RenderWindow window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");;
+    private final RenderWindow window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");
     private Dialogue interaction = new Dialogue(FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME", "Content Placeholder");
     private BattleWindow battleWindow = new BattleWindow();
     private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 240, TextureType.SQUARE16.getTexture());
-    private final List<Drawable> toDraw = new ArrayList<>();;
+    private final List<Drawable> toDraw = new ArrayList<>();
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
     private Npc npc = new Npc("Name Placeholder", 250, 300, TextureType.SQUARE16.getTexture());
     private Mechanics game = new Mechanics(keyPresses, window, npc, interaction, battleWindow);
     private Drawable[] itemsToDraw = {wizard, npc};
     GameMap mapHouse;
     View worldView;
-    private int[] drawingBounds;
+    private final int[] drawingBounds;
 
     /**
      * Constructor for the game class
