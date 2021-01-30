@@ -17,7 +17,7 @@ public class MoveableCharacter extends Character {
         wizardColliding = false;
     }
 
-    public void moveCharacter(Map<String, Boolean> keyPresses, List<Drawable> toDraw, View worldView) {
+    public void moveCharacter(Map<String, Boolean> keyPresses, List<Drawable> toDraw, View worldView, FloatRect mapBounds) {
         Npc npcCollide = null;
 
         for (Drawable npcs : toDraw) {
@@ -31,21 +31,30 @@ public class MoveableCharacter extends Character {
         }
         if (!wizardColliding) {
             if ((keyPresses.get("RIGHT") && !keyPresses.get("SPACE"))) {
-                this.move(1, 0);
-                worldView.move(-1, 0);
+                   if(this.getPosition().x - mapBounds.width < 0) {
+                       this.move(1, 0);
+                       worldView.move(-1, 0);
+                   }
             }
             if ((keyPresses.get("LEFT") && !keyPresses.get("SPACE"))) {
-                this.move(-1, 0);
-                worldView.move(1, 0);
+                if(this.getPosition().x > mapBounds.left) {
+                    this.move(-1, 0);
+                    worldView.move(1, 0);
+                }
             }
             if ((keyPresses.get("UP") && !keyPresses.get("SPACE"))) {
-                this.move(0, -1);
-                worldView.move(0, 1);
+                if(this.getPosition().y > mapBounds.top) {
+                    this.move(0, -1);
+                    worldView.move(0, 1);
+                }
             }
             if ((keyPresses.get("DOWN") && !keyPresses.get("SPACE"))) {
-                this.move(0, 1);
-                worldView.move(0, -1);
+                if(this.getPosition().y - mapBounds.height < 0) {
+                    this.move(0, 1);
+                    worldView.move(0, -1);
+                }
             }
+
             worldView.setCenter(this.getPosition());
         } else {
             assert npcCollide != null;

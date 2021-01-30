@@ -2,6 +2,7 @@ package me.ghost.map;
 
 
 import me.ghost.resourceEnum.TileLoader;
+import org.jsfml.graphics.FloatRect;
 import org.jsfml.system.Vector2f;
 
 import java.io.*;
@@ -80,5 +81,9 @@ public class GameMap {
 
     public int getDrawHeight() {
         return cell.size() - 2;
+    }
+
+    public FloatRect getMapBounds(){
+        return new FloatRect(0, 0, getDrawWidth() * 16, getDrawHeight() * 16);
     }
 }

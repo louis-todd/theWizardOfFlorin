@@ -60,7 +60,7 @@ public class Game {
     public void run() {
         while (window.isOpen()) {
             game.handleEvents(wizard);
-            wizard.moveCharacter(keyPresses, toDraw, worldView);
+            wizard.moveCharacter(keyPresses, toDraw, worldView, currentMap.getMapBounds());
             updateWindow();
         }
     }
