@@ -2,7 +2,6 @@
 package me.ghost;
 
 import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -60,7 +59,7 @@ public class Game {
     public void run() {
         while (window.isOpen()) {
             game.handleEvents(wizard);
-            wizard.moveCharacter(keyPresses, toDraw, worldView, currentMap.getMapBounds(), currentMap);
+            wizard.moveCharacter(keyPresses, toDraw, worldView, currentMap);
             updateWindow();
         }
     }
