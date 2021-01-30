@@ -70,12 +70,7 @@ public class Game {
     private void updateWindow(){
         window.clear(Color.RED);
 
-        drawingBounds();
-        for(int i = drawingBounds[2]; i <= drawingBounds[3]; i++){
-            for(int j = drawingBounds[0]; j <= drawingBounds[1]; j++){
-                mapHouse.getTile(i, j).draw(window, RenderStates.DEFAULT);
-            }
-        }
+        drawTiles();
 
         for(Drawable item : toDraw){
             window.draw(item);
@@ -84,6 +79,16 @@ public class Game {
 
         window.setView(worldView);
         window.display();
+    }
+
+    private void drawTiles(){
+        drawingBounds();
+
+        for(int i = drawingBounds[2]; i <= drawingBounds[3]; i++){
+            for(int j = drawingBounds[0]; j <= drawingBounds[1]; j++){
+                mapHouse.getTile(i, j).draw(window, RenderStates.DEFAULT);
+            }
+        }
     }
 
     private void drawingBounds(){
