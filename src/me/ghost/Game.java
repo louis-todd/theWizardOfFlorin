@@ -60,7 +60,7 @@ public class Game {
     public void run() {
         while (window.isOpen()) {
             game.handleEvents(wizard);
-            wizard.moveCharacter(keyPresses, toDraw, worldView, currentMap.getMapBounds());
+            wizard.moveCharacter(keyPresses, toDraw, worldView, currentMap.getMapBounds(), currentMap);
             updateWindow();
         }
     }
@@ -94,10 +94,11 @@ public class Game {
     }
 
     private void drawingBounds(){
-        drawingBounds[0] = Math.max((int) (wizard.getPosition().x / 16) - 20, 0);
-        drawingBounds[1] = Math.min((int) (wizard.getPosition().x / 16) + 20, currentMap.getDrawWidth());
-        drawingBounds[2] = Math.max((int) (wizard.getPosition().y / 16) - 20, 0);
-        drawingBounds[3] = Math.min((int) (wizard.getPosition().y / 16) + 20, currentMap.getDrawHeight());
+        drawingBounds[0] = Math.max((int) (worldView.getCenter().x / 16) - 20, 0);
+        drawingBounds[1] = Math.min((int) (worldView.getCenter().x / 16) + 20, currentMap.getDrawWidth());
+        drawingBounds[2] = Math.max((int) (worldView.getCenter().y / 16) - 20, 0);
+        drawingBounds[3] = Math.min((int) (worldView.getCenter().y / 16) + 20, currentMap.getDrawHeight());
     }
+
 }
 
