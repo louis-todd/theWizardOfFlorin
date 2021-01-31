@@ -35,25 +35,21 @@ public class MoveableCharacter extends Character {
             if ((keyPresses.get("RIGHT") && !keyPresses.get("SPACE"))) {
                 if (this.getPosition().x - currentMap.getMapBounds().width < 0) {
                     this.move(1, 0);
-                    worldView.move(-1, 0);
                 }
             }
             if ((keyPresses.get("LEFT") && !keyPresses.get("SPACE"))) {
                 if (this.getPosition().x > currentMap.getMapBounds().left) {
                     this.move(-1, 0);
-                    worldView.move(1, 0);
                 }
             }
             if ((keyPresses.get("UP") && !keyPresses.get("SPACE"))) {
                 if (this.getPosition().y > currentMap.getMapBounds().top) {
                     this.move(0, -1);
-                    worldView.move(0, 1);
                 }
             }
             if ((keyPresses.get("DOWN") && !keyPresses.get("SPACE"))) {
                 if (this.getPosition().y - currentMap.getMapBounds().height < 0) {
                     this.move(0, 1);
-                    worldView.move(0, -1);
                 }
             }
             setViewPosition(worldView, this.getPosition(), currentMap);
@@ -96,7 +92,7 @@ public class MoveableCharacter extends Character {
 
 
     private void setViewPosition(View mapView, Vector2f position, GameMap currentMap){
-        Vector2f viewPosition = new Vector2f(0, 0);
+        //new Vector2f(0, 0);
         float x = this.getPosition().x;
         float y = this.getPosition().y;
         boolean changed = false;
@@ -116,6 +112,7 @@ public class MoveableCharacter extends Character {
             y = mapView.getSize().y/2;
             changed = true;
         }
+        Vector2f viewPosition;
         if (!changed){
             viewPosition = this.getPosition();
         } else {
