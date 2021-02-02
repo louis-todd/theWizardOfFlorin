@@ -23,9 +23,9 @@ public class Game {
             TextureType.SQUARE16.getTexture());
     private final List<Drawable> toDraw = new ArrayList<>();;
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
-    private Npc npc = new Npc("Name Placeholder", 250, 300, TextureType.SQUARE16.getTexture());
-    private Npc npc2 = new Npc("Name Placeholder", 150, 300, TextureType.SQUARE16.getTexture());
-    private Npc npc3 = new Npc("Name Placeholder", 50, 300, TextureType.SQUARE16.getTexture());
+    private Npc npc = new Npc("Placeholder1", 250, 300, TextureType.SQUARE16.getTexture());
+    private Npc npc2 = new Npc("Placeholder2", 150, 300, TextureType.SQUARE16.getTexture());
+    private Npc npc3 = new Npc("Placeholder3", 50, 300, TextureType.SQUARE16.getTexture());
     private Npc[] npcArray = { npc, npc2, npc3 };
     private ArrayList<Npc> NPCs = new ArrayList<Npc>(Arrays.asList(npcArray));
     private Mechanics game = new Mechanics(keyPresses, window, NPCs, interaction, battleWindow);

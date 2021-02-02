@@ -113,9 +113,9 @@ public class Mechanics {
                         // If space has already been pressed
                         if (keyPresses.get("SPACE")) {
                             // if still tiles to step through do
-                            if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().length) {
-                                interaction.setTextContent(
-                                        String.valueOf(interactingNPC.getScript()[interactingNPC.getCurrentIndex()]));
+                            if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().size()) {
+                                interaction.setTextContent(String
+                                        .valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
                                 interactingNPC.incrementCurrentIndex();
                                 ;
                             }
@@ -128,7 +128,7 @@ public class Mechanics {
                         }
                         // if first space, set to display first tile
                         else {
-                            interaction.setTextContent(interactingNPC.getScript()[0]);
+                            interaction.setTextContent(interactingNPC.getScript().get(0));
                             handleKeyPress(keyEvent, true);
                         }
                     }
@@ -146,15 +146,15 @@ public class Mechanics {
                 case MOUSE_BUTTON_PRESSED:
                     if (keyPresses.get("SPACE")) {
                         // if still tiles left to show, step through them
-                        if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().length) {
+                        if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().size()) {
                             interaction.setTextContent(
-                                    String.valueOf(interactingNPC.getScript()[interactingNPC.getCurrentIndex()]));
+                                    String.valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
                             interactingNPC.incrementCurrentIndex();
                             System.out.println("If: 1");
                         }
                         // if have read all tiles, act as if space has been clicked to close the
                         // dialogue box
-                        else if (interactingNPC.getCurrentIndex() >= interactingNPC.getScript().length) {
+                        else if (interactingNPC.getCurrentIndex() >= interactingNPC.getScript().size()) {
                             keyPresses.put("SPACE", !(keyPresses.get("SPACE")));
                             interactingNPC.resetScript();
                             ;
