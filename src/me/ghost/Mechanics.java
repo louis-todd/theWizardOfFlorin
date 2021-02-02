@@ -6,6 +6,7 @@ import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import me.ghost.Characters.MoveableCharacter;
 import me.ghost.Characters.Npc;
@@ -20,12 +21,15 @@ public class Mechanics {
     private Dialogue interaction;
     private Npc npc;
     private BattleWindow battleWindow;
+    private ArrayList<Npc> NPCs = new ArrayList<>();
+    private Npc interactingNPC;
 
-    public Mechanics(Map<String, Boolean> keyPresses, RenderWindow window, Npc npc, Dialogue interaction, BattleWindow battleWindow){
+    public Mechanics(Map<String, Boolean> keyPresses, RenderWindow window, ArrayList<Npc> NPCs, Dialogue interaction,
+            BattleWindow battleWindow) {
         this.keyPresses = keyPresses;
         this.window = window;
         this.interaction = interaction;
-        this.npc = npc;
+        this.NPCs = NPCs;
         this.battleWindow = battleWindow;
     }
 
@@ -42,7 +46,7 @@ public class Mechanics {
      * Sets direction flags to true if direction key is pressed
      *
      * @param movementKey direction key
-     * @param pressed boolean - whether the key is pressed or not
+     * @param pressed     boolean - whether the key is pressed or not
      */
     private void handleKeyPress(KeyEvent movementKey, boolean pressed) {
         switch (movementKey.key) {
@@ -72,8 +76,8 @@ public class Mechanics {
     /**
      * Handles the input events
      */
-    public void handleEvents(MoveableCharacter wizard){
-        //Handle events
+    public void handleEvents(MoveableCharacter wizard) {
+        // Handle events
         for (Event event : window.pollEvents()) {
             switch (event.type) {
                 case CLOSED:
@@ -81,56 +85,80 @@ public class Mechanics {
                     break;
                 case KEY_RELEASED:
                     KeyEvent keyRelease = event.asKeyEvent();
-                    if ((keyRelease.key == Keyboard.Key.RIGHT || keyRelease.key == Keyboard.Key.LEFT || keyRelease.key == Keyboard.Key.UP || keyRelease.key == Keyboard.Key.DOWN)) {
+                    if ((keyRelease.key == Keyboard.Key.RIGHT || keyRelease.key == Keyboard.Key.LEFT
+                            || keyRelease.key == Keyboard.Key.UP || keyRelease.key == Keyboard.Key.DOWN)) {
                         handleKeyPress(keyRelease, false);
                     }
                     break;
                 case KEY_PRESSED:
                     KeyEvent keyEvent = event.asKeyEvent();
-                        if ((keyEvent.key == Keyboard.Key.RIGHT || keyEvent.key == Keyboard.Key.LEFT || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN)) {
+                    if ((keyEvent.key == Keyboard.Key.RIGHT || keyEvent.key == Keyboard.Key.LEFT
+                            || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN)) {
+                        handleKeyPress(keyEvent, true);
+                        break;
+                    }
+
+                    // Calculate which NPC is being interacted with
+                    interactingNPC = null;
+                    for (Npc npc : NPCs) {
+                        if (wizard.dialogueAreaCollide(npc)) {
+                            interactingNPC = npc;
+                        }
+                    }
+                    if (interactingNPC == null) {
+                        break;
+                    }
+
+                    if (keyEvent.key == Keyboard.Key.SPACE) {
+                        // If space has already been pressed
+                        if (keyPresses.get("SPACE")) {
+                            // if still tiles to step through do
+                            if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().length) {
+                                interaction.setTextContent(
+                                        String.valueOf(interactingNPC.getScript()[interactingNPC.getCurrentIndex()]));
+                                interactingNPC.incrementCurrentIndex();
+                                ;
+                            }
+                            // if at tile limit, close
+                            else {
+                                keyPresses.put("SPACE", false);
+                                interactingNPC.resetScript();
+                                ;
+                            }
+                        }
+                        // if first space, set to display first tile
+                        else {
+                            interaction.setTextContent(interactingNPC.getScript()[0]);
                             handleKeyPress(keyEvent, true);
                         }
-                        if(keyEvent.key == Keyboard.Key.SPACE && wizard.dialogueAreaCollide(npc)){
-                            //If space has already been pressed
-                            if(keyPresses.get("SPACE")){
-                                //if still tiles to step through do
-                                if(npc.getCurrentIndex()<npc.getScript().length){
-                                    interaction.setTextContent(String.valueOf(npc.getScript()[npc.getCurrentIndex()]));
-                                    npc.incrementCurrentIndex();;
-                                }
-                                //if at tile limit, close
-                                else{
-                                    keyPresses.put("SPACE", false);
-                                    npc.resetScript();;
-                                }
-                            }
-                            //if first space, set to display first tile
-                            else{
-                                interaction.setTextContent(npc.getScript()[0]);
-                                handleKeyPress(keyEvent, true);
-                            }
+                    }
+                    if (keyEvent.key == Keyboard.Key.B) {
+                        // If B has already been pressed
+                        if (keyPresses.get("B")) {
+                            keyPresses.put("B", false);
                         }
-                        if(keyEvent.key == Keyboard.Key.B && wizard.dialogueAreaCollide(npc)){
-                            //If B has already been pressed
-                            if(keyPresses.get("B")){
-                                keyPresses.put("B", false);
-                            }
-                            //if first B, set to display battle window
-                            else{
-                                handleKeyPress(keyEvent, true);
-                            }
+                        // if first B, set to display battle window
+                        else {
+                            handleKeyPress(keyEvent, true);
                         }
+                    }
                     break;
                 case MOUSE_BUTTON_PRESSED:
-                    //if still tiles left to show, step through them
-                    if(npc.getCurrentIndex()<npc.getScript().length && keyPresses.get("SPACE")){
-                        interaction.setTextContent(String.valueOf(npc.getScript()[npc.getCurrentIndex()]));
-                        npc.incrementCurrentIndex();
-                    }
-                    //if have read all tiles, act as if space has been clicked to close the dialogue box
-                    else if (npc.getCurrentIndex()>=npc.getScript().length && keyPresses.get("SPACE")){
-                        keyPresses.put("SPACE", !(keyPresses.get("SPACE")));
-                        npc.resetScript();;
+                    if (keyPresses.get("SPACE")) {
+                        // if still tiles left to show, step through them
+                        if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().length) {
+                            interaction.setTextContent(
+                                    String.valueOf(interactingNPC.getScript()[interactingNPC.getCurrentIndex()]));
+                            interactingNPC.incrementCurrentIndex();
+                            System.out.println("If: 1");
+                        }
+                        // if have read all tiles, act as if space has been clicked to close the
+                        // dialogue box
+                        else if (interactingNPC.getCurrentIndex() >= interactingNPC.getScript().length) {
+                            keyPresses.put("SPACE", !(keyPresses.get("SPACE")));
+                            interactingNPC.resetScript();
+                            ;
+                        }
                     }
                 default:
                     break;
@@ -139,11 +167,11 @@ public class Mechanics {
     }
 
     public void isDialogue() {
-        //If its the first time space is pressed, set the text
-        if((keyPresses.get("SPACE"))){
+        // If its the first time space is pressed, set the text
+        if ((keyPresses.get("SPACE"))) {
             interaction.draw(window, null);
         }
-        if((keyPresses.get("B"))){
+        if ((keyPresses.get("B"))) {
             battleWindow.draw(window, null);
         }
     }
