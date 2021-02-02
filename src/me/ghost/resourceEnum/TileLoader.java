@@ -1,4 +1,4 @@
-package me.ghost.ResourceEnum;
+package me.ghost.resourceEnum;
 
 import me.ghost.Game;
 import org.jsfml.graphics.Texture;

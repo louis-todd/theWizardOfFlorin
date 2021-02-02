@@ -1,11 +1,11 @@
 
 package me.ghost;
 
-import me.ghost.Characters.MoveableCharacter;
-import me.ghost.Characters.Npc;
-import me.ghost.ResourceEnum.FontType;
-import me.ghost.ResourceEnum.TileLoader;
-import me.ghost.ResourceEnum.TextureType;
+import me.ghost.characters.MoveableCharacter;
+import me.ghost.characters.Npc;
+import me.ghost.resourceEnum.FontType;
+import me.ghost.resourceEnum.TileLoader;
+import me.ghost.resourceEnum.TextureType;
 import me.ghost.map.GameMap;
 import org.jsfml.graphics.*;
 import org.jsfml.window.VideoMode;

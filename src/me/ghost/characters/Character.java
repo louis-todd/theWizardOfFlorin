@@ -1,7 +1,6 @@
-package me.ghost.Characters;
+package me.ghost.characters;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
