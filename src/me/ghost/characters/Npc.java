@@ -1,4 +1,4 @@
-package me.ghost.characters;
+package me.ghost.Characters;
 
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Texture;

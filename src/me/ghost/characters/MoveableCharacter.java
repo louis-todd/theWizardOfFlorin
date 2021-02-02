@@ -1,4 +1,4 @@
-package me.ghost.characters;
+package me.ghost.Characters;
 
 import me.ghost.map.GameMap;
 import org.jsfml.graphics.Drawable;
@@ -19,7 +19,8 @@ public class MoveableCharacter extends Character {
         wizardColliding = false;
     }
 
-    public void moveCharacter(Map<String, Boolean> keyPresses, List<Drawable> toDraw, View worldView,GameMap currentMap) {
+    public void moveCharacter(Map<String, Boolean> keyPresses, List<Drawable> toDraw, View worldView,
+            GameMap currentMap) {
         Npc npcCollide = null;
 
         for (Drawable npcs : toDraw) {
@@ -82,45 +83,42 @@ public class MoveableCharacter extends Character {
         return this.getGlobalBounds().intersection(npc.getGlobalBounds()) != null;
     }
 
-    private FloatRect collisionRectangle(Npc npc){
+    private FloatRect collisionRectangle(Npc npc) {
         return this.getGlobalBounds().intersection((npc.getGlobalBounds()));
     }
 
-    public boolean dialogueAreaCollide(Npc npc){
+    public boolean dialogueAreaCollide(Npc npc) {
         return this.getGlobalBounds().intersection(npc.dialogueArea(4)) != null;
     }
 
-
-    private void setViewPosition(View mapView, Vector2f position, GameMap currentMap){
-        //new Vector2f(0, 0);
+    private void setViewPosition(View mapView, Vector2f position, GameMap currentMap) {
+        // new Vector2f(0, 0);
         float x = this.getPosition().x;
         float y = this.getPosition().y;
         boolean changed = false;
-        if(position.x > (currentMap.getDrawWidth()+1)*16 - mapView.getSize().x/2){
-            x = (currentMap.getDrawWidth()+1)*16 - mapView.getSize().x/2;
+        if (position.x > (currentMap.getDrawWidth() + 1) * 16 - mapView.getSize().x / 2) {
+            x = (currentMap.getDrawWidth() + 1) * 16 - mapView.getSize().x / 2;
             changed = true;
         }
-        if(position.x < mapView.getSize().x/2){
-            x = mapView.getSize().x/2;
+        if (position.x < mapView.getSize().x / 2) {
+            x = mapView.getSize().x / 2;
             changed = true;
         }
-        if(position.y > (currentMap.getDrawHeight()+1)*16 - mapView.getSize().y/2){
-            y = (currentMap.getDrawHeight()+1)*16 - mapView.getSize().y/2;
+        if (position.y > (currentMap.getDrawHeight() + 1) * 16 - mapView.getSize().y / 2) {
+            y = (currentMap.getDrawHeight() + 1) * 16 - mapView.getSize().y / 2;
             changed = true;
         }
-        if(position.y < mapView.getSize().y/2){
-            y = mapView.getSize().y/2;
+        if (position.y < mapView.getSize().y / 2) {
+            y = mapView.getSize().y / 2;
             changed = true;
         }
         Vector2f viewPosition;
-        if (!changed){
+        if (!changed) {
             viewPosition = this.getPosition();
         } else {
             viewPosition = new Vector2f(x, y);
         }
         mapView.setCenter(viewPosition);
     }
-
-
 
 }

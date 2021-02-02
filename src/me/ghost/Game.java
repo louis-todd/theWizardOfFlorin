@@ -1,21 +1,20 @@
 
 package me.ghost;
 
+import me.ghost.Characters.MoveableCharacter;
+import me.ghost.Characters.Npc;
+import me.ghost.ResourceEnum.FontType;
+import me.ghost.ResourceEnum.TileLoader;
+import me.ghost.ResourceEnum.TextureType;
+import me.ghost.map.GameMap;
+import org.jsfml.graphics.*;
+import org.jsfml.window.VideoMode;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
-import me.ghost.characters.MoveableCharacter;
-import me.ghost.characters.Npc;
-import me.ghost.map.GameMap;
-import me.ghost.resourceEnum.FontType;
-import me.ghost.resourceEnum.TextureType;
-import me.ghost.resourceEnum.TileLoader;
-import org.jsfml.graphics.*;
-
-import org.jsfml.window.VideoMode;
 
 public class Game {
 
@@ -27,9 +26,15 @@ public class Game {
             TextureType.SQUARE16.getTexture());
     private final List<Drawable> toDraw = new ArrayList<>();
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
-    private Npc npc = new Npc("Name Placeholder", 250, 300, TextureType.SQUARE16.getTexture());
-    private Mechanics game = new Mechanics(keyPresses, window, npc, interaction, battleWindow);
-    private Drawable[] itemsToDraw = { wizard, npc };
+
+    private Npc npc = new Npc("Placeholder1", 250, 300, TextureType.SQUARE16.getTexture());
+    private Npc npc2 = new Npc("Placeholder2", 150, 300, TextureType.SQUARE16.getTexture());
+    private Npc npc3 = new Npc("Placeholder3", 50, 300, TextureType.SQUARE16.getTexture());
+    private Npc[] npcArray = { npc, npc2, npc3 };
+    private ArrayList<Npc> NPCs = new ArrayList<Npc>(Arrays.asList(npcArray));
+
+    private Mechanics game = new Mechanics(keyPresses, window, NPCs, interaction, battleWindow);
+    private Drawable[] itemsToDraw = { wizard, npc, npc2, npc3 };
     GameMap mapHouse;
     GameMap currentMap;
     View worldView;

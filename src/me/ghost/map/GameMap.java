@@ -1,7 +1,7 @@
 package me.ghost.map;
 
 
-import me.ghost.resourceEnum.TileLoader;
+import me.ghost.ResourceEnum.TileLoader;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.system.Vector2f;
 
