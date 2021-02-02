@@ -20,24 +20,25 @@ import org.jsfml.window.VideoMode;
 public class Game {
 
     private final RenderWindow window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");
-    private Dialogue interaction = new Dialogue(FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME", "Content Placeholder");
+    private Dialogue interaction = new Dialogue(FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME",
+            "Content Placeholder");
     private BattleWindow battleWindow = new BattleWindow();
-    private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 240, TextureType.SQUARE16.getTexture());
+    private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 240,
+            TextureType.SQUARE16.getTexture());
     private final List<Drawable> toDraw = new ArrayList<>();
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
     private Npc npc = new Npc("Name Placeholder", 250, 300, TextureType.SQUARE16.getTexture());
     private Mechanics game = new Mechanics(keyPresses, window, npc, interaction, battleWindow);
-    private Drawable[] itemsToDraw = {wizard, npc};
+    private Drawable[] itemsToDraw = { wizard, npc };
     GameMap mapHouse;
     GameMap currentMap;
     View worldView;
-    private final int[] drawingBounds;
+    private final Map<String, Integer> drawingBounds = new CaseInsensitiveMap<>();
 
     /**
      * Constructor for the game class
      */
     public Game() throws FileNotFoundException {
-
 
         TileLoader tileLoader = new TileLoader();
         game.initKeyPressesMap();
@@ -45,12 +46,12 @@ public class Game {
         interaction.setCharacterName(npc.getName());
 
         mapHouse = new GameMap("resources/map._House.csv", 50, tileLoader);
-        //Limit the framerate
-        window.setFramerateLimit(120);
         worldView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
         worldView.setCenter(wizard.getPosition());
-        drawingBounds = new int[4];
         currentMap = mapHouse;
+
+        // Limit the framerate
+        window.setFramerateLimit(120);
     }
 
     /**
@@ -65,15 +66,15 @@ public class Game {
     }
 
     /**
-
+     * 
      * Updates the window
      */
-    private void updateWindow(){
+    private void updateWindow() {
         window.clear(Color.RED);
 
         drawTiles();
 
-        for(Drawable item : toDraw){
+        for (Drawable item : toDraw) {
             window.draw(item);
         }
         game.isDialogue();
@@ -82,22 +83,27 @@ public class Game {
         window.display();
     }
 
-    private void drawTiles(){
-        drawingBounds();
+    private void drawTiles() {
+        initialiseDrawingBounds();
 
-        for(int i = drawingBounds[2]; i <= drawingBounds[3]; i++){
-            for(int j = drawingBounds[0]; j <= drawingBounds[1]; j++){
+        for (int i = drawingBounds.get("TopCameraEdge"); i <= drawingBounds.get("BottomCameraEdge"); i++) {
+            for (int j = drawingBounds.get("LeftCameraEdge"); j <= drawingBounds.get("RightCameraEdge"); j++) {
                 currentMap.getTile(i, j).draw(window, RenderStates.DEFAULT);
             }
         }
     }
 
-    private void drawingBounds(){
-        drawingBounds[0] = Math.max((int) (worldView.getCenter().x / 16) - 20, 0);
-        drawingBounds[1] = Math.min((int) (worldView.getCenter().x / 16) + 20, currentMap.getDrawWidth());
-        drawingBounds[2] = Math.max((int) (worldView.getCenter().y / 16) - 20, 0);
-        drawingBounds[3] = Math.min((int) (worldView.getCenter().y / 16) + 20, currentMap.getDrawHeight());
+    private void initialiseDrawingBounds() {
+        int tileSize = 16;
+        int cameraWidth = 40;
+        this.drawingBounds.put("LeftCameraEdge",
+                Math.max((int) (worldView.getCenter().x / tileSize) - (cameraWidth / 2), 0));
+        this.drawingBounds.put("RightCameraEdge",
+                Math.min((int) (worldView.getCenter().x / tileSize) + (cameraWidth / 2), currentMap.getDrawWidth()));
+        this.drawingBounds.put("TopCameraEdge",
+                Math.max((int) (worldView.getCenter().y / tileSize) - (cameraWidth / 2), 0));
+        this.drawingBounds.put("BottomCameraEdge",
+                Math.min((int) (worldView.getCenter().y / tileSize) + (cameraWidth / 2), currentMap.getDrawHeight()));
     }
 
 }
-
