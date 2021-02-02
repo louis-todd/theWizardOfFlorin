@@ -1,42 +1,56 @@
+
 package me.ghost;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import me.ghost.Characters.MoveableCharacter;
-import me.ghost.Characters.Npc;
-import me.ghost.ResourceEnum.FontType;
-import me.ghost.ResourceEnum.TextureType;
+import me.ghost.characters.MoveableCharacter;
+import me.ghost.characters.Npc;
+import me.ghost.map.GameMap;
+import me.ghost.resourceEnum.FontType;
+import me.ghost.resourceEnum.TextureType;
+import me.ghost.resourceEnum.TileLoader;
 import org.jsfml.graphics.*;
 
 import org.jsfml.window.VideoMode;
 
 public class Game {
 
-    private final RenderWindow window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");;
-    private Dialogue interaction = new Dialogue(FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME", "Content Placeholder");
+    private final RenderWindow window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");
+    private Dialogue interaction = new Dialogue(FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME",
+            "Content Placeholder");
     private BattleWindow battleWindow = new BattleWindow();
-    private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 240, TextureType.SQUARE16.getTexture());
-    private final List<Drawable> toDraw = new ArrayList<>();;
+    private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 240,
+            TextureType.SQUARE16.getTexture());
+    private final List<Drawable> toDraw = new ArrayList<>();
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
     private Npc npc = new Npc("Name Placeholder", 250, 300, TextureType.SQUARE16.getTexture());
     private Mechanics game = new Mechanics(keyPresses, window, npc, interaction, battleWindow);
-    private Drawable[] itemsToDraw = {wizard, npc};
-
+    private Drawable[] itemsToDraw = { wizard, npc };
+    GameMap mapHouse;
+    GameMap currentMap;
+    View worldView;
+    private final Map<String, Integer> drawingBounds = new CaseInsensitiveMap<>();
 
     /**
      * Constructor for the game class
      */
-    public Game() {
+    public Game() throws FileNotFoundException {
 
+        TileLoader tileLoader = new TileLoader();
         game.initKeyPressesMap();
         toDraw.addAll(Arrays.asList(itemsToDraw));
         interaction.setCharacterName(npc.getName());
 
+        mapHouse = new GameMap("resources/map._House.csv", 50, tileLoader);
+        worldView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
+        worldView.setCenter(wizard.getPosition());
+        currentMap = mapHouse;
 
-        //Limit the framerate
+        // Limit the framerate
         window.setFramerateLimit(120);
     }
 
@@ -46,23 +60,50 @@ public class Game {
     public void run() {
         while (window.isOpen()) {
             game.handleEvents(wizard);
-            wizard.moveCharacter(keyPresses, toDraw);
+            wizard.moveCharacter(keyPresses, toDraw, worldView, currentMap);
             updateWindow();
         }
     }
 
     /**
-
+     * 
      * Updates the window
      */
-    private void updateWindow(){
+    private void updateWindow() {
         window.clear(Color.RED);
 
-        for(Drawable item : toDraw){
+        drawTiles();
+
+        for (Drawable item : toDraw) {
             window.draw(item);
         }
         game.isDialogue();
 
+        window.setView(worldView);
         window.display();
     }
+
+    private void drawTiles() {
+        initialiseDrawingBounds();
+
+        for (int i = drawingBounds.get("TopCameraEdge"); i <= drawingBounds.get("BottomCameraEdge"); i++) {
+            for (int j = drawingBounds.get("LeftCameraEdge"); j <= drawingBounds.get("RightCameraEdge"); j++) {
+                currentMap.getTile(i, j).draw(window, RenderStates.DEFAULT);
+            }
+        }
+    }
+
+    private void initialiseDrawingBounds() {
+        int tileSize = 16;
+        int cameraWidth = 40;
+        this.drawingBounds.put("LeftCameraEdge",
+                Math.max((int) (worldView.getCenter().x / tileSize) - (cameraWidth / 2), 0));
+        this.drawingBounds.put("RightCameraEdge",
+                Math.min((int) (worldView.getCenter().x / tileSize) + (cameraWidth / 2), currentMap.getDrawWidth()));
+        this.drawingBounds.put("TopCameraEdge",
+                Math.max((int) (worldView.getCenter().y / tileSize) - (cameraWidth / 2), 0));
+        this.drawingBounds.put("BottomCameraEdge",
+                Math.min((int) (worldView.getCenter().y / tileSize) + (cameraWidth / 2), currentMap.getDrawHeight()));
+    }
+
 }
