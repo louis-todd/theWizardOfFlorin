@@ -43,7 +43,7 @@ public class Game {
     /**
      * Constructor for the game class
      */
-    public Game() throws FileNotFoundException {
+    public Game() {
 
         TileLoader tileLoader = new TileLoader();
         game.initKeyPressesMap();
