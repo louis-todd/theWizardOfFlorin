@@ -38,6 +38,7 @@ public class Game {
     GameMap mapHouse;
     GameMap currentMap;
     View worldView;
+    View battleView;
     private final Map<String, Integer> drawingBounds = new CaseInsensitiveMap<>();
 
     /**
@@ -53,6 +54,7 @@ public class Game {
         mapHouse = new GameMap("resources/map._House.csv", 50, tileLoader);
         worldView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
         worldView.setCenter(wizard.getPosition());
+        battleView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
         currentMap = mapHouse;
 
         // Limit the framerate
@@ -65,7 +67,9 @@ public class Game {
     public void run() {
         while (window.isOpen()) {
             game.handleEvents(wizard);
-            wizard.moveCharacter(keyPresses, toDraw, worldView, currentMap);
+            if(!game.isBattleScreenOpen()) {
+                wizard.moveCharacter(keyPresses, toDraw, worldView, currentMap);
+            }
             updateWindow();
         }
     }
@@ -84,7 +88,11 @@ public class Game {
         }
         game.isDialogue();
 
-        window.setView(worldView);
+        if(!game.isBattleScreenOpen()) {
+            window.setView(worldView);
+        } else {
+            window.setView(battleView);
+        }
         window.display();
     }
 

@@ -19,6 +19,7 @@ public class Mechanics {
     private BattleWindow battleWindow;
     private ArrayList<Npc> NPCs = new ArrayList<>();
     private Npc interactingNPC;
+    private boolean battleScreenOpen = false;
 
     public Mechanics(Map<String, Boolean> keyPresses, RenderWindow window, ArrayList<Npc> NPCs, Dialogue interaction,
             BattleWindow battleWindow) {
@@ -132,6 +133,7 @@ public class Mechanics {
                         // If B has already been pressed
                         if (keyPresses.get("B")) {
                             keyPresses.put("B", false);
+                            battleScreenOpen = false;
                         }
                         // if first B, set to display battle window
                         else {
@@ -169,7 +171,11 @@ public class Mechanics {
         }
         if ((keyPresses.get("B"))) {
             battleWindow.draw(window, null);
+            battleScreenOpen = true;
         }
     }
 
+    public boolean isBattleScreenOpen() {
+        return battleScreenOpen;
+    }
 }
