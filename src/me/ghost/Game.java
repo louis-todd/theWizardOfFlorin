@@ -81,18 +81,20 @@ public class Game {
     private void updateWindow() {
         window.clear(Color.RED);
 
-        drawTiles();
+
+        if(!game.isBattleScreenOpen()) {
+            drawTiles();
+            window.setView(worldView);
+        } else {
+            window.setView(battleView);
+        }
 
         for (Drawable item : toDraw) {
             window.draw(item);
         }
         game.isDialogue();
 
-        if(!game.isBattleScreenOpen()) {
-            window.setView(worldView);
-        } else {
-            window.setView(battleView);
-        }
+
         window.display();
     }
 
