@@ -20,6 +20,10 @@ public class Dialogue implements Drawable {
 
     private Text toWrite;
 
+    private int xBoundary = 20;
+
+    private int yBoundary = 320;
+
     public Dialogue(Font font, Texture setBoardTexture, String textspeakingCharacter, String dialogueMessage) {
         simpleFont = new Font();                                    //Set the font
         speakingCharacter = textspeakingCharacter;
@@ -39,13 +43,13 @@ public class Dialogue implements Drawable {
 
         //Set characterName, size, and position
         characterName = new Text(speakingCharacter, simpleFont, 20) {{
-            this.setPosition(120, 320);
+            this.setPosition(xBoundary+100, yBoundary+20);
         }};
         toDraw.add(characterName);
 
         //Set Message
         toWrite = new Text(dialogueText, simpleFont, 20) {{
-            this.setPosition(60, 370);
+            this.setPosition(xBoundary+40, yBoundary+70);
         }};
         toDraw.add(toWrite);
 
@@ -56,7 +60,7 @@ public class Dialogue implements Drawable {
         Vector2f dimensions = new Vector2f(600,200);
         // this.setFillColor(new Color(98,52,18));
         RectangleShape textBackground = new RectangleShape(dimensions) {{
-            this.setPosition(20, 300);
+            this.setPosition(xBoundary, yBoundary);
             this.setSize(dimensions);
             // this.setFillColor(new Color(98,52,18));
             this.setTexture(boardTexture);
