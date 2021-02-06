@@ -144,7 +144,7 @@ public class Mechanics {
                                 interaction.setTextContent(interactingNPC.getScript().get(0));
                                 handleKeyPress(keyEvent, true);
                             }
-                            if (interactingItem != null && interactingNPC == null) {
+                            if (interactingItem != null) {
                                 interactingItem.setAsFound(true);
                             }
                         }
