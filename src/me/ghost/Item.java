@@ -11,7 +11,6 @@ public class Item extends Sprite {
     private Boolean availibleToCollect = false;
     private Boolean isFound = false;
     private String itemName = "placeholder";
-    
 
     public Item(String itemName, float xPosition, float yPosition, Texture itemTexture) {
         this.setTexture(itemTexture);
@@ -39,9 +38,9 @@ public class Item extends Sprite {
         this.isFound = isFound;
     }
 
-    public FloatRect dialogueArea(float scaleFactor){
-        float centrex = this.getGlobalBounds().left + (this.getGlobalBounds().width/2);
-        float centrey = this.getGlobalBounds().top + (this.getGlobalBounds().height/2);
+    public FloatRect dialogueArea(float scaleFactor) {
+        float centrex = this.getGlobalBounds().left + (this.getGlobalBounds().width / 2);
+        float centrey = this.getGlobalBounds().top + (this.getGlobalBounds().height / 2);
         float newHeight = this.getGlobalBounds().height * scaleFactor;
         float newWidth = this.getGlobalBounds().width * scaleFactor;
         float newLeft = centrex - (newWidth / 2);

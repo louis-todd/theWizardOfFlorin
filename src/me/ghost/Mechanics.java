@@ -122,7 +122,7 @@ public class Mechanics {
                     if (keyEvent.key == Keyboard.Key.SPACE) {
                         // If space has already been pressed
                         if (keyPresses.get("SPACE")) {
-                            if (interactingNPC != null & interactingItem==null && interactingNPC.shouldDraw()) {
+                            if (interactingNPC != null & interactingItem == null && interactingNPC.shouldDraw()) {
                                 // if still tiles to step through do
                                 if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().size()) {
                                     interaction.setTextContent(String
@@ -140,7 +140,7 @@ public class Mechanics {
                         }
                         // if first space, set to display first tile
                         else {
-                            if (interactingNPC != null && interactingItem == null && interactingNPC.shouldDraw()){
+                            if (interactingNPC != null && interactingItem == null && interactingNPC.shouldDraw()) {
                                 interaction.setTextContent(interactingNPC.getScript().get(0));
                                 handleKeyPress(keyEvent, true);
                             }
@@ -161,7 +161,8 @@ public class Mechanics {
                     }
                     break;
                 case MOUSE_BUTTON_PRESSED:
-                    if (keyPresses.get("SPACE") && interactingNPC != null && interactingItem == null && interactingNPC.shouldDraw()) {
+                    if (keyPresses.get("SPACE") && interactingNPC != null && interactingItem == null
+                            && interactingNPC.shouldDraw()) {
                         // if still tiles left to show, step through them
                         if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().size()) {
                             interaction.setTextContent(

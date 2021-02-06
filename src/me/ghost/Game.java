@@ -42,12 +42,13 @@ public class Game {
     private ArrayList<Item> ITEMS = new ArrayList<Item>(Arrays.asList(itemArray));
 
     private Drawable[] itemsToDraw = { wizard, npc, npc2, npc3, boat };
-    private Boolean[] shouldDrawItem = { true, true, true, true, true};
+    private Boolean[] shouldDrawItem = { true, true, true, true, true };
     private Mechanics game = new Mechanics(keyPresses, window, NPCs, ITEMS, shouldDrawItem, interaction, battleWindow);
     GameMap mapHouse;
     GameMap currentMap;
     View worldView;
     private final Map<String, Integer> drawingBounds = new CaseInsensitiveMap<>();
+
     /**
      * Constructor for the game class
      */
@@ -87,23 +88,23 @@ public class Game {
 
         drawTiles();
 
-        int index=0;
+        int index = 0;
         for (Drawable item : toDraw) {
             // if(shouldDrawItem[index] == true){
-            //     window.draw(item);
+            // window.draw(item);
             // }
-            if(item instanceof Item){
-                if(!((Item) item).isFound()) {
+            if (item instanceof Item) {
+                if (!((Item) item).isFound()) {
                     window.draw(item);
                 }
             }
             // if(item instanceof Npc){
-            //     if(((Npc) item).shouldDraw()) {
-            //         window.draw(item);
-            //     }
+            // if(((Npc) item).shouldDraw()) {
+            // window.draw(item);
             // }
-            //move wizard
-            else{
+            // }
+            // move wizard
+            else {
                 window.draw(item);
             }
             index++;
