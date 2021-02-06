@@ -41,8 +41,7 @@ public class Game {
     private Item[] itemArray = { boat };
     private ArrayList<Item> ITEMS = new ArrayList<Item>(Arrays.asList(itemArray));
 
-    // private Drawable[] itemsToDraw = { wizard, npc, npc2, npc3, boat };
-    private Drawable[] itemsToDraw = { wizard, boat };
+    private Drawable[] itemsToDraw = { wizard, npc, npc2, npc3, boat };
     private Boolean[] shouldDrawItem = { true, true, true, true, true};
     private Mechanics game = new Mechanics(keyPresses, window, NPCs, ITEMS, shouldDrawItem, interaction, battleWindow);
     GameMap mapHouse;
@@ -98,6 +97,12 @@ public class Game {
                     window.draw(item);
                 }
             }
+            // if(item instanceof Npc){
+            //     if(((Npc) item).shouldDraw()) {
+            //         window.draw(item);
+            //     }
+            // }
+            //move wizard
             else{
                 window.draw(item);
             }

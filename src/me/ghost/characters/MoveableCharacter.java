@@ -28,13 +28,18 @@ public class MoveableCharacter extends Character {
 
         int index = 0;
         for (Drawable obstacle : toDraw) {
-            if (this.collides(obstacle) && shouldDrawItem[index] == true) {
-                wizardColliding = true;
+            if (this.collides(obstacle)) {
                 if (obstacle instanceof Npc) {
-                    npcCollide = (Npc) obstacle;
+                    if (((Npc) obstacle).shouldDraw()) {
+                        npcCollide = (Npc) obstacle;
+                        wizardColliding = true;
+                    }
                 }
                 if (obstacle instanceof Item) {
-                    itemCollide = (Item) obstacle;
+                    if (!((Item) obstacle).isFound()){
+                        itemCollide = (Item) obstacle;
+                        wizardColliding = true;
+                    }
                 }
             }
             index++;
@@ -119,10 +124,6 @@ public class MoveableCharacter extends Character {
         }
         return null;
     }
-
-    // public boolean dialogueAreaCollide(Npc npc) {
-    // return this.getGlobalBounds().intersection(npc.dialogueArea(4)) != null;
-    // }
 
     public boolean dialogueAreaCollide(Drawable obstacle) {
         if (obstacle instanceof Npc) {

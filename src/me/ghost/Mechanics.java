@@ -145,8 +145,8 @@ public class Mechanics {
                                 handleKeyPress(keyEvent, true);
                             }
                             if (interactingItem != null && interactingNPC == null) {
-                                // System.out.println("SET THIS ITEM TO COLLECTED");
                                 interactingItem.setAsFound(true);
+                                System.out.println(interactingItem.isFound());
                             }
                         }
                     }

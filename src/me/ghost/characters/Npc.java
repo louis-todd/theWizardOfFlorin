@@ -7,7 +7,7 @@ import org.jsfml.graphics.Texture;
 
 public class Npc extends Character {
 
-    private Boolean shouldDraw = false;
+    private Boolean shouldDraw = true;
 
     public Npc(String characterName, float xPosition, float yPosition, Texture npcTexture) {
         super(characterName, xPosition, yPosition, npcTexture);
