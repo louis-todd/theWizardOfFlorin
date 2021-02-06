@@ -146,7 +146,6 @@ public class Mechanics {
                             }
                             if (interactingItem != null && interactingNPC == null) {
                                 interactingItem.setAsFound(true);
-                                System.out.println(interactingItem.isFound());
                             }
                         }
                     }
@@ -162,7 +161,7 @@ public class Mechanics {
                     }
                     break;
                 case MOUSE_BUTTON_PRESSED:
-                    if (keyPresses.get("SPACE") && interactingNPC != null && interactingNPC.shouldDraw()) {
+                    if (keyPresses.get("SPACE") && interactingNPC != null && interactingItem == null && interactingNPC.shouldDraw()) {
                         // if still tiles left to show, step through them
                         if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().size()) {
                             interaction.setTextContent(
