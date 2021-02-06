@@ -7,12 +7,14 @@ import me.ghost.resourceEnum.FontType;
 import me.ghost.resourceEnum.TileLoader;
 import me.ghost.resourceEnum.TextureType;
 import me.ghost.map.GameMap;
+import me.ghost.Item;
 import org.jsfml.graphics.*;
 import org.jsfml.window.VideoMode;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,14 +34,15 @@ public class Game {
     private Npc npc3 = new Npc("Placeholder3", 50, 300, TextureType.SQUARE16.getTexture());
     private Npc[] npcArray = { npc, npc2, npc3 };
     private ArrayList<Npc> NPCs = new ArrayList<Npc>(Arrays.asList(npcArray));
+    private Item boat = new Item("Boat", 300, 300, TextureType.SQUARE16.getTexture());
 
     private Mechanics game = new Mechanics(keyPresses, window, NPCs, interaction, battleWindow);
-    private Drawable[] itemsToDraw = { wizard, npc, npc2, npc3 };
+    private Drawable[] itemsToDraw = { wizard, npc, npc2, npc3, boat };
+    private Boolean[] shouldDrawItem = { true, true, true, true, false};
     GameMap mapHouse;
     GameMap currentMap;
     View worldView;
     private final Map<String, Integer> drawingBounds = new CaseInsensitiveMap<>();
-
     /**
      * Constructor for the game class
      */
@@ -65,7 +68,7 @@ public class Game {
     public void run() {
         while (window.isOpen()) {
             game.handleEvents(wizard);
-            wizard.moveCharacter(keyPresses, toDraw, worldView, currentMap);
+            wizard.moveCharacter(keyPresses, toDraw, shouldDrawItem, worldView, currentMap);
             updateWindow();
         }
     }
@@ -79,8 +82,12 @@ public class Game {
 
         drawTiles();
 
+        int index=0;
         for (Drawable item : toDraw) {
-            window.draw(item);
+            if(shouldDrawItem[index] == true){
+                window.draw(item);
+            }
+            index++;
         }
         game.isDialogue();
 
