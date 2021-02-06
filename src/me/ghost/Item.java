@@ -8,9 +8,9 @@ import org.jsfml.graphics.Texture;
 
 public class Item extends Sprite {
 
-    private Boolean availibleToCollect;
-    private Boolean isFound;
-    private String itemName;
+    private Boolean availibleToCollect = false;
+    private Boolean isFound = false;
+    private String itemName = "placeholder";
     
 
     public Item(String itemName, float xPosition, float yPosition, Texture itemTexture) {

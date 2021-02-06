@@ -120,8 +120,17 @@ public class MoveableCharacter extends Character {
         return null;
     }
 
-    public boolean dialogueAreaCollide(Npc npc) {
-        return this.getGlobalBounds().intersection(npc.dialogueArea(4)) != null;
+    // public boolean dialogueAreaCollide(Npc npc) {
+    // return this.getGlobalBounds().intersection(npc.dialogueArea(4)) != null;
+    // }
+
+    public boolean dialogueAreaCollide(Drawable obstacle) {
+        if (obstacle instanceof Npc) {
+            return this.getGlobalBounds().intersection(((Npc) obstacle).dialogueArea(4)) != null;
+        } else if (obstacle instanceof Item) {
+            return this.getGlobalBounds().intersection(((Item) obstacle).dialogueArea(4)) != null;
+        }
+        return false;
     }
 
     private void setViewPosition(View mapView, Vector2f position, GameMap currentMap) {

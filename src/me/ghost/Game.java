@@ -32,13 +32,19 @@ public class Game {
     private Npc npc = new Npc("Placeholder1", 250, 300, TextureType.SQUARE16.getTexture());
     private Npc npc2 = new Npc("Placeholder2", 150, 300, TextureType.SQUARE16.getTexture());
     private Npc npc3 = new Npc("Placeholder3", 50, 300, TextureType.SQUARE16.getTexture());
-    private Npc[] npcArray = { npc, npc2, npc3 };
-    private ArrayList<Npc> NPCs = new ArrayList<Npc>(Arrays.asList(npcArray));
+
     private Item boat = new Item("Boat", 300, 300, TextureType.SQUARE16.getTexture());
 
-    private Mechanics game = new Mechanics(keyPresses, window, NPCs, interaction, battleWindow);
-    private Drawable[] itemsToDraw = { wizard, npc, npc2, npc3, boat };
-    private Boolean[] shouldDrawItem = { true, true, true, true, false};
+    private Npc[] npcArray = { npc, npc2, npc3 };
+    private ArrayList<Npc> NPCs = new ArrayList<Npc>(Arrays.asList(npcArray));
+
+    private Item[] itemArray = { boat };
+    private ArrayList<Item> ITEMS = new ArrayList<Item>(Arrays.asList(itemArray));
+
+    // private Drawable[] itemsToDraw = { wizard, npc, npc2, npc3, boat };
+    private Drawable[] itemsToDraw = { wizard, boat };
+    private Boolean[] shouldDrawItem = { true, true, true, true, true};
+    private Mechanics game = new Mechanics(keyPresses, window, NPCs, ITEMS, shouldDrawItem, interaction, battleWindow);
     GameMap mapHouse;
     GameMap currentMap;
     View worldView;
@@ -84,7 +90,15 @@ public class Game {
 
         int index=0;
         for (Drawable item : toDraw) {
-            if(shouldDrawItem[index] == true){
+            // if(shouldDrawItem[index] == true){
+            //     window.draw(item);
+            // }
+            if(item instanceof Item){
+                if(!((Item) item).isFound()) {
+                    window.draw(item);
+                }
+            }
+            else{
                 window.draw(item);
             }
             index++;
