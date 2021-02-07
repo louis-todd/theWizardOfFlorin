@@ -24,7 +24,7 @@ public abstract class Character extends Sprite {
     public ArrayList<String> getScript(){
         NPCScript.clear();
         if (characterName.equals("Mayor")) {
-            addDialogue("resources/MayorSpeech.csv");
+            addDialogue("resources/Dialogue/MayorSpeech.csv");
         }
         if (characterName == "Placeholder2") {
             NPCScript.add("Page 1: NPC2");
