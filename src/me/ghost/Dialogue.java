@@ -20,17 +20,23 @@ public class Dialogue implements Drawable {
 
     private Text toWrite;
 
-    private int xBoundary = 20;
+    private int xBoundary;
 
-    private int yBoundary = 320;
+    private int yBoundary;
+
+    private int xBoundaryOffset = 20;
+
+    private int yBoundaryOffset = 320;
 
     public Dialogue(Font font, Texture setBoardTexture, String textspeakingCharacter, String dialogueMessage) {
         simpleFont = new Font();                                    //Set the font
         speakingCharacter = textspeakingCharacter;
         dialogueText = dialogueMessage;
         boardTexture = new Texture();                               //Set image for dialogue box background
-
         toDraw = new ArrayList<>();
+
+        xBoundary+=xBoundaryOffset;
+        yBoundary+=yBoundaryOffset;
 
         boardTexture = setBoardTexture;
         simpleFont = font;
