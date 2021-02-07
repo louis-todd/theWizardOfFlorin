@@ -34,10 +34,11 @@ public class Game {
 
     private Mechanics game = new Mechanics(keyPresses, window, NPCs, interaction, battleWindow);
     private Drawable[] itemsToDraw = { wizard, npc, npc2, npc3 };
-    GameMap mapHouse;
-    GameMap currentMap;
-    View worldView;
-    View battleView;
+    private TileLoader tileLoader = new TileLoader();
+    GameMap mapHouse = new GameMap("resources/map._House.csv", 50, tileLoader);;
+    GameMap currentMap = mapHouse;
+    View worldView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());;
+    View battleView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
     private final Map<String, Integer> drawingBounds = new CaseInsensitiveMap<>();
 
     /**
@@ -45,16 +46,11 @@ public class Game {
      */
     public Game() {
 
-        TileLoader tileLoader = new TileLoader();
         game.initKeyPressesMap();
         toDraw.addAll(Arrays.asList(itemsToDraw));
         interaction.setCharacterName(npc.getName());
 
-        mapHouse = new GameMap("resources/map._House.csv", 50, tileLoader);
-        worldView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
         worldView.setCenter(wizard.getPosition());
-        battleView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
-        currentMap = mapHouse;
 
         // Limit the framerate
         window.setFramerateLimit(120);
