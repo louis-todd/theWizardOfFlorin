@@ -27,10 +27,11 @@ public class Game {
     private Npc npc = new Npc("Placeholder1", 250, 300, TextureType.SQUARE16.getTexture());
     private Npc npc2 = new Npc("Placeholder2", 150, 300, TextureType.SQUARE16.getTexture());
     private Npc npc3 = new Npc("Placeholder3", 50, 300, TextureType.SQUARE16.getTexture());
-    private Npc[] npcArray = { npc, npc2, npc3 };
+    private Npc npc4 = new Npc("Placeholder3", 700, 300, TextureType.SQUARE16.getTexture());
+    private Npc[] npcArray = { npc, npc2, npc3, npc4 };
     private ArrayList<Npc> NPCs = new ArrayList<Npc>(Arrays.asList(npcArray));
 
-    private Drawable[] itemsToDraw = { wizard, npc, npc2, npc3 };
+    private Drawable[] itemsToDraw = { wizard, npc, npc2, npc3, npc4 };
     private TileLoader tileLoader = new TileLoader();
     GameMap mapHouse = new GameMap("resources/map._House.csv", 50, tileLoader);;
     GameMap currentMap = mapHouse;
@@ -38,21 +39,25 @@ public class Game {
     View battleView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
     private final Map<String, Integer> drawingBounds = new CaseInsensitiveMap<>();
 
-    private Dialogue interaction = new Dialogue(worldView, FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(),
-            "REPLACE ME", "Content Placeholder");
+    private Dialogue interaction;
 
-    private Mechanics game = new Mechanics(keyPresses, window, NPCs, interaction, battleWindow);
+    private Mechanics game;;
 
     /**
      * Constructor for the game class
      */
     public Game() {
+        worldView.setCenter(wizard.getPosition());
 
+        interaction = new Dialogue(worldView, FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(),
+            "REPLACE ME", "Content Placeholder");
+
+        game = new Mechanics(keyPresses, window, NPCs, interaction, battleWindow);
         game.initKeyPressesMap();
         toDraw.addAll(Arrays.asList(itemsToDraw));
         interaction.setCharacterName(npc.getName());
 
-        worldView.setCenter(wizard.getPosition());
+        
 
         // Limit the framerate
         window.setFramerateLimit(120);

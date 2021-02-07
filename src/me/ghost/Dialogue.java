@@ -20,13 +20,9 @@ public class Dialogue implements Drawable {
 
     private Text toWrite;
 
-    private int xBoundary;
+    private float xBoundary;
 
-    private int yBoundary;
-
-    private int xBoundaryOffset = 20;
-
-    private int yBoundaryOffset = 320;
+    private float yBoundary;
     
     private View currentWorld;
 
@@ -40,8 +36,8 @@ public class Dialogue implements Drawable {
         toDraw = new ArrayList<>();
 
         this.currentWorld = currentWorld;
-        xBoundary+=xBoundaryOffset;
-        yBoundary+=yBoundaryOffset;
+        xBoundary=(currentWorld.getCenter().x)-300;
+        yBoundary=(currentWorld.getCenter().y)+60;
 
         boardTexture = setBoardTexture;
         simpleFont = font;
