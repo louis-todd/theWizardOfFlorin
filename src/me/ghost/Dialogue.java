@@ -26,6 +26,10 @@ public class Dialogue implements Drawable {
     
     private View currentWorld;
 
+    private Vector2f dimensions;
+
+    private RectangleShape textBackground;
+
 
 
     public Dialogue(View currentWorld, Font font, Texture setBoardTexture, String textspeakingCharacter, String dialogueMessage) {
@@ -64,9 +68,9 @@ public class Dialogue implements Drawable {
 
     public void formatText(){
         //Set the rectangle for the text to sit in
-        Vector2f dimensions = new Vector2f(600,200);
+        dimensions = new Vector2f(600,200);
         // this.setFillColor(new Color(98,52,18));
-        RectangleShape textBackground = new RectangleShape(dimensions) {{
+        textBackground = new RectangleShape(dimensions) {{
             this.setPosition(xBoundary, yBoundary);
             this.setSize(dimensions);
             // this.setFillColor(new Color(98,52,18));
@@ -76,7 +80,14 @@ public class Dialogue implements Drawable {
     }
 
     public void setTextContent(String contentToWrite){
+        System.out.println("THE DIALOGUE X SHOULD BE: " + currentWorld.getCenter().x);
+        xBoundary=(currentWorld.getCenter().x) - 300;
+        yBoundary=(currentWorld.getCenter().y) + 60;
+        System.out.println("THE DIALOGUE X IS *************: " + xBoundary);
         toWrite.setString(contentToWrite);
+        textBackground.setPosition(xBoundary, yBoundary);
+        characterName.setPosition(xBoundary+100, yBoundary+20);
+        toWrite.setPosition(xBoundary+40, yBoundary+70);
     }
 
     public void setCharacterName(String nameToWrite){
