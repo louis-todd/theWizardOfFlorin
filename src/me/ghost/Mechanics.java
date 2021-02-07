@@ -148,7 +148,6 @@ public class Mechanics {
                             interaction.setTextContent(
                                     String.valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
                             interactingNPC.incrementCurrentIndex();
-                            System.out.println("If: 1");
                         }
                         // if have read all tiles, act as if space has been clicked to close the
                         // dialogue box

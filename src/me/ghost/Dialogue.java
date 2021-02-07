@@ -80,10 +80,8 @@ public class Dialogue implements Drawable {
     }
 
     public void setTextContent(String contentToWrite){
-        System.out.println("THE DIALOGUE X SHOULD BE: " + currentWorld.getCenter().x);
         xBoundary=(currentWorld.getCenter().x) - 300;
         yBoundary=(currentWorld.getCenter().y) + 60;
-        System.out.println("THE DIALOGUE X IS *************: " + xBoundary);
         toWrite.setString(contentToWrite);
         textBackground.setPosition(xBoundary, yBoundary);
         characterName.setPosition(xBoundary+100, yBoundary+20);
