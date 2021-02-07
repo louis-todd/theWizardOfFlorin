@@ -27,14 +27,19 @@ public class Dialogue implements Drawable {
     private int xBoundaryOffset = 20;
 
     private int yBoundaryOffset = 320;
+    
+    private View currentWorld;
 
-    public Dialogue(Font font, Texture setBoardTexture, String textspeakingCharacter, String dialogueMessage) {
+
+
+    public Dialogue(View currentWorld, Font font, Texture setBoardTexture, String textspeakingCharacter, String dialogueMessage) {
         simpleFont = new Font();                                    //Set the font
         speakingCharacter = textspeakingCharacter;
         dialogueText = dialogueMessage;
         boardTexture = new Texture();                               //Set image for dialogue box background
         toDraw = new ArrayList<>();
 
+        this.currentWorld = currentWorld;
         xBoundary+=xBoundaryOffset;
         yBoundary+=yBoundaryOffset;
 

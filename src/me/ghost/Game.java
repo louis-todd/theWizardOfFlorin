@@ -18,8 +18,6 @@ import java.util.Map;
 public class Game {
 
     private final RenderWindow window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");
-    private Dialogue interaction = new Dialogue(FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME",
-            "Content Placeholder");
     private BattleWindow battleWindow = new BattleWindow();
     private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 240,
             TextureType.SQUARE16.getTexture());
@@ -32,7 +30,6 @@ public class Game {
     private Npc[] npcArray = { npc, npc2, npc3 };
     private ArrayList<Npc> NPCs = new ArrayList<Npc>(Arrays.asList(npcArray));
 
-    private Mechanics game = new Mechanics(keyPresses, window, NPCs, interaction, battleWindow);
     private Drawable[] itemsToDraw = { wizard, npc, npc2, npc3 };
     private TileLoader tileLoader = new TileLoader();
     GameMap mapHouse = new GameMap("resources/map._House.csv", 50, tileLoader);;
@@ -40,6 +37,11 @@ public class Game {
     View worldView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());;
     View battleView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
     private final Map<String, Integer> drawingBounds = new CaseInsensitiveMap<>();
+
+    private Dialogue interaction = new Dialogue(worldView, FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(),
+            "REPLACE ME", "Content Placeholder");
+
+    private Mechanics game = new Mechanics(keyPresses, window, NPCs, interaction, battleWindow);
 
     /**
      * Constructor for the game class
