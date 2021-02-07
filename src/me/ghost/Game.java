@@ -1,6 +1,7 @@
 
 package me.ghost;
 
+import me.ghost.battle.BattleWindow;
 import me.ghost.characters.MoveableCharacter;
 import me.ghost.characters.Npc;
 import me.ghost.resourceEnum.FontType;
@@ -27,7 +28,7 @@ public class Game {
     private final List<Drawable> toDraw = new ArrayList<>();
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
 
-    private Npc npc = new Npc("Placeholder1", 250, 300, TextureType.SQUARE16.getTexture());
+    private Npc npc = new Npc("Mayor", 250, 300, TextureType.SQUARE16.getTexture());
     private Npc npc2 = new Npc("Placeholder2", 150, 300, TextureType.SQUARE16.getTexture());
     private Npc npc3 = new Npc("Placeholder3", 50, 300, TextureType.SQUARE16.getTexture());
     private Npc[] npcArray = { npc, npc2, npc3 };

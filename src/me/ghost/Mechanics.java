@@ -1,5 +1,6 @@
 package me.ghost;
 
+import me.ghost.battle.BattleWindow;
 import me.ghost.characters.MoveableCharacter;
 import me.ghost.characters.Npc;
 import org.jsfml.graphics.RenderWindow;
