@@ -54,15 +54,16 @@ public abstract class Character extends Sprite {
     }
 
     private String[] wrapRoundDialogueBox(String[] data){
-        int widthOfDialogue=55;
+        int widthOfDialogue=50;
         int tmp = 0;
         ArrayList<String> updatedData = new ArrayList<String>();
         for (String sentence : data){
-            //step through every character in that sentence and keep track of length
             for(int length=0; length<sentence.length(); length++){
                 if(tmp>=widthOfDialogue){
-                    sentence = sentence.substring(0, length) + "\n" + sentence.substring(length);
-                    tmp=0;
+                    if(sentence.charAt(length) == (' ')){
+                        sentence = sentence.substring(0, length) + "\n" + sentence.substring(length);
+                        tmp=0;
+                    }
                 }
                 tmp++;
             }
