@@ -26,6 +26,8 @@ public class Mechanics {
         this.interaction = interaction;
         this.NPCs = NPCs;
         this.battleWindow = battleWindow;
+
+        initKeyPressesMap();
     }
 
     public void initKeyPressesMap() {

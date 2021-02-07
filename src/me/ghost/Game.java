@@ -18,47 +18,38 @@ import java.util.Map;
 public class Game {
 
     private final RenderWindow window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");
-    private BattleWindow battleWindow = new BattleWindow();
-    private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 240,
-            TextureType.SQUARE16.getTexture());
+    private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 240, TextureType.SQUARE16.getTexture());
     private final List<Drawable> toDraw = new ArrayList<>();
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
 
+    private BattleWindow battleWindow = new BattleWindow();
     private Npc npc = new Npc("Placeholder1", 250, 300, TextureType.SQUARE16.getTexture());
     private Npc npc2 = new Npc("Placeholder2", 150, 300, TextureType.SQUARE16.getTexture());
     private Npc npc3 = new Npc("Placeholder3", 50, 300, TextureType.SQUARE16.getTexture());
-    private Npc npc4 = new Npc("Placeholder3", 700, 300, TextureType.SQUARE16.getTexture());
+    private Npc npc4 = new Npc("Placeholder4 ", 700, 300, TextureType.SQUARE16.getTexture());
     private Npc[] npcArray = { npc, npc2, npc3, npc4 };
     private ArrayList<Npc> NPCs = new ArrayList<Npc>(Arrays.asList(npcArray));
 
     private Drawable[] itemsToDraw = { wizard, npc, npc2, npc3, npc4 };
     private TileLoader tileLoader = new TileLoader();
-    GameMap mapHouse = new GameMap("resources/map._House.csv", 50, tileLoader);;
-    GameMap currentMap = mapHouse;
-    View worldView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());;
-    View battleView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
+    private GameMap mapHouse = new GameMap("resources/map._House.csv", 50, tileLoader);;
+    private GameMap currentMap = mapHouse;
+    private View worldView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());;
+    private View battleView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
     private final Map<String, Integer> drawingBounds = new CaseInsensitiveMap<>();
-
-    private Dialogue interaction;
-
-    private Mechanics game;;
+    private Dialogue interaction = new Dialogue(worldView, FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME", "Content Placeholder");;
+    private Mechanics game = new Mechanics(keyPresses, window, NPCs, interaction, battleWindow);
 
     /**
      * Constructor for the game class
      */
     public Game() {
+
         worldView.setCenter(wizard.getPosition());
 
-        interaction = new Dialogue(worldView, FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME",
-                "Content Placeholder");
-
-        game = new Mechanics(keyPresses, window, NPCs, interaction, battleWindow);
-        game.initKeyPressesMap();
         toDraw.addAll(Arrays.asList(itemsToDraw));
-        interaction.setCharacterName(npc.getName());
 
-        // Limit the framerate
-        window.setFramerateLimit(120);
+        window.setFramerateLimit(120);                                                                                      // Limit the framerate
     }
 
     /**
