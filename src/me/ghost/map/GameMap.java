@@ -1,6 +1,6 @@
 package me.ghost.map;
 
-import me.ghost.resourceEnum.TileLoader;
+import me.ghost.ResourceEnum.TileLoader;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.system.Vector2f;
 
@@ -15,7 +15,7 @@ public class GameMap {
     private final List<List<Tile>> tileMap;
     private final int csvWidth;
     private final TileLoader tileLoader;
-    public GameMap(String setFileName, int setCsvWidth, TileLoader setTileLoader) throws FileNotFoundException {
+    public GameMap(String setFileName, int setCsvWidth, TileLoader setTileLoader) {
         this.tileLoader = setTileLoader;
         this.csvWidth = setCsvWidth;
         cell = new ArrayList<>();
@@ -55,11 +55,18 @@ public class GameMap {
         }
     }
 
-    private BufferedReader returnBufferedReader() throws FileNotFoundException {
+    private BufferedReader returnBufferedReader(){
         return new BufferedReader(new InputStreamReader(getFileStream()));
     }
-    private InputStream getFileStream() throws FileNotFoundException {
-        return new DataInputStream(new FileInputStream(fileName));
+
+    private InputStream getFileStream()  {
+        DataInputStream fileStream = null;
+        try {
+            fileStream = new DataInputStream(new FileInputStream(fileName));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return fileStream;
     }
 
     private void createTiles(int rowNumber, int rowIndex){

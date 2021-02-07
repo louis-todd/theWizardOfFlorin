@@ -1,8 +1,9 @@
 package me.ghost;
 
+import me.ghost.Characters.MoveableCharacter;
+import me.ghost.Characters.Npc;
 import me.ghost.battle.BattleWindow;
-import me.ghost.characters.MoveableCharacter;
-import me.ghost.characters.Npc;
+
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.event.Event;
@@ -16,18 +17,19 @@ public class Mechanics {
     private Map<String, Boolean> keyPresses;
     private RenderWindow window;
     private Dialogue interaction;
-    private Npc npc;
     private BattleWindow battleWindow;
     private ArrayList<Npc> NPCs = new ArrayList<>();
     private Npc interactingNPC;
+    private boolean battleScreenOpen = false;
 
-    public Mechanics(Map<String, Boolean> keyPresses, RenderWindow window, ArrayList<Npc> NPCs, Dialogue interaction,
-            BattleWindow battleWindow) {
+    public Mechanics(Map<String, Boolean> keyPresses, RenderWindow window, ArrayList<Npc> NPCs, Dialogue interaction, BattleWindow battleWindow) {
         this.keyPresses = keyPresses;
         this.window = window;
         this.interaction = interaction;
         this.NPCs = NPCs;
         this.battleWindow = battleWindow;
+
+        initKeyPressesMap();
     }
 
     public void initKeyPressesMap() {
@@ -126,6 +128,7 @@ public class Mechanics {
                         // if first space, set to display first tile
                         else {
                             interaction.setTextContent(interactingNPC.getScript().get(0));
+                            interaction.setCharacterName(interactingNPC.getName());
                             handleKeyPress(keyEvent, true);
                         }
                     }
@@ -133,6 +136,7 @@ public class Mechanics {
                         // If B has already been pressed
                         if (keyPresses.get("B")) {
                             keyPresses.put("B", false);
+                            battleScreenOpen = false;
                         }
                         // if first B, set to display battle window
                         else {
@@ -147,7 +151,6 @@ public class Mechanics {
                             interaction.setTextContent(
                                     String.valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
                             interactingNPC.incrementCurrentIndex();
-                            System.out.println("If: 1");
                         }
                         // if have read all tiles, act as if space has been clicked to close the
                         // dialogue box
@@ -170,7 +173,11 @@ public class Mechanics {
         }
         if ((keyPresses.get("B"))) {
             battleWindow.draw(window, null);
+            battleScreenOpen = true;
         }
     }
 
+    public boolean isBattleScreenOpen() {
+        return battleScreenOpen;
+    }
 }
