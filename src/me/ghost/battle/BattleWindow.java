@@ -9,43 +9,47 @@ import org.jsfml.system.Vector2f;
 public class BattleWindow implements Drawable{
 
     private final ArrayList<Drawable> toDraw;
+    private final ArrayList<CircleShape> healthCircles;
+    private final RectangleShape ghostArea;
+    private final RectangleShape playerArea;
 
     public BattleWindow(){
 
         toDraw = new ArrayList<>();
-        rectangle(640,480,0,0,0,0,0);// background
-        rectangle(500,180,70,10,255,255,255);//ghost area
-        rectangle(350,100,150,210,255,255,255); // player area
+        healthCircles = new ArrayList<>();
 
-        rectangle(30,20,10, 340,255,30,0);//health label
+        rectangle(640, 480, 0, 0, 0, 0, 0); //Background
+        ghostArea = rectangle(500, 180, 70, 10, 255, 255, 255); //Ghost Area
+        playerArea = rectangle(350, 100, 150, 210, 255, 255, 255); //Player Area
+        rectangle(30,20,10, 340,255,30,0); //Health label
+
         // for health circles
         for (int i=50; i<=100 ; i+=25)
         {
-            healthCircle(i, 340);
+            healthCircles.add(healthCircle(i, 340));
         }
+
         rectangle(620,100,10, 370,98,52,18);//dialogue box
     }
 
-    private void rectangle(int width, int height, int y, int x, int r, int g, int b){
+    private RectangleShape rectangle(int width, int height, int x, int y, int r, int g, int b){
         Vector2f dimensions = new Vector2f(width,height);
-        RectangleShape textBackground = new RectangleShape(dimensions) {{
-            this.setPosition(y, x);
-            this.setSize(dimensions);
-            this.setFillColor(new Color(r,g,b));
-            this.setOutlineThickness(1);
-        }};
+        RectangleShape textBackground = new RectangleShape(dimensions);
+        textBackground.setPosition(x, y);
+        textBackground.setSize(dimensions);
+        textBackground.setFillColor(new Color(r,g,b));
+        textBackground.setOutlineThickness(1);
         toDraw.add(textBackground);
+        return textBackground;
     }
 
-    private void healthCircle(int y, int x){
-
-        CircleShape circle = new CircleShape(10) {{
-
-            this.setPosition(y, x);
-            this.setFillColor(new Color(255,0,255));
-            this.setOutlineThickness(1);
-        }};
+    private CircleShape healthCircle(int x, int y) {
+        CircleShape circle = new CircleShape(10);
+        circle.setPosition(x, y);
+        circle.setFillColor(new Color(255, 0, 255));
+        circle.setOutlineThickness(1);
         toDraw.add(circle);
+        return circle;
     }
 
     @Override
@@ -53,5 +57,17 @@ public class BattleWindow implements Drawable{
         for(Drawable item : toDraw) {
             renderTarget.draw(item);
         }
+    }
+
+    public ArrayList<CircleShape> getHealthCircles() {
+        return healthCircles;
+    }
+
+    public RectangleShape getGhostArea() {
+        return ghostArea;
+    }
+
+    public RectangleShape getPlayerArea() {
+        return playerArea;
     }
 }
