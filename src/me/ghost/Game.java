@@ -49,15 +49,13 @@ public class Game {
     public Game() {
         worldView.setCenter(wizard.getPosition());
 
-        interaction = new Dialogue(worldView, FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(),
-            "REPLACE ME", "Content Placeholder");
+        interaction = new Dialogue(worldView, FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME",
+                "Content Placeholder");
 
         game = new Mechanics(keyPresses, window, NPCs, interaction, battleWindow);
         game.initKeyPressesMap();
         toDraw.addAll(Arrays.asList(itemsToDraw));
         interaction.setCharacterName(npc.getName());
-
-        
 
         // Limit the framerate
         window.setFramerateLimit(120);

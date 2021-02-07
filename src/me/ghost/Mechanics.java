@@ -15,14 +15,12 @@ public class Mechanics {
     private Map<String, Boolean> keyPresses;
     private RenderWindow window;
     private Dialogue interaction;
-    private Npc npc;
     private BattleWindow battleWindow;
     private ArrayList<Npc> NPCs = new ArrayList<>();
     private Npc interactingNPC;
     private boolean battleScreenOpen = false;
 
-    public Mechanics(Map<String, Boolean> keyPresses, RenderWindow window, ArrayList<Npc> NPCs, Dialogue interaction,
-            BattleWindow battleWindow) {
+    public Mechanics(Map<String, Boolean> keyPresses, RenderWindow window, ArrayList<Npc> NPCs, Dialogue interaction, BattleWindow battleWindow) {
         this.keyPresses = keyPresses;
         this.window = window;
         this.interaction = interaction;

@@ -6,104 +6,90 @@ import org.jsfml.system.Vector2f;
 import java.util.ArrayList;
 
 public class Dialogue implements Drawable {
-    private Font simpleFont;
-
+    private Font font = new Font();
     private final String speakingCharacter;
-
     private final String dialogueText;
-
-    private Texture boardTexture;
-
-    private final ArrayList<Drawable> toDraw;
-
+    private Texture boardTexture = new Texture();
+    private final ArrayList<Drawable> toDraw = new ArrayList<>();
     private Text characterName;
-
     private Text toWrite;
-
     private float xBoundary;
-
     private float yBoundary;
-    
     private View currentWorld;
-
     private Vector2f dimensions;
-
     private RectangleShape textBackground;
 
-
-
-    public Dialogue(View currentWorld, Font font, Texture setBoardTexture, String textspeakingCharacter, String dialogueMessage) {
-        simpleFont = new Font();                                    //Set the font
-        speakingCharacter = textspeakingCharacter;
-        dialogueText = dialogueMessage;
-        boardTexture = new Texture();                               //Set image for dialogue box background
-        toDraw = new ArrayList<>();
-
+    public Dialogue(View currentWorld, Font font, Texture boardTexture, String speakingCharacter, String dialogueText) {
+        this.speakingCharacter = speakingCharacter;
+        this.dialogueText = dialogueText;                                                                                                   
         this.currentWorld = currentWorld;
-        xBoundary=(currentWorld.getCenter().x)-300;
-        yBoundary=(currentWorld.getCenter().y)+60;
+        this.boardTexture = boardTexture;
+        this.font = font;
 
-        boardTexture = setBoardTexture;
-        simpleFont = font;
+        xBoundary = (currentWorld.getCenter().x) - 300;
+        yBoundary = (currentWorld.getCenter().y) + 60;
+
         formatText();
         writeText();
     }
 
-
     public void writeText() {
-
-        //Set characterName, size, and position
-        characterName = new Text(speakingCharacter, simpleFont, 20) {{
-            this.setPosition(xBoundary+100, yBoundary+20);
-        }};
+        // Set and format the character's name
+        characterName = new Text(speakingCharacter, font, 20) {
+            {
+                this.setPosition(xBoundary + 100, yBoundary + 20);
+            }
+        };
         toDraw.add(characterName);
 
-        //Set Message
-        toWrite = new Text(dialogueText, simpleFont, 20) {{
-            this.setPosition(xBoundary+40, yBoundary+70);
-        }};
+        // Set Message
+        toWrite = new Text(dialogueText, font, 20) {
+            {
+                this.setPosition(xBoundary + 40, yBoundary + 70);
+            }
+        };
         toDraw.add(toWrite);
-
     }
 
-    public void formatText(){
-        //Set the rectangle for the text to sit in
-        dimensions = new Vector2f(600,200);
+    public void formatText() {
+        // Set the rectangle for the text to sit in
+        dimensions = new Vector2f(600, 200);
         // this.setFillColor(new Color(98,52,18));
-        textBackground = new RectangleShape(dimensions) {{
-            this.setPosition(xBoundary, yBoundary);
-            this.setSize(dimensions);
-            // this.setFillColor(new Color(98,52,18));
-            this.setTexture(boardTexture);
-        }};
+        textBackground = new RectangleShape(dimensions) {
+            {
+                this.setPosition(xBoundary, yBoundary);
+                this.setSize(dimensions);
+                // this.setFillColor(new Color(98,52,18));
+                this.setTexture(boardTexture);
+            }
+        };
         toDraw.add(textBackground);
     }
 
-    public void setTextContent(String contentToWrite){
-        xBoundary=(currentWorld.getCenter().x) - 300;
-        yBoundary=(currentWorld.getCenter().y) + 60;
+    public void setTextContent(String contentToWrite) {
+        xBoundary = (currentWorld.getCenter().x) - 300;
+        yBoundary = (currentWorld.getCenter().y) + 60;
         toWrite.setString(contentToWrite);
         textBackground.setPosition(xBoundary, yBoundary);
-        characterName.setPosition(xBoundary+100, yBoundary+20);
-        toWrite.setPosition(xBoundary+40, yBoundary+70);
+        characterName.setPosition(xBoundary + 100, yBoundary + 20);
+        toWrite.setPosition(xBoundary + 40, yBoundary + 70);
     }
 
-    public void setCharacterName(String nameToWrite){
+    public void setCharacterName(String nameToWrite) {
         characterName.setString(nameToWrite);
     }
 
-    public String getTextContent(){
+    public String getTextContent() {
         return toWrite.getString();
     }
 
-    public String getCharacterName(){
+    public String getCharacterName() {
         return characterName.getString();
     }
 
-
     @Override
     public void draw(RenderTarget renderTarget, RenderStates renderStates) {
-        for(Drawable item : toDraw) {
+        for (Drawable item : toDraw) {
             renderTarget.draw(item);
         }
     }
