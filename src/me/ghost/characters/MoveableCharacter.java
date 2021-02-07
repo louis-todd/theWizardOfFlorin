@@ -1,4 +1,4 @@
-package me.ghost.characters;
+package me.ghost.Characters;
 
 import me.ghost.map.GameMap;
 import org.jsfml.graphics.Drawable;

@@ -1,16 +1,15 @@
 
 package me.ghost;
 
-import me.ghost.characters.MoveableCharacter;
-import me.ghost.characters.Npc;
-import me.ghost.resourceEnum.FontType;
-import me.ghost.resourceEnum.TileLoader;
-import me.ghost.resourceEnum.TextureType;
+import me.ghost.Characters.MoveableCharacter;
+import me.ghost.Characters.Npc;
+import me.ghost.ResourceEnum.TileLoader;
 import me.ghost.map.GameMap;
+import me.ghost.ResourceEnum.FontType;
+import me.ghost.ResourceEnum.TextureType;
 import org.jsfml.graphics.*;
 import org.jsfml.window.VideoMode;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -67,7 +66,7 @@ public class Game {
     public void run() {
         while (window.isOpen()) {
             game.handleEvents(wizard);
-            if(!game.isBattleScreenOpen()) {
+            if (!game.isBattleScreenOpen()) {
                 wizard.moveCharacter(keyPresses, toDraw, worldView, currentMap);
             }
             updateWindow();
@@ -81,8 +80,7 @@ public class Game {
     private void updateWindow() {
         window.clear(Color.RED);
 
-
-        if(!game.isBattleScreenOpen()) {
+        if (!game.isBattleScreenOpen()) {
             drawTiles();
             window.setView(worldView);
         } else {
@@ -93,7 +91,6 @@ public class Game {
             window.draw(item);
         }
         game.isDialogue();
-
 
         window.display();
     }

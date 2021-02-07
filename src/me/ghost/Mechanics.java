@@ -1,7 +1,7 @@
 package me.ghost;
 
-import me.ghost.characters.MoveableCharacter;
-import me.ghost.characters.Npc;
+import me.ghost.Characters.MoveableCharacter;
+import me.ghost.Characters.Npc;
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.event.Event;
