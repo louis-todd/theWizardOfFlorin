@@ -65,7 +65,7 @@ public class Game {
         while (window.isOpen()) {
             game.handleEvents(wizard);
             if (!game.isBattleScreenOpen()) {
-                wizard.moveCharacter(keyPresses, toDraw, worldView, currentMap);
+                wizard.moveCharacter(keyPresses, toDraw, worldView, topLayer);
             }
             updateWindow();
         }
@@ -103,7 +103,6 @@ public class Game {
         }
 
     }
-
 
     private void initialiseDrawingBounds() {
         int tileSize = 16;
