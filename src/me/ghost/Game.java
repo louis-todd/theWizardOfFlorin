@@ -28,18 +28,23 @@ public class Game {
     private Npc npc2 = new Npc("Placeholder2", 150, 300, TextureType.SQUARE16.getTexture());
     private Npc npc3 = new Npc("Placeholder3", 50, 300, TextureType.SQUARE16.getTexture());
     private Npc npc4 = new Npc("Placeholder4 ", 700, 300, TextureType.SQUARE16.getTexture());
-    private Npc[] npcArray = { npc, npc2, npc3, npc4 };
+    private Npc[] npcArray = {npc, npc2, npc3, npc4};
     private ArrayList<Npc> NPCs = new ArrayList<Npc>(Arrays.asList(npcArray));
 
-    private Drawable[] itemsToDraw = { wizard, npc, npc2, npc3, npc4 };
+    private Drawable[] itemsToDraw = {wizard, npc, npc2, npc3, npc4};
     private TileLoader tileLoader = new TileLoader();
-    private GameMap mapHouse = new GameMap("resources/map._House.csv", 50, tileLoader);;
+    private GameMap mapHouse = new GameMap("resources/map._House.csv", 50, tileLoader);
+    ;
     private GameMap currentMap = mapHouse;
-    private View worldView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());;
+    private View worldView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
+    ;
     private View battleView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
     private final Map<String, Integer> drawingBounds = new CaseInsensitiveMap<>();
-    private Dialogue interaction = new Dialogue(worldView, FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME", "Content Placeholder");;
+    private Dialogue interaction = new Dialogue(worldView, FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME", "Content Placeholder");
+    ;
     private Mechanics game = new Mechanics(keyPresses, window, NPCs, interaction, battleWindow);
+    private GameMap baseLayer = new GameMap("resources/finalmap_Base Layer.csv", 250, tileLoader);
+    private GameMap topLayer = new GameMap("resources/finalmap_Extra Layer.csv", 250, tileLoader);
 
     /**
      * Constructor for the game class
@@ -67,7 +72,6 @@ public class Game {
     }
 
     /**
-     * 
      * Updates the window
      */
     private void updateWindow() {
@@ -93,10 +97,13 @@ public class Game {
 
         for (int i = drawingBounds.get("TopCameraEdge"); i <= drawingBounds.get("BottomCameraEdge"); i++) {
             for (int j = drawingBounds.get("LeftCameraEdge"); j <= drawingBounds.get("RightCameraEdge"); j++) {
-                currentMap.getTile(i, j).draw(window, RenderStates.DEFAULT);
+                baseLayer.getTile(i, j).draw(window, RenderStates.DEFAULT);
+                topLayer.getTile(i, j).draw(window, RenderStates.DEFAULT);
             }
         }
+
     }
+
 
     private void initialiseDrawingBounds() {
         int tileSize = 16;
@@ -104,11 +111,11 @@ public class Game {
         this.drawingBounds.put("LeftCameraEdge",
                 Math.max((int) (worldView.getCenter().x / tileSize) - (cameraWidth / 2), 0));
         this.drawingBounds.put("RightCameraEdge",
-                Math.min((int) (worldView.getCenter().x / tileSize) + (cameraWidth / 2), currentMap.getDrawWidth()));
+                Math.min((int) (worldView.getCenter().x / tileSize) + (cameraWidth / 2), topLayer.getDrawWidth()));
         this.drawingBounds.put("TopCameraEdge",
                 Math.max((int) (worldView.getCenter().y / tileSize) - (cameraWidth / 2), 0));
         this.drawingBounds.put("BottomCameraEdge",
-                Math.min((int) (worldView.getCenter().y / tileSize) + (cameraWidth / 2), currentMap.getDrawHeight()));
+                Math.min((int) (worldView.getCenter().y / tileSize) + (cameraWidth / 2), topLayer.getDrawHeight()));
     }
 
 }
