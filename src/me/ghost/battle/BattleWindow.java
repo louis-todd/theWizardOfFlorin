@@ -67,7 +67,15 @@ public class BattleWindow implements Drawable{
         return ghostArea;
     }
 
+    public Vector2f getGhostAreaCentre(){
+        return(new Vector2f(ghostArea.getPosition().x + ghostArea.getSize().x/2, ghostArea.getPosition().y + ghostArea.getSize().y/2));
+    }
+
     public RectangleShape getPlayerArea() {
         return playerArea;
+    }
+
+    public ArrayList<Drawable> getToDraw() {
+        return toDraw;
     }
 }

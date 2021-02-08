@@ -1,7 +1,13 @@
 package me.ghost.battle;
 
-public class DodgeGame extends BattleWindow{
+import me.ghost.Characters.Npc;
 
-    public DodgeGame() {
+public class DodgeGame{
+
+    private Npc battleNpc;
+    public DodgeGame(Npc setBattleNpc) {
+        BattleWindow battleWindow = new BattleWindow();
+        this.battleNpc = setBattleNpc;
+        this.battleNpc.setPosition(battleWindow.getGhostAreaCentre());
     }
 }
