@@ -19,7 +19,7 @@ import java.util.Map;
 public class Game {
 
     private final RenderWindow window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");
-    private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 240, TextureType.SQUARE16.getTexture());
+    private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 240, TextureType.STILLSPRITE.getTexture());
     private final List<Drawable> toDraw = new ArrayList<>();
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
 
