@@ -4,6 +4,7 @@ import me.ghost.Characters.MoveableCharacter;
 import me.ghost.Characters.Npc;
 import me.ghost.battle.BattleWindow;
 
+import me.ghost.battle.dodge.DodgeGame;
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.event.Event;
@@ -21,6 +22,8 @@ public class Mechanics {
     private ArrayList<Npc> NPCs = new ArrayList<>();
     private Npc interactingNPC;
     private boolean battleScreenOpen = false;
+    private DodgeGame dodgeGame;
+
 
     public Mechanics(Map<String, Boolean> keyPresses, RenderWindow window, ArrayList<Npc> NPCs, Dialogue interaction, BattleWindow battleWindow) {
         this.keyPresses = keyPresses;
@@ -28,7 +31,6 @@ public class Mechanics {
         this.interaction = interaction;
         this.NPCs = NPCs;
         this.battleWindow = battleWindow;
-
         initKeyPressesMap();
     }
 
@@ -140,6 +142,7 @@ public class Mechanics {
                         }
                         // if first B, set to display battle window
                         else {
+                            dodgeGame = new DodgeGame(interactingNPC);
                             handleKeyPress(keyEvent, true);
                         }
                     }
@@ -172,7 +175,8 @@ public class Mechanics {
             interaction.draw(window, null);
         }
         if ((keyPresses.get("B"))) {
-            battleWindow.draw(window, null);
+            //battleWindow.draw(window, null);
+            dodgeGame.draw(window, null);
             battleScreenOpen = true;
         }
     }

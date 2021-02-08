@@ -1,16 +1,17 @@
 package me.ghost.battle.dodge;
 
+import org.jsfml.graphics.CircleShape;
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.ConvexShape;
 import org.jsfml.system.Vector2f;
 
 import java.util.Random;
 
-public class Projectile extends ConvexShape {
+public class Projectile extends CircleShape {
 
     Vector2f velocity;
-    public Projectile(int i) {
-        super(i);
+    public Projectile(int radius, int i) {
+        super(radius, i);
         velocity = setRandomVelocity();
         this.setRandomColour();
     }
