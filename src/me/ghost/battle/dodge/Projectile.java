@@ -2,7 +2,6 @@ package me.ghost.battle.dodge;
 
 import org.jsfml.graphics.CircleShape;
 import org.jsfml.graphics.Color;
-import org.jsfml.graphics.ConvexShape;
 import org.jsfml.system.Vector2f;
 
 import java.util.Random;
