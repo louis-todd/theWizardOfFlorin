@@ -5,7 +5,8 @@ import org.jsfml.graphics.Texture;
 
 public enum TextureType {
     SQUARE16("square-16.png"),
-    STILLSPRITE("left-still.png"),
+    LEFTSTILL("left-still.png"),
+    RIGHTSTILL("right-still.png"),
     LEFTSPRITE("left-sprite.png"),
     RIGHTSPRITE("right-sprite.png"),
     BOARD("DialogueBoard.png"),
