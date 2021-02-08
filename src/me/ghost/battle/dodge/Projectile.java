@@ -9,9 +9,10 @@ import java.util.Random;
 public class Projectile extends ConvexShape {
 
     Vector2f velocity;
-    public Projectile(int i, Vector2f setVelocity) {
+    public Projectile(int i) {
         super(i);
-        velocity = setVelocity;
+        velocity = setRandomVelocity();
+        this.setRandomColour();
     }
 
     private void setRandomColour(){
@@ -22,4 +23,14 @@ public class Projectile extends ConvexShape {
         Color randomColour = new Color(r, g, b);
         this.setFillColor(randomColour);
     }
+
+    private Vector2f setRandomVelocity(){
+        Random rand = new Random();
+        int maxx = 5;
+        int maxy = 5;
+        int minx = -5;
+        int miny = 1;
+        return(new Vector2f(rand.nextInt(maxx - minx + 1), rand.nextInt(maxy - miny + 1)));
+    }
+
 }
