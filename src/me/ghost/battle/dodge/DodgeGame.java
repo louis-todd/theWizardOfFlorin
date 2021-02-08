@@ -9,7 +9,6 @@ import org.jsfml.graphics.*;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Stack;
-import java.util.Timer;
 
 public class DodgeGame implements Drawable{
 
@@ -18,9 +17,11 @@ public class DodgeGame implements Drawable{
     private MoveableCharacter wizard;
     private final ArrayList<Drawable> toDraw;
     private Stack<Projectile> projectileInMotion = new Stack<>();
+    private boolean battleOpen;
 
     public DodgeGame(Npc setBattleNpc/*, MoveableCharacter setWizard*/) {
         BattleWindow battleWindow = new BattleWindow();
+        battleOpen = true;
         toDraw = battleWindow.getToDraw();
         this.battleNpc = new Npc(setBattleNpc.getName(), battleWindow.getGhostAreaCentre().x - 16, battleWindow.getGhostAreaCentre().y - 16, (Texture) setBattleNpc.getTexture());
         this.wizard = new MoveableCharacter("Wizard", battleWindow.getPlayerAreaCentre().x - 16, battleWindow.getPlayerAreaCentre().y - 16, TextureType.SQUARE16.getTexture());
@@ -28,6 +29,7 @@ public class DodgeGame implements Drawable{
         toDraw.add(this.battleNpc);
         toDraw.add(this.wizard);
         throwObject();
+        run();
     }
 
     private void addProjectilesToStack(int numberProjectiles){
@@ -43,16 +45,32 @@ public class DodgeGame implements Drawable{
         while (projectileStack.size() > 0) {
             projectileInMotion.push(projectileStack.pop());
         }
-        for (Projectile projectile : projectileInMotion) {
-                projectile.move(projectile.velocity.x, projectile.velocity.y);
-                toDraw.add(projectile);
-            }
-    }
+        for(Projectile projectile : projectileInMotion){
+            toDraw.add(projectile);
+        }
+        }
 
     @Override
     public void draw(RenderTarget renderTarget, RenderStates renderStates) {
         for(Drawable item : toDraw) {
             renderTarget.draw(item);
         }
+    }
+
+    private void run(){
+       /* while(battleOpen){
+            for (Projectile projectile : projectileInMotion) {
+                if(projectile.getPosition().y < 200) {
+                    projectile.move(projectile.velocity.x / 100, projectile.velocity.y / 100);
+                }
+            }
+        }
+        updateWindow();
+
+        */
+    }
+
+    private void updateWindow(){
+
     }
 }
