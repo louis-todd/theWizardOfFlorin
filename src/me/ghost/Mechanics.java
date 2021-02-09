@@ -11,6 +11,7 @@ import org.jsfml.window.event.Event;
 import org.jsfml.window.event.KeyEvent;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Mechanics {
@@ -25,7 +26,7 @@ public class Mechanics {
     private DodgeGame dodgeGame;
 
 
-    public Mechanics(Map<String, Boolean> keyPresses, RenderWindow window, ArrayList<Npc> NPCs, Dialogue interaction, BattleWindow battleWindow) {
+    public Mechanics(Map<String, Boolean> keyPresses, RenderWindow window, List<Npc> NPCs, Dialogue interaction, BattleWindow battleWindow) {
         this.keyPresses = keyPresses;
         this.window = window;
         this.interaction = interaction;

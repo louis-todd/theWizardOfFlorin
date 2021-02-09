@@ -27,23 +27,22 @@ public class Game {
     private final List<Drawable> toDraw = new ArrayList<>();
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
 
-    private BattleWindow battleWindow = new BattleWindow();
-    private Npc npc = new Npc("Mayor", 250, 300, TextureType.SQUARE16.getTexture());
-    private Npc npc2 = new Npc("Placeholder2", 150, 300, TextureType.SQUARE16.getTexture());
-    private Npc npc3 = new Npc("Placeholder3", 50, 300, TextureType.SQUARE16.getTexture());
-    private Npc npc4 = new Npc("Placeholder4 ", 700, 300, TextureType.SQUARE16.getTexture());
-    private Npc[] npcArray = { npc, npc2, npc3, npc4 };
-    private ArrayList<Npc> NPCs = new ArrayList<Npc>(Arrays.asList(npcArray));
+    private final BattleWindow battleWindow = new BattleWindow();
+    private final Npc npc = new Npc("Mayor", 250, 300, TextureType.SQUARE16.getTexture());
+    private final Npc npc2 = new Npc("Placeholder2", 150, 300, TextureType.SQUARE16.getTexture());
+    private final Npc npc3 = new Npc("Placeholder3", 50, 300, TextureType.SQUARE16.getTexture());
+    private final Npc npc4 = new Npc("Placeholder4 ", 700, 300, TextureType.SQUARE16.getTexture());
+    private final Npc[] npcArray = { npc, npc2, npc3, npc4 };
+    private final List<Npc> NPCs = new ArrayList<>(Arrays.asList(npcArray));
 
-    private Drawable[] itemsToDraw = { wizard, npc, npc2, npc3, npc4 };
-    private TileLoader tileLoader = new TileLoader();
-    private GameMap mapHouse = new GameMap("resources/map._House.csv", 50, tileLoader);;
-    private GameMap currentMap = mapHouse;
-    private View worldView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());;
-    private View battleView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
+    private final TileLoader tileLoader = new TileLoader();
+    private final GameMap mapHouse = new GameMap("resources/map._House.csv", 50, tileLoader);
+    private final GameMap currentMap = mapHouse;
+    private final View worldView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
+    private final View battleView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
     private final Map<String, Integer> drawingBounds = new CaseInsensitiveMap<>();
-    private Dialogue interaction = new Dialogue(worldView, FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME", "Content Placeholder");;
-    private Mechanics game = new Mechanics(keyPresses, window, NPCs, interaction, battleWindow);
+    private final Dialogue interaction = new Dialogue(worldView, FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME", "Content Placeholder");
+    private final Mechanics game = new Mechanics(keyPresses, window, NPCs, interaction, battleWindow);
 
     private int loadingBarCounter = 0;
     private Text loadingText = null;
@@ -56,6 +55,7 @@ public class Game {
 
         worldView.setCenter(wizard.getPosition());
 
+        Drawable[] itemsToDraw = {wizard, npc, npc2, npc3, npc4};
         toDraw.addAll(Arrays.asList(itemsToDraw));
 
         window.setFramerateLimit(120);                                                                                      // Limit the framerate
