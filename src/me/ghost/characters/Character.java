@@ -90,6 +90,7 @@ public abstract class Character extends Sprite {
                 if(row.contains("@")){
                     if(associatedItem!=null){
                         npcResolved=true;
+                        row=row.replace('@', ' ');
                     }
                 }
                 String[] data = row.split(",");
@@ -170,7 +171,6 @@ public abstract class Character extends Sprite {
 
     public void resetScript() {
         if(npcResolved==true){
-            System.out.println("Hey look I do set reported to true!");
             associatedItem.setAshasBeenReportedAsFound(true);
         }
         currentIndex = 1;
