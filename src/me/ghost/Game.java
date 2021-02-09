@@ -27,7 +27,6 @@ public class Game {
     private final List<Drawable> toDraw = new ArrayList<>();
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
 
-    private final BattleWindow battleWindow = new BattleWindow();
     private final Npc npc = new Npc("Mayor", 250, 300, TextureType.GHOST.getTexture());
     private final Npc npc2 = new Npc("Placeholder2", 150, 300, TextureType.GHOST.getTexture());
     private final Npc npc3 = new Npc("Placeholder3", 50, 300, TextureType.GHOST.getTexture());
