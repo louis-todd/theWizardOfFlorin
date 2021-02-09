@@ -97,7 +97,7 @@ public class Game {
             // window.draw(item);
             // }
             if (item instanceof Item) {
-                if (!((Item) item).isFound()) {
+                if (!((Item) item).isFound() && ((Item) item).availibleToCollect()) {
                     window.draw(item);
                 }
             }
