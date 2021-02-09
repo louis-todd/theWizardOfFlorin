@@ -6,10 +6,9 @@ import org.jsfml.graphics.Texture;
 public enum TextureType {
     SQUARE16("square-16.png"),
     BOARD("DialogueBoard.png"),
-    TEST("tiles/tile200.png32")
-    ;
+    TEST("tiles/tile200.png32");
 
-private final Texture texture = new Texture();
+    private final Texture texture = new Texture();
 
     TextureType(String path) {
         try {
