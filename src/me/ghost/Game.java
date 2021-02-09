@@ -19,6 +19,9 @@ import java.util.Map;
 
 public class Game {
 
+    private static final Vector2f TEXT_POSITION = new Vector2f(200, 200);
+    private static final Vector2f LOADING_BAR_POSITION = new Vector2f(50, 400);
+
     private final RenderWindow window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");
     private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 240, TextureType.SQUARE16.getTexture());
     private final List<Drawable> toDraw = new ArrayList<>();
@@ -42,6 +45,10 @@ public class Game {
     private Dialogue interaction = new Dialogue(worldView, FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME", "Content Placeholder");;
     private Mechanics game = new Mechanics(keyPresses, window, NPCs, interaction, battleWindow);
 
+    private int loadingBarCounter = 0;
+    private Text loadingText = null;
+    private RectangleShape loadingBar = null;
+
     /**
      * Constructor for the game class
      */
@@ -58,31 +65,9 @@ public class Game {
      * Runs the window including inputs and updating the window
      */
     public void run() {
-        int counter = 0;
-
         while (window.isOpen()) {
             if (!this.tileLoader.isLoaded()) {
-                window.clear(Color.BLACK);
-
-                Text text = new Text();
-
-                text.setPosition(new Vector2f(200, 200));
-                text.setString("Ghost Game v 1.0.0");
-                text.setColor(Color.WHITE);
-                text.setCharacterSize(20);
-                text.setFont(FontType.ROBOTO.getFont());
-
-                RectangleShape loadingBar = new RectangleShape();
-
-                loadingBar.setPosition(new Vector2f(50, 400));
-                loadingBar.setSize(new Vector2f(counter, 50));
-                loadingBar.setFillColor(Color.WHITE);
-
-                counter += 2;
-
-                window.draw(loadingBar);
-                window.draw(text);
-                window.display();
+                this.drawLoadingScreen(window);
                 continue;
             }
 
@@ -96,6 +81,47 @@ public class Game {
             }
             updateWindow();
         }
+    }
+
+    private void drawLoadingScreen(RenderWindow window) {
+        window.clear(Color.BLACK);
+
+        RectangleShape loadingBar = this.getLoadingBar();
+
+        loadingBar.setSize(new Vector2f(loadingBarCounter, 50));
+        loadingBarCounter += 2;
+
+        window.draw(loadingBar);
+        window.draw(this.getLoadingText());
+        window.display();
+    }
+
+    private Text getLoadingText() {
+        if (this.loadingText == null) {
+            Text text = new Text();
+
+            text.setPosition(TEXT_POSITION);
+            text.setString("Ghost Game v 1.0.0");
+            text.setColor(Color.WHITE);
+            text.setCharacterSize(20);
+            text.setFont(FontType.ROBOTO.getFont());
+            this.loadingText = text;
+        }
+
+        return this.loadingText;
+    }
+
+    private RectangleShape getLoadingBar() {
+        if (this.loadingBar == null) {
+            RectangleShape loadingBar = new RectangleShape();
+
+            loadingBar.setPosition(LOADING_BAR_POSITION);
+            loadingBar.setSize(new Vector2f(loadingBarCounter, 50));
+            loadingBar.setFillColor(Color.WHITE);
+            this.loadingBar = loadingBar;
+        }
+
+        return this.loadingBar;
     }
 
     /**
