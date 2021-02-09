@@ -10,24 +10,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameMap {
-    String fileName;
-    private final List<List<Integer>> cell;
-    private final List<List<Tile>> tileMap;
+
+    private final String fileName;
+    private final List<List<Integer>> cell = new ArrayList<>();
+    private final List<List<Tile>> tileMap = new ArrayList<>();
+
     private final int csvWidth;
     private final TileLoader tileLoader;
-    public GameMap(String setFileName, int setCsvWidth, TileLoader setTileLoader) {
+    private boolean hasLoaded = false;
+
+    public GameMap(String fileName, int setCsvWidth, TileLoader setTileLoader) {
+        this.fileName = fileName;
         this.tileLoader = setTileLoader;
         this.csvWidth = setCsvWidth;
-        cell = new ArrayList<>();
-        cell.add(new ArrayList<>());
-        tileMap = new ArrayList<>();
-        tileMap.add(new ArrayList<>());
-        this.fileName = setFileName;
-        this.LoadMap(returnBufferedReader());
 
+        cell.add(new ArrayList<>());
+        tileMap.add(new ArrayList<>());
     }
 
-    private void LoadMap(BufferedReader csvReader){
+    public boolean hasLoaded() {
+        return hasLoaded;
+    }
+
+    public void loadMap(){
+        this.hasLoaded = true;
+        BufferedReader csvReader = this.returnBufferedReader();
+
         try {
             String row;
             int rowIndex = 0;
@@ -73,6 +81,7 @@ public class GameMap {
         if(cell.get(rowNumber).get(rowIndex) == -1){
             tileMap.get(rowNumber).add(new Tile(new Vector2f(rowIndex*16, rowNumber*16), tileLoader.getTileTexture(10)));
         } else {
+            tileLoader.getTileTexture(cell.get(rowNumber).get(rowIndex));
             tileMap.get(rowNumber).add(new Tile(new Vector2f(rowIndex * 16, rowNumber * 16), tileLoader.getTileTexture(cell.get(rowNumber).get(rowIndex))));
         }
     }

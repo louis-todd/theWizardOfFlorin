@@ -9,6 +9,7 @@ import me.ghost.map.GameMap;
 import me.ghost.ResourceEnum.FontType;
 import me.ghost.ResourceEnum.TextureType;
 import org.jsfml.graphics.*;
+import org.jsfml.system.Vector2f;
 import org.jsfml.window.VideoMode;
 
 import java.util.ArrayList;
@@ -58,6 +59,26 @@ public class Game {
      */
     public void run() {
         while (window.isOpen()) {
+            if (!this.tileLoader.isLoaded()) {
+                window.clear(Color.BLACK);
+
+                Text text = new Text();
+
+                text.setPosition(new Vector2f(200, 200));
+                text.setString("Ghost Game v 1.0.0");
+                text.setColor(Color.WHITE);
+                text.setCharacterSize(20);
+                text.setFont(FontType.ROBOTO.getFont());
+
+                window.draw(text);
+                window.display();
+                continue;
+            }
+
+            if (!this.currentMap.hasLoaded()) {
+                this.currentMap.loadMap();
+            }
+
             game.handleEvents(wizard);
             if (!game.isBattleScreenOpen()) {
                 wizard.moveCharacter(keyPresses, toDraw, worldView, currentMap);
