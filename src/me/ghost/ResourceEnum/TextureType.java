@@ -10,6 +10,7 @@ public enum TextureType {
     RIGHTSTILL("right-still.png"),
     LEFTSPRITE("left-sprite.png"),
     RIGHTSPRITE("right-sprite.png"),
+    GHOST("ghost.png"),
     TEST("tiles/tile200.png32")
     ;
 
