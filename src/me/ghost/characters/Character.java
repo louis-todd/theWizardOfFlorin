@@ -58,6 +58,7 @@ public abstract class Character extends Sprite {
         int tmp = 0;
         ArrayList<String> updatedData = new ArrayList<String>();
         for (String sentence : data){
+            this.checkForItem(sentence);
             for(int length=0; length<sentence.length(); length++){
                 if(tmp>=widthOfDialogue){
                     if(sentence.charAt(length) == (' ')){
@@ -70,6 +71,16 @@ public abstract class Character extends Sprite {
             updatedData.add(sentence);
         }
         return updatedData.toArray(new String[0]);
+    }
+
+    private void checkForItem(String sentence){
+        String item = "";
+        int itemStart = sentence.indexOf("**");
+        int itemEnd = sentence.lastIndexOf("**");
+        if(itemStart!=-1 && itemEnd!=-1){
+            item = sentence.substring(sentence.indexOf("**")+2, sentence.lastIndexOf("**"));
+            System.out.println("The item is: " + item);
+        }
     }
 
     private BufferedReader returnBufferedReader(String fileName) {
