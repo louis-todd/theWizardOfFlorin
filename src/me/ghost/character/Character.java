@@ -3,6 +3,7 @@ package me.ghost.character;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
@@ -10,10 +11,9 @@ import org.jsfml.graphics.Texture;
 public abstract class Character extends Sprite {
 
     private String[] script;
-    private ArrayList<String> NPCScript = new ArrayList<String>();
-    private String characterName;
+    private final List<String> npcScript = new ArrayList<>();
+    private final String characterName;
     private int currentIndex = 1;
-    private File npcTextFile;
 
     public Character(String characterName, float xPosition, float yPosition, Texture characterTexture) {
 
@@ -22,30 +22,29 @@ public abstract class Character extends Sprite {
         this.characterName = characterName;
     }
 
-    public ArrayList<String> getScript(){
-        NPCScript.clear();
+    public List<String> getScript(){
+        npcScript.clear();
 
-        npcTextFile = new File("resources/Dialogue/" + characterName + ".csv");
+        File npcTextFile = new File("resources/Dialogue/" + characterName + ".csv");
         if(npcTextFile.exists()) {
             addDialogue("resources/Dialogue/" + characterName + ".csv");
         }
         else{
-            NPCScript.add("Page 1: " + characterName);
-            NPCScript.add("Page 2: " + characterName);
-            NPCScript.add("Page 3: " + characterName);
+            npcScript.add("Page 1: " + characterName);
+            npcScript.add("Page 2: " + characterName);
+            npcScript.add("Page 3: " + characterName);
         }
-        return NPCScript;
+        return npcScript;
     }
 
     private void addDialogue(String fileName) {
         BufferedReader csvReader = returnBufferedReader(fileName);
         try{
             String row;
-            int index = 1;
             while((row = csvReader.readLine()) != null){
                 String[] data = row.split(",");
                 data = this.wrapRoundDialogueBox(data);
-                NPCScript.addAll(Arrays.asList(data));
+                npcScript.addAll(Arrays.asList(data));
                 }
             csvReader.close();
         } catch (Exception e){
@@ -56,7 +55,7 @@ public abstract class Character extends Sprite {
     private String[] wrapRoundDialogueBox(String[] data){
         int widthOfDialogue=50;
         int tmp = 0;
-        ArrayList<String> updatedData = new ArrayList<String>();
+        ArrayList<String> updatedData = new ArrayList<>();
         for (String sentence : data){
             for(int length=0; length<sentence.length(); length++){
                 if(tmp>=widthOfDialogue){
