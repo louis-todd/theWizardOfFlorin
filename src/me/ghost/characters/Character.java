@@ -17,6 +17,7 @@ public abstract class Character extends Sprite {
     private int currentIndex = 1;
     private File npcTextFile;
     private static ArrayList<Item> items;
+    private Item associatedItem = null;
 
     public Character(String characterName, float xPosition, float yPosition, Texture characterTexture) {
 
@@ -35,15 +36,39 @@ public abstract class Character extends Sprite {
     public ArrayList<String> getScript(){
         NPCScript.clear();
 
-        npcTextFile = new File("resources/Dialogue/" + characterName + ".csv");
-        if(npcTextFile.exists()) {
-            addDialogue("resources/Dialogue/" + characterName + ".csv");
+        if(!(this.associatedItem == null)){
+            if(this.associatedItem.isFound()){
+                System.out.println("1");
+                npcTextFile = new File("resources/Dialogue/" + characterName + "2.csv");
+                if(npcTextFile.exists()) {
+                    addDialogue(npcTextFile.getPath());
+                }
+                else{
+                    NPCScript.add("ERROR: File not found" + characterName);
+                }
+            }
+            else{
+                System.out.println("2");
+                npcTextFile = new File("resources/Dialogue/" + characterName + ".csv");
+                if(npcTextFile.exists()) {
+                    addDialogue(npcTextFile.getPath());
+                }
+                else{
+                    NPCScript.add("ERROR: File not found" + characterName);
+                }
+            }
         }
         else{
-            NPCScript.add("Page 1: " + characterName);
-            NPCScript.add("Page 2: " + characterName);
-            NPCScript.add("Page 3: " + characterName);
+            System.out.println("3");
+            npcTextFile = new File("resources/Dialogue/" + characterName + ".csv");
+            if(npcTextFile.exists()) {
+                addDialogue(npcTextFile.getPath());
+            }
+            else{
+                NPCScript.add("ERROR: File not found" + characterName);
+            }
         }
+        
         return NPCScript;
     }
 
@@ -51,13 +76,13 @@ public abstract class Character extends Sprite {
         BufferedReader csvReader = returnBufferedReader(fileName);
         try{
             String row;
-            int index = 1;
             while((row = csvReader.readLine()) != null){
                 String[] data = row.split(",");
                 data = this.wrapRoundDialogueBox(data);
                 NPCScript.addAll(Arrays.asList(data));
                 }
             csvReader.close();
+
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -71,7 +96,6 @@ public abstract class Character extends Sprite {
             int[] positions = this.checkForItem(sentence);
             if(positions[0]!=-1 && positions[1]!=-1){
                 sentence = sentence.substring(0, positions[0]) + sentence.substring(positions[0]+2, positions[1]) + sentence.substring(positions[1]+2, sentence.length());
-                // sentence.length();
             }
             for(int length=0; length<sentence.length(); length++){
                 if(tmp>=widthOfDialogue){
@@ -82,7 +106,6 @@ public abstract class Character extends Sprite {
                 }
                 tmp++;
             }
-            sentence.replace("*", " ");
             updatedData.add(sentence);
         }
         return updatedData.toArray(new String[0]);
@@ -96,6 +119,7 @@ public abstract class Character extends Sprite {
             item = sentence.substring(sentence.indexOf("**")+2, sentence.lastIndexOf("**"));
             for (Item potentialItem : Character.items) {
                 if (potentialItem.getName().equals(item)) {
+                    this.associatedItem = potentialItem;
                     potentialItem.setAsAvailibleToCollect(true);
                 }
             }
