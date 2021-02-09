@@ -1,5 +1,6 @@
 package me.ghost.character;
 
+import me.ghost.ResourceEnum.TextureType;
 import me.ghost.map.GameMap;
 import org.jsfml.graphics.Drawable;
 import org.jsfml.graphics.FloatRect;
@@ -13,6 +14,7 @@ import java.util.Map;
 public class MoveableCharacter extends Character {
 
     private boolean wizardColliding;
+    private boolean isFirst = false;
 
     public MoveableCharacter(String characterName, float xPosition, float yPosition, Texture characterTexture) {
         super(characterName, xPosition, yPosition, characterTexture);
@@ -33,13 +35,26 @@ public class MoveableCharacter extends Character {
             }
         }
         if (!wizardColliding) {
+            isFirst = !isFirst;
             if ((keyPresses.get("RIGHT") && !keyPresses.get("SPACE"))) {
                 if (this.getPosition().x - currentMap.getMapBounds().width < 0) {
+                    if(isFirst){
+                        this.setTexture(TextureType.RIGHTSPRITE.getTexture());
+                    }
+                    else{
+                        this.setTexture(TextureType.RIGHTSTILL.getTexture());
+                    }
                     this.move(1, 0);
                 }
             }
             if ((keyPresses.get("LEFT") && !keyPresses.get("SPACE"))) {
                 if (this.getPosition().x > currentMap.getMapBounds().left) {
+                    if(isFirst){
+                        this.setTexture(TextureType.LEFTSPRITE.getTexture());
+                    }
+                    else{
+                        this.setTexture(TextureType.LEFTSTILL.getTexture());
+                    }
                     this.move(-1, 0);
                 }
             }

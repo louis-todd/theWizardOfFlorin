@@ -6,7 +6,13 @@ import org.jsfml.graphics.Texture;
 public enum TextureType {
     SQUARE16("square-16.png"),
     BOARD("DialogueBoard.png"),
-    TEST("tiles/tile200.png32");
+    LEFTSTILL("left-still.png"),
+    RIGHTSTILL("right-still.png"),
+    LEFTSPRITE("left-sprite.png"),
+    RIGHTSPRITE("right-sprite.png"),
+    GHOST("ghost.png"),
+    TEST("tiles/tile200.png32")
+    ;
 
     private final Texture texture = new Texture();
 

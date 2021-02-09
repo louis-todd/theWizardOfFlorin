@@ -23,15 +23,15 @@ public class Game {
     private static final Vector2f LOADING_BAR_POSITION = new Vector2f(50, 400);
 
     private final RenderWindow window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");
-    private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 240, TextureType.SQUARE16.getTexture());
+    private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 240, TextureType.LEFTSTILL.getTexture());
     private final List<Drawable> toDraw = new ArrayList<>();
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
 
     private final BattleWindow battleWindow = new BattleWindow();
-    private final Npc npc = new Npc("Mayor", 250, 300, TextureType.SQUARE16.getTexture());
-    private final Npc npc2 = new Npc("Placeholder2", 150, 300, TextureType.SQUARE16.getTexture());
-    private final Npc npc3 = new Npc("Placeholder3", 50, 300, TextureType.SQUARE16.getTexture());
-    private final Npc npc4 = new Npc("Placeholder4 ", 700, 300, TextureType.SQUARE16.getTexture());
+    private final Npc npc = new Npc("Mayor", 250, 300, TextureType.GHOST.getTexture());
+    private final Npc npc2 = new Npc("Placeholder2", 150, 300, TextureType.GHOST.getTexture());
+    private final Npc npc3 = new Npc("Placeholder3", 50, 300, TextureType.GHOST.getTexture());
+    private final Npc npc4 = new Npc("Placeholder4 ", 700, 300, TextureType.GHOST.getTexture());
     private final Npc[] npcArray = { npc, npc2, npc3, npc4 };
     private final List<Npc> NPCs = new ArrayList<>(Arrays.asList(npcArray));
 
@@ -43,6 +43,8 @@ public class Game {
     private final Map<String, Integer> drawingBounds = new CaseInsensitiveMap<>();
     private final Dialogue interaction = new Dialogue(worldView, FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME", "Content Placeholder");
     private final Mechanics game = new Mechanics(keyPresses, window, NPCs, interaction);
+    private final GameMap baseLayer = new GameMap("resources/finalmap_Base Layer.csv", 250, tileLoader);
+    private final GameMap topLayer = new GameMap("resources/finalmap_Extra Layer.csv", 250, tileLoader);
 
     private int loadingBarCounter = 0;
     private Text loadingText = null;
@@ -77,7 +79,7 @@ public class Game {
 
             game.handleEvents(wizard);
             if (!game.isBattleScreenOpen()) {
-                wizard.moveCharacter(keyPresses, toDraw, worldView, currentMap);
+                wizard.moveCharacter(keyPresses, toDraw, worldView, topLayer);
             }
             updateWindow();
         }
@@ -127,7 +129,6 @@ public class Game {
     }
 
     /**
-     * 
      * Updates the window
      */
     private void updateWindow() {
@@ -153,9 +154,11 @@ public class Game {
 
         for (int i = drawingBounds.get("TopCameraEdge"); i <= drawingBounds.get("BottomCameraEdge"); i++) {
             for (int j = drawingBounds.get("LeftCameraEdge"); j <= drawingBounds.get("RightCameraEdge"); j++) {
-                currentMap.getTile(i, j).draw(window, RenderStates.DEFAULT);
+                baseLayer.getTile(i, j).draw(window, RenderStates.DEFAULT);
+                topLayer.getTile(i, j).draw(window, RenderStates.DEFAULT);
             }
         }
+
     }
 
     private void initialiseDrawingBounds() {
@@ -164,11 +167,11 @@ public class Game {
         this.drawingBounds.put("LeftCameraEdge",
                 Math.max((int) (worldView.getCenter().x / tileSize) - (cameraWidth / 2), 0));
         this.drawingBounds.put("RightCameraEdge",
-                Math.min((int) (worldView.getCenter().x / tileSize) + (cameraWidth / 2), currentMap.getDrawWidth()));
+                Math.min((int) (worldView.getCenter().x / tileSize) + (cameraWidth / 2), topLayer.getDrawWidth()));
         this.drawingBounds.put("TopCameraEdge",
                 Math.max((int) (worldView.getCenter().y / tileSize) - (cameraWidth / 2), 0));
         this.drawingBounds.put("BottomCameraEdge",
-                Math.min((int) (worldView.getCenter().y / tileSize) + (cameraWidth / 2), currentMap.getDrawHeight()));
+                Math.min((int) (worldView.getCenter().y / tileSize) + (cameraWidth / 2), topLayer.getDrawHeight()));
     }
 
 }
