@@ -58,6 +58,8 @@ public class Game {
      * Runs the window including inputs and updating the window
      */
     public void run() {
+        int counter = 0;
+
         while (window.isOpen()) {
             if (!this.tileLoader.isLoaded()) {
                 window.clear(Color.BLACK);
@@ -70,6 +72,15 @@ public class Game {
                 text.setCharacterSize(20);
                 text.setFont(FontType.ROBOTO.getFont());
 
+                RectangleShape loadingBar = new RectangleShape();
+
+                loadingBar.setPosition(new Vector2f(50, 400));
+                loadingBar.setSize(new Vector2f(counter, 50));
+                loadingBar.setFillColor(Color.WHITE);
+
+                counter += 2;
+
+                window.draw(loadingBar);
                 window.draw(text);
                 window.display();
                 continue;
