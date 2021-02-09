@@ -18,6 +18,7 @@ public abstract class Character extends Sprite {
     private File npcTextFile;
     private static ArrayList<Item> items;
     private Item associatedItem = null;
+    private int tmp = 0;
 
     public Character(String characterName, float xPosition, float yPosition, Texture characterTexture) {
 
@@ -37,35 +38,43 @@ public abstract class Character extends Sprite {
         NPCScript.clear();
 
         if(!(this.associatedItem == null)){
-            if(this.associatedItem.isFound()){
-                System.out.println("1");
+            if(this.associatedItem.isFound() && !(this.associatedItem.hasBeenReportedAsFound())){
                 npcTextFile = new File("resources/Dialogue/" + characterName + "2.csv");
                 if(npcTextFile.exists()) {
                     addDialogue(npcTextFile.getPath());
                 }
                 else{
-                    NPCScript.add("ERROR: File not found" + characterName);
+                    NPCScript.add("ERROR 1: File not found" + characterName);
                 }
             }
             else{
-                System.out.println("2");
-                npcTextFile = new File("resources/Dialogue/" + characterName + ".csv");
-                if(npcTextFile.exists()) {
-                    addDialogue(npcTextFile.getPath());
+                if(this.associatedItem.hasBeenReportedAsFound()){
+                    npcTextFile = new File("resources/Dialogue/" + characterName + "3.csv");
+                    if(npcTextFile.exists()) {
+                        addDialogue(npcTextFile.getPath());
+                    }
+                    else{
+                        NPCScript.add("ERROR 2: File not found" + characterName);
+                    }
                 }
                 else{
-                    NPCScript.add("ERROR: File not found" + characterName);
+                    npcTextFile = new File("resources/Dialogue/" + characterName + ".csv");
+                    if(npcTextFile.exists()) {
+                        addDialogue(npcTextFile.getPath());
+                    }
+                    else{
+                        NPCScript.add("ERROR 3: File not found" + characterName);
+                    }
                 }
             }
         }
         else{
-            System.out.println("3");
             npcTextFile = new File("resources/Dialogue/" + characterName + ".csv");
             if(npcTextFile.exists()) {
                 addDialogue(npcTextFile.getPath());
             }
             else{
-                NPCScript.add("ERROR: File not found" + characterName);
+                NPCScript.add("ERROR 4: File not found" + characterName);
             }
         }
         
@@ -74,9 +83,15 @@ public abstract class Character extends Sprite {
 
     private void addDialogue(String fileName) {
         BufferedReader csvReader = returnBufferedReader(fileName);
+        tmp=0;
         try{
             String row;
             while((row = csvReader.readLine()) != null){
+                if(row.contains("@")){
+                    if(associatedItem!=null){
+                        tmp=1;
+                    }
+                }
                 String[] data = row.split(",");
                 data = this.wrapRoundDialogueBox(data);
                 NPCScript.addAll(Arrays.asList(data));
@@ -154,6 +169,10 @@ public abstract class Character extends Sprite {
     }
 
     public void resetScript() {
+        if(tmp==1){
+            System.out.println("Hey look I do set reported to true!");
+            associatedItem.setAshasBeenReportedAsFound(true);
+        }
         currentIndex = 1;
     }
 
