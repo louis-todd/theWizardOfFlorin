@@ -16,11 +16,11 @@ public class DodgeGame {
 
     private final BattleWindow battleWindow = new BattleWindow();
 
-    private Npc battleNpc;
-    private Stack<Projectile> projectileStack = new Stack<>();
-    private MoveableCharacter wizard;
-    private Stack<Projectile> projectileInMotion = new Stack<>();
-    private boolean battleOpen = true;
+    private final Npc battleNpc;
+    private final Stack<Projectile> projectileStack = new Stack<>();
+    private final MoveableCharacter wizard;
+    private final Stack<Projectile> projectileInMotion = new Stack<>();
+    private final boolean battleOpen = true;
 
     public DodgeGame(Npc setBattleNpc) {
         this.battleNpc = new Npc(setBattleNpc.getName(), battleWindow.getGhostAreaCentre().x - 16, battleWindow.getGhostAreaCentre().y - 16, (Texture) setBattleNpc.getTexture());
