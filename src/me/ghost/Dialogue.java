@@ -4,18 +4,21 @@ import org.jsfml.graphics.*;
 import org.jsfml.system.Vector2f;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Dialogue implements Drawable {
-    private Font font = new Font();
+
+    private final Font font;
+    private final View currentWorld;
     private final String speakingCharacter;
     private final String dialogueText;
-    private Texture boardTexture = new Texture();
-    private final ArrayList<Drawable> toDraw = new ArrayList<>();
+    private final Texture boardTexture;
+    private final List<Drawable> toDraw = new ArrayList<>();
+
     private Text characterName;
     private Text toWrite;
     private float xBoundary;
     private float yBoundary;
-    private View currentWorld;
     private Vector2f dimensions;
     private RectangleShape textBackground;
 
