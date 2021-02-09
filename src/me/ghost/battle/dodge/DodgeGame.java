@@ -7,29 +7,29 @@ import me.ghost.battle.BattleWindow;
 import org.jsfml.graphics.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Stack;
 
-public class DodgeGame implements Drawable{
+public class DodgeGame {
+
+    private final BattleWindow battleWindow = new BattleWindow();
 
     private Npc battleNpc;
     private Stack<Projectile> projectileStack = new Stack<>();
     private MoveableCharacter wizard;
-    private final ArrayList<Drawable> toDraw;
     private Stack<Projectile> projectileInMotion = new Stack<>();
-    private boolean battleOpen;
+    private boolean battleOpen = true;
 
-    public DodgeGame(Npc setBattleNpc/*, MoveableCharacter setWizard*/) {
-        BattleWindow battleWindow = new BattleWindow();
-        battleOpen = true;
-        toDraw = battleWindow.getToDraw();
+    public DodgeGame(Npc setBattleNpc) {
         this.battleNpc = new Npc(setBattleNpc.getName(), battleWindow.getGhostAreaCentre().x - 16, battleWindow.getGhostAreaCentre().y - 16, (Texture) setBattleNpc.getTexture());
         this.wizard = new MoveableCharacter("Wizard", battleWindow.getPlayerAreaCentre().x - 16, battleWindow.getPlayerAreaCentre().y - 16, TextureType.SQUARE16.getTexture());
         this.addProjectilesToStack(1000);
-        toDraw.add(this.battleNpc);
-        toDraw.add(this.wizard);
-        throwObject();
-        run();
+
+        this.battleWindow.getToDraw().add(this.battleNpc);
+        this.battleWindow.getToDraw().add(this.wizard);
+
+        this.throwObject();
     }
 
     private void addProjectilesToStack(int numberProjectiles){
@@ -37,40 +37,23 @@ public class DodgeGame implements Drawable{
         int minSides = 0;
         int maxSides = 10;
         for(int i = 0; i < numberProjectiles; i++){
-            projectileStack.push(new Projectile(4, rand.nextInt(maxSides - minSides + 1)));
+            Projectile push = projectileStack.push(new Projectile(4, rand.nextInt(maxSides - minSides + 1)));
+
+            push.thrown(this.battleNpc);
         }
     }
 
     private void throwObject() {
-        while (projectileStack.size() > 0) {
-            projectileInMotion.push(projectileStack.pop());
-        }
-        for(Projectile projectile : projectileInMotion){
-            toDraw.add(projectile);
-        }
-        }
+        this.projectileInMotion.addAll(this.projectileStack);
+        this.projectileStack.clear();
 
-    @Override
-    public void draw(RenderTarget renderTarget, RenderStates renderStates) {
-        for(Drawable item : toDraw) {
-            renderTarget.draw(item);
+        for (Projectile projectile : this.projectileInMotion) {
+            this.battleWindow.getToDraw().add(projectile);
         }
     }
 
-    private void run(){
-       /* while(battleOpen){
-            for (Projectile projectile : projectileInMotion) {
-                if(projectile.getPosition().y < 200) {
-                    projectile.move(projectile.velocity.x / 100, projectile.velocity.y / 100);
-                }
-            }
-        }
-        updateWindow();
-
-        */
-    }
-
-    private void updateWindow(){
-
+    public void draw(RenderWindow window) {
+        this.battleWindow.getToDraw().forEach(window::draw);
+        this.projectileInMotion.forEach(Projectile::applyVelocity);
     }
 }

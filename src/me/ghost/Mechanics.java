@@ -175,8 +175,7 @@ public class Mechanics {
             interaction.draw(window, null);
         }
         if ((keyPresses.get("B"))) {
-            //battleWindow.draw(window, null);
-            dodgeGame.draw(window, null);
+            dodgeGame.draw(this.window);
             battleScreenOpen = true;
         }
     }
