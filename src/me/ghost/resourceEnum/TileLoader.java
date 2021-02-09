@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TileLoader {
 
-    private static final ExecutorService THREADS = Executors.newCachedThreadPool();
+    public static final ExecutorService THREADS = Executors.newCachedThreadPool();
 
     private final AtomicBoolean loading = new AtomicBoolean(false);
     private final Texture[] tileTexture = new Texture[3420];

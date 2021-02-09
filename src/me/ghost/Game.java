@@ -81,6 +81,8 @@ public class Game {
             }
             updateWindow();
         }
+
+        TileLoader.THREADS.shutdown();
     }
 
     private void drawLoadingScreen(RenderWindow window) {
