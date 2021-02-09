@@ -11,7 +11,6 @@ import me.ghost.Item;
 
 public abstract class Character extends Sprite {
 
-    private String[] script;
     private ArrayList<String> NPCScript = new ArrayList<String>();
     private String characterName;
     private int currentIndex = 1;
@@ -26,6 +25,7 @@ public abstract class Character extends Sprite {
         this.setPosition(xPosition, yPosition);
         this.characterName = characterName;
     }
+    
     public Character(String characterName, float xPosition, float yPosition, Texture characterTexture, ArrayList<Item> items) {
 
         Character.items = items;
