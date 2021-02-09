@@ -18,7 +18,7 @@ public abstract class Character extends Sprite {
     private File npcTextFile;
     private static ArrayList<Item> items;
     private Item associatedItem = null;
-    private int tmp = 0;
+    private Boolean npcResolved = false;
 
     public Character(String characterName, float xPosition, float yPosition, Texture characterTexture) {
 
@@ -83,13 +83,13 @@ public abstract class Character extends Sprite {
 
     private void addDialogue(String fileName) {
         BufferedReader csvReader = returnBufferedReader(fileName);
-        tmp=0;
+        npcResolved=false;
         try{
             String row;
             while((row = csvReader.readLine()) != null){
                 if(row.contains("@")){
                     if(associatedItem!=null){
-                        tmp=1;
+                        npcResolved=true;
                     }
                 }
                 String[] data = row.split(",");
@@ -169,7 +169,7 @@ public abstract class Character extends Sprite {
     }
 
     public void resetScript() {
-        if(tmp==1){
+        if(npcResolved==true){
             System.out.println("Hey look I do set reported to true!");
             associatedItem.setAshasBeenReportedAsFound(true);
         }
