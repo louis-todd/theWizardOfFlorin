@@ -24,10 +24,10 @@ public class Game {
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
 
     private BattleWindow battleWindow = new BattleWindow();
-    private Npc npc = new Npc("Mayor", 250, 300, TextureType.SQUARE16.getTexture());
-    private Npc npc2 = new Npc("Placeholder2", 150, 300, TextureType.SQUARE16.getTexture());
-    private Npc npc3 = new Npc("Placeholder3", 50, 300, TextureType.SQUARE16.getTexture());
-    private Npc npc4 = new Npc("Placeholder4 ", 700, 300, TextureType.SQUARE16.getTexture());
+    private Npc npc = new Npc("Mayor", 250, 300, TextureType.GHOST.getTexture());
+    private Npc npc2 = new Npc("Placeholder2", 150, 300, TextureType.GHOST.getTexture());
+    private Npc npc3 = new Npc("Placeholder3", 50, 300, TextureType.GHOST.getTexture());
+    private Npc npc4 = new Npc("Placeholder4 ", 700, 300, TextureType.GHOST.getTexture());
     private Npc[] npcArray = {npc, npc2, npc3, npc4};
     private ArrayList<Npc> NPCs = new ArrayList<Npc>(Arrays.asList(npcArray));
 
