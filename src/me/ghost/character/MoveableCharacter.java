@@ -1,6 +1,6 @@
 package me.ghost.character;
 
-import me.ghost.ResourceEnum.TextureType;
+import me.ghost.data.TextureType;
 import me.ghost.map.GameMap;
 import org.jsfml.graphics.Drawable;
 import org.jsfml.graphics.FloatRect;

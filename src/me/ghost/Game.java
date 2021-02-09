@@ -32,8 +32,7 @@ public class Game {
     private final Npc npc2 = new Npc("Placeholder2", 150, 300, TextureType.GHOST.getTexture());
     private final Npc npc3 = new Npc("Placeholder3", 50, 300, TextureType.GHOST.getTexture());
     private final Npc npc4 = new Npc("Placeholder4 ", 700, 300, TextureType.GHOST.getTexture());
-    private final Npc[] npcArray = { npc, npc2, npc3, npc4 };
-    private final List<Npc> NPCs = new ArrayList<>(Arrays.asList(npcArray));
+    private final List<Npc> NPCs = new ArrayList<>(Arrays.asList(npc, npc2, npc3, npc4));
 
     private final TileLoader tileLoader = new TileLoader();
     private final GameMap mapHouse = new GameMap("resources/map._House.csv", 50, tileLoader);
@@ -54,13 +53,9 @@ public class Game {
      * Constructor for the game class
      */
     public Game() {
-
         worldView.setCenter(wizard.getPosition());
-
-        Drawable[] itemsToDraw = {wizard, npc, npc2, npc3, npc4};
-        toDraw.addAll(Arrays.asList(itemsToDraw));
-
-        window.setFramerateLimit(120);                                                                                      // Limit the framerate
+        toDraw.addAll(Arrays.asList(wizard, npc, npc2, npc3, npc4));
+        window.setFramerateLimit(120);
     }
 
     /**
@@ -74,7 +69,8 @@ public class Game {
             }
 
             if (!this.currentMap.hasLoaded()) {
-                this.currentMap.loadMap();
+                this.baseLayer.loadMap();
+                this.topLayer.loadMap();
             }
 
             game.handleEvents(wizard);
