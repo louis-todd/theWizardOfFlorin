@@ -43,8 +43,8 @@ public class Game {
     private Dialogue interaction = new Dialogue(worldView, FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME", "Content Placeholder");
     ;
     private Mechanics game = new Mechanics(keyPresses, window, NPCs, interaction, battleWindow);
-    private GameMap baseLayer = new GameMap("resources/finalmap_Base Layer.csv", 250, tileLoader);
-    private GameMap topLayer = new GameMap("resources/finalmap_Extra Layer.csv", 250, tileLoader);
+    private GameMap baseLayer = new GameMap("resources/finalmapv2_Base Layer.csv", 250, tileLoader);
+    private GameMap topLayer = new GameMap("resources/finalmapv2_Extra Layer.csv", 250, tileLoader);
 
     /**
      * Constructor for the game class
