@@ -42,7 +42,7 @@ public class Game {
     private final View battleView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
     private final Map<String, Integer> drawingBounds = new CaseInsensitiveMap<>();
     private final Dialogue interaction = new Dialogue(worldView, FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME", "Content Placeholder");
-    private final Mechanics game = new Mechanics(keyPresses, window, NPCs, interaction, battleWindow);
+    private final Mechanics game = new Mechanics(keyPresses, window, NPCs, interaction);
 
     private int loadingBarCounter = 0;
     private Text loadingText = null;

@@ -1,38 +1,34 @@
 package me.ghost;
 
+import me.ghost.battle.dodge.DodgeGame;
 import me.ghost.character.MoveableCharacter;
 import me.ghost.character.Npc;
-import me.ghost.battle.BattleWindow;
-
-import me.ghost.battle.dodge.DodgeGame;
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.KeyEvent;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class Mechanics {
 
-    private Map<String, Boolean> keyPresses;
-    private RenderWindow window;
-    private Dialogue interaction;
-    private BattleWindow battleWindow;
-    private ArrayList<Npc> NPCs = new ArrayList<>();
+    private final Map<String, Boolean> keyPresses;
+    private final RenderWindow window;
+    private final Dialogue interaction;
+    private final List<Npc> NPCs;
+
     private Npc interactingNPC;
     private boolean battleScreenOpen = false;
     private DodgeGame dodgeGame;
 
 
-    public Mechanics(Map<String, Boolean> keyPresses, RenderWindow window, List<Npc> NPCs, Dialogue interaction, BattleWindow battleWindow) {
+    public Mechanics(Map<String, Boolean> keyPresses, RenderWindow window, List<Npc> NPCs, Dialogue interaction) {
         this.keyPresses = keyPresses;
         this.window = window;
         this.interaction = interaction;
         this.NPCs = NPCs;
-        this.battleWindow = battleWindow;
-        initKeyPressesMap();
+        this.initKeyPressesMap();
     }
 
     public void initKeyPressesMap() {
@@ -127,13 +123,11 @@ public class Mechanics {
                                 interaction.setTextContent(String
                                         .valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
                                 interactingNPC.incrementCurrentIndex();
-                                ;
                             }
                             // if at tile limit, close
                             else {
                                 keyPresses.put("SPACE", false);
                                 interactingNPC.resetScript();
-                                ;
                             }
                         }
                         // if first space, set to display first tile
@@ -169,7 +163,6 @@ public class Mechanics {
                         else if (interactingNPC.getCurrentIndex() >= interactingNPC.getScript().size()) {
                             keyPresses.put("SPACE", !(keyPresses.get("SPACE")));
                             interactingNPC.resetScript();
-                            ;
                         }
                     }
                 default:
