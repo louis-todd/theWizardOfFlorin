@@ -1,16 +1,14 @@
 package me.ghost.battle.dodge;
 
-import me.ghost.Characters.MoveableCharacter;
-import me.ghost.Characters.Npc;
-import me.ghost.ResourceEnum.TextureType;
+import me.ghost.character.MoveableCharacter;
+import me.ghost.character.Npc;
+import me.ghost.data.TextureType;
 import me.ghost.battle.BattleWindow;
 import org.jsfml.graphics.*;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.KeyEvent;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import java.util.Stack;
 

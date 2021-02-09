@@ -1,4 +1,4 @@
-package me.ghost.ResourceEnum;
+package me.ghost.data;
 
 
 import me.ghost.Game;

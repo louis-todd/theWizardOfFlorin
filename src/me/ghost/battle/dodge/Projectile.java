@@ -1,6 +1,6 @@
 package me.ghost.battle.dodge;
 
-import me.ghost.Characters.Npc;
+import me.ghost.character.Npc;
 import org.jsfml.graphics.CircleShape;
 import org.jsfml.graphics.Color;
 import org.jsfml.system.Vector2f;

@@ -1,4 +1,4 @@
-package me.ghost.Characters;
+package me.ghost.character;
 
 import java.io.*;
 import java.util.ArrayList;

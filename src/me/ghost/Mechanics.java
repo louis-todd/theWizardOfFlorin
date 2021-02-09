@@ -1,7 +1,7 @@
 package me.ghost;
 
-import me.ghost.Characters.MoveableCharacter;
-import me.ghost.Characters.Npc;
+import me.ghost.character.MoveableCharacter;
+import me.ghost.character.Npc;
 import me.ghost.battle.BattleWindow;
 
 import me.ghost.battle.dodge.DodgeGame;
