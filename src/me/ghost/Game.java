@@ -67,10 +67,14 @@ public class Game {
                 continue;
             }
 
-            if (!this.currentMap.hasLoaded()) {
-                this.baseLayer.loadMap();
+            if (!this.topLayer.hasLoaded()) {
                 this.topLayer.loadMap();
             }
+
+            if (!this.baseLayer.hasLoaded()) {
+                this.baseLayer.loadMap();
+            }
+
 
             game.handleEvents(wizard);
             if (!game.isBattleScreenOpen()) {
