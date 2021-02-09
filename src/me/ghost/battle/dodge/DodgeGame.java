@@ -5,6 +5,9 @@ import me.ghost.Characters.Npc;
 import me.ghost.ResourceEnum.TextureType;
 import me.ghost.battle.BattleWindow;
 import org.jsfml.graphics.*;
+import org.jsfml.window.Keyboard;
+import org.jsfml.window.event.Event;
+import org.jsfml.window.event.KeyEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,5 +58,12 @@ public class DodgeGame {
     public void draw(RenderWindow window) {
         this.battleWindow.getToDraw().forEach(window::draw);
         this.projectileInMotion.forEach(Projectile::applyVelocity);
+    }
+
+    public void handleInput(KeyEvent event) {
+        if (event.key == Keyboard.Key.W && event.type == Event.Type.KEY_PRESSED) {
+            this.wizard.setPosition(this.wizard.getPosition().x, this.wizard.getPosition().y + 10);
+        }
+
     }
 }

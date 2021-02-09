@@ -90,6 +90,10 @@ public class Mechanics {
                             || keyRelease.key == Keyboard.Key.UP || keyRelease.key == Keyboard.Key.DOWN)) {
                         handleKeyPress(keyRelease, false);
                     }
+
+                    if (this.battleScreenOpen) {
+                        this.dodgeGame.handleInput(keyRelease);
+                    }
                     break;
                 case KEY_PRESSED:
                     KeyEvent keyEvent = event.asKeyEvent();
@@ -97,6 +101,10 @@ public class Mechanics {
                             || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN)) {
                         handleKeyPress(keyEvent, true);
                         break;
+                    }
+
+                    if (this.battleScreenOpen) {
+                        this.dodgeGame.handleInput(keyEvent);
                     }
 
                     // Calculate which NPC is being interacted with
