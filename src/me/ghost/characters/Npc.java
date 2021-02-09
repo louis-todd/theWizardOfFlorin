@@ -3,6 +3,8 @@ package me.ghost.characters;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Texture;
 
+import me.ghost.Item;
+
 public class Npc extends Character {
 
     private Boolean shouldDraw = true;

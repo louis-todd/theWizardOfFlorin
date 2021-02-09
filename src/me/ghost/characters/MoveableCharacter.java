@@ -10,6 +10,7 @@ import org.jsfml.graphics.View;
 import org.jsfml.system.Vector2f;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class MoveableCharacter extends Character {
@@ -18,6 +19,11 @@ public class MoveableCharacter extends Character {
 
     public MoveableCharacter(String characterName, float xPosition, float yPosition, Texture characterTexture) {
         super(characterName, xPosition, yPosition, characterTexture);
+        wizardColliding = false;
+    }
+
+    public MoveableCharacter(String characterName, float xPosition, float yPosition, Texture characterTexture, ArrayList<Item> items) {
+        super(characterName, xPosition, yPosition, characterTexture, items);
         wizardColliding = false;
     }
 

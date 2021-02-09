@@ -3,6 +3,7 @@ package me.ghost;
 
 import me.ghost.battle.BattleWindow;
 import me.ghost.characters.MoveableCharacter;
+import me.ghost.characters.Character;
 import me.ghost.characters.Npc;
 import me.ghost.resourceEnum.FontType;
 import me.ghost.resourceEnum.TileLoader;
@@ -25,8 +26,14 @@ public class Game {
     private Dialogue interaction = new Dialogue(FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME",
             "Content Placeholder");
     private BattleWindow battleWindow = new BattleWindow();
+
+    private Item axe = new Item("axe", 300, 300, TextureType.SQUARE16.getTexture());
+
+    private Item[] itemArray = { axe };
+    private ArrayList<Item> ITEMS = new ArrayList<Item>(Arrays.asList(itemArray));
+
     private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 240,
-            TextureType.SQUARE16.getTexture());
+            TextureType.SQUARE16.getTexture(), ITEMS);
     private final List<Drawable> toDraw = new ArrayList<>();
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
 
@@ -34,15 +41,10 @@ public class Game {
     private Npc npc2 = new Npc("Placeholder2", 150, 300, TextureType.SQUARE16.getTexture());
     private Npc npc3 = new Npc("Placeholder3", 50, 300, TextureType.SQUARE16.getTexture());
 
-    private Item boat = new Item("Boat", 300, 300, TextureType.SQUARE16.getTexture());
-
     private Npc[] npcArray = { npc, npc2, npc3 };
     private ArrayList<Npc> NPCs = new ArrayList<Npc>(Arrays.asList(npcArray));
 
-    private Item[] itemArray = { boat };
-    private ArrayList<Item> ITEMS = new ArrayList<Item>(Arrays.asList(itemArray));
-
-    private Drawable[] itemsToDraw = { wizard, npc, npc2, npc3, boat };
+    private Drawable[] itemsToDraw = { wizard, npc, npc2, npc3, axe };
     private Boolean[] shouldDrawItem = { true, true, true, true, true };
     private Mechanics game = new Mechanics(keyPresses, window, NPCs, ITEMS, shouldDrawItem, interaction, battleWindow);
     GameMap mapHouse;

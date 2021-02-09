@@ -7,6 +7,8 @@ import java.util.Arrays;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 
+import me.ghost.Item;
+
 public abstract class Character extends Sprite {
 
     private String[] script;
@@ -14,9 +16,17 @@ public abstract class Character extends Sprite {
     private String characterName;
     private int currentIndex = 1;
     private File npcTextFile;
+    private static ArrayList<Item> items;
 
     public Character(String characterName, float xPosition, float yPosition, Texture characterTexture) {
 
+        this.setTexture(characterTexture);
+        this.setPosition(xPosition, yPosition);
+        this.characterName = characterName;
+    }
+    public Character(String characterName, float xPosition, float yPosition, Texture characterTexture, ArrayList<Item> items) {
+
+        Character.items = items;
         this.setTexture(characterTexture);
         this.setPosition(xPosition, yPosition);
         this.characterName = characterName;
@@ -84,6 +94,11 @@ public abstract class Character extends Sprite {
         int itemEnd = sentence.lastIndexOf("**");
         if(itemStart!=-1 && itemEnd!=-1){
             item = sentence.substring(sentence.indexOf("**")+2, sentence.lastIndexOf("**"));
+            for (Item potentialItem : Character.items) {
+                if (potentialItem.getName().equals(item)) {
+                    potentialItem.setAsAvailibleToCollect(true);
+                }
+            }
         }
         int[] positions = {itemStart, itemEnd};
         return positions;
@@ -116,6 +131,10 @@ public abstract class Character extends Sprite {
 
     public void resetScript() {
         currentIndex = 1;
+    }
+
+    public static ArrayList<Item> getItems(){
+        return Character.items;
     }
 
 }
