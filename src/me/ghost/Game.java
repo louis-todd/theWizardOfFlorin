@@ -4,7 +4,6 @@ package me.ghost;
 import me.ghost.character.MoveableCharacter;
 import me.ghost.character.Npc;
 import me.ghost.data.TileLoader;
-import me.ghost.battle.BattleWindow;
 import me.ghost.map.GameMap;
 import me.ghost.data.FontType;
 import me.ghost.data.TextureType;
@@ -74,7 +73,6 @@ public class Game {
             if (!this.baseLayer.hasLoaded()) {
                 this.baseLayer.loadMap();
             }
-
 
             game.handleEvents(wizard);
             if (!game.isBattleScreenOpen()) {
