@@ -17,7 +17,7 @@ public abstract class Character extends Sprite {
     private File npcTextFile;
     private static ArrayList<Item> items;
     private Item associatedItem = null;
-    private Boolean npcResolved = false;
+    private static Boolean npcResolved = false;
 
     public Character(String characterName, float xPosition, float yPosition, Texture characterTexture) {
 
@@ -25,7 +25,7 @@ public abstract class Character extends Sprite {
         this.setPosition(xPosition, yPosition);
         this.characterName = characterName;
     }
-    
+
     public Character(String characterName, float xPosition, float yPosition, Texture characterTexture, ArrayList<Item> items) {
 
         Character.items = items;
@@ -38,43 +38,61 @@ public abstract class Character extends Sprite {
         NPCScript.clear();
 
         if(!(this.associatedItem == null)){
+            System.out.println("1");
             if(this.associatedItem.isFound() && !(this.associatedItem.hasBeenReportedAsFound())){
+                System.out.println("2");
                 npcTextFile = new File("resources/Dialogue/" + characterName + "2.csv");
                 if(npcTextFile.exists()) {
+                    System.out.println("3");
                     addDialogue(npcTextFile.getPath());
                 }
                 else{
+                    System.out.println("4");
                     NPCScript.add("ERROR 1: File not found" + characterName);
                 }
             }
             else{
+                System.out.println("5");
                 if(this.associatedItem.hasBeenReportedAsFound()){
+                    System.out.println("6");
                     npcTextFile = new File("resources/Dialogue/" + characterName + "3.csv");
                     if(npcTextFile.exists()) {
+                        System.out.println("7");
                         addDialogue(npcTextFile.getPath());
                     }
                     else{
+                        System.out.println("8");
                         NPCScript.add("ERROR 2: File not found" + characterName);
                     }
                 }
                 else{
+                    System.out.println("9");
                     npcTextFile = new File("resources/Dialogue/" + characterName + ".csv");
                     if(npcTextFile.exists()) {
+                        System.out.println("10");
                         addDialogue(npcTextFile.getPath());
                     }
                     else{
+                        System.out.println("11");
                         NPCScript.add("ERROR 3: File not found" + characterName);
                     }
                 }
             }
         }
         else{
+            System.out.println("12");
             npcTextFile = new File("resources/Dialogue/" + characterName + ".csv");
             if(npcTextFile.exists()) {
-                addDialogue(npcTextFile.getPath());
+                if(!npcResolved){
+                    addDialogue(npcTextFile.getPath());
+                }
+                else{
+                    NPCScript.add("can't talk to me yet!" + characterName);
+                }
             }
             else{
                 NPCScript.add("ERROR 4: File not found" + characterName);
+                System.out.println("14");
             }
         }
         
