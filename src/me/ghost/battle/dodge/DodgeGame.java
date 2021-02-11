@@ -59,17 +59,19 @@ public class DodgeGame {
     }
 
     public void handleInput(KeyEvent event) {
-        if (event.key == Keyboard.Key.W && event.type == Event.Type.KEY_PRESSED) {
-            this.wizard.setPosition(this.wizard.getPosition().x, this.wizard.getPosition().y - 3);
-        }
-        if (event.key == Keyboard.Key.A && event.type == Event.Type.KEY_PRESSED) {
-            this.wizard.setPosition(this.wizard.getPosition().x - 3, this.wizard.getPosition().y);
-        }
-        if (event.key == Keyboard.Key.S && event.type == Event.Type.KEY_PRESSED) {
-            this.wizard.setPosition(this.wizard.getPosition().x, this.wizard.getPosition().y + 3);
-        }
-        if (event.key == Keyboard.Key.D && event.type == Event.Type.KEY_PRESSED) {
-            this.wizard.setPosition(this.wizard.getPosition().x + 3, this.wizard.getPosition().y);
+        if(event.type == Event.Type.KEY_PRESSED){
+            if (event.key == Keyboard.Key.W) {
+                this.wizard.setPosition(this.wizard.getPosition().x, this.wizard.getPosition().y - 3);
+            }
+            if (event.key == Keyboard.Key.A) {
+                this.wizard.setPosition(this.wizard.getPosition().x - 3, this.wizard.getPosition().y);
+            }
+            if (event.key == Keyboard.Key.S) {
+                this.wizard.setPosition(this.wizard.getPosition().x, this.wizard.getPosition().y + 3);
+            }
+            if (event.key == Keyboard.Key.D) {
+                this.wizard.setPosition(this.wizard.getPosition().x + 3, this.wizard.getPosition().y);
+            }
         }
     }
 }
