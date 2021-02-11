@@ -25,9 +25,9 @@ public abstract class Character extends Sprite {
     public List<String> getScript(){
         npcScript.clear();
 
-        File npcTextFile = new File("resources/Dialogue/" + characterName + ".csv");
+        File npcTextFile = new File("resources/Dialogue/" + characterName + "1.csv");
         if(npcTextFile.exists()) {
-            addDialogue("resources/Dialogue/" + characterName + ".csv");
+            addDialogue("resources/Dialogue/" + characterName + "1.csv");
         }
         else{
             npcScript.add("Page 1: " + characterName);
