@@ -65,7 +65,7 @@ public abstract class Character extends Sprite {
                         NPCScript.add("ERROR 2: File not found" + characterName);
                     }
                 }
-                else{
+                 {
                     System.out.println("9");
                     npcTextFile = new File("resources/Dialogue/" + characterName + ".csv");
                     if(npcTextFile.exists()) {
@@ -189,7 +189,9 @@ public abstract class Character extends Sprite {
 
     public void resetScript() {
         if(npcResolved==true){
-            associatedItem.setAshasBeenReportedAsFound(true);
+            if(associatedItem!=null){
+                associatedItem.setAshasBeenReportedAsFound(true);
+            }
         }
         currentIndex = 1;
     }
