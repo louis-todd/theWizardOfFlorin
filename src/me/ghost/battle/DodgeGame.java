@@ -1,7 +1,7 @@
-package me.ghost.battle;
-
-public class DodgeGame extends BattleWindow{
-
-    public DodgeGame() {
-    }
-}
+//package me.ghost.battle;
+//
+//public class DodgeGame extends BattleWindow{
+//
+//    public DodgeGame() {
+//    }
+//}
