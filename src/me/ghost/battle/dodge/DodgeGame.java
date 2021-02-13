@@ -121,22 +121,24 @@ public class DodgeGame {
             }
             this.battleWindow.getToDraw().forEach(window::draw);
 
-            if(lives == 0){
+            if(lives <= 0){
                 System.out.println("YOU LOST");
+                battleLost = true;
             } else {
                 System.out.println("YOU WON");
+                battleWon = true;
             }
         }
     }
 
     private void collideProjectile(Projectile p){
-        if(((int)System.currentTimeMillis() - collideTime > 2000)){
+        if(((int)System.currentTimeMillis() - collideTime > 3000)){
             invincible = false;
         }
         if((p.getGlobalBounds().intersection(wizard.getGlobalBounds()) != null) && !invincible){
             lives-=1;
-            invincible = true;
             collideTime = (int) System.currentTimeMillis();
+            invincible = true;
             System.out.println("LIFE LOST");
         }
     }

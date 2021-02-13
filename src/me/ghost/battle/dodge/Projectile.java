@@ -5,9 +5,6 @@ import org.jsfml.graphics.CircleShape;
 import org.jsfml.graphics.Color;
 import org.jsfml.system.Vector2f;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -15,7 +12,7 @@ public class Projectile extends CircleShape {
 
     private Vector2f velocity = null;
     private boolean rightRotate;
-    private final Color[] colours = {Color.BLACK, Color.BLUE, Color.RED, Color.GREEN, Color.MAGENTA};
+    private final Color[] colours = {Color.BLACK, Color.BLUE, Color.RED, Color.GREEN};
     private Vector2f totalMovement = new Vector2f(0, 0);
 
     public Projectile(int radius, int i) {
@@ -26,7 +23,7 @@ public class Projectile extends CircleShape {
     }
 
     private void setRandomColour(){
-        Color randomColour = colours[ThreadLocalRandom.current().nextInt(5)];
+        Color randomColour = colours[ThreadLocalRandom.current().nextInt(4)];
         this.setFillColor(randomColour);
     }
 
