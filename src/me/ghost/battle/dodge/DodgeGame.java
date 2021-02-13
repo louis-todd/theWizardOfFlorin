@@ -11,7 +11,6 @@ import org.jsfml.window.event.KeyEvent;
 
 import java.util.Random;
 import java.util.Stack;
-import java.util.Timer;
 
 public class DodgeGame {
 
@@ -25,6 +24,8 @@ public class DodgeGame {
     private int lives = 3;
     private boolean invincible = false;
     private int cooldown;
+    private boolean battleWon = false;
+    private boolean battleLost = false;
 
     public DodgeGame(Npc setBattleNpc) {
         this.battleNpc = new Npc(setBattleNpc.getName(), battleWindow.getGhostAreaCentre().x - 16, battleWindow.getGhostAreaCentre().y - 16, (Texture) setBattleNpc.getTexture());
@@ -58,6 +59,9 @@ public class DodgeGame {
     }
 
     public void draw(RenderWindow window) {
+        for(Projectile p : projectileInMotion){
+            collideProjectile(p);
+        }
         this.battleWindow.getToDraw().forEach(window::draw);
         this.projectileInMotion.forEach(Projectile::applyVelocity);
     }
@@ -71,15 +75,14 @@ public class DodgeGame {
         if((p.getGlobalBounds().intersection(wizard.getGlobalBounds()) != null) && !invincible){
             lives-=1;
             invincible = true;
-            cooldown = 10000;
+            cooldown = 100000;
+            if(lives == 0){
+                battleLost = true;
+            }
         }
     }
 
     public void handleInput(KeyEvent event) {
-
-        for(Projectile p : projectileInMotion){
-            collideProjectile(p);
-        }
         if(event.type == Event.Type.KEY_PRESSED){
             if (event.key == Keyboard.Key.W) {
                 this.wizard.setPosition(this.wizard.getPosition().x, this.wizard.getPosition().y - 3);
