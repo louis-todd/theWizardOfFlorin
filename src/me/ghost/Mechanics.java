@@ -145,7 +145,7 @@ public class Mechanics {
                         }
                         // if first B, set to display battle window
                         else {
-                            dodgeGame = new DodgeGame(interactingNPC);
+                            dodgeGame = new DodgeGame(interactingNPC, "EASY");
                             handleKeyPress(keyEvent, true);
                         }
                     }
