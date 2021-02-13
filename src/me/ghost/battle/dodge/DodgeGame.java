@@ -21,6 +21,7 @@ public class DodgeGame {
     private final MoveableCharacter wizard;
     private final Stack<Projectile> projectileInMotion = new Stack<>();
     private final boolean battleOpen = true;
+    private int lives = 3;
 
     public DodgeGame(Npc setBattleNpc) {
         this.battleNpc = new Npc(setBattleNpc.getName(), battleWindow.getGhostAreaCentre().x - 16, battleWindow.getGhostAreaCentre().y - 16, (Texture) setBattleNpc.getTexture());
@@ -58,7 +59,18 @@ public class DodgeGame {
         this.projectileInMotion.forEach(Projectile::applyVelocity);
     }
 
+    private void collideProjectile(Projectile p){
+        if(p.getGlobalBounds().intersection(wizard.getGlobalBounds()) != null){
+            lives-=1;
+            System.out.println(lives);
+        }
+    }
+
     public void handleInput(KeyEvent event) {
+
+        for(Projectile p : projectileInMotion){
+            collideProjectile(p);
+        }
         if(event.type == Event.Type.KEY_PRESSED){
             if (event.key == Keyboard.Key.W) {
                 this.wizard.setPosition(this.wizard.getPosition().x, this.wizard.getPosition().y - 3);
