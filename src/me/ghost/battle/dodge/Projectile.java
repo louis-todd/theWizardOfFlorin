@@ -30,10 +30,10 @@ public class Projectile extends CircleShape {
     public void applyVelocity(){
         if (this.velocity == null) {
             int maxx = 5;
-            int maxy = 5;
+            int maxy = 6;
             int minx = -5;
             int miny = 1;
-            this.velocity = new Vector2f(ThreadLocalRandom.current().nextInt(maxx - minx + 1), ThreadLocalRandom.current().nextInt(maxy - miny + 1));
+            this.velocity = new Vector2f(ThreadLocalRandom.current().nextInt(maxx - minx + 1) + minx, ThreadLocalRandom.current().nextInt(maxy - miny) + miny);
         }
 
         this.setPosition(this.getPosition().x + this.velocity.x, this.getPosition().y + this.velocity.y);

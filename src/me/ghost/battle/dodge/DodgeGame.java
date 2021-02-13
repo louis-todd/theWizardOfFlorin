@@ -38,7 +38,7 @@ public class DodgeGame {
         int minSides = 0;
         int maxSides = 10;
         for(int i = 0; i < numberProjectiles; i++){
-            Projectile push = projectileStack.push(new Projectile(4, rand.nextInt(maxSides - minSides + 1)));
+            Projectile push = projectileStack.push(new Projectile(6, rand.nextInt(maxSides - minSides + 1)));
 
             push.thrown(this.battleNpc);
         }
