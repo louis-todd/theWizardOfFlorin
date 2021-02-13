@@ -63,6 +63,10 @@ public class BattleWindow {
         return playerArea;
     }
 
+    public RectangleShape getBackground() {
+        return background;
+    }
+
     public Vector2f getPlayerAreaCentre() {
         return (new Vector2f(playerArea.getPosition().x + playerArea.getSize().x / 2, playerArea.getPosition().y + playerArea.getSize().y / 2));
     }
