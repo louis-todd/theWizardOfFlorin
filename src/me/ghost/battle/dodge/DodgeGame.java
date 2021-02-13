@@ -26,6 +26,7 @@ public class DodgeGame {
     private int cooldown;
     private boolean battleWon = false;
     private boolean battleLost = false;
+    private boolean keyPressed = false;
 
     public DodgeGame(Npc setBattleNpc) {
         this.battleNpc = new Npc(setBattleNpc.getName(), battleWindow.getGhostAreaCentre().x - 16, battleWindow.getGhostAreaCentre().y - 16, (Texture) setBattleNpc.getTexture());

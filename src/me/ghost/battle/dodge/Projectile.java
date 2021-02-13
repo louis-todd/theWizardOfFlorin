@@ -33,7 +33,9 @@ public class Projectile extends CircleShape {
             int maxy = 6;
             int minx = -5;
             int miny = 1;
-            this.velocity = new Vector2f(ThreadLocalRandom.current().nextInt(maxx - minx + 1) + minx, ThreadLocalRandom.current().nextInt(maxy - miny) + miny);
+            boolean positivex = ThreadLocalRandom.current().nextBoolean();
+            this.velocity = new Vector2f((positivex) ? ThreadLocalRandom.current().nextFloat()*5 : ThreadLocalRandom.current().nextFloat()*-5, ThreadLocalRandom.current().nextFloat()*3 + 1);
+
         }
 
         this.setPosition(this.getPosition().x + this.velocity.x, this.getPosition().y + this.velocity.y);
