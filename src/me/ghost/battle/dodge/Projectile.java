@@ -11,11 +11,13 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Projectile extends CircleShape {
 
     private Vector2f velocity = null;
+    private boolean rightRotate;
 
     public Projectile(int radius, int i) {
         super(radius, i);
 
         this.setRandomColour();
+        this.rightRotate = ThreadLocalRandom.current().nextBoolean();
     }
 
     private void setRandomColour(){
@@ -30,12 +32,9 @@ public class Projectile extends CircleShape {
     public void applyVelocity(){
         if (this.velocity == null) {
             int maxx = 5;
-            int maxy = 6;
-            int minx = -5;
-            int miny = 1;
+            int maxy = 3;
             boolean positivex = ThreadLocalRandom.current().nextBoolean();
-            this.velocity = new Vector2f((positivex) ? ThreadLocalRandom.current().nextFloat()*5 : ThreadLocalRandom.current().nextFloat()*-5, ThreadLocalRandom.current().nextFloat()*3 + 1);
-
+            this.velocity = new Vector2f((positivex) ? ThreadLocalRandom.current().nextFloat() * maxx : ThreadLocalRandom.current().nextFloat()*(-maxx), ThreadLocalRandom.current().nextFloat() * maxy + 1);
         }
 
         this.setPosition(this.getPosition().x + this.velocity.x, this.getPosition().y + this.velocity.y);
@@ -44,5 +43,9 @@ public class Projectile extends CircleShape {
     public void thrown(Npc player) {
         this.setPosition(player.getPosition());
         this.applyVelocity();
+    }
+
+    public boolean isRightRotate() {
+        return rightRotate;
     }
 }

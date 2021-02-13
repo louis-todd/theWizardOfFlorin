@@ -11,6 +11,7 @@ import org.jsfml.window.event.KeyEvent;
 
 import java.util.Random;
 import java.util.Stack;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class DodgeGame {
 
@@ -26,7 +27,6 @@ public class DodgeGame {
     private int cooldown;
     private boolean battleWon = false;
     private boolean battleLost = false;
-    private boolean keyPressed = false;
 
     public DodgeGame(Npc setBattleNpc) {
         this.battleNpc = new Npc(setBattleNpc.getName(), battleWindow.getGhostAreaCentre().x - 16, battleWindow.getGhostAreaCentre().y - 16, (Texture) setBattleNpc.getTexture());
@@ -40,11 +40,10 @@ public class DodgeGame {
     }
 
     private void addProjectilesToStack(int numberProjectiles){
-        Random rand = new Random();
         int minSides = 0;
         int maxSides = 10;
         for(int i = 0; i < numberProjectiles; i++){
-            Projectile push = projectileStack.push(new Projectile(6, rand.nextInt(maxSides - minSides + 1)));
+            Projectile push = projectileStack.push(new Projectile(6, ThreadLocalRandom.current().nextInt(maxSides - minSides + 1)));
 
             push.thrown(this.battleNpc);
         }
@@ -61,6 +60,7 @@ public class DodgeGame {
 
     public void draw(RenderWindow window) {
         for(Projectile p : projectileInMotion){
+            p.rotate(p.isRightRotate() ? ThreadLocalRandom.current().nextFloat() * 5 : ThreadLocalRandom.current().nextFloat() * (-5));
             collideProjectile(p);
         }
         this.battleWindow.getToDraw().forEach(window::draw);
@@ -79,6 +79,7 @@ public class DodgeGame {
             cooldown = 100000;
             if(lives == 0){
                 battleLost = true;
+                System.out.println("BATTLE LOST");
             }
         }
     }
@@ -99,4 +100,5 @@ public class DodgeGame {
             }
         }
     }
+
 }
