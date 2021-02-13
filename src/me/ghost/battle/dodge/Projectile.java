@@ -36,7 +36,7 @@ public class Projectile extends CircleShape {
             boolean positivex = ThreadLocalRandom.current().nextBoolean();
             this.velocity = new Vector2f((positivex) ? ThreadLocalRandom.current().nextFloat() * maxx : ThreadLocalRandom.current().nextFloat()*(-maxx), ThreadLocalRandom.current().nextFloat() * maxy + 1);
         }
-
+        this.rotate(rightRotate ? ThreadLocalRandom.current().nextFloat() * 5 : ThreadLocalRandom.current().nextFloat() * (-5));
         this.setPosition(this.getPosition().x + this.velocity.x, this.getPosition().y + this.velocity.y);
     }
 
@@ -45,7 +45,4 @@ public class Projectile extends CircleShape {
         this.applyVelocity();
     }
 
-    public boolean isRightRotate() {
-        return rightRotate;
-    }
 }

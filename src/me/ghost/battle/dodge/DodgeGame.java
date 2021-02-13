@@ -73,11 +73,6 @@ public class DodgeGame {
                 }
                 break;
         }
-        int index = 0;
-        for(Projectile p : levels.get(0)){
-            System.out.println(index);
-            index++;
-        }
     }
 
     private void throwObject() {
@@ -91,7 +86,7 @@ public class DodgeGame {
 
     public void draw(RenderWindow window) {
         for(Projectile p : projectileInMotion){
-            p.rotate(p.isRightRotate() ? ThreadLocalRandom.current().nextFloat() * 5 : ThreadLocalRandom.current().nextFloat() * (-5));
+
             collideProjectile(p);
         }
         this.battleWindow.getToDraw().forEach(window::draw);
