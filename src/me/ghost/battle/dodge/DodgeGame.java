@@ -1,6 +1,5 @@
 package me.ghost.battle.dodge;
 
-import me.ghost.CaseInsensitiveMap;
 import me.ghost.character.MoveableCharacter;
 import me.ghost.character.Npc;
 import me.ghost.data.TextureType;
@@ -33,6 +32,7 @@ public class DodgeGame {
     private int currentLevel = 0;
     private boolean projectilesOnScreen = false;
     private boolean projectileStillOnScreen = false;
+    private int collideTime;
 
     public DodgeGame(Npc setBattleNpc, String difficulty) {
         this.battleNpc = new Npc(setBattleNpc.getName(), battleWindow.getGhostAreaCentre().x - 16, battleWindow.getGhostAreaCentre().y - 80, (Texture) setBattleNpc.getTexture());
@@ -42,7 +42,6 @@ public class DodgeGame {
         this.battleWindow.getToDraw().add(this.battleNpc);
         this.battleWindow.getToDraw().add(this.wizard);
         this.setDifficulty(difficulty);
-        //this.throwObject();
     }
 
     private Stack<Projectile> addProjectilesToStack(int numberProjectiles){
@@ -121,24 +120,24 @@ public class DodgeGame {
                 this.battleWindow.getToDraw().remove(p);
             }
             this.battleWindow.getToDraw().forEach(window::draw);
-            System.out.println("ENDED");
+
+            if(lives == 0){
+                System.out.println("YOU LOST");
+            } else {
+                System.out.println("YOU WON");
+            }
         }
     }
 
     private void collideProjectile(Projectile p){
-        if(cooldown > 0){
-            cooldown-=1;
-        } else {
+        if(((int)System.currentTimeMillis() - collideTime > 2000)){
             invincible = false;
         }
         if((p.getGlobalBounds().intersection(wizard.getGlobalBounds()) != null) && !invincible){
             lives-=1;
             invincible = true;
-            cooldown = 100000;
-            if(lives == 0){
-                battleLost = true;
-                System.out.println("BATTLE LOST");
-            }
+            collideTime = (int) System.currentTimeMillis();
+            System.out.println("LIFE LOST");
         }
     }
 
