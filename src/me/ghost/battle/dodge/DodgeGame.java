@@ -11,6 +11,7 @@ import org.jsfml.window.event.KeyEvent;
 
 import java.util.Random;
 import java.util.Stack;
+import java.util.Timer;
 
 public class DodgeGame {
 
@@ -22,6 +23,8 @@ public class DodgeGame {
     private final Stack<Projectile> projectileInMotion = new Stack<>();
     private final boolean battleOpen = true;
     private int lives = 3;
+    private boolean invincible = false;
+    private int cooldown;
 
     public DodgeGame(Npc setBattleNpc) {
         this.battleNpc = new Npc(setBattleNpc.getName(), battleWindow.getGhostAreaCentre().x - 16, battleWindow.getGhostAreaCentre().y - 16, (Texture) setBattleNpc.getTexture());
@@ -60,9 +63,15 @@ public class DodgeGame {
     }
 
     private void collideProjectile(Projectile p){
-        if(p.getGlobalBounds().intersection(wizard.getGlobalBounds()) != null){
+        if(cooldown > 0){
+            cooldown-=1;
+        } else {
+            invincible = false;
+        }
+        if((p.getGlobalBounds().intersection(wizard.getGlobalBounds()) != null) && !invincible){
             lives-=1;
-            System.out.println(lives);
+            invincible = true;
+            cooldown = 10000;
         }
     }
 
