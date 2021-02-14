@@ -11,7 +11,9 @@ public enum TextureType {
     LEFTSPRITE("left-sprite.png"),
     RIGHTSPRITE("right-sprite.png"),
     GHOST("ghost.png"),
+    FRONTVIEW("wizard_front.png"),
     TEST("tiles/tile200.png32")
+
     ;
 
     private final Texture texture = new Texture();

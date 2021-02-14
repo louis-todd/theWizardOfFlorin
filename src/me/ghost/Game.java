@@ -40,7 +40,7 @@ public class Game {
     private Item[] itemArray = { axe };
     private ArrayList<Item> ITEMS = new ArrayList<Item>(Arrays.asList(itemArray));
 
-    private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 240, TextureType.LEFTSTILL.getTexture(), ITEMS);
+    private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 240, TextureType.FRONTVIEW.getTexture(), ITEMS);
 
     private Npc npc = new Npc("Mayor", 250, 300, TextureType.GHOST.getTexture());
     private Npc npc2 = new Npc("TestPerson", 150, 300, TextureType.GHOST.getTexture());
