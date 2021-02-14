@@ -23,8 +23,7 @@ import java.util.Map;
 public class Game {
 
     private final RenderWindow window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");
-    private Dialogue interaction = new Dialogue(FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME",
-            "Content Placeholder");
+    private Dialogue interaction = new Dialogue(FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME", "Content Placeholder");
     private BattleWindow battleWindow = new BattleWindow();
 
     private Item axe = new Item("axe", 300, 300, TextureType.SQUARE16.getTexture());
@@ -32,8 +31,7 @@ public class Game {
     private Item[] itemArray = { axe };
     private ArrayList<Item> ITEMS = new ArrayList<Item>(Arrays.asList(itemArray));
 
-    private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 240,
-            TextureType.SQUARE16.getTexture(), ITEMS);
+    private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 240, TextureType.SQUARE16.getTexture(), ITEMS);
     private final List<Drawable> toDraw = new ArrayList<>();
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
 
@@ -45,8 +43,8 @@ public class Game {
     private ArrayList<Npc> NPCs = new ArrayList<Npc>(Arrays.asList(npcArray));
 
     private Drawable[] itemsToDraw = { wizard, npc, npc2, npc3, axe };
-    private Boolean[] shouldDrawItem = { true, true, true, true, true };
-    private Mechanics game = new Mechanics(keyPresses, window, NPCs, ITEMS, shouldDrawItem, interaction, battleWindow);
+
+    private Mechanics game = new Mechanics(keyPresses, window, NPCs, ITEMS, interaction, battleWindow);
     GameMap mapHouse;
     GameMap currentMap;
     View worldView;
@@ -77,7 +75,7 @@ public class Game {
     public void run() {
         while (window.isOpen()) {
             game.handleEvents(wizard);
-            wizard.moveCharacter(keyPresses, toDraw, shouldDrawItem, worldView, currentMap);
+            wizard.moveCharacter(keyPresses, toDraw, worldView, currentMap);
             updateWindow();
         }
     }
@@ -91,11 +89,7 @@ public class Game {
 
         drawTiles();
 
-        int index = 0;
         for (Drawable item : toDraw) {
-            // if(shouldDrawItem[index] == true){
-            // window.draw(item);
-            // }
             if (item instanceof Item) {
                 if (!((Item) item).isFound() && ((Item) item).availableToCollect()) {
                     window.draw(item);
@@ -110,7 +104,6 @@ public class Game {
             else {
                 window.draw(item);
             }
-            index++;
         }
         game.isDialogue();
 

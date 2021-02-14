@@ -20,19 +20,16 @@ public class Mechanics {
     private BattleWindow battleWindow;
     private ArrayList<Npc> NPCs = new ArrayList<>();
     private ArrayList<Item> ITEMS = new ArrayList<>();
-    private Boolean[] itemsToDraw;
     private Npc interactingNPC;
     private Item interactingItem;
 
-    public Mechanics(Map<String, Boolean> keyPresses, RenderWindow window, ArrayList<Npc> NPCs, ArrayList<Item> ITEMS,
-            Boolean[] itemsToDraw, Dialogue interaction, BattleWindow battleWindow) {
+    public Mechanics(Map<String, Boolean> keyPresses, RenderWindow window, ArrayList<Npc> NPCs, ArrayList<Item> ITEMS, Dialogue interaction, BattleWindow battleWindow) {
         this.keyPresses = keyPresses;
         this.window = window;
         this.interaction = interaction;
         this.NPCs = NPCs;
         this.ITEMS = ITEMS;
         this.battleWindow = battleWindow;
-        this.itemsToDraw = itemsToDraw;
     }
 
     public void initKeyPressesMap() {
