@@ -101,7 +101,7 @@ public abstract class Character extends Sprite {
     private void updateCharacterStates(){
         if(this.associatedItem == null){
             //if theres a task in progress and its not mine set to false
-            if(taskInProgress){
+            if(taskInProgress && NPCInProgress.associatedItem!=null){
                 if(NPCInProgress!=this){
                     characterStates.put("AVAILABLE", false);
                 }
@@ -110,6 +110,7 @@ public abstract class Character extends Sprite {
             else{
                 characterStates.put("AVAILABLE", true);
                 NPCInProgress = this;
+                taskInProgress=true;
             }
         }
         //if this character has been already assigned an item
@@ -221,6 +222,7 @@ public abstract class Character extends Sprite {
         if(characterStates.get("SUCCESS") == true){
             if(associatedItem!=null){
                 associatedItem.setAshasBeenReportedAsFound(true);
+                taskInProgress=false;
                 characterStates.put("SUCCESS", false);
             }
         }
