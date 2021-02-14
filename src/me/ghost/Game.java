@@ -40,12 +40,13 @@ public class Game {
     private final Map<String, Integer> drawingBounds = new CaseInsensitiveMap<>();
     private final Dialogue interaction = new Dialogue(worldView, FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME", "Content Placeholder");
     private final Mechanics game = new Mechanics(keyPresses, window, NPCs, interaction);
-    private final GameMap baseLayer = new GameMap("resources/finalmap_Base Layer.csv", 250, tileLoader);
-    private final GameMap topLayer = new GameMap("resources/finalmap_Extra Layer.csv", 250, tileLoader);
+    private final GameMap baseLayer = new GameMap("resources/finalmapv2_Base Layer.csv", 250, tileLoader);
+    private final GameMap topLayer = new GameMap("resources/finalmapv2_Extra Layer.csv", 250, tileLoader);
 
     private int loadingBarCounter = 0;
     private Text loadingText = null;
     private RectangleShape loadingBar = null;
+
 
     /**
      * Constructor for the game class
