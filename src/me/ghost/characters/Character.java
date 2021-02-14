@@ -24,12 +24,8 @@ public abstract class Character extends Sprite {
     private static Boolean taskInProgress = false;
     private static Character NPCInProgress = null;
     private final Map<String, Boolean> characterStates = new CaseInsensitiveMap<>();
+    private Boolean isFirstSuccess = true;
 
-
-
-
-
-    
     public Character(String characterName, float xPosition, float yPosition, Texture characterTexture) {
 
         this.setTexture(characterTexture);
@@ -46,47 +42,48 @@ public abstract class Character extends Sprite {
         this.characterName = characterName;
     }
 
-
-
-
-
-
-
-
     public void initCharacterStates() {
         this.characterStates.put("AVAILABLE", false);
         this.characterStates.put("IN PROGRESS", false);
         this.characterStates.put("RESOURCE FOUND", false);
+        this.characterStates.put("SUCCESS", false);
     }
-
 
     public ArrayList<String> getScript(){
         NPCScript.clear();
         updateCharacterStates(); 
 
         if(associatedItem == null){
-            //if available serve that script
             if(characterStates.get("AVAILABLE")){
-                System.out.println("AVAILABLE TO INTERACT WITH!");
                 serveScript(0);
             }
-            //if unavailable serve generic script
             else{
-                System.out.println("AVAILABLE IS FALSE");
                 serveScript(3);
             }
         }
         else{
-            //if in progress and resource has not been found, serve general response
+
+            //if not brought back
             if(characterStates.get("IN PROGRESS")){
-                System.out.println("MY MISSION IS IN PROGRESS!");
-                serveScript(3);
+                //continue or success
+                if(!(characterStates.get("RESOURCE FOUND"))){
+                    serveScript(0);
+                }
+                else{
+                    serveScript(3);
+                }
             }
-            //if in progress and resource has been found, serve congrats
             else{
-                System.out.println("YOU'VE FOUND WHAT I WAS LOOKING FOR - STOP BOTHERING ME!");
-                serveScript(2);
+                //generic response
+                if(characterStates.get("RESOURCE FOUND") && (isFirstSuccess || characterStates.get("SUCCESS"))){
+                    isFirstSuccess=false;
+                    serveScript(2);
+                }
+                else{
+                    serveScript(3);
+                }
             }
+
         }
         return NPCScript;
     }
@@ -108,35 +105,31 @@ public abstract class Character extends Sprite {
 
     private void updateCharacterStates(){
         if(this.associatedItem == null){
-            System.out.println("1");
-            //check if available to talk to  - handle available/unavailable
-
             //if theres a task in progress and its not mine set to false
             if(taskInProgress){
-                System.out.println("2");
                 if(NPCInProgress!=this){
                     characterStates.put("AVAILABLE", false);
-                    System.out.println("3");
                 }
             }
             //if theres a task in progress and its mine - set all to true
             else{
-                System.out.println("4: SET AVAILABLE TO TRUE");
                 characterStates.put("AVAILABLE", true);
                 NPCInProgress = this;
             }
         }
         //if this character has been already assigned an item
         else{
-            System.out.println("5");
             //check if in progress - handle in progress
             if(NPCInProgress == this){
-                System.out.println("6");
                 characterStates.put("IN PROGRESS", true);
                 taskInProgress = true;
             }
             else{
-                System.out.println("7");
+                characterStates.put("AVAILABLE", false);
+            }
+            if(associatedItem.isFound()){
+                characterStates.put("RESOURCE FOUND", true);
+                characterStates.put("IN PROGRESS", false);
                 characterStates.put("AVAILABLE", false);
             }
         }
@@ -144,12 +137,13 @@ public abstract class Character extends Sprite {
 
     private void addDialogue(String fileName) {
         BufferedReader csvReader = returnBufferedReader(fileName);
+        characterStates.put("SUCCESS", false);
         try{
             String row;
             while((row = csvReader.readLine()) != null){
                 if(row.contains("@")){
                     if(associatedItem!=null){
-                        characterStates.put("RESOURCE FOUND", true);
+                        characterStates.put("SUCCESS", true);
                         row=row.replace('@', ' ');
                     }
                 }
@@ -230,9 +224,10 @@ public abstract class Character extends Sprite {
     }
 
     public void resetScript() {
-        if(characterStates.get("RESOURCE FOUND") == true){
+        if(characterStates.get("SUCCESS") == true){
             if(associatedItem!=null){
                 associatedItem.setAshasBeenReportedAsFound(true);
+                characterStates.put("SUCCESS", false);
             }
         }
         currentIndex = 1;

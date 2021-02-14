@@ -121,31 +121,36 @@ public class Mechanics {
                     }
 
                     if (keyEvent.key == Keyboard.Key.SPACE) {
+                        // System.out.println("SPACE PRESSED");
                         // If space has already been pressed
                         if (keyPresses.get("SPACE")) {
+                            // System.out.println("SECOND SPACE");
                             if (interactingNPC != null & interactingItem == null && interactingNPC.shouldDraw()) {
                                 // if still tiles to step through do
+                                // System.out.println("SOMEBODY HERE WANTS TO INTERACT");
                                 if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().size()) {
-                                    interaction.setTextContent(String
-                                            .valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
+                                    // System.out.println("THERES STILL SO MUCH TO SAY!");
+                                    interaction.setTextContent(String.valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
                                     interactingNPC.incrementCurrentIndex();
-                                    ;
                                 }
                                 // if at tile limit, close
                                 else {
+                                    //System.out.println("NOTHING LEFT TO SAY LINE 138...\n THE CURRENT INDEX IS: " + interactingNPC.getCurrentIndex() + "\n SIZE IS: " + interactingNPC.getScript().size() + "SCRIPT IS: " + interactingNPC.getScript());
                                     keyPresses.put("SPACE", false);
                                     interactingNPC.resetScript();
-                                    ;
                                 }
                             }
                         }
                         // if first space, set to display first tile
                         else {
+                            //System.out.println("FIRST SPACE");
                             if (interactingNPC != null && interactingItem == null && interactingNPC.shouldDraw()) {
+                                //System.out.println("SOMEBODY HERE WANTS TO INTERACT");
                                 interaction.setTextContent(interactingNPC.getScript().get(0));
                                 handleKeyPress(keyEvent, true);
                             }
                             if (interactingItem != null) {
+                                //System.out.println("PICKED UP AN OLD ITEM!");
                                 interactingItem.setAsFound(true);
                             }
                         }
