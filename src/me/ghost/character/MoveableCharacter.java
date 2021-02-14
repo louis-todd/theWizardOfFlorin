@@ -18,7 +18,7 @@ public class MoveableCharacter extends Character {
 
     private boolean wizardColliding;
     private boolean isFirst = false;
-    private int leftIndex = 0;
+    private int walkIndex = 0;
     private int walkFrameControl = 0;
 
     public MoveableCharacter(String characterName, float xPosition, float yPosition, Texture characterTexture) {
@@ -57,26 +57,29 @@ public class MoveableCharacter extends Character {
             isFirst = !isFirst;
             if ((keyPresses.get("RIGHT") && !keyPresses.get("SPACE"))) {
                 if (this.getPosition().x - currentMap.getMapBounds().width < 0) {
-                    if(isFirst){
-                        this.setTexture(TextureType.RIGHTMOVEMENT1.getTexture());
-                    }
-                    else{
-                        this.setTexture(TextureType.RIGHTSTILL.getTexture());
-                    }
+                    this.setTexture(TextureType.getRightTextureByIndex(walkIndex));
                     this.move(1, 0);
+                    if(walkFrameControl == 16){
+                        walkIndex++;
+                        walkFrameControl=0;
+                    }
+                    walkFrameControl++;
+                    if(walkIndex==8){
+                        walkIndex=0;
+                    }
                 }
             }
             if ((keyPresses.get("LEFT") && !keyPresses.get("SPACE"))) {
                 if (this.getPosition().x > currentMap.getMapBounds().left) {
-                    this.setTexture(TextureType.getLeftTextureByIndex(leftIndex));
+                    this.setTexture(TextureType.getLeftTextureByIndex(walkIndex));
                     this.move(-1, 0);
                     if(walkFrameControl == 16){
-                        leftIndex++;
+                        walkIndex++;
                         walkFrameControl=0;
                     }
                     walkFrameControl++;
-                    if(leftIndex==8){
-                        leftIndex=0;
+                    if(walkIndex==8){
+                        walkIndex=0;
                     }
                 }
             }
