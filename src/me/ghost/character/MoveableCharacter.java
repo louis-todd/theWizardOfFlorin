@@ -20,6 +20,7 @@ public class MoveableCharacter extends Character {
     private boolean isFirst = false;
     private int walkIndex = 0;
     private int walkFrameControl = 0;
+    private int walkingPace = 2;
 
     public MoveableCharacter(String characterName, float xPosition, float yPosition, Texture characterTexture) {
         super(characterName, xPosition, yPosition, characterTexture);
@@ -58,7 +59,7 @@ public class MoveableCharacter extends Character {
             if ((keyPresses.get("RIGHT") && !keyPresses.get("SPACE"))) {
                 if (this.getPosition().x - currentMap.getMapBounds().width < 0) {
                     this.setTexture(TextureType.getRightTextureByIndex(walkIndex));
-                    this.move(1, 0);
+                    this.move(walkingPace, 0);
                     if(walkFrameControl == 16){
                         walkIndex++;
                         walkFrameControl=0;
@@ -72,7 +73,7 @@ public class MoveableCharacter extends Character {
             if ((keyPresses.get("LEFT") && !keyPresses.get("SPACE"))) {
                 if (this.getPosition().x > currentMap.getMapBounds().left) {
                     this.setTexture(TextureType.getLeftTextureByIndex(walkIndex));
-                    this.move(-1, 0);
+                    this.move(-(walkingPace), 0);
                     if(walkFrameControl == 16){
                         walkIndex++;
                         walkFrameControl=0;
@@ -86,13 +87,13 @@ public class MoveableCharacter extends Character {
             if ((keyPresses.get("UP") && !keyPresses.get("SPACE"))) {
                 if (this.getPosition().y > currentMap.getMapBounds().top) {
                     this.setTexture(TextureType.BACKVIEW.getTexture());
-                    this.move(0, -1);
+                    this.move(0, -(walkingPace));
                 }
             }
             if ((keyPresses.get("DOWN") && !keyPresses.get("SPACE"))) {
                 if (this.getPosition().y - currentMap.getMapBounds().height < 0) {
                     this.setTexture(TextureType.FRONTVIEW.getTexture());
-                    this.move(0, 1);
+                    this.move(0, walkingPace);
                 }
             }
             setViewPosition(worldView, this.getPosition(), currentMap);
