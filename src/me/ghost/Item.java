@@ -10,7 +10,6 @@ public class Item extends Sprite {
 
     private Boolean availableToCollect = false;
     private Boolean isFound = false;
-    private Boolean reportedFound = false;
     private String itemName = "placeholder";
 
     public Item(String itemName, float xPosition, float yPosition, Texture itemTexture) {
@@ -29,14 +28,6 @@ public class Item extends Sprite {
 
     public Boolean isFound() {
         return isFound;
-    }
-
-    public Boolean hasBeenReportedAsFound(){
-        return reportedFound;
-    }
-
-    public void setAshasBeenReportedAsFound(Boolean hasBeenFound){
-        reportedFound = hasBeenFound;
     }
 
     public void setAsAvailableToCollect(Boolean isAvailableToCollect) {

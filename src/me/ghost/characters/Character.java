@@ -221,7 +221,6 @@ public abstract class Character extends Sprite {
     public void resetScript() {
         if(characterStates.get("SUCCESS") == true){
             if(associatedItem!=null){
-                associatedItem.setAshasBeenReportedAsFound(true);
                 taskInProgress=false;
                 characterStates.put("SUCCESS", false);
             }
