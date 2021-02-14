@@ -17,8 +17,7 @@ import java.util.Map;
 public class MoveableCharacter extends Character {
 
     private boolean wizardColliding;
-    private int leftIndex = 0;
-    private int rightIndex = 0;
+    private int stepIndex = 0;
     private int walkFrameControl = 0;
     private int walkingPace = 2;
 
@@ -74,7 +73,7 @@ public class MoveableCharacter extends Character {
                         walkRight();
                     }
                     else{
-                        this.setTexture(TextureType.BACKVIEW.getTexture());
+                        walkBack();
                     }
                     this.move(0, -(walkingPace));
                 }
@@ -88,7 +87,7 @@ public class MoveableCharacter extends Character {
                         walkRight();
                     }
                     else{
-                        this.setTexture(TextureType.FRONTVIEW.getTexture());
+                        walkForward();
                     }
                     this.move(0, (walkingPace));
                 }
@@ -140,26 +139,50 @@ public class MoveableCharacter extends Character {
     }
 
     private void walkLeft(){
-        this.setTexture(TextureType.getLeftTextureByIndex(leftIndex));
-        if(walkFrameControl == 16){
-            leftIndex++;
+        this.setTexture(TextureType.getLeftTextureByIndex(stepIndex));
+        if(walkFrameControl%16 == 0){
+            stepIndex++;
             walkFrameControl=0;
         }
         walkFrameControl++;
-        if(leftIndex==8){
-            leftIndex=0;
+        if(stepIndex%7 == 0){
+            stepIndex=0;
         }
     }
 
     private void walkRight(){
-        this.setTexture(TextureType.getRightTextureByIndex(rightIndex));
-        if(walkFrameControl == 16){
-            rightIndex++;
+        this.setTexture(TextureType.getRightTextureByIndex(stepIndex));
+        if(walkFrameControl%16 == 0){
+            stepIndex++;
             walkFrameControl=0;
         }
         walkFrameControl++;
-        if(rightIndex==8){
-            rightIndex=0;
+        if(stepIndex%7 == 0){
+            stepIndex=0;
+        }
+    }
+
+    private void walkBack(){
+        this.setTexture(TextureType.getBackTextureByIndex(stepIndex));
+        if(walkFrameControl%16 == 0){
+            stepIndex++;
+            walkFrameControl=0;
+        }
+        walkFrameControl++;
+        if(stepIndex%3 == 0){
+            stepIndex=0;
+        }
+    }
+
+    private void walkForward(){
+        this.setTexture(TextureType.getFrontTextureByIndex(stepIndex));
+        if(walkFrameControl%16 == 0){
+            stepIndex++;
+            walkFrameControl=0;
+        }
+        walkFrameControl++;
+        if(stepIndex%3 == 0){
+            stepIndex=0;
         }
     }
 

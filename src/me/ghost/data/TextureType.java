@@ -26,8 +26,17 @@ public enum TextureType {
     RIGHTMOVEMENT8("wizardImages/right-movement8.png"),
 
     GHOST("ghost.png"),
-    FRONTVIEW("wizardImages/front.png"),
-    BACKVIEW("wizardImages/back.png"),
+
+    FRONT1("wizardImages/front1.png"),
+    FRONT2("wizardImages/front2.png"),
+    FRONT3("wizardImages/front3.png"),
+    FRONT4("wizardImages/front4.png"),
+
+    BACK1("wizardImages/back1.png"),
+    BACK2("wizardImages/back2.png"),
+    BACK3("wizardImages/back3.png"),
+    BACK4("wizardImages/back4.png"),
+
     TEST("tiles/tile200.png32")
     ;
 
@@ -54,6 +63,16 @@ public enum TextureType {
     public static Texture getRightTextureByIndex(int index){
         Texture[] allTextures = {RIGHTMOVEMENT1.getTexture(), RIGHTMOVEMENT2.getTexture(), RIGHTMOVEMENT3.getTexture(), RIGHTMOVEMENT4.getTexture(), RIGHTMOVEMENT5.getTexture(), 
             RIGHTMOVEMENT6.getTexture(), RIGHTMOVEMENT7.getTexture(), RIGHTMOVEMENT8.getTexture()};
+        return allTextures[index];
+    }
+
+    public static Texture getBackTextureByIndex(int index){
+        Texture[] allTextures = {BACK1.getTexture(), BACK2.getTexture(), BACK3.getTexture(), BACK4.getTexture()};
+        return allTextures[index];
+    }
+
+    public static Texture getFrontTextureByIndex(int index){
+        Texture[] allTextures = {FRONT1.getTexture(), FRONT2.getTexture(), FRONT3.getTexture(), FRONT4.getTexture()};
         return allTextures[index];
     }
 }
