@@ -17,8 +17,6 @@ public abstract class Character extends Sprite {
     private String characterName;
     private int currentIndex = 1;
     private File npcTextFile;
-
-    // variables concerning item pickup 
     private static ArrayList<Item> items;
     private Item associatedItem = null;
     private static Boolean taskInProgress = false;
@@ -27,7 +25,6 @@ public abstract class Character extends Sprite {
     private Boolean isFirstSuccess = true;
 
     public Character(String characterName, float xPosition, float yPosition, Texture characterTexture) {
-
         this.setTexture(characterTexture);
         this.setPosition(xPosition, yPosition);
         this.characterName = characterName;
@@ -35,7 +32,6 @@ public abstract class Character extends Sprite {
     }
 
     public Character(String characterName, float xPosition, float yPosition, Texture characterTexture, ArrayList<Item> items) {
-
         Character.items = items;
         this.setTexture(characterTexture);
         this.setPosition(xPosition, yPosition);
@@ -53,6 +49,7 @@ public abstract class Character extends Sprite {
         NPCScript.clear();
         updateCharacterStates(); 
 
+        // if sprite does not have an associated item
         if(associatedItem == null){
             if(characterStates.get("AVAILABLE")){
                 serveScript(0);
@@ -62,10 +59,8 @@ public abstract class Character extends Sprite {
             }
         }
         else{
-
-            //if not brought back
+            // if has associated item
             if(characterStates.get("IN PROGRESS")){
-                //continue or success
                 if(!(characterStates.get("RESOURCE FOUND"))){
                     serveScript(0);
                 }
@@ -74,7 +69,7 @@ public abstract class Character extends Sprite {
                 }
             }
             else{
-                //generic response
+                //not in progress - success message or generic response
                 if(characterStates.get("RESOURCE FOUND") && (isFirstSuccess || characterStates.get("SUCCESS"))){
                     isFirstSuccess=false;
                     serveScript(2);
@@ -119,7 +114,6 @@ public abstract class Character extends Sprite {
         }
         //if this character has been already assigned an item
         else{
-            //check if in progress - handle in progress
             if(NPCInProgress == this){
                 characterStates.put("IN PROGRESS", true);
                 taskInProgress = true;
