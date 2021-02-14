@@ -1,5 +1,6 @@
 package me.ghost;
 
+import me.ghost.battle.BattleWindow;
 import me.ghost.battle.dodge.DodgeGame;
 import me.ghost.character.MoveableCharacter;
 import me.ghost.character.Npc;
@@ -8,6 +9,7 @@ import org.jsfml.window.Keyboard;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.KeyEvent;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,18 +18,25 @@ public class Mechanics {
     private final Map<String, Boolean> keyPresses;
     private final RenderWindow window;
     private final Dialogue interaction;
-    private final List<Npc> NPCs;
 
     private Npc interactingNPC;
+    private Item interactingItem;
+
     private boolean battleScreenOpen = false;
     private DodgeGame dodgeGame;
+    private BattleWindow battleWindow;
 
+    private ArrayList<Npc> NPCs = new ArrayList<>();
+    private ArrayList<Item> ITEMS = new ArrayList<>();
 
-    public Mechanics(Map<String, Boolean> keyPresses, RenderWindow window, List<Npc> NPCs, Dialogue interaction) {
+    public Mechanics(Map<String, Boolean> keyPresses, RenderWindow window, ArrayList<Npc> NPCs, ArrayList<Item> ITEMS, Dialogue interaction, BattleWindow battleWindow) {
         this.keyPresses = keyPresses;
         this.window = window;
         this.interaction = interaction;
         this.NPCs = NPCs;
+        this.ITEMS = ITEMS;
+        this.battleWindow = battleWindow;
+
         this.initKeyPressesMap();
     }
 
@@ -107,34 +116,48 @@ public class Mechanics {
                     // Calculate which NPC is being interacted with
                     interactingNPC = null;
                     for (Npc npc : NPCs) {
-                        if (wizard.dialogueAreaCollide(npc)) {
+                        if (wizard.dialogueAreaCollide(npc) && npc.shouldDraw()) {
                             interactingNPC = npc;
                         }
                     }
-                    if (interactingNPC == null) {
+
+                    // Calculate which NPC is being interacted with
+                    interactingItem = null;
+                    for (Item item : ITEMS) {
+                        if (wizard.dialogueAreaCollide(item) && !(item.isFound()) && item.availableToCollect()) {
+                            interactingItem = item;
+                        }
+                    }
+
+                    if (interactingNPC == null && interactingItem == null) {
                         break;
                     }
 
                     if (keyEvent.key == Keyboard.Key.SPACE) {
                         // If space has already been pressed
                         if (keyPresses.get("SPACE")) {
-                            // if still tiles to step through do
-                            if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().size()) {
-                                interaction.setTextContent(String
-                                        .valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
-                                interactingNPC.incrementCurrentIndex();
-                            }
-                            // if at tile limit, close
-                            else {
-                                keyPresses.put("SPACE", false);
-                                interactingNPC.resetScript();
+                            if (interactingNPC != null & interactingItem == null && interactingNPC.shouldDraw()) {
+                                // if still tiles to step through do
+                                if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().size()) {
+                                    interaction.setTextContent(String.valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
+                                    interactingNPC.incrementCurrentIndex();
+                                }
+                                // if at tile limit, close
+                                else {
+                                    keyPresses.put("SPACE", false);
+                                    interactingNPC.resetScript();
+                                }
                             }
                         }
                         // if first space, set to display first tile
                         else {
-                            interaction.setTextContent(interactingNPC.getScript().get(0));
-                            interaction.setCharacterName(interactingNPC.getName());
-                            handleKeyPress(keyEvent, true);
+                            if (interactingNPC != null && interactingItem == null && interactingNPC.shouldDraw()) {
+                                interaction.setTextContent(interactingNPC.getScript().get(0));
+                                handleKeyPress(keyEvent, true);
+                            }
+                            if (interactingItem != null) {
+                                interactingItem.setAsFound(true);
+                            }
                         }
                     }
                     if (keyEvent.key == Keyboard.Key.B) {
@@ -151,7 +174,8 @@ public class Mechanics {
                     }
                     break;
                 case MOUSE_BUTTON_PRESSED:
-                    if (keyPresses.get("SPACE")) {
+                    if (keyPresses.get("SPACE") && interactingNPC != null && interactingItem == null
+                            && interactingNPC.shouldDraw()) {
                         // if still tiles left to show, step through them
                         if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().size()) {
                             interaction.setTextContent(

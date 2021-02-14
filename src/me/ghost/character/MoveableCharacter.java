@@ -1,14 +1,17 @@
 package me.ghost.character;
 
 import me.ghost.data.TextureType;
+import me.ghost.Item;
 import me.ghost.map.GameMap;
 import org.jsfml.graphics.Drawable;
 import org.jsfml.graphics.FloatRect;
+import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.graphics.View;
 import org.jsfml.system.Vector2f;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class MoveableCharacter extends Character {
@@ -21,18 +24,32 @@ public class MoveableCharacter extends Character {
         wizardColliding = false;
     }
 
-    public void moveCharacter(Map<String, Boolean> keyPresses, List<Drawable> toDraw, View worldView,
-            GameMap currentMap) {
+    public MoveableCharacter(String characterName, float xPosition, float yPosition, Texture characterTexture, ArrayList<Item> items) {
+        super(characterName, xPosition, yPosition, characterTexture, items);
+        wizardColliding = false;
+    }
+
+    public void moveCharacter(Map<String, Boolean> keyPresses, List<Drawable> toDraw, View worldView, GameMap currentMap) {
         Npc npcCollide = null;
+        Item itemCollide = null;
 
-        for (Drawable npcs : toDraw) {
-            if (npcs instanceof Npc) {
-                if (this.collides((Npc) npcs)) {
-                    wizardColliding = true;
-                    npcCollide = (Npc) npcs;
+        int index = 0;
+        for (Drawable obstacle : toDraw) {
+            if (this.collides(obstacle)) {
+                if (obstacle instanceof Npc) {
+                    if (((Npc) obstacle).shouldDraw()) {
+                        npcCollide = (Npc) obstacle;
+                        wizardColliding = true;
+                    }
                 }
-
+                if (obstacle instanceof Item) {
+                    if (!((Item) obstacle).isFound() && ((Item) obstacle).availableToCollect()) {
+                        itemCollide = (Item) obstacle;
+                        wizardColliding = true;
+                    }
+                }
             }
+            index++;
         }
         if (!wizardColliding) {
             isFirst = !isFirst;
@@ -69,8 +86,7 @@ public class MoveableCharacter extends Character {
                 }
             }
             setViewPosition(worldView, this.getPosition(), currentMap);
-        } else {
-            assert npcCollide != null;
+        } else if (npcCollide != null) {
             float xDifference = this.collisionRectangle(npcCollide).width;
             float yDifference = this.collisionRectangle(npcCollide).height;
 
@@ -91,19 +107,51 @@ public class MoveableCharacter extends Character {
             }
 
             wizardColliding = false;
+        } else if (itemCollide != null) {
+            float xDifference = this.collisionRectangle(itemCollide).width;
+            float yDifference = this.collisionRectangle(itemCollide).height;
+
+            if (Math.abs(itemCollide.getPosition().y - this.getPosition().y) < 15) {
+                if (itemCollide.getPosition().x > this.getPosition().x) {
+                    this.move(-xDifference, 0);
+                }
+                if (itemCollide.getPosition().x < this.getPosition().x) {
+                    this.move(xDifference, 0);
+                }
+            } else {
+                if (itemCollide.getPosition().y > this.getPosition().y) {
+                    this.move(0, -yDifference);
+                }
+                if (itemCollide.getPosition().y < this.getPosition().y) {
+                    this.move(0, yDifference);
+                }
+            }
+
+            wizardColliding = false;
         }
     }
 
-    private boolean collides(Npc npc) {
-        return this.getGlobalBounds().intersection(npc.getGlobalBounds()) != null;
+    private boolean collides(Object obstacle) {
+        if (obstacle instanceof Npc || obstacle instanceof Item) {
+            return this.getGlobalBounds().intersection(((Sprite) obstacle).getGlobalBounds()) != null;
+        }
+        return false;
     }
 
-    private FloatRect collisionRectangle(Npc npc) {
-        return this.getGlobalBounds().intersection((npc.getGlobalBounds()));
+    private FloatRect collisionRectangle(Drawable obstacle) {
+        if (obstacle instanceof Npc || obstacle instanceof Item) {
+            return this.getGlobalBounds().intersection((((Sprite) obstacle).getGlobalBounds()));
+        }
+        return null;
     }
 
-    public boolean dialogueAreaCollide(Npc npc) {
-        return this.getGlobalBounds().intersection(npc.dialogueArea(4)) != null;
+    public boolean dialogueAreaCollide(Drawable obstacle) {
+        if (obstacle instanceof Npc) {
+            return this.getGlobalBounds().intersection(((Npc) obstacle).dialogueArea(4)) != null;
+        } else if (obstacle instanceof Item) {
+            return this.getGlobalBounds().intersection(((Item) obstacle).dialogueArea(4)) != null;
+        }
+        return false;
     }
 
     private void setViewPosition(View mapView, Vector2f position, GameMap currentMap) {
