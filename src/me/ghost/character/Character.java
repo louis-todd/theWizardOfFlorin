@@ -86,10 +86,10 @@ public abstract class Character extends Sprite {
 
     private void serveScript(int csvFileNumb){
         if(csvFileNumb==0){
-            npcTextFile = new File("resources/Dialogue/" + characterName + ".csv"); 
+            npcTextFile = new File("resources/Dialogue/" + characterName + "/" + characterName + ".csv"); 
         }
         else{
-            npcTextFile = new File("resources/Dialogue/" + characterName + csvFileNumb + ".csv");
+            npcTextFile = new File("resources/Dialogue/" + characterName + "/" + characterName + csvFileNumb + ".csv");
         }
         if(npcTextFile.exists()) {
             addDialogue(npcTextFile.getPath());
