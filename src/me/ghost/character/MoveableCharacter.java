@@ -77,11 +77,13 @@ public class MoveableCharacter extends Character {
             }
             if ((keyPresses.get("UP") && !keyPresses.get("SPACE"))) {
                 if (this.getPosition().y > currentMap.getMapBounds().top) {
+                    this.setTexture(TextureType.BACKVIEW.getTexture());
                     this.move(0, -1);
                 }
             }
             if ((keyPresses.get("DOWN") && !keyPresses.get("SPACE"))) {
                 if (this.getPosition().y - currentMap.getMapBounds().height < 0) {
+                    this.setTexture(TextureType.FRONTVIEW.getTexture());
                     this.move(0, 1);
                 }
             }

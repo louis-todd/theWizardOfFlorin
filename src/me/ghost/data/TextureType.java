@@ -12,6 +12,7 @@ public enum TextureType {
     RIGHTSPRITE("right-sprite.png"),
     GHOST("ghost.png"),
     FRONTVIEW("wizard_front.png"),
+    BACKVIEW("wizard_back.png"),
     TEST("tiles/tile200.png32")
 
     ;
