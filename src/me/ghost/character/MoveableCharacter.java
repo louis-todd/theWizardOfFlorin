@@ -140,11 +140,11 @@ public class MoveableCharacter extends Character {
 
     private void walkLeft(){
         this.setTexture(TextureType.getLeftTextureByIndex(stepIndex));
+        walkFrameControl++;
         if(walkFrameControl%16 == 0){
             stepIndex++;
             walkFrameControl=0;
         }
-        walkFrameControl++;
         if(stepIndex%7 == 0){
             stepIndex=0;
         }
@@ -152,35 +152,41 @@ public class MoveableCharacter extends Character {
 
     private void walkRight(){
         this.setTexture(TextureType.getRightTextureByIndex(stepIndex));
+        walkFrameControl++;
         if(walkFrameControl%16 == 0){
             stepIndex++;
             walkFrameControl=0;
         }
-        walkFrameControl++;
         if(stepIndex%7 == 0){
             stepIndex=0;
         }
     }
 
     private void walkBack(){
+        if(stepIndex>3){
+            stepIndex=0;
+        }
         this.setTexture(TextureType.getBackTextureByIndex(stepIndex));
+        walkFrameControl++;
         if(walkFrameControl%16 == 0){
             stepIndex++;
             walkFrameControl=0;
         }
-        walkFrameControl++;
         if(stepIndex%3 == 0){
             stepIndex=0;
         }
     }
 
     private void walkForward(){
+        if(stepIndex>3){
+            stepIndex=0;
+        }
         this.setTexture(TextureType.getFrontTextureByIndex(stepIndex));
+        walkFrameControl++;
         if(walkFrameControl%16 == 0){
             stepIndex++;
             walkFrameControl=0;
         }
-        walkFrameControl++;
         if(stepIndex%3 == 0){
             stepIndex=0;
         }
