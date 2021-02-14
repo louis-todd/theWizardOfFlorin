@@ -111,7 +111,7 @@ public class Mechanics {
                     // Calculate which NPC is being interacted with
                     interactingItem = null;
                     for (Item item : ITEMS) {
-                        if (wizard.dialogueAreaCollide(item) && !(item.isFound())) {
+                        if (wizard.dialogueAreaCollide(item) && !(item.isFound()) && item.availableToCollect()) {
                             interactingItem = item;
                         }
                     }

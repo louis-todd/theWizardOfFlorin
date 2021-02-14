@@ -42,7 +42,7 @@ public class MoveableCharacter extends Character {
                     }
                 }
                 if (obstacle instanceof Item) {
-                    if (!((Item) obstacle).isFound()) {
+                    if (!((Item) obstacle).isFound() && ((Item) obstacle).availableToCollect()) {
                         itemCollide = (Item) obstacle;
                         wizardColliding = true;
                     }
