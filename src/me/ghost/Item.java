@@ -8,7 +8,7 @@ import org.jsfml.graphics.Texture;
 
 public class Item extends Sprite {
 
-    private Boolean availibleToCollect = false;
+    private Boolean availableToCollect = false;
     private Boolean isFound = false;
     private Boolean reportedFound = false;
     private String itemName = "placeholder";
@@ -23,8 +23,8 @@ public class Item extends Sprite {
         return itemName;
     }
 
-    public Boolean availibleToCollect() {
-        return availibleToCollect;
+    public Boolean availableToCollect() {
+        return availableToCollect;
     }
 
     public Boolean isFound() {
@@ -39,8 +39,8 @@ public class Item extends Sprite {
         reportedFound = hasBeenFound;
     }
 
-    public void setAsAvailibleToCollect(Boolean isAvailibleToCollect) {
-        this.availibleToCollect = isAvailibleToCollect;
+    public void setAsAvailableToCollect(Boolean isAvailableToCollect) {
+        this.availableToCollect = isAvailableToCollect;
     }
 
     public void setAsFound(Boolean isFound) {

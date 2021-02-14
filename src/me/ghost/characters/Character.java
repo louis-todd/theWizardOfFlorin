@@ -3,10 +3,12 @@ package me.ghost.characters;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 
+import me.ghost.CaseInsensitiveMap;
 import me.ghost.Item;
 
 public abstract class Character extends Sprite {
@@ -15,15 +17,25 @@ public abstract class Character extends Sprite {
     private String characterName;
     private int currentIndex = 1;
     private File npcTextFile;
+
+    // variables concerning item pickup 
     private static ArrayList<Item> items;
     private Item associatedItem = null;
-    private static Boolean npcResolved = false;
+    private static Boolean taskInProgress = false;
+    private static Character NPCInProgress = null;
+    private final Map<String, Boolean> characterStates = new CaseInsensitiveMap<>();
 
+
+
+
+
+    
     public Character(String characterName, float xPosition, float yPosition, Texture characterTexture) {
 
         this.setTexture(characterTexture);
         this.setPosition(xPosition, yPosition);
         this.characterName = characterName;
+        this.initCharacterStates();
     }
 
     public Character(String characterName, float xPosition, float yPosition, Texture characterTexture, ArrayList<Item> items) {
@@ -34,80 +46,110 @@ public abstract class Character extends Sprite {
         this.characterName = characterName;
     }
 
+
+
+
+
+
+
+
+    public void initCharacterStates() {
+        this.characterStates.put("AVAILABLE", false);
+        this.characterStates.put("IN PROGRESS", false);
+        this.characterStates.put("RESOURCE FOUND", false);
+    }
+
+
     public ArrayList<String> getScript(){
         NPCScript.clear();
+        updateCharacterStates(); 
 
-        if(!(this.associatedItem == null)){
-            System.out.println("1");
-            if(this.associatedItem.isFound() && !(this.associatedItem.hasBeenReportedAsFound())){
-                System.out.println("2");
-                npcTextFile = new File("resources/Dialogue/" + characterName + "2.csv");
-                if(npcTextFile.exists()) {
-                    System.out.println("3");
-                    addDialogue(npcTextFile.getPath());
-                }
-                else{
-                    System.out.println("4");
-                    NPCScript.add("ERROR 1: File not found" + characterName);
-                }
+        if(associatedItem == null){
+            //if available serve that script
+            if(characterStates.get("AVAILABLE")){
+                System.out.println("AVAILABLE TO INTERACT WITH!");
+                serveScript(0);
             }
+            //if unavailable serve generic script
             else{
-                System.out.println("5");
-                if(this.associatedItem.hasBeenReportedAsFound()){
-                    System.out.println("6");
-                    npcTextFile = new File("resources/Dialogue/" + characterName + "3.csv");
-                    if(npcTextFile.exists()) {
-                        System.out.println("7");
-                        addDialogue(npcTextFile.getPath());
-                    }
-                    else{
-                        System.out.println("8");
-                        NPCScript.add("ERROR 2: File not found" + characterName);
-                    }
-                }
-                 {
-                    System.out.println("9");
-                    npcTextFile = new File("resources/Dialogue/" + characterName + ".csv");
-                    if(npcTextFile.exists()) {
-                        System.out.println("10");
-                        addDialogue(npcTextFile.getPath());
-                    }
-                    else{
-                        System.out.println("11");
-                        NPCScript.add("ERROR 3: File not found" + characterName);
-                    }
-                }
+                System.out.println("AVAILABLE IS FALSE");
+                serveScript(3);
             }
         }
         else{
-            System.out.println("12");
-            npcTextFile = new File("resources/Dialogue/" + characterName + ".csv");
-            if(npcTextFile.exists()) {
-                if(!npcResolved){
-                    addDialogue(npcTextFile.getPath());
-                }
-                else{
-                    NPCScript.add("can't talk to me yet!" + characterName);
-                }
+            //if in progress and resource has not been found, serve general response
+            if(characterStates.get("IN PROGRESS")){
+                System.out.println("MY MISSION IS IN PROGRESS!");
+                serveScript(3);
             }
+            //if in progress and resource has been found, serve congrats
             else{
-                NPCScript.add("ERROR 4: File not found" + characterName);
-                System.out.println("14");
+                System.out.println("YOU'VE FOUND WHAT I WAS LOOKING FOR - STOP BOTHERING ME!");
+                serveScript(2);
             }
         }
-        
         return NPCScript;
+    }
+
+    private void serveScript(int csvFileNumb){
+        if(csvFileNumb==0){
+            npcTextFile = new File("resources/Dialogue/" + characterName + ".csv"); 
+        }
+        else{
+            npcTextFile = new File("resources/Dialogue/" + characterName + csvFileNumb + ".csv");
+        }
+        if(npcTextFile.exists()) {
+            addDialogue(npcTextFile.getPath());
+        }
+        else{
+            NPCScript.add("ERROR 1: File not found" + characterName);
+        }
+    }
+
+    private void updateCharacterStates(){
+        if(this.associatedItem == null){
+            System.out.println("1");
+            //check if available to talk to  - handle available/unavailable
+
+            //if theres a task in progress and its not mine set to false
+            if(taskInProgress){
+                System.out.println("2");
+                if(NPCInProgress!=this){
+                    characterStates.put("AVAILABLE", false);
+                    System.out.println("3");
+                }
+            }
+            //if theres a task in progress and its mine - set all to true
+            else{
+                System.out.println("4: SET AVAILABLE TO TRUE");
+                characterStates.put("AVAILABLE", true);
+                NPCInProgress = this;
+            }
+        }
+        //if this character has been already assigned an item
+        else{
+            System.out.println("5");
+            //check if in progress - handle in progress
+            if(NPCInProgress == this){
+                System.out.println("6");
+                characterStates.put("IN PROGRESS", true);
+                taskInProgress = true;
+            }
+            else{
+                System.out.println("7");
+                characterStates.put("AVAILABLE", false);
+            }
+        }
     }
 
     private void addDialogue(String fileName) {
         BufferedReader csvReader = returnBufferedReader(fileName);
-        npcResolved=false;
         try{
             String row;
             while((row = csvReader.readLine()) != null){
                 if(row.contains("@")){
                     if(associatedItem!=null){
-                        npcResolved=true;
+                        characterStates.put("RESOURCE FOUND", true);
                         row=row.replace('@', ' ');
                     }
                 }
@@ -154,7 +196,7 @@ public abstract class Character extends Sprite {
             for (Item potentialItem : Character.items) {
                 if (potentialItem.getName().equals(item)) {
                     this.associatedItem = potentialItem;
-                    potentialItem.setAsAvailibleToCollect(true);
+                    potentialItem.setAsAvailableToCollect(true);
                 }
             }
         }
@@ -188,7 +230,7 @@ public abstract class Character extends Sprite {
     }
 
     public void resetScript() {
-        if(npcResolved==true){
+        if(characterStates.get("RESOURCE FOUND") == true){
             if(associatedItem!=null){
                 associatedItem.setAshasBeenReportedAsFound(true);
             }
