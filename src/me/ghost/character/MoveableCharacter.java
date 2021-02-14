@@ -17,7 +17,6 @@ import java.util.Map;
 public class MoveableCharacter extends Character {
 
     private boolean wizardColliding;
-    private boolean isFirst = false;
     private int walkIndex = 0;
     private int walkFrameControl = 0;
     private int walkingPace = 2;
@@ -36,7 +35,6 @@ public class MoveableCharacter extends Character {
         Npc npcCollide = null;
         Item itemCollide = null;
 
-        int index = 0;
         for (Drawable obstacle : toDraw) {
             if (this.collides(obstacle)) {
                 if (obstacle instanceof Npc) {
@@ -52,10 +50,8 @@ public class MoveableCharacter extends Character {
                     }
                 }
             }
-            index++;
         }
         if (!wizardColliding) {
-            isFirst = !isFirst;
             if ((keyPresses.get("RIGHT") && !keyPresses.get("SPACE"))) {
                 if (this.getPosition().x - currentMap.getMapBounds().width < 0) {
                     this.setTexture(TextureType.getRightTextureByIndex(walkIndex));
