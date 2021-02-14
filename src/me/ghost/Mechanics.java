@@ -2,7 +2,8 @@ package me.ghost;
 
 import me.ghost.Characters.MoveableCharacter;
 import me.ghost.Characters.Npc;
-import me.ghost.battle.BattleWindow;
+//import me.ghost.battle.BattleWindow;
+import me.ghost.battle.BattleWindow2;
 
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.window.Keyboard;
@@ -17,12 +18,12 @@ public class Mechanics {
     private Map<String, Boolean> keyPresses;
     private RenderWindow window;
     private Dialogue interaction;
-    private BattleWindow battleWindow;
+    private BattleWindow2 battleWindow;
     private ArrayList<Npc> NPCs = new ArrayList<>();
     private Npc interactingNPC;
     private boolean battleScreenOpen = false;
 
-    public Mechanics(Map<String, Boolean> keyPresses, RenderWindow window, ArrayList<Npc> NPCs, Dialogue interaction, BattleWindow battleWindow) {
+    public Mechanics(Map<String, Boolean> keyPresses, RenderWindow window, ArrayList<Npc> NPCs, Dialogue interaction, BattleWindow2 battleWindow) {
         this.keyPresses = keyPresses;
         this.window = window;
         this.interaction = interaction;
