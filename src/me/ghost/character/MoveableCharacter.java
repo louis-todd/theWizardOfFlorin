@@ -17,7 +17,8 @@ import java.util.Map;
 public class MoveableCharacter extends Character {
 
     private boolean wizardColliding;
-    private int walkIndex = 0;
+    private int leftIndex = 0;
+    private int rightIndex = 0;
     private int walkFrameControl = 0;
     private int walkingPace = 2;
 
@@ -54,42 +55,42 @@ public class MoveableCharacter extends Character {
         if (!wizardColliding) {
             if ((keyPresses.get("RIGHT") && !keyPresses.get("SPACE"))) {
                 if (this.getPosition().x - currentMap.getMapBounds().width < 0) {
-                    this.setTexture(TextureType.getRightTextureByIndex(walkIndex));
+                    this.walkRight();
                     this.move(walkingPace, 0);
-                    if(walkFrameControl == 16){
-                        walkIndex++;
-                        walkFrameControl=0;
-                    }
-                    walkFrameControl++;
-                    if(walkIndex==8){
-                        walkIndex=0;
-                    }
                 }
             }
             if ((keyPresses.get("LEFT") && !keyPresses.get("SPACE"))) {
                 if (this.getPosition().x > currentMap.getMapBounds().left) {
-                    this.setTexture(TextureType.getLeftTextureByIndex(walkIndex));
+                    this.walkLeft();
                     this.move(-(walkingPace), 0);
-                    if(walkFrameControl == 16){
-                        walkIndex++;
-                        walkFrameControl=0;
-                    }
-                    walkFrameControl++;
-                    if(walkIndex==8){
-                        walkIndex=0;
-                    }
                 }
             }
             if ((keyPresses.get("UP") && !keyPresses.get("SPACE"))) {
                 if (this.getPosition().y > currentMap.getMapBounds().top) {
-                    this.setTexture(TextureType.BACKVIEW.getTexture());
+                    if(keyPresses.get("LEFT")){
+                        walkLeft();
+                    }
+                    else if(keyPresses.get("RIGHT")){
+                        walkRight();
+                    }
+                    else{
+                        this.setTexture(TextureType.BACKVIEW.getTexture());
+                    }
                     this.move(0, -(walkingPace));
                 }
             }
             if ((keyPresses.get("DOWN") && !keyPresses.get("SPACE"))) {
                 if (this.getPosition().y - currentMap.getMapBounds().height < 0) {
-                    this.setTexture(TextureType.FRONTVIEW.getTexture());
-                    this.move(0, walkingPace);
+                    if(keyPresses.get("LEFT")){
+                        walkLeft();
+                    }
+                    else if(keyPresses.get("RIGHT")){
+                        walkRight();
+                    }
+                    else{
+                        this.setTexture(TextureType.FRONTVIEW.getTexture());
+                    }
+                    this.move(0, (walkingPace));
                 }
             }
             setViewPosition(worldView, this.getPosition(), currentMap);
@@ -135,6 +136,30 @@ public class MoveableCharacter extends Character {
             }
 
             wizardColliding = false;
+        }
+    }
+
+    private void walkLeft(){
+        this.setTexture(TextureType.getLeftTextureByIndex(leftIndex));
+        if(walkFrameControl == 16){
+            leftIndex++;
+            walkFrameControl=0;
+        }
+        walkFrameControl++;
+        if(leftIndex==8){
+            leftIndex=0;
+        }
+    }
+
+    private void walkRight(){
+        this.setTexture(TextureType.getRightTextureByIndex(rightIndex));
+        if(walkFrameControl == 16){
+            rightIndex++;
+            walkFrameControl=0;
+        }
+        walkFrameControl++;
+        if(rightIndex==8){
+            rightIndex=0;
         }
     }
 
