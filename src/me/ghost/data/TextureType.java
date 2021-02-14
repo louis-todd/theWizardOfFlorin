@@ -8,11 +8,11 @@ public enum TextureType {
     BOARD("DialogueBoard.png"),
     LEFTSTILL("wizardImages/left-still.png"),
     RIGHTSTILL("wizardImages/right-still.png"),
-    LEFTSPRITE("wizardImages/left-sprite.png"),
-    RIGHTSPRITE("wizardImages/right-sprite.png"),
+    LEFTSPRITE("wizardImages/left-movement.png"),
+    RIGHTSPRITE("wizardImages/right-movement.png"),
     GHOST("ghost.png"),
-    FRONTVIEW("wizardImages/wizard_front.png"),
-    BACKVIEW("wizardImages/wizard_back.png"),
+    FRONTVIEW("wizardImages/front.png"),
+    BACKVIEW("wizardImages/back.png"),
     TEST("tiles/tile200.png32")
 
     ;
