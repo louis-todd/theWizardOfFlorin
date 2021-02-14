@@ -1,6 +1,5 @@
 package me.ghost;
 
-import java.util.ArrayList;
 import org.jsfml.graphics.FloatRect;
 
 import org.jsfml.graphics.Sprite;
