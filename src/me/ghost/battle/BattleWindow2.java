@@ -6,7 +6,7 @@ import org.jsfml.graphics.*;
 import org.jsfml.graphics.Drawable;
 import org.jsfml.system.Vector2f;
 
-public class BattleWindow implements Drawable{
+public class BattleWindow2 implements Drawable{
 
     private  ArrayList<Drawable> toDraw;
     private  ArrayList<CircleShape> healthCircles;
@@ -14,7 +14,7 @@ public class BattleWindow implements Drawable{
     //private final RectangleShape ghostArea;
     private  RectangleShape playerArea;
 
-    public BattleWindow(){
+    public BattleWindow2(){
         int life = 1;
 
 //        while(life == 1)
