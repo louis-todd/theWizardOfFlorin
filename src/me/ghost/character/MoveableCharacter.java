@@ -18,6 +18,8 @@ public class MoveableCharacter extends Character {
 
     private boolean wizardColliding;
     private boolean isFirst = false;
+    private int leftIndex = 0;
+    private int walkFrameControl = 0;
 
     public MoveableCharacter(String characterName, float xPosition, float yPosition, Texture characterTexture) {
         super(characterName, xPosition, yPosition, characterTexture);
@@ -56,7 +58,7 @@ public class MoveableCharacter extends Character {
             if ((keyPresses.get("RIGHT") && !keyPresses.get("SPACE"))) {
                 if (this.getPosition().x - currentMap.getMapBounds().width < 0) {
                     if(isFirst){
-                        this.setTexture(TextureType.RIGHTSPRITE.getTexture());
+                        this.setTexture(TextureType.RIGHTMOVEMENT1.getTexture());
                     }
                     else{
                         this.setTexture(TextureType.RIGHTSTILL.getTexture());
@@ -66,13 +68,16 @@ public class MoveableCharacter extends Character {
             }
             if ((keyPresses.get("LEFT") && !keyPresses.get("SPACE"))) {
                 if (this.getPosition().x > currentMap.getMapBounds().left) {
-                    if(isFirst){
-                        this.setTexture(TextureType.LEFTSPRITE.getTexture());
-                    }
-                    else{
-                        this.setTexture(TextureType.LEFTSTILL.getTexture());
-                    }
+                    this.setTexture(TextureType.getLeftTextureByIndex(leftIndex));
                     this.move(-1, 0);
+                    if(walkFrameControl == 16){
+                        leftIndex++;
+                        walkFrameControl=0;
+                    }
+                    walkFrameControl++;
+                    if(leftIndex==8){
+                        leftIndex=0;
+                    }
                 }
             }
             if ((keyPresses.get("UP") && !keyPresses.get("SPACE"))) {
