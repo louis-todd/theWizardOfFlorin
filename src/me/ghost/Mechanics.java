@@ -152,6 +152,7 @@ public class Mechanics {
                         // if first space, set to display first tile
                         else {
                             if (interactingNPC != null && interactingItem == null && interactingNPC.shouldDraw()) {
+                                interaction.setCharacterName(interactingNPC.getName());
                                 interaction.setTextContent(interactingNPC.getScript().get(0));
                                 handleKeyPress(keyEvent, true);
                             }
