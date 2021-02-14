@@ -6,13 +6,13 @@ import org.jsfml.graphics.Texture;
 public enum TextureType {
     SQUARE16("square-16.png"),
     BOARD("DialogueBoard.png"),
-    LEFTSTILL("left-still.png"),
-    RIGHTSTILL("right-still.png"),
-    LEFTSPRITE("left-sprite.png"),
-    RIGHTSPRITE("right-sprite.png"),
+    LEFTSTILL("wizardImages/left-still.png"),
+    RIGHTSTILL("wizardImages/right-still.png"),
+    LEFTSPRITE("wizardImages/left-sprite.png"),
+    RIGHTSPRITE("wizardImages/right-sprite.png"),
     GHOST("ghost.png"),
-    FRONTVIEW("wizard_front.png"),
-    BACKVIEW("wizard_back.png"),
+    FRONTVIEW("wizardImages/wizard_front.png"),
+    BACKVIEW("wizardImages/wizard_back.png"),
     TEST("tiles/tile200.png32")
 
     ;
