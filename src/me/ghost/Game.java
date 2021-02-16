@@ -33,6 +33,7 @@ public class Game {
     private final GameMap currentMap = mapHouse;
     private final View worldView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
     private final View battleView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
+    private final View pauseView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
     private BattleWindow battleWindow = new BattleWindow();
 
     private Item axe = new Item("axe", 300, 300, TextureType.SQUARE16.getTexture());
@@ -146,12 +147,23 @@ public class Game {
     private void updateWindow() {
         window.clear(Color.RED);
 
-        if (!game.isBattleScreenOpen()) {
-            drawTiles();
-            window.setView(worldView);
-        } else {
+        if(game.isBattleScreenOpen()){
             window.setView(battleView);
         }
+        else if(game.isPauseMenuOpen()){
+            window.setView(pauseView);
+        }
+        else{
+            drawTiles();
+            window.setView(worldView);
+        }
+
+        // if (!game.isBattleScreenOpen()) {
+        //     drawTiles();
+        //     window.setView(worldView);
+        // } else {
+        //     window.setView(battleView);
+        // }
 
         for (Drawable item : toDraw) {
             if (item instanceof Item) {

@@ -2,6 +2,7 @@ package me.ghost;
 
 import me.ghost.battle.BattleWindow;
 import me.ghost.battle.dodge.DodgeGame;
+import me.ghost.PauseMenu;
 import me.ghost.character.MoveableCharacter;
 import me.ghost.character.Npc;
 import org.jsfml.graphics.RenderWindow;
@@ -23,7 +24,9 @@ public class Mechanics {
     private Item interactingItem;
 
     private boolean battleScreenOpen = false;
+    private boolean pauseMenuOpen = false;
     private DodgeGame dodgeGame;
+    private PauseMenu pauseMenu;
     private BattleWindow battleWindow;
 
     private ArrayList<Npc> NPCs = new ArrayList<>();
@@ -47,6 +50,7 @@ public class Mechanics {
         this.keyPresses.put("DOWN", false);
         this.keyPresses.put("SPACE", false);
         this.keyPresses.put("B", false);
+        this.keyPresses.put("ESCAPE", false);
     }
 
     /**
@@ -75,6 +79,9 @@ public class Mechanics {
             case B:
                 keyPresses.put("B", pressed);
                 break;
+            case ESCAPE:
+                keyPresses.put("ESCAPE", pressed);
+                break;
             default:
                 break;
         }
@@ -100,6 +107,10 @@ public class Mechanics {
                     if (this.battleScreenOpen) {
                         this.dodgeGame.handleInput(keyRelease);
                     }
+
+                    if (this.pauseMenuOpen) {
+                        this.pauseMenu.handleInput(keyRelease);
+                    }
                     break;
                 case KEY_PRESSED:
                     KeyEvent keyEvent = event.asKeyEvent();
@@ -111,6 +122,10 @@ public class Mechanics {
 
                     if (this.battleScreenOpen) {
                         this.dodgeGame.handleInput(keyEvent);
+                    }
+
+                    if (this.pauseMenuOpen) {
+                        this.pauseMenu.handleInput(keyEvent);
                     }
 
                     // Calculate which NPC is being interacted with
@@ -173,6 +188,18 @@ public class Mechanics {
                             handleKeyPress(keyEvent, true);
                         }
                     }
+                    if (keyEvent.key == Keyboard.Key.ESCAPE) {
+                        // If B has already been pressed
+                        if (keyPresses.get("ESCAPE")) {
+                            keyPresses.put("ESCAPE", false);
+                            pauseMenuOpen = false;
+                        }
+                        // if first B, set to display battle window
+                        else {
+                            pauseMenu = new PauseMenu();
+                            handleKeyPress(keyEvent, true);
+                        }
+                    }
                     break;
                 case MOUSE_BUTTON_PRESSED:
                     if (keyPresses.get("SPACE") && interactingNPC != null && interactingItem == null
@@ -205,9 +232,17 @@ public class Mechanics {
             dodgeGame.draw(this.window);
             battleScreenOpen = true;
         }
+        if ((keyPresses.get("ESCAPE"))) {
+            pauseMenu.draw(this.window);
+            pauseMenuOpen = true;
+        }
     }
 
     public boolean isBattleScreenOpen() {
         return battleScreenOpen;
+    }
+
+    public boolean isPauseMenuOpen() {
+        return pauseMenuOpen;
     }
 }
