@@ -161,7 +161,7 @@ public class Mechanics {
                         break;
                     }
 
-                    if (keyEvent.key == Keyboard.Key.SPACE) {
+                    if (keyEvent.key == Keyboard.Key.SPACE && !pauseMenuOpen) {
                         // If space has already been pressed
                         if (keyPresses.get("SPACE")) {
                             if (interactingNPC != null & interactingItem == null && interactingNPC.shouldDraw()) {
@@ -204,7 +204,7 @@ public class Mechanics {
                     break;
                 case MOUSE_BUTTON_PRESSED:
                     if (keyPresses.get("SPACE") && interactingNPC != null && interactingItem == null
-                            && interactingNPC.shouldDraw()) {
+                            && interactingNPC.shouldDraw() & !pauseMenuOpen) {
                         // if still tiles left to show, step through them
                         if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().size()) {
                             interaction.setTextContent(
