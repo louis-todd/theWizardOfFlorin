@@ -189,7 +189,7 @@ public class Mechanics {
                             }
                         }
                     }
-                    if (keyEvent.key == Keyboard.Key.B) {
+                    if (keyEvent.key == Keyboard.Key.B && !pauseMenuOpen) {
                         // If B has already been pressed
                         if (keyPresses.get("B")) {
                             keyPresses.put("B", false);
