@@ -1,21 +1,60 @@
 package me.ghost;
 
+import me.ghost.battle.BattleWindow;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jsfml.graphics.*;
+import org.jsfml.system.Vector2f;
+import org.jsfml.window.Keyboard;
+import org.jsfml.window.event.Event;
 import org.jsfml.window.event.KeyEvent;
+
 
 public class PauseMenu {
 
-    private final boolean pauseMenuOpen = true;
+    private final BattleWindow battleWindow = new BattleWindow();
+    private final boolean pauseOpen = true;
+    private final List<Drawable> toDraw = new ArrayList<>();
+    private final RectangleShape background = createDrawnRectangle(640, 480, 0, 0, 0, 0, 0);
+    
 
     public PauseMenu() {
-        System.out.println("Loads in pause menu");
+        //
+        toDraw.add(background);
     }
 
     public void draw(RenderWindow window) {
-       //
+        toDraw.forEach(window::draw);
     }
 
     public void handleInput(KeyEvent event) {
-        //
+        if(event.type == Event.Type.KEY_PRESSED){
+            if (event.key == Keyboard.Key.W) {
+                //
+            }
+            if (event.key == Keyboard.Key.A) {
+                //
+            }
+            if (event.key == Keyboard.Key.S) {
+                //
+            }
+            if (event.key == Keyboard.Key.D) {
+                //
+            }
+        }
     }
+
+    private RectangleShape createDrawnRectangle(int width, int height, int x, int y, int r, int g, int b) {
+        Vector2f dimensions = new Vector2f(width, height);
+        RectangleShape textBackground = new RectangleShape(dimensions);
+        textBackground.setPosition(x, y);
+        textBackground.setSize(dimensions);
+        textBackground.setFillColor(new Color(r, g, b));
+        textBackground.setOutlineThickness(1);
+        toDraw.add(textBackground);
+        return textBackground;
+    }
+    
 }

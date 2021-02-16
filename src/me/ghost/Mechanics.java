@@ -128,6 +128,19 @@ public class Mechanics {
                         this.pauseMenu.handleInput(keyEvent);
                     }
 
+                    if (keyEvent.key == Keyboard.Key.ESCAPE) {
+                        // If B has already been pressed
+                        if (keyPresses.get("ESCAPE")) {
+                            keyPresses.put("ESCAPE", false);
+                            pauseMenuOpen = false;
+                        }
+                        // if first B, set to display battle window
+                        else {
+                            pauseMenu = new PauseMenu();
+                            handleKeyPress(keyEvent, true);
+                        }
+                    }
+
                     // Calculate which NPC is being interacted with
                     interactingNPC = null;
                     for (Npc npc : NPCs) {
@@ -185,18 +198,6 @@ public class Mechanics {
                         // if first B, set to display battle window
                         else {
                             dodgeGame = new DodgeGame(interactingNPC);
-                            handleKeyPress(keyEvent, true);
-                        }
-                    }
-                    if (keyEvent.key == Keyboard.Key.ESCAPE) {
-                        // If B has already been pressed
-                        if (keyPresses.get("ESCAPE")) {
-                            keyPresses.put("ESCAPE", false);
-                            pauseMenuOpen = false;
-                        }
-                        // if first B, set to display battle window
-                        else {
-                            pauseMenu = new PauseMenu();
                             handleKeyPress(keyEvent, true);
                         }
                     }
