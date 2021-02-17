@@ -139,6 +139,10 @@ public class DodgeGame {
             lives-=1;
             collideTime = (int) System.currentTimeMillis();
             invincible = true;
+            if(this.battleWindow.getHealthCircles().size() > 0) {
+                this.battleWindow.getToDraw().remove(this.battleWindow.getHealthCircles().get(this.battleWindow.getHealthCircles().size() - 1));
+                this.battleWindow.getHealthCircles().remove(this.battleWindow.getHealthCircles().size() - 1);
+            }
             System.out.println("LIFE LOST");
         }
     }
