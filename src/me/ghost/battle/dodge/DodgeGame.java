@@ -1,15 +1,19 @@
 package me.ghost.battle.dodge;
 
 import me.ghost.CaseInsensitiveMap;
+import me.ghost.Dialogue;
 import me.ghost.character.MoveableCharacter;
 import me.ghost.character.Npc;
+import me.ghost.data.FontType;
 import me.ghost.data.TextureType;
 import me.ghost.battle.BattleWindow;
 import org.jsfml.graphics.*;
+import org.jsfml.graphics.Font;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.KeyEvent;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +59,7 @@ public class DodgeGame {
         this.keyPresses.put("D", false);
         this.keyPresses.put("SPACE", false);
     }
+
 
     private Stack<Projectile> addProjectilesToStack(int numberProjectiles){
         int minSides = 3;
@@ -150,10 +155,6 @@ public class DodgeGame {
             invincible = false;
         }
         if((p.getGlobalBounds().intersection(wizard.getGlobalBounds()) != null) && !invincible){
-
-            System.out.println(p.getGlobalBounds());
-            System.out.println(p.getPointCount());
-            System.out.println(wizard.getGlobalBounds());
             lives-=1;
             collideTime = (int) System.currentTimeMillis();
             invincible = true;
@@ -167,6 +168,7 @@ public class DodgeGame {
 
     public void handleInput(KeyEvent event) {
         handleWizardMovement();
+        handleSpace();
         if(event.type == Event.Type.KEY_PRESSED){
             if (event.key == Keyboard.Key.W) {
                 keyPresses.put("W", true);
@@ -216,6 +218,13 @@ public class DodgeGame {
         }
         if(keyPresses.get("D")){
             this.wizard.setPosition(this.wizard.getPosition().x + 3, this.wizard.getPosition().y);
+        }
+
+    }
+
+    private void handleSpace() {
+        if (keyPresses.get("SPACE")) {
+            this.battleWindow.setBattleText("NEW TEXT");
         }
     }
 

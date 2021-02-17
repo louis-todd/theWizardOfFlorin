@@ -4,6 +4,7 @@ import me.ghost.battle.dodge.DodgeGame;
 import me.ghost.character.MoveableCharacter;
 import me.ghost.character.Npc;
 import org.jsfml.graphics.RenderWindow;
+import org.jsfml.graphics.View;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.KeyEvent;

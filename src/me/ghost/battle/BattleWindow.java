@@ -3,6 +3,7 @@ package me.ghost.battle;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.ghost.data.FontType;
 import org.jsfml.graphics.*;
 import org.jsfml.graphics.Drawable;
 import org.jsfml.system.Vector2f;
@@ -16,9 +17,13 @@ public class BattleWindow {
     private final RectangleShape healthLabel = createDrawnRectangle(30, 20, 10, 340, 255, 30, 0);
     private final RectangleShape ghostArea = createDrawnRectangle(500, 180, 70, 10, 255, 255, 255);
     private final RectangleShape playerArea = createDrawnRectangle(350, 100, 150, 210, 255, 255, 255);
+    private final Text dialogueText = new Text("Battle Dialogue", FontType.ROBOTO.getFont());
 
     public BattleWindow() {
         this.createHealthCircles();
+        dialogueText.setPosition(20, 370);
+        dialogueText.setCharacterSize(18);
+        this.toDraw.add(dialogueText);
     }
 
     private void createHealthCircles() {
@@ -73,5 +78,9 @@ public class BattleWindow {
 
     public List<Drawable> getToDraw() {
         return toDraw;
+    }
+
+    public void setBattleText(String newText){
+        this.dialogueText.setString(newText);
     }
 }
