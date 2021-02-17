@@ -40,6 +40,8 @@ public class DodgeGame {
     private int collideTime;
     private boolean dialogueFinished = false;
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
+    private List<String> battleDialogue = new ArrayList<>();
+    private int dialogueIndex = 0;
 
     public DodgeGame(Npc setBattleNpc, String difficulty) {
         this.battleNpc = new Npc(setBattleNpc.getName(), battleWindow.getGhostAreaCentre().x - 16, battleWindow.getGhostAreaCentre().y - 80, (Texture) setBattleNpc.getTexture());
@@ -50,6 +52,7 @@ public class DodgeGame {
         this.battleWindow.getToDraw().add(this.wizard);
         this.setDifficulty(difficulty);
         this.initKeyPresses();
+        addDialogue();
     }
 
     private void initKeyPresses(){
@@ -58,6 +61,12 @@ public class DodgeGame {
         this.keyPresses.put("S", false);
         this.keyPresses.put("D", false);
         this.keyPresses.put("SPACE", false);
+    }
+
+    private void addDialogue(){
+        this.battleDialogue.add("FIRST TEXT");
+        this.battleDialogue.add("SECOND TEXT");
+        this.battleDialogue.add("THIRD TEXT");
     }
 
 
@@ -107,7 +116,7 @@ public class DodgeGame {
     }
 
     public void draw(RenderWindow window) {
-        if (!dialogueFinished) {
+        if (dialogueFinished) {
             if (currentLevel < maxLevel) {
                 if (this.projectilesOnScreen) {
                     this.battleWindow.getToDraw().forEach(window::draw);
@@ -147,6 +156,8 @@ public class DodgeGame {
                     battleWon = true;
                 }
             }
+        } else {
+            this.battleWindow.getToDraw().forEach(window::draw);
         }
     }
 
@@ -224,7 +235,14 @@ public class DodgeGame {
 
     private void handleSpace() {
         if (keyPresses.get("SPACE")) {
-            this.battleWindow.setBattleText("NEW TEXT");
+
+            if(dialogueIndex == this.battleDialogue.size()){
+                dialogueFinished = true;
+                this.battleWindow.getToDraw().remove(this.battleWindow.getBattleText());
+            } else {
+                this.battleWindow.setBattleText(this.battleDialogue.get(dialogueIndex));
+                dialogueIndex++;
+            }
         }
     }
 
