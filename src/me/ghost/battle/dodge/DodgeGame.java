@@ -26,7 +26,6 @@ public class DodgeGame {
     private final boolean battleOpen = true;
     private int lives = 3;
     private boolean invincible = false;
-    private int cooldown;
     private boolean battleWon = false;
     private boolean battleLost = false;
     private final List<Stack<Projectile>> levels = new ArrayList<>();
@@ -54,15 +53,15 @@ public class DodgeGame {
         this.keyPresses.put("A", false);
         this.keyPresses.put("S", false);
         this.keyPresses.put("D", false);
-        this.keyPresses.put("ENTER", false);
+        this.keyPresses.put("SPACE", false);
     }
 
     private Stack<Projectile> addProjectilesToStack(int numberProjectiles){
-        int minSides = 0;
+        int minSides = 3;
         int maxSides = 10;
         Stack<Projectile> projectileStack = new Stack<>();
         for(int i = 0; i < numberProjectiles; i++){
-            Projectile push = projectileStack.push(new Projectile(6, ThreadLocalRandom.current().nextInt(maxSides - minSides + 1)));
+            Projectile push = projectileStack.push(new Projectile(6, ThreadLocalRandom.current().nextInt(maxSides - minSides + 1) + minSides));
 
             push.thrown(this.battleNpc);
         }
@@ -151,6 +150,10 @@ public class DodgeGame {
             invincible = false;
         }
         if((p.getGlobalBounds().intersection(wizard.getGlobalBounds()) != null) && !invincible){
+
+            System.out.println(p.getGlobalBounds());
+            System.out.println(p.getPointCount());
+            System.out.println(wizard.getGlobalBounds());
             lives-=1;
             collideTime = (int) System.currentTimeMillis();
             invincible = true;
@@ -163,6 +166,7 @@ public class DodgeGame {
     }
 
     public void handleInput(KeyEvent event) {
+        handleWizardMovement();
         if(event.type == Event.Type.KEY_PRESSED){
             if (event.key == Keyboard.Key.W) {
                 keyPresses.put("W", true);
@@ -176,7 +180,9 @@ public class DodgeGame {
             if (event.key == Keyboard.Key.D) {
                 keyPresses.put("D", true);
             }
-            handleWizardMovement();
+            if(event.key == Keyboard.Key.SPACE){
+                keyPresses.put("SPACE", true);
+            }
         }
         if(event.type == Event.Type.KEY_RELEASED){
             if (event.key == Keyboard.Key.W) {
@@ -191,7 +197,9 @@ public class DodgeGame {
             if (event.key == Keyboard.Key.D) {
                 keyPresses.put("D", false);
             }
-            handleWizardMovement();
+            if(event.key == Keyboard.Key.SPACE){
+                keyPresses.put("SPACE", false);
+            }
         }
 
     }

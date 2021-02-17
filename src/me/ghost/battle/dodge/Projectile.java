@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Projectile extends CircleShape {
 
     private Vector2f velocity = null;
-    private boolean rightRotate;
+    private final boolean rightRotate;
     private final Color[] colours = {Color.BLACK, Color.BLUE, Color.RED, Color.GREEN};
     private Vector2f totalMovement = new Vector2f(0, 0);
 
