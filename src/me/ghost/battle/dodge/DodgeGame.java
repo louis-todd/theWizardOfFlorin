@@ -1,5 +1,6 @@
 package me.ghost.battle.dodge;
 
+import me.ghost.CaseInsensitiveMap;
 import me.ghost.character.MoveableCharacter;
 import me.ghost.character.Npc;
 import me.ghost.data.TextureType;
@@ -11,6 +12,7 @@ import org.jsfml.window.event.KeyEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -33,6 +35,8 @@ public class DodgeGame {
     private boolean projectilesOnScreen = false;
     private boolean projectileStillOnScreen = false;
     private int collideTime;
+    private boolean dialogueFinished = false;
+    private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
 
     public DodgeGame(Npc setBattleNpc, String difficulty) {
         this.battleNpc = new Npc(setBattleNpc.getName(), battleWindow.getGhostAreaCentre().x - 16, battleWindow.getGhostAreaCentre().y - 80, (Texture) setBattleNpc.getTexture());
@@ -42,6 +46,15 @@ public class DodgeGame {
         this.battleWindow.getToDraw().add(this.battleNpc);
         this.battleWindow.getToDraw().add(this.wizard);
         this.setDifficulty(difficulty);
+        this.initKeyPresses();
+    }
+
+    private void initKeyPresses(){
+        this.keyPresses.put("W", false);
+        this.keyPresses.put("A", false);
+        this.keyPresses.put("S", false);
+        this.keyPresses.put("D", false);
+        this.keyPresses.put("ENTER", false);
     }
 
     private Stack<Projectile> addProjectilesToStack(int numberProjectiles){
@@ -90,43 +103,45 @@ public class DodgeGame {
     }
 
     public void draw(RenderWindow window) {
-        if (currentLevel < maxLevel) {
-            if (this.projectilesOnScreen) {
-                this.battleWindow.getToDraw().forEach(window::draw);
-                this.projectileInMotion.forEach(Projectile::applyVelocity);
-                this.projectileStillOnScreen = false;
+        if (!dialogueFinished) {
+            if (currentLevel < maxLevel) {
+                if (this.projectilesOnScreen) {
+                    this.battleWindow.getToDraw().forEach(window::draw);
+                    this.projectileInMotion.forEach(Projectile::applyVelocity);
+                    this.projectileStillOnScreen = false;
+                } else {
+                    this.currentLevel++;
+                    for (Projectile p : projectileInMotion) {
+                        battleWindow.getToDraw().remove(p);
+                    }
+                    this.projectileInMotion.clear();
+                    throwObject();
+                    this.battleWindow.getToDraw().forEach(window::draw);
+                    this.projectileInMotion.forEach(Projectile::applyVelocity);
+                    this.projectilesOnScreen = true;
+                }
+                for (Projectile p : this.projectileInMotion) {
+                    collideProjectile(p);
+                    if (p.getGlobalBounds().intersection(this.battleWindow.getBackground().getGlobalBounds()) != null) {
+                        this.projectileStillOnScreen = true;
+                    }
+                }
+                if (!this.projectileStillOnScreen) {
+                    this.projectilesOnScreen = false;
+                }
             } else {
-                this.currentLevel++;
-                for(Projectile p : projectileInMotion){
-                    battleWindow.getToDraw().remove(p);
+                for (Projectile p : projectileInMotion) {
+                    this.battleWindow.getToDraw().remove(p);
                 }
-                this.projectileInMotion.clear();
-                throwObject();
                 this.battleWindow.getToDraw().forEach(window::draw);
-                this.projectileInMotion.forEach(Projectile::applyVelocity);
-                this.projectilesOnScreen = true;
-            }
-            for (Projectile p : this.projectileInMotion) {
-                collideProjectile(p);
-                if (p.getGlobalBounds().intersection(this.battleWindow.getBackground().getGlobalBounds()) != null) {
-                    this.projectileStillOnScreen = true;
-                }
-            }
-            if (!this.projectileStillOnScreen) {
-                this.projectilesOnScreen = false;
-            }
-        } else {
-            for(Projectile p : projectileInMotion) {
-                this.battleWindow.getToDraw().remove(p);
-            }
-            this.battleWindow.getToDraw().forEach(window::draw);
 
-            if(lives <= 0){
-                System.out.println("YOU LOST");
-                battleLost = true;
-            } else {
-                System.out.println("YOU WON");
-                battleWon = true;
+                if (lives <= 0) {
+                    System.out.println("YOU LOST");
+                    battleLost = true;
+                } else {
+                    System.out.println("YOU WON");
+                    battleWon = true;
+                }
             }
         }
     }
@@ -150,17 +165,49 @@ public class DodgeGame {
     public void handleInput(KeyEvent event) {
         if(event.type == Event.Type.KEY_PRESSED){
             if (event.key == Keyboard.Key.W) {
-                this.wizard.setPosition(this.wizard.getPosition().x, this.wizard.getPosition().y - 3);
+                keyPresses.put("W", true);
             }
             if (event.key == Keyboard.Key.A) {
-                this.wizard.setPosition(this.wizard.getPosition().x - 3, this.wizard.getPosition().y);
+                keyPresses.put("A", true);
             }
             if (event.key == Keyboard.Key.S) {
-                this.wizard.setPosition(this.wizard.getPosition().x, this.wizard.getPosition().y + 3);
+                keyPresses.put("S", true);
             }
             if (event.key == Keyboard.Key.D) {
-                this.wizard.setPosition(this.wizard.getPosition().x + 3, this.wizard.getPosition().y);
+                keyPresses.put("D", true);
             }
+            handleWizardMovement();
+        }
+        if(event.type == Event.Type.KEY_RELEASED){
+            if (event.key == Keyboard.Key.W) {
+                keyPresses.put("W", false);
+            }
+            if (event.key == Keyboard.Key.A) {
+                keyPresses.put("A", false);
+            }
+            if (event.key == Keyboard.Key.S) {
+                keyPresses.put("S", false);
+            }
+            if (event.key == Keyboard.Key.D) {
+                keyPresses.put("D", false);
+            }
+            handleWizardMovement();
+        }
+
+    }
+
+    private void handleWizardMovement(){
+        if(keyPresses.get("W")){
+            this.wizard.setPosition(this.wizard.getPosition().x, this.wizard.getPosition().y - 3);
+        }
+        if(keyPresses.get("A")){
+            this.wizard.setPosition(this.wizard.getPosition().x - 3, this.wizard.getPosition().y);
+        }
+        if(keyPresses.get("S")){
+            this.wizard.setPosition(this.wizard.getPosition().x, this.wizard.getPosition().y + 3);
+        }
+        if(keyPresses.get("D")){
+            this.wizard.setPosition(this.wizard.getPosition().x + 3, this.wizard.getPosition().y);
         }
     }
 
