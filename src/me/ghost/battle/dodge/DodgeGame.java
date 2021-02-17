@@ -218,16 +218,16 @@ public class DodgeGame {
     }
 
     private void handleWizardMovement(){
-        if(keyPresses.get("W")){
+        if(keyPresses.get("W") && wizard.getPosition().y >= this.battleWindow.getPlayerArea().getPosition().y){
             this.wizard.setPosition(this.wizard.getPosition().x, this.wizard.getPosition().y - 3);
         }
-        if(keyPresses.get("A")){
+        if(keyPresses.get("A") && wizard.getPosition().x >= this.battleWindow.getPlayerArea().getPosition().x){
             this.wizard.setPosition(this.wizard.getPosition().x - 3, this.wizard.getPosition().y);
         }
-        if(keyPresses.get("S")){
+        if(keyPresses.get("S") && wizard.getPosition().y <= this.battleWindow.getPlayerArea().getPosition().y + this.battleWindow.getPlayerArea().getSize().y - wizard.getGlobalBounds().height){
             this.wizard.setPosition(this.wizard.getPosition().x, this.wizard.getPosition().y + 3);
         }
-        if(keyPresses.get("D")){
+        if(keyPresses.get("D") && wizard.getPosition().x <= this.battleWindow.getPlayerArea().getPosition().x + this.battleWindow.getPlayerArea().getSize().x - wizard.getGlobalBounds().width){
             this.wizard.setPosition(this.wizard.getPosition().x + 3, this.wizard.getPosition().y);
         }
 
