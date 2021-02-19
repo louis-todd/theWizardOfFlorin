@@ -203,16 +203,16 @@ public class DodgeGame {
         }
         if(event.type == Event.Type.KEY_RELEASED){
             if (event.key == Keyboard.Key.W) {
-                game.handleEvents(wizard);
+                keyPresses.put("W", false);
             }
             if (event.key == Keyboard.Key.A) {
-                game.handleEvents(wizard);
+                keyPresses.put("A", false);
             }
             if (event.key == Keyboard.Key.S) {
-                game.handleEvents(wizard);
+                keyPresses.put("S", false);
             }
             if (event.key == Keyboard.Key.D) {
-                game.handleEvents(wizard);
+                keyPresses.put("D", false);
             }
             // if(event.key == Keyboard.Key.SPACE){
             //     game.handleEvents(wizard);
