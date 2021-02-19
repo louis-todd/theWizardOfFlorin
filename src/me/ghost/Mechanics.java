@@ -165,17 +165,17 @@ public class Mechanics {
                     }
                     if (keyEvent.key == Keyboard.Key.B) {
                         // If B has already been pressed
-                        if (keyPresses.get("B")) {
-                            keyPresses.put("B", false);
-                            battleScreenOpen = false;
-                        }
+                        // if (keyPresses.get("B")) {
+                        //     keyPresses.put("B", false);
+                        //     battleScreenOpen = false;
+                        // }
                         // if first B, set to display battle window
-                        else {
+                        // else {
                             if(!interactingNPC.hasCompletedBattle()){
                                 dodgeGame = new DodgeGame(interactingNPC, "HARD", this);
                                 handleKeyPress(keyEvent, true);
                             }
-                        }
+                        // }
                     }
                     break;
                 case MOUSE_BUTTON_PRESSED:
