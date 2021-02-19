@@ -17,7 +17,7 @@ public class BattleWindow {
     private final RectangleShape healthLabel = createDrawnRectangle(30, 20, 10, 340, 255, 30, 0);
     private final RectangleShape ghostArea = createDrawnRectangle(500, 180, 70, 10, 255, 255, 255);
     private final RectangleShape playerArea = createDrawnRectangle(350, 100, 150, 210, 255, 255, 255);
-    private final Text dialogueText = new Text("WASD to control wizard space for next text", FontType.ROBOTO.getFont());
+    private final Text dialogueText = new Text("...REMINDER: Use arrow keys to avoid the ghosts wrath!!...", FontType.ROBOTO.getFont());
 
     public BattleWindow() {
         this.createHealthCircles();
