@@ -59,10 +59,10 @@ public class DodgeGame {
     }
 
     private void initKeyPresses(){
-        this.keyPresses.put("W", false);
-        this.keyPresses.put("A", false);
-        this.keyPresses.put("S", false);
-        this.keyPresses.put("D", false);
+        this.keyPresses.put("RIGHT", false);
+        this.keyPresses.put("LEFT", false);
+        this.keyPresses.put("UP", false);
+        this.keyPresses.put("DOWN", false);
         this.keyPresses.put("SPACE", false);
     }
 
@@ -183,46 +183,46 @@ public class DodgeGame {
     public void handleInput(KeyEvent event) {
         handleWizardMovement();
         if(event.type == Event.Type.KEY_PRESSED){
-            if (event.key == Keyboard.Key.W) {
-                keyPresses.put("W", true);
+            if (event.key == Keyboard.Key.UP) {
+                keyPresses.put("UP", true);
             }
-            if (event.key == Keyboard.Key.A) {
-                keyPresses.put("A", true);
+            if (event.key == Keyboard.Key.LEFT) {
+                keyPresses.put("LEFT", true);
             }
-            if (event.key == Keyboard.Key.S) {
-                keyPresses.put("S", true);
+            if (event.key == Keyboard.Key.DOWN) {
+                keyPresses.put("DOWN", true);
             }
-            if (event.key == Keyboard.Key.D) {
-                keyPresses.put("D", true);
+            if (event.key == Keyboard.Key.RIGHT) {
+                keyPresses.put("RIGHT", true);
             }
         }
         if(event.type == Event.Type.KEY_RELEASED){
-            if (event.key == Keyboard.Key.W) {
-                keyPresses.put("W", false);
+            if (event.key == Keyboard.Key.UP) {
+                keyPresses.put("UP", false);
             }
-            if (event.key == Keyboard.Key.A) {
-                keyPresses.put("A", false);
+            if (event.key == Keyboard.Key.LEFT) {
+                keyPresses.put("LEFT", false);
             }
-            if (event.key == Keyboard.Key.S) {
-                keyPresses.put("S", false);
+            if (event.key == Keyboard.Key.DOWN) {
+                keyPresses.put("DOWN", false);
             }
-            if (event.key == Keyboard.Key.D) {
-                keyPresses.put("D", false);
+            if (event.key == Keyboard.Key.RIGHT) {
+                keyPresses.put("RIGHT", false);
             }
         }
     }
 
     private void handleWizardMovement(){
-        if(keyPresses.get("W") && wizard.getPosition().y >= this.battleWindow.getPlayerArea().getPosition().y){
+        if(keyPresses.get("UP") && wizard.getPosition().y >= this.battleWindow.getPlayerArea().getPosition().y){
             this.wizard.setPosition(this.wizard.getPosition().x, this.wizard.getPosition().y - 3);
         }
-        if(keyPresses.get("A") && wizard.getPosition().x >= this.battleWindow.getPlayerArea().getPosition().x){
+        if(keyPresses.get("LEFT") && wizard.getPosition().x >= this.battleWindow.getPlayerArea().getPosition().x){
             this.wizard.setPosition(this.wizard.getPosition().x - 3, this.wizard.getPosition().y);
         }
-        if(keyPresses.get("S") && wizard.getPosition().y <= this.battleWindow.getPlayerArea().getPosition().y + this.battleWindow.getPlayerArea().getSize().y - wizard.getGlobalBounds().height){
+        if(keyPresses.get("DOWN") && wizard.getPosition().y <= this.battleWindow.getPlayerArea().getPosition().y + this.battleWindow.getPlayerArea().getSize().y - wizard.getGlobalBounds().height){
             this.wizard.setPosition(this.wizard.getPosition().x, this.wizard.getPosition().y + 3);
         }
-        if(keyPresses.get("D") && wizard.getPosition().x <= this.battleWindow.getPlayerArea().getPosition().x + this.battleWindow.getPlayerArea().getSize().x - wizard.getGlobalBounds().width){
+        if(keyPresses.get("RIGHT") && wizard.getPosition().x <= this.battleWindow.getPlayerArea().getPosition().x + this.battleWindow.getPlayerArea().getSize().x - wizard.getGlobalBounds().width){
             this.wizard.setPosition(this.wizard.getPosition().x + 3, this.wizard.getPosition().y);
         }
     }

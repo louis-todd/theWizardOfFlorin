@@ -95,14 +95,12 @@ public class Mechanics {
                     break;
                 case KEY_PRESSED:
                     KeyEvent keyEvent = event.asKeyEvent();
-                    if ((keyEvent.key == Keyboard.Key.RIGHT || keyEvent.key == Keyboard.Key.LEFT
-                            || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN)) {
+                    if ((keyEvent.key == Keyboard.Key.RIGHT || keyEvent.key == Keyboard.Key.LEFT || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN)) {
                         handleKeyPress(keyEvent, true);
+                        if(this.dodgeGame!=null){
+                            this.dodgeGame.handleInput(keyEvent);
+                        }
                         break;
-                    }
-
-                    if (this.battleScreenOpen) {
-                        this.dodgeGame.handleInput(keyEvent);
                     }
 
                     // Calculate which NPC is being interacted with
