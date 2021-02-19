@@ -2,6 +2,7 @@ package me.ghost.battle.dodge;
 
 import me.ghost.CaseInsensitiveMap;
 import me.ghost.Dialogue;
+import me.ghost.Mechanics;
 import me.ghost.character.MoveableCharacter;
 import me.ghost.character.Npc;
 import me.ghost.data.FontType;
@@ -42,11 +43,14 @@ public class DodgeGame {
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
     private List<String> battleDialogue = new ArrayList<>();
     private int dialogueIndex = 0;
+    private Mechanics game = null;
+    private Boolean finishedDialogue = false;
 
-    public DodgeGame(Npc setBattleNpc, String difficulty) {
+    public DodgeGame(Npc setBattleNpc, String difficulty, Mechanics game) {
         this.battleNpc = new Npc(setBattleNpc.getName(), battleWindow.getGhostAreaCentre().x - 16, battleWindow.getGhostAreaCentre().y - 80, (Texture) setBattleNpc.getTexture());
         this.wizard = new MoveableCharacter("Wizard", battleWindow.getPlayerAreaCentre().x - 16, battleWindow.getPlayerAreaCentre().y - 16, TextureType.SQUARE16.getTexture());
         this.addProjectilesToStack(1000);
+        this.game = game;
 
         this.battleWindow.getToDraw().add(this.battleNpc);
         this.battleWindow.getToDraw().add(this.wizard);
@@ -179,7 +183,7 @@ public class DodgeGame {
 
     public void handleInput(KeyEvent event) {
         handleWizardMovement();
-        handleSpace();
+        // handleSpace();
         if(event.type == Event.Type.KEY_PRESSED){
             if (event.key == Keyboard.Key.W) {
                 keyPresses.put("W", true);
@@ -193,28 +197,27 @@ public class DodgeGame {
             if (event.key == Keyboard.Key.D) {
                 keyPresses.put("D", true);
             }
-            if(event.key == Keyboard.Key.SPACE){
-                keyPresses.put("SPACE", true);
-            }
+            // if(event.key == Keyboard.Key.SPACE){
+            //     game.handleEvents(wizard);
+            // }
         }
         if(event.type == Event.Type.KEY_RELEASED){
             if (event.key == Keyboard.Key.W) {
-                keyPresses.put("W", false);
+                game.handleEvents(wizard);
             }
             if (event.key == Keyboard.Key.A) {
-                keyPresses.put("A", false);
+                game.handleEvents(wizard);
             }
             if (event.key == Keyboard.Key.S) {
-                keyPresses.put("S", false);
+                game.handleEvents(wizard);
             }
             if (event.key == Keyboard.Key.D) {
-                keyPresses.put("D", false);
+                game.handleEvents(wizard);
             }
-            if(event.key == Keyboard.Key.SPACE){
-                keyPresses.put("SPACE", false);
-            }
+            // if(event.key == Keyboard.Key.SPACE){
+            //     game.handleEvents(wizard);
+            // }
         }
-
     }
 
     private void handleWizardMovement(){
@@ -233,17 +236,25 @@ public class DodgeGame {
 
     }
 
-    private void handleSpace() {
-        if (keyPresses.get("SPACE")) {
+    // public void handleSpace() {
+    //     if(dialogueIndex == this.battleDialogue.size()){
+    //         dialogueFinished = true;
+    //         this.battleWindow.getToDraw().remove(this.battleWindow.getBattleText());
+    //     } else {
+    //         this.battleWindow.setBattleText(this.battleDialogue.get(dialogueIndex));
+    //         dialogueIndex++;
+    //     }
+    // }
 
-            if(dialogueIndex == this.battleDialogue.size()){
-                dialogueFinished = true;
-                this.battleWindow.getToDraw().remove(this.battleWindow.getBattleText());
-            } else {
-                this.battleWindow.setBattleText(this.battleDialogue.get(dialogueIndex));
-                dialogueIndex++;
-            }
-        }
+    public void setTextContent(String newText){
+        this.battleWindow.setBattleText(newText);
     }
 
+    public Boolean isFinishedDialogue(){
+        return finishedDialogue;
+    }
+
+    public void setFinishedDialogue(Boolean isFinished){
+        finishedDialogue=isFinished;
+    }
 }

@@ -120,22 +120,51 @@ public class Mechanics {
                         // If space has already been pressed
                         if (keyPresses.get("SPACE")) {
                             // if still tiles to step through do
-                            if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().size()) {
-                                interaction.setTextContent(String
-                                        .valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
-                                interactingNPC.incrementCurrentIndex();
+                            if (!battleScreenOpen){
+                                if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().size()) {
+                                    interaction.setTextContent(String
+                                            .valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
+                                    interactingNPC.incrementCurrentIndex();
+                                }
+                                // if at tile limit, close
+                                else {
+                                    keyPresses.put("SPACE", false);
+                                    interactingNPC.resetScript();
+                                }
                             }
-                            // if at tile limit, close
-                            else {
-                                keyPresses.put("SPACE", false);
-                                interactingNPC.resetScript();
+                            else{
+                                //Step through battle dialogue
+                                if (interactingNPC.getCurrentBattleIndex() < interactingNPC.getBattleScript().size()) {
+                                    if(!dodgeGame.isFinishedDialogue()){
+                                        dodgeGame.setTextContent(String.valueOf(interactingNPC.getBattleScript().get(interactingNPC.getCurrentBattleIndex())));
+                                        interactingNPC.incrementCurrentBattleIndex();
+                                        System.out.println(interactingNPC.getCurrentBattleIndex());
+                                        dodgeGame.setFinishedDialogue(false);
+                                    }
+                                }
+                                // if at tile limit, close
+                                else {
+                                    keyPresses.put("SPACE", false);
+                                    dodgeGame.setFinishedDialogue(true);
+                                    interactingNPC.setHasCompletedBattle(true);
+                                    dodgeGame.setTextContent("");
+                                }
                             }
                         }
                         // if first space, set to display first tile
                         else {
-                            interaction.setTextContent(interactingNPC.getScript().get(0));
-                            interaction.setCharacterName(interactingNPC.getName());
-                            handleKeyPress(keyEvent, true);
+                            if(!battleScreenOpen){
+                                interaction.setTextContent(interactingNPC.getScript().get(0));
+                                interaction.setCharacterName(interactingNPC.getName());
+                                handleKeyPress(keyEvent, true);
+                            }
+                            else{
+                                if(!dodgeGame.isFinishedDialogue()){
+                                    dodgeGame.setTextContent(interactingNPC.getScript().get(0));
+                                    // dodgeGame.setCharacterName(interactingNPC.getName());
+                                    handleKeyPress(keyEvent, true);
+                                }
+                            }
                         }
                     }
                     if (keyEvent.key == Keyboard.Key.B) {
@@ -146,8 +175,10 @@ public class Mechanics {
                         }
                         // if first B, set to display battle window
                         else {
-                            dodgeGame = new DodgeGame(interactingNPC, "EASY");
-                            handleKeyPress(keyEvent, true);
+                            if(!interactingNPC.hasCompletedBattle()){
+                                dodgeGame = new DodgeGame(interactingNPC, "HARD", this);
+                                handleKeyPress(keyEvent, true);
+                            }
                         }
                     }
                     break;
@@ -155,8 +186,7 @@ public class Mechanics {
                     if (keyPresses.get("SPACE")) {
                         // if still tiles left to show, step through them
                         if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().size()) {
-                            interaction.setTextContent(
-                                    String.valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
+                            interaction.setTextContent(String.valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
                             interactingNPC.incrementCurrentIndex();
                         }
                         // if have read all tiles, act as if space has been clicked to close the
@@ -174,7 +204,7 @@ public class Mechanics {
 
     public void isDialogue() {
         // If its the first time space is pressed, set the text
-        if ((keyPresses.get("SPACE"))) {
+        if ((keyPresses.get("SPACE")) && dodgeGame.isFinishedDialogue()) {
             interaction.draw(window, null);
         }
         if ((keyPresses.get("B"))) {

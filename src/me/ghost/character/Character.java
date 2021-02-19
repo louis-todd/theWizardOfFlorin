@@ -10,10 +10,14 @@ import org.jsfml.graphics.Texture;
 
 public abstract class Character extends Sprite {
 
-    private String[] script;
     private final List<String> npcScript = new ArrayList<>();
     private final String characterName;
     private int currentIndex = 1;
+
+    private int currentBattleIndex = 1;
+    private final List<String> npcBattleScript = new ArrayList<>();
+
+    private boolean hasCompletedBattle = false;
 
     public Character(String characterName, float xPosition, float yPosition, Texture characterTexture) {
 
@@ -37,6 +41,21 @@ public abstract class Character extends Sprite {
         return npcScript;
     }
 
+    public List<String> getBattleScript(){
+        npcBattleScript.clear();
+
+        File npcTextFile = new File("resources/Dialogue/" + characterName + "1.csv");
+        if(npcTextFile.exists()) {
+            addBattleDialogue("resources/Dialogue/" + characterName + "1.csv");
+        }
+        else{
+            npcBattleScript.add("Page 1: " + characterName);
+            npcBattleScript.add("Page 2: " + characterName);
+            npcBattleScript.add("Page 3: " + characterName);
+        }
+        return npcBattleScript;
+    }
+
     private void addDialogue(String fileName) {
         BufferedReader csvReader = returnBufferedReader(fileName);
         try{
@@ -45,6 +64,21 @@ public abstract class Character extends Sprite {
                 String[] data = row.split(",");
                 data = this.wrapRoundDialogueBox(data);
                 npcScript.addAll(Arrays.asList(data));
+                }
+            csvReader.close();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void addBattleDialogue(String fileName) {
+        BufferedReader csvReader = returnBufferedReader(fileName);
+        try{
+            String row;
+            while((row = csvReader.readLine()) != null){
+                String[] data = row.split(",");
+                data = this.wrapRoundDialogueBox(data);
+                npcBattleScript.addAll(Arrays.asList(data));
                 }
             csvReader.close();
         } catch (Exception e){
@@ -98,6 +132,26 @@ public abstract class Character extends Sprite {
 
     public void resetScript() {
         currentIndex = 1;
+    }
+
+    public int getCurrentBattleIndex() {
+        return currentBattleIndex;
+    }
+
+    public void incrementCurrentBattleIndex() {
+        currentBattleIndex++;
+    }
+
+    public void resetBattleScript() {
+        currentBattleIndex = 1;
+    }
+
+    public void setHasCompletedBattle(boolean hasCompleted){
+        hasCompletedBattle = hasCompleted;
+    }
+
+    public boolean hasCompletedBattle(){
+        return hasCompletedBattle;
     }
 
 }
