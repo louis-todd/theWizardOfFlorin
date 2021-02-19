@@ -120,7 +120,7 @@ public class DodgeGame {
     }
 
     public void draw(RenderWindow window) {
-        if (dialogueFinished) {
+        if (finishedDialogue) {
             if (currentLevel < maxLevel) {
                 if (this.projectilesOnScreen) {
                     this.battleWindow.getToDraw().forEach(window::draw);

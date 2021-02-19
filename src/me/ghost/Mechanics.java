@@ -122,8 +122,7 @@ public class Mechanics {
                             // if still tiles to step through do
                             if (!battleScreenOpen){
                                 if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().size()) {
-                                    interaction.setTextContent(String
-                                            .valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
+                                    interaction.setTextContent(String.valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
                                     interactingNPC.incrementCurrentIndex();
                                 }
                                 // if at tile limit, close
@@ -138,7 +137,6 @@ public class Mechanics {
                                     if(!dodgeGame.isFinishedDialogue()){
                                         dodgeGame.setTextContent(String.valueOf(interactingNPC.getBattleScript().get(interactingNPC.getCurrentBattleIndex())));
                                         interactingNPC.incrementCurrentBattleIndex();
-                                        System.out.println(interactingNPC.getCurrentBattleIndex());
                                         dodgeGame.setFinishedDialogue(false);
                                     }
                                 }
