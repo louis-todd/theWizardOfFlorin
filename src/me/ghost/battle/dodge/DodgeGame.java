@@ -39,7 +39,6 @@ public class DodgeGame {
     private boolean projectilesOnScreen = false;
     private boolean projectileStillOnScreen = false;
     private int collideTime;
-    private boolean dialogueFinished = false;
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
     private List<String> battleDialogue = new ArrayList<>();
     private int dialogueIndex = 0;
@@ -183,7 +182,6 @@ public class DodgeGame {
 
     public void handleInput(KeyEvent event) {
         handleWizardMovement();
-        // handleSpace();
         if(event.type == Event.Type.KEY_PRESSED){
             if (event.key == Keyboard.Key.W) {
                 keyPresses.put("W", true);
@@ -197,9 +195,6 @@ public class DodgeGame {
             if (event.key == Keyboard.Key.D) {
                 keyPresses.put("D", true);
             }
-            // if(event.key == Keyboard.Key.SPACE){
-            //     game.handleEvents(wizard);
-            // }
         }
         if(event.type == Event.Type.KEY_RELEASED){
             if (event.key == Keyboard.Key.W) {
@@ -214,9 +209,6 @@ public class DodgeGame {
             if (event.key == Keyboard.Key.D) {
                 keyPresses.put("D", false);
             }
-            // if(event.key == Keyboard.Key.SPACE){
-            //     game.handleEvents(wizard);
-            // }
         }
     }
 
@@ -233,18 +225,8 @@ public class DodgeGame {
         if(keyPresses.get("D") && wizard.getPosition().x <= this.battleWindow.getPlayerArea().getPosition().x + this.battleWindow.getPlayerArea().getSize().x - wizard.getGlobalBounds().width){
             this.wizard.setPosition(this.wizard.getPosition().x + 3, this.wizard.getPosition().y);
         }
-
     }
 
-    // public void handleSpace() {
-    //     if(dialogueIndex == this.battleDialogue.size()){
-    //         dialogueFinished = true;
-    //         this.battleWindow.getToDraw().remove(this.battleWindow.getBattleText());
-    //     } else {
-    //         this.battleWindow.setBattleText(this.battleDialogue.get(dialogueIndex));
-    //         dialogueIndex++;
-    //     }
-    // }
 
     public void setTextContent(String newText){
         this.battleWindow.setBattleText(newText);
