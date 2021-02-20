@@ -172,7 +172,7 @@ public class Mechanics {
                         // if first B, set to display battle window
                         // else {
                             if(!interactingNPC.hasCompletedBattle()){
-                                dodgeGame = new DodgeGame(interactingNPC, "HARD", this);
+                                dodgeGame = new DodgeGame(interactingNPC, "EASY", this);
                                 handleKeyPress(keyEvent, true);
                             }
                         // }
