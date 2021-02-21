@@ -169,6 +169,7 @@ public class Mechanics {
                                 if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().size()) {
                                     interaction.setTextContent(String.valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
                                     interactingNPC.incrementCurrentIndex();
+                                    interaction.setCharacterName(interaction.getCharacterName());
                                 }
                                 // if at tile limit, close
                                 else {
@@ -198,6 +199,7 @@ public class Mechanics {
                             if (!battleScreenOpen) {
                                 if (interactingNPC != null && interactingItem == null && interactingNPC.shouldDraw()) {
                                     interaction.setCharacterName(interactingNPC.getName());
+                                    interaction.setOriginalInteractor(interactingNPC.getName());
                                     interaction.setTextContent(interactingNPC.getScript().get(0));
                                     handleKeyPress(keyEvent, true);
                                 }
@@ -235,6 +237,7 @@ public class Mechanics {
                             if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().size()) {
                                 interaction.setTextContent(String.valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
                                 interactingNPC.incrementCurrentIndex();
+                                interaction.setCharacterName(interaction.getCharacterName());
                             }
                             // if have read all tiles, act as if space has been clicked to close the
                             // dialogue box
