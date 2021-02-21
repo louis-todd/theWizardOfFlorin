@@ -52,6 +52,7 @@ public class DodgeGame {
     private Boolean finishedDialogue = false;
     private boolean mouseButtonclicked;
     private Vector2f mousePosition;
+    private Boolean attemptedToClose = false;
 
     public DodgeGame(Npc setBattleNpc, String difficulty, Mechanics game) {
         this.battleNpc = new Npc(setBattleNpc.getName(), battleWindow.getGhostAreaCentre().x - 16, battleWindow.getGhostAreaCentre().y - 80, (Texture) setBattleNpc.getTexture());
@@ -243,6 +244,7 @@ public class DodgeGame {
             if(mousePosition.x <= winLoseScreen.getExitButton().getPosition().x + winLoseScreen.getExitButton().getSize().x && mousePosition.x >= winLoseScreen.getPosition().x &&
                     mousePosition.y <= winLoseScreen.getExitButton().getPosition().y + winLoseScreen.getExitButton().getSize().y && mousePosition.y >= winLoseScreen.getExitButton().getPosition().y){
                     System.out.println("BUTTON PRESSED");
+                    attemptedToClose=true;
             }
             this.mouseButtonclicked = false;
         }
@@ -283,5 +285,9 @@ public class DodgeGame {
 
     public void setMousePosition(Vector2f mousePosition) {
         this.mousePosition = mousePosition;
+    }
+
+    public Boolean attemptedToClose(){
+        return attemptedToClose;
     }
 }

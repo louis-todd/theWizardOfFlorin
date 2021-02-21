@@ -198,6 +198,10 @@ public class Mechanics {
                         assert dodgeGame != null;
                         dodgeGame.setMouseButtonclicked(true);
                         dodgeGame.setMousePosition(new Vector2f(event.asMouseButtonEvent().position));
+                        if(dodgeGame.attemptedToClose()){
+                            keyPresses.put("B", false);
+                            battleScreenOpen = false;
+                        }
                     }
 
                 default:
