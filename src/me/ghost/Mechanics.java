@@ -147,11 +147,10 @@ public class Mechanics {
                                     keyPresses.put("SPACE", false);
                                     interactingNPC.resetScript();
                                 }
-                            }
-                            else if (battleScreenOpen){
+                            } else if (battleScreenOpen) {
                                 //Step through battle dialogue
                                 if (interactingNPC.getCurrentBattleIndex() < interactingNPC.getBattleScript().size()) {
-                                    if(!dodgeGame.isFinishedDialogue()){
+                                    if (!dodgeGame.isFinishedDialogue()) {
                                         dodgeGame.setTextContent(String.valueOf(interactingNPC.getBattleScript().get(interactingNPC.getCurrentBattleIndex())));
                                         interactingNPC.incrementCurrentBattleIndex();
                                         dodgeGame.setFinishedDialogue(false);
@@ -168,7 +167,7 @@ public class Mechanics {
                         }
                         // if first space, set to display first tile
                         else {
-                            if(!battleScreenOpen){
+                            if (!battleScreenOpen) {
                                 if (interactingNPC != null && interactingItem == null && interactingNPC.shouldDraw()) {
                                     interaction.setCharacterName(interactingNPC.getName());
                                     interaction.setTextContent(interactingNPC.getScript().get(0));
@@ -177,14 +176,15 @@ public class Mechanics {
                                 if (interactingItem != null) {
                                     interactingItem.setAsFound(true);
                                 }
-                            }
-                            else{
-                                if(!dodgeGame.isFinishedDialogue()){
+                            } else {
+                                if (!dodgeGame.isFinishedDialogue()) {
                                     dodgeGame.setTextContent(interactingNPC.getScript().get(0));
                                     // dodgeGame.setCharacterName(interactingNPC.getName());
                                     handleKeyPress(keyEvent, true);
                                 }
+                            }
                         }
+                        break;
                     }
                     if (keyEvent.key == Keyboard.Key.B) {
                         // If B has already been pressed
@@ -194,13 +194,12 @@ public class Mechanics {
                         // }
                         // if first B, set to display battle window
                         // else {
-                            if(!interactingNPC.hasCompletedBattle()){
-                                dodgeGame = new DodgeGame(interactingNPC, "EASY", this);
-                                handleKeyPress(keyEvent, true);
-                            }
+                        if (!interactingNPC.hasCompletedBattle()) {
+                            dodgeGame = new DodgeGame(interactingNPC, "EASY", this);
+                            handleKeyPress(keyEvent, true);
+                        }
                         // }
                     }
-                    break;
                 case MOUSE_BUTTON_PRESSED:
                     if(!battleScreenOpen) {
                         if (keyPresses.get("SPACE") && interactingNPC != null && interactingItem == null && interactingNPC.shouldDraw()) {

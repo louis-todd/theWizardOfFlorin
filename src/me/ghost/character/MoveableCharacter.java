@@ -26,6 +26,12 @@ public class MoveableCharacter extends Character {
         wizardColliding = false;
     }
 
+    public MoveableCharacter(String characterName, float xPosition, float yPosition, Texture characterTexture, ArrayList<Item> items) {
+        super(characterName, xPosition, yPosition, characterTexture, items);
+        wizardColliding = false;
+    }
+
+
     public void moveCharacter(Map<String, Boolean> keyPresses, List<Drawable> toDraw, View worldView, GameMap currentMap) {
         Npc npcCollide = null;
         Item itemCollide = null;

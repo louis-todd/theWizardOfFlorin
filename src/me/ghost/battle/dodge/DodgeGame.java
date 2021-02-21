@@ -203,7 +203,6 @@ public class DodgeGame {
             if(lives == 0){
                 wonOrLost = true;
             }
-            System.out.println("LIFE LOST");
         }
     }
 
