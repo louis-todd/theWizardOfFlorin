@@ -9,8 +9,8 @@ public class Npc extends Character {
 
     private Boolean shouldDraw = true;
 
-    public Npc(String characterName, float xPosition, float yPosition, Texture npcTexture) {
-        super(characterName, xPosition, yPosition, npcTexture);
+    public Npc(String characterName, float xPosition, float yPosition, Texture npcTexture, int expectedNumberOfItems) {
+        super(characterName, xPosition, yPosition, npcTexture, expectedNumberOfItems);
     }
 
     public FloatRect dialogueArea(float scaleFactor) {

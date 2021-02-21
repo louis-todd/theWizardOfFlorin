@@ -37,20 +37,22 @@ public class Game {
     private BattleWindow battleWindow = new BattleWindow();
 
     private Item axe = new Item("axe", 300, 300, TextureType.SQUARE16.getTexture());
+    private Item boot = new Item("boot", 250, 180, TextureType.SQUARE16.getTexture());
+    private Item heart = new Item("heart", 350, 380, TextureType.SQUARE16.getTexture());
 
-    private Item[] itemArray = { axe };
+    private Item[] itemArray = { axe, boot, heart };
     private ArrayList<Item> ITEMS = new ArrayList<Item>(Arrays.asList(itemArray));
 
     private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 240, TextureType.FRONT1.getTexture(), ITEMS);
 
-    private Npc npc = new Npc("Mayor", 250, 300, TextureType.GHOST.getTexture());
-    private Npc npc2 = new Npc("TestPerson", 150, 300, TextureType.GHOST.getTexture());
-    private Npc npc3 = new Npc("Placeholder3", 50, 300, TextureType.GHOST.getTexture());
+    private Npc npc = new Npc("Mayor", 250, 300, TextureType.GHOST.getTexture(), 0);
+    private Npc npc2 = new Npc("TestPerson", 150, 300, TextureType.GHOST.getTexture(), 3);
+    private Npc npc3 = new Npc("Placeholder3", 50, 300, TextureType.GHOST.getTexture(), 0);
 
     private Npc[] npcArray = { npc, npc2, npc3 };
     private ArrayList<Npc> NPCs = new ArrayList<Npc>(Arrays.asList(npcArray));
 
-    private Drawable[] itemsToDraw = { wizard, npc, npc2, npc3, axe };
+    private Drawable[] itemsToDraw = { wizard, npc, npc2, npc3, axe, boot, heart };
     private final Dialogue interaction = new Dialogue(worldView, FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME", "Content Placeholder");
     private Mechanics game = new Mechanics(keyPresses, window, NPCs, ITEMS, interaction, battleWindow);
 
