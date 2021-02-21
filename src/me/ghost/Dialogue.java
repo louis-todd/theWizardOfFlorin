@@ -89,13 +89,12 @@ public class Dialogue implements Drawable {
 
     public String getCharacterName() {
         if (toWrite.getString().substring(0, 2).equals("££")) {
+            toWrite.setString(toWrite.getString().substring(2));
             return "Wizard";
         } else {
             return originalInteractor;
         }
     }
-
-    ///
 
     public void setOriginalInteractor(String nameToWrite) {
         originalInteractor = nameToWrite;
@@ -104,8 +103,6 @@ public class Dialogue implements Drawable {
     public String getOriginalInteractor() {
         return originalInteractor;
     }
-
-    ///
 
     @Override
     public void draw(RenderTarget renderTarget, RenderStates renderStates) {
