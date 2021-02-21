@@ -25,6 +25,11 @@ public abstract class Character extends Sprite {
     private final Map<String, Boolean> characterStates = new CaseInsensitiveMap<>();
     private Boolean isFirstSuccess = true;
 
+    private int currentBattleIndex = 1;
+    private final List<String> npcBattleScript = new ArrayList<>();
+
+    private boolean hasCompletedBattle = false;
+
     public Character(String characterName, float xPosition, float yPosition, Texture characterTexture) {
         this.setTexture(characterTexture);
         this.setPosition(xPosition, yPosition);
@@ -131,6 +136,21 @@ public abstract class Character extends Sprite {
         }
     }
 
+    public List<String> getBattleScript(){
+        npcBattleScript.clear();
+
+        File npcTextFile = new File("resources/BattleDialogue/" + characterName + "1.csv");
+        if(npcTextFile.exists()) {
+            addBattleDialogue("resources/BattleDialogue/" + characterName + "1.csv");
+        }
+        else{
+            npcBattleScript.add("Page 1: " + characterName);
+            npcBattleScript.add("Page 2: " + characterName);
+            npcBattleScript.add("Page 3: " + characterName);
+        }
+        return npcBattleScript;
+    }
+
     private void addDialogue(String fileName) {
         BufferedReader csvReader = returnBufferedReader(fileName);
         characterStates.put("SUCCESS", false);
@@ -149,6 +169,21 @@ public abstract class Character extends Sprite {
             }
             csvReader.close();
             
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void addBattleDialogue(String fileName) {
+        BufferedReader csvReader = returnBufferedReader(fileName);
+        try{
+            String row;
+            while((row = csvReader.readLine()) != null){
+                String[] data = row.split(",");
+                data = this.wrapRoundDialogueBox(data);
+                npcBattleScript.addAll(Arrays.asList(data));
+                }
+            csvReader.close();
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -229,6 +264,26 @@ public abstract class Character extends Sprite {
         currentIndex = 1;
     }
 
+    public int getCurrentBattleIndex() {
+        return currentBattleIndex;
+    }
+
+    public void incrementCurrentBattleIndex() {
+        currentBattleIndex++;
+    }
+
+    public void resetBattleScript() {
+        currentBattleIndex = 1;
+    }
+
+    public void setHasCompletedBattle(boolean hasCompleted){
+        hasCompletedBattle = hasCompleted;
+    }
+
+    public boolean hasCompletedBattle(){
+        return hasCompletedBattle;
+    }
+    
     public static ArrayList<Item> getItems(){
         return Character.items;
     }

@@ -31,6 +31,7 @@ public class MoveableCharacter extends Character {
         wizardColliding = false;
     }
 
+
     public void moveCharacter(Map<String, Boolean> keyPresses, List<Drawable> toDraw, View worldView, GameMap currentMap) {
         Npc npcCollide = null;
         Item itemCollide = null;
@@ -52,19 +53,19 @@ public class MoveableCharacter extends Character {
             }
         }
         if (!wizardColliding) {
-            if ((keyPresses.get("RIGHT") && !keyPresses.get("SPACE"))) {
+            if ((keyPresses.get("RIGHT") && !keyPresses.get("SPACE") && !keyPresses.get("ESCAPE"))) {
                 if (this.getPosition().x - currentMap.getMapBounds().width < 0) {
                     this.walkRight();
                     this.move(walkingPace, 0);
                 }
             }
-            if ((keyPresses.get("LEFT") && !keyPresses.get("SPACE"))) {
+            if ((keyPresses.get("LEFT") && !keyPresses.get("SPACE") && !keyPresses.get("ESCAPE"))) {
                 if (this.getPosition().x > currentMap.getMapBounds().left) {
                     this.walkLeft();
                     this.move(-(walkingPace), 0);
                 }
             }
-            if ((keyPresses.get("UP") && !keyPresses.get("SPACE"))) {
+            if ((keyPresses.get("UP") && !keyPresses.get("SPACE") && !keyPresses.get("ESCAPE"))) {
                 if (this.getPosition().y > currentMap.getMapBounds().top) {
                     if(keyPresses.get("LEFT")){
                         walkLeft();
@@ -78,7 +79,7 @@ public class MoveableCharacter extends Character {
                     this.move(0, -(walkingPace));
                 }
             }
-            if ((keyPresses.get("DOWN") && !keyPresses.get("SPACE"))) {
+            if ((keyPresses.get("DOWN") && !keyPresses.get("SPACE") && !keyPresses.get("ESCAPE"))) {
                 if (this.getPosition().y - currentMap.getMapBounds().height < 0) {
                     if(keyPresses.get("LEFT")){
                         walkLeft();
