@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Stack;
 import java.util.concurrent.ThreadLocalRandom;
 
+
 public class DodgeGame {
 
     private final BattleWindow battleWindow = new BattleWindow();
@@ -53,12 +54,16 @@ public class DodgeGame {
     private boolean mouseButtonclicked;
     private Vector2f mousePosition;
     private Boolean attemptedToClose = false;
+    private int stepIndex = 0;
+    private int walkFrameControl = 0;
+    private int walkingPace = 2;
 
     public DodgeGame(Npc setBattleNpc, String difficulty, Mechanics game) {
         this.battleNpc = new Npc(setBattleNpc.getName(), battleWindow.getGhostAreaCentre().x - 16, battleWindow.getGhostAreaCentre().y - 80, (Texture) setBattleNpc.getTexture());
-        this.wizard = new MoveableCharacter("Wizard", battleWindow.getPlayerAreaCentre().x - 16, battleWindow.getPlayerAreaCentre().y - 16, TextureType.SQUARE16.getTexture());
+        this.wizard = new MoveableCharacter("Wizard", battleWindow.getPlayerAreaCentre().x - 16, battleWindow.getPlayerAreaCentre().y - 16, TextureType.FRONT1.getTexture());
         this.addProjectilesToStack(1000);
         this.game = game;
+        wizard.setScale(dimensions);
 
         this.battleWindow.getToDraw().add(this.battleNpc);
         this.battleWindow.getToDraw().add(this.wizard);
@@ -253,15 +258,92 @@ public class DodgeGame {
     private void handleWizardMovement(){
         if(keyPresses.get("UP") && wizard.getPosition().y >= this.battleWindow.getPlayerArea().getPosition().y){
             this.wizard.setPosition(this.wizard.getPosition().x, this.wizard.getPosition().y - 3);
+            if(keyPresses.get("LEFT")){
+                walkLeft();
+            }
+            else if(keyPresses.get("RIGHT")){
+                walkRight();
+            }
+            else{
+                walkBack();
+            }
+            wizard.move(0, -(walkingPace));
         }
         if(keyPresses.get("LEFT") && wizard.getPosition().x >= this.battleWindow.getPlayerArea().getPosition().x){
-            this.wizard.setPosition(this.wizard.getPosition().x - 3, this.wizard.getPosition().y);
+            // this.wizard.setPosition(this.wizard.getPosition().x - 3, this.wizard.getPosition().y);
+            this.walkLeft();
+            wizard.move(-(walkingPace), 0);
         }
         if(keyPresses.get("DOWN") && wizard.getPosition().y <= this.battleWindow.getPlayerArea().getPosition().y + this.battleWindow.getPlayerArea().getSize().y - wizard.getGlobalBounds().height){
-            this.wizard.setPosition(this.wizard.getPosition().x, this.wizard.getPosition().y + 3);
+            // this.wizard.setPosition(this.wizard.getPosition().x, this.wizard.getPosition().y + 3);
+            if(keyPresses.get("LEFT")){
+                walkLeft();
+            }
+            else if(keyPresses.get("RIGHT")){
+                walkRight();
+            }
+            else{
+                walkForward();
+            }
+            wizard.move(0, (walkingPace));
         }
         if(keyPresses.get("RIGHT") && wizard.getPosition().x <= this.battleWindow.getPlayerArea().getPosition().x + this.battleWindow.getPlayerArea().getSize().x - wizard.getGlobalBounds().width){
-            this.wizard.setPosition(this.wizard.getPosition().x + 3, this.wizard.getPosition().y);
+            // this.wizard.setPosition(this.wizard.getPosition().x + 3, this.wizard.getPosition().y);
+            this.walkRight();
+            wizard.move(walkingPace, 0);
+        }
+    }
+    private void walkLeft(){
+        wizard.setTexture(TextureType.getLeftTextureByIndex(stepIndex));
+        walkFrameControl++;
+        if(walkFrameControl%16 == 0){
+            stepIndex++;
+            walkFrameControl=0;
+        }
+        if(stepIndex%7 == 0){
+            stepIndex=0;
+        }
+    }
+
+    private void walkRight(){
+        wizard.setTexture(TextureType.getRightTextureByIndex(stepIndex));
+        walkFrameControl++;
+        if(walkFrameControl%16 == 0){
+            stepIndex++;
+            walkFrameControl=0;
+        }
+        if(stepIndex%7 == 0){
+            stepIndex=0;
+        }
+    }
+
+    private void walkBack(){
+        if(stepIndex>3){
+            stepIndex=0;
+        }
+        wizard.setTexture(TextureType.getBackTextureByIndex(stepIndex));
+        walkFrameControl++;
+        if(walkFrameControl%16 == 0){
+            stepIndex++;
+            walkFrameControl=0;
+        }
+        if(stepIndex%3 == 0){
+            stepIndex=0;
+        }
+    }
+
+    private void walkForward(){
+        if(stepIndex>3){
+            stepIndex=0;
+        }
+        wizard.setTexture(TextureType.getFrontTextureByIndex(stepIndex));
+        walkFrameControl++;
+        if(walkFrameControl%16 == 0){
+            stepIndex++;
+            walkFrameControl=0;
+        }
+        if(stepIndex%3 == 0){
+            stepIndex=0;
         }
     }
 
