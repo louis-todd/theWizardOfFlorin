@@ -12,6 +12,7 @@ import me.ghost.battle.BattleWindow;
 import org.jsfml.graphics.*;
 import org.jsfml.graphics.Font;
 import org.jsfml.window.Keyboard;
+import org.jsfml.window.Mouse;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.KeyEvent;
 
@@ -122,57 +123,58 @@ public class DodgeGame {
     }
 
     public void draw(RenderWindow window) {
-      //  WinLoseScreen test = new WinLoseScreen(true);
-        //test.getToDraw().forEach(window::draw);
-        if (!wonOrLost) {
-            if (finishedDialogue) {
-                if (currentLevel < maxLevel) {
-                    if (this.projectilesOnScreen) {
-                        this.battleWindow.getToDraw().forEach(window::draw);
-                        this.projectileInMotion.forEach(Projectile::applyVelocity);
-                        this.projectileStillOnScreen = false;
-                    } else {
-                        this.currentLevel++;
-                        for (Projectile p : projectileInMotion) {
-                            battleWindow.getToDraw().remove(p);
-                        }
-                        this.projectileInMotion.clear();
-                        throwObject();
-                        this.battleWindow.getToDraw().forEach(window::draw);
-                        this.projectileInMotion.forEach(Projectile::applyVelocity);
-                        this.projectilesOnScreen = true;
-                    }
-                    for (Projectile p : this.projectileInMotion) {
-                        collideProjectile(p);
-                        if (p.getGlobalBounds().intersection(this.battleWindow.getBackground().getGlobalBounds()) != null) {
-                            this.projectileStillOnScreen = true;
-                        }
-                    }
-                    if (!this.projectileStillOnScreen) {
-                        this.projectilesOnScreen = false;
-                    }
-                } else {
-                    for (Projectile p : projectileInMotion) {
-                        this.battleWindow.getToDraw().remove(p);
-                    }
-                    this.battleWindow.getToDraw().forEach(window::draw);
-                    wonOrLost = true;
-
-                }
-            } else {
-                this.battleWindow.getToDraw().forEach(window::draw);
-            }
-        } else {
-            if (lives <= 0) {
-                battleLost = true;
-                WinLoseScreen loseScreen = new WinLoseScreen(false);
-                loseScreen.getToDraw().forEach(window::draw);
-            } else {
-                battleWon = true;
-                WinLoseScreen winScreen = new WinLoseScreen(true);
-                winScreen.getToDraw().forEach(window::draw);
-            }
-        }
+        WinLoseScreen test = new WinLoseScreen(true);
+        this.battleWindow.getToDraw().forEach(window::draw);
+        test.getToDraw().forEach(window::draw);
+//        if (!wonOrLost) {
+//            if (finishedDialogue) {
+//                if (currentLevel < maxLevel) {
+//                    if (this.projectilesOnScreen) {
+//                        this.battleWindow.getToDraw().forEach(window::draw);
+//                        this.projectileInMotion.forEach(Projectile::applyVelocity);
+//                        this.projectileStillOnScreen = false;
+//                    } else {
+//                        this.currentLevel++;
+//                        for (Projectile p : projectileInMotion) {
+//                            battleWindow.getToDraw().remove(p);
+//                        }
+//                        this.projectileInMotion.clear();
+//                        throwObject();
+//                        this.battleWindow.getToDraw().forEach(window::draw);
+//                        this.projectileInMotion.forEach(Projectile::applyVelocity);
+//                        this.projectilesOnScreen = true;
+//                    }
+//                    for (Projectile p : this.projectileInMotion) {
+//                        collideProjectile(p);
+//                        if (p.getGlobalBounds().intersection(this.battleWindow.getBackground().getGlobalBounds()) != null) {
+//                            this.projectileStillOnScreen = true;
+//                        }
+//                    }
+//                    if (!this.projectileStillOnScreen) {
+//                        this.projectilesOnScreen = false;
+//                    }
+//                } else {
+//                    for (Projectile p : projectileInMotion) {
+//                        this.battleWindow.getToDraw().remove(p);
+//                    }
+//                    this.battleWindow.getToDraw().forEach(window::draw);
+//                    wonOrLost = true;
+//
+//                }
+//            } else {
+//                this.battleWindow.getToDraw().forEach(window::draw);
+//            }
+//        } else {
+//            if (lives <= 0) {
+//                battleLost = true;
+//                WinLoseScreen loseScreen = new WinLoseScreen(false);
+//                loseScreen.getToDraw().forEach(window::draw);
+//            } else {
+//                battleWon = true;
+//                WinLoseScreen winScreen = new WinLoseScreen(true);
+//                winScreen.getToDraw().forEach(window::draw);
+//            }
+//        }
     }
 
     private void collideProjectile(Projectile p){
@@ -224,7 +226,11 @@ public class DodgeGame {
                 keyPresses.put("RIGHT", false);
             }
         }
+        if(event.type == Event.Type.MOUSE_BUTTON_PRESSED){
+
+        }
     }
+
 
     private void handleWizardMovement(){
         if(keyPresses.get("UP") && wizard.getPosition().y >= this.battleWindow.getPlayerArea().getPosition().y){
