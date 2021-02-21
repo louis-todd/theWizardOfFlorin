@@ -44,9 +44,9 @@ public abstract class Character extends Sprite {
     public List<String> getBattleScript(){
         npcBattleScript.clear();
 
-        File npcTextFile = new File("resources/Dialogue/" + characterName + "1.csv");
+        File npcTextFile = new File("resources/BattleDialogue/" + characterName + "1.csv");
         if(npcTextFile.exists()) {
-            addBattleDialogue("resources/Dialogue/" + characterName + "1.csv");
+            addBattleDialogue("resources/BattleDialogue/" + characterName + "1.csv");
         }
         else{
             npcBattleScript.add("Page 1: " + characterName);
