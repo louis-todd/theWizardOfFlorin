@@ -1,8 +1,11 @@
 package me.ghost;
 
 import me.ghost.battle.BattleWindow;
+import me.ghost.data.FontType;
+import me.ghost.data.TextureType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.jsfml.graphics.*;
@@ -17,26 +20,20 @@ public class PauseMenu {
     private final BattleWindow battleWindow = new BattleWindow();
     private final boolean pauseOpen = true;
     private final List<Drawable> toDraw = new ArrayList<>();
-    private final RectangleShape background;
-    private float xBoundary;
-    private float yBoundary;
-    private Vector2f dimensions;
-    
+    private Texture backgroundTexture = TextureType.PAUSEBACKGROUND.getTexture();
+    private final RectangleShape background = createTexturedRectangle(640, 480, 0, 0, backgroundTexture);
+    private final RectangleShape pauseBackground = createSimpleRectangle(320, 60, 165, 150, 120, 119, 161);
+    private final RectangleShape exitBackground = createSimpleRectangle(320, 60, 165, 300, 120, 119, 161);
+    private Drawable[] itemsToDraw = {background, pauseBackground, exitBackground};  
+    private final Font font = FontType.ROBOTO.getFont();  
+
+    private Text text;
 
     public PauseMenu() {
         //
-
-        dimensions = new Vector2f(640, 480);
-
-        background = new RectangleShape(dimensions) {
-            {
-                this.setPosition(0, 0);
-                this.setSize(dimensions);
-                this.setFillColor(new Color(98,52,18));
-            }
-        };
-
-        toDraw.add(background);
+        toDraw.addAll(Arrays.asList(itemsToDraw));
+        writeText("Paused...", 155, 150);
+        writeText("Press here to quit...", 120, 300);
     }
 
     public void draw(RenderWindow window) {
@@ -60,7 +57,31 @@ public class PauseMenu {
         }
     }
 
-    private RectangleShape createDrawnRectangle(int width, int height, int x, int y, int r, int g, int b) {
+    public void writeText(String function, int x, int y) {
+        // Set and format the character's name
+        text = new Text(function, font, 20) {
+            {
+                this.setPosition(x + 120, y + 20);
+            }
+        };
+
+        toDraw.add(text);
+    }
+
+
+    private RectangleShape createTexturedRectangle(int width, int height, int x, int y, Texture rectangleTexture) {
+        Vector2f dimensions = new Vector2f(width, height);
+        RectangleShape textBackground = new RectangleShape(dimensions);
+        textBackground.setPosition(x, y);
+        textBackground.setSize(dimensions);
+        // textBackground.setFillColor(new Color(r, g, b));
+        textBackground.setTexture(rectangleTexture);
+        textBackground.setOutlineThickness(1);
+        toDraw.add(textBackground);
+        return textBackground;
+    }
+
+    private RectangleShape createSimpleRectangle(int width, int height, int x, int y, int r, int g, int b) {
         Vector2f dimensions = new Vector2f(width, height);
         RectangleShape textBackground = new RectangleShape(dimensions);
         textBackground.setPosition(x, y);
@@ -70,5 +91,5 @@ public class PauseMenu {
         toDraw.add(textBackground);
         return textBackground;
     }
-
+    
 }

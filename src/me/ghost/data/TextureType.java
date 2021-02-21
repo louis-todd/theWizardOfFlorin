@@ -6,6 +6,7 @@ import org.jsfml.graphics.Texture;
 public enum TextureType {
     SQUARE16("square-16.png"),
     BOARD("DialogueBoard.png"),
+    PAUSEBACKGROUND("woodenBackground.png"),
 
     LEFTMOVEMENT1("wizardImages/left-movement1.png"),
     LEFTMOVEMENT2("wizardImages/left-movement2.png"),
