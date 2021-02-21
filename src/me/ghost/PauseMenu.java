@@ -105,9 +105,10 @@ public class PauseMenu {
     private void checkMouse(){
         if(this.mouseButtonclicked){
             //handle quit
-            if(mousePosition.x <= quitX + buttonLength && mousePosition.x >= quitX &&
-                    mousePosition.y <= quitY + buttonHeight && mousePosition.y >= quitY){
+            if(mousePosition!=null){
+                if(mousePosition.x <= quitX + buttonLength && mousePosition.x >= quitX && mousePosition.y <= quitY + buttonHeight && mousePosition.y >= quitY){
                     quited=true;
+                }
             }
             this.mouseButtonclicked = false;
         }
