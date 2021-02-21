@@ -17,11 +17,25 @@ public class PauseMenu {
     private final BattleWindow battleWindow = new BattleWindow();
     private final boolean pauseOpen = true;
     private final List<Drawable> toDraw = new ArrayList<>();
-    private final RectangleShape background = createDrawnRectangle(640, 480, 0, 0, 0, 0, 0);
+    private final RectangleShape background;
+    private float xBoundary;
+    private float yBoundary;
+    private Vector2f dimensions;
     
 
     public PauseMenu() {
         //
+
+        dimensions = new Vector2f(640, 480);
+
+        background = new RectangleShape(dimensions) {
+            {
+                this.setPosition(0, 0);
+                this.setSize(dimensions);
+                this.setFillColor(new Color(98,52,18));
+            }
+        };
+
         toDraw.add(background);
     }
 
@@ -56,5 +70,5 @@ public class PauseMenu {
         toDraw.add(textBackground);
         return textBackground;
     }
-    
+
 }
