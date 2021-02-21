@@ -245,7 +245,7 @@ public class DodgeGame {
     }
 
     private void checkMouse(WinLoseScreen winLoseScreen){
-        if(this.mouseButtonclicked){
+        if(this.mouseButtonclicked && mousePosition!=null && winLoseScreen!=null){
             if(mousePosition.x <= winLoseScreen.getExitButton().getPosition().x + winLoseScreen.getExitButton().getSize().x && mousePosition.x >= winLoseScreen.getPosition().x &&
                     mousePosition.y <= winLoseScreen.getExitButton().getPosition().y + winLoseScreen.getExitButton().getSize().y && mousePosition.y >= winLoseScreen.getExitButton().getPosition().y){
                     attemptedToClose=true;

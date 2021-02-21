@@ -64,10 +64,8 @@ public abstract class Character extends Sprite {
         // if sprite does not have an associated item
         if (associatedItems.isEmpty()) {
             if (characterStates.get("AVAILABLE")) {
-                System.out.println("NO ASSOCIATED ITEM & IS AVAILABLE");
                 serveScript(0);
             } else {
-                System.out.println("NO ASSOCIATED ITEM BUT IS NOT AVAILABLE");
                 serveScript(3);
             }
         } else {
@@ -195,7 +193,6 @@ public abstract class Character extends Sprite {
                             for(String itemName : RiddleItems){
                                 if (potentialItem.getName().equals(itemName)) {
                                     if(!associatedItems.contains(potentialItem)) {
-                                        System.out.println("Add " + itemName + " to associated items");
                                         associatedItems.add(potentialItem);
                                     }
                                     potentialItem.setAsAvailableToCollect(true);
