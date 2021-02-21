@@ -212,8 +212,15 @@ public class Mechanics {
 
     public void isDialogue() {
         // If its the first time space is pressed, set the text
-        if ((keyPresses.get("SPACE")) && dodgeGame.isFinishedDialogue()) {
-            interaction.draw(window, null);
+        if ((keyPresses.get("SPACE"))) {
+            if(dodgeGame!=null){
+                if(dodgeGame.isFinishedDialogue()){
+                    interaction.draw(window, null);
+                }
+            }
+            else{
+                interaction.draw(window, null);
+            }
         }
         if ((keyPresses.get("B"))) {
             dodgeGame.draw(this.window);
