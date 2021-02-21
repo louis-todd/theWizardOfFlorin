@@ -182,6 +182,29 @@ public abstract class Character extends Sprite {
                     characterStates.put("SUCCESS", true);
                     row=row.replace('@', ' ');
                 }
+                if(row.contains("\\")){
+                    int itemStart=-1;
+                    itemStart = row.indexOf("\\");
+                    String itemList="";
+                    if(itemStart!=-1){
+                        itemList = row.substring(itemStart+2);
+
+                        //at start of item list - extract items from itemList
+                        String[] RiddleItems = itemList.split(" ");
+                        for (Item potentialItem : Character.items) {
+                            for(String itemName : RiddleItems){
+                                if (potentialItem.getName().equals(itemName)) {
+                                    if(!associatedItems.contains(potentialItem)) {
+                                        System.out.println("Add " + itemName + " to associated items");
+                                        associatedItems.add(potentialItem);
+                                    }
+                                    potentialItem.setAsAvailableToCollect(true);
+                                }
+                            }
+                        }
+                        row=row.substring(0, itemStart);
+                    }
+                }
                 String[] data = row.split(",");
                 data = this.wrapRoundDialogueBox(data);
                 NPCScript.addAll(Arrays.asList(data));
