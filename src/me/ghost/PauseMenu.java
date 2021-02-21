@@ -22,10 +22,19 @@ public class PauseMenu {
     private final List<Drawable> toDraw = new ArrayList<>();
     private Texture backgroundTexture = TextureType.PAUSEBACKGROUND.getTexture();
     private final RectangleShape background = createTexturedRectangle(640, 480, 0, 0, backgroundTexture);
-    private final RectangleShape pauseBackground = createSimpleRectangle(320, 60, 165, 150, 120, 119, 161);
-    private final RectangleShape exitBackground = createSimpleRectangle(320, 60, 165, 300, 120, 119, 161);
+    private final int pauseX = 165;
+    private final int quitX = 165;
+    private final int pauseY = 150;
+    private final int quitY = 300;
+    private final int buttonLength = 320;
+    private final int buttonHeight = 60;
+    private final RectangleShape pauseBackground = createSimpleRectangle(buttonLength, buttonHeight, 165, 150, 120, 119, 161);
+    private final RectangleShape exitBackground = createSimpleRectangle(buttonLength, buttonHeight, 165, 300, 120, 119, 161);
     private Drawable[] itemsToDraw = {background, pauseBackground, exitBackground};  
     private final Font font = FontType.ROBOTO.getFont();  
+    private boolean mouseButtonclicked;
+    private Vector2f mousePosition;
+    private Boolean quited = false;
 
     private Text text;
 
@@ -37,6 +46,7 @@ public class PauseMenu {
     }
 
     public void draw(RenderWindow window) {
+        checkMouse();
         toDraw.forEach(window::draw);
     }
 
@@ -90,6 +100,29 @@ public class PauseMenu {
         textBackground.setOutlineThickness(1);
         toDraw.add(textBackground);
         return textBackground;
+    }
+
+    private void checkMouse(){
+        if(this.mouseButtonclicked){
+            //handle quit
+            if(mousePosition.x <= quitX + buttonLength && mousePosition.x >= quitX &&
+                    mousePosition.y <= quitY + buttonHeight && mousePosition.y >= quitY){
+                    quited=true;
+            }
+            this.mouseButtonclicked = false;
+        }
+    }
+
+    public void setMouseButtonclicked(boolean mouseButtonclicked) {
+        this.mouseButtonclicked = mouseButtonclicked;
+    }
+
+    public void setMousePosition(Vector2f mousePosition) {
+        this.mousePosition = mousePosition;
+    }
+
+    public Boolean playerHasQuit() {
+        return quited;
     }
     
 }

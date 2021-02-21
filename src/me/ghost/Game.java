@@ -95,6 +95,10 @@ public class Game {
                 wizard.moveCharacter(keyPresses, toDraw, worldView, topLayer);
             }
             updateWindow();
+            if(game.hasPlayerQuit()){
+                window.clear();
+                window.close();
+            }
         }
 
         TileLoader.THREADS.shutdown();

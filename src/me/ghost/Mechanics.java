@@ -7,6 +7,7 @@ import me.ghost.character.MoveableCharacter;
 import me.ghost.character.Npc;
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.View;
+import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.KeyEvent;
@@ -115,14 +116,12 @@ public class Mechanics {
                     break;
                 case KEY_PRESSED:
                     KeyEvent keyEvent = event.asKeyEvent();
-                    if ((keyEvent.key == Keyboard.Key.RIGHT || keyEvent.key == Keyboard.Key.LEFT
-                            || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN)) {
+                    if ((keyEvent.key == Keyboard.Key.RIGHT || keyEvent.key == Keyboard.Key.LEFT || keyEvent.key == Keyboard.Key.UP || keyEvent.key == Keyboard.Key.DOWN)) {
                         handleKeyPress(keyEvent, true);
+                        if(this.dodgeGame!=null){
+                            this.dodgeGame.handleInput(keyEvent);
+                        }
                         break;
-                    }
-
-                    if (this.battleScreenOpen) {
-                        this.dodgeGame.handleInput(keyEvent);
                     }
 
                     if (this.pauseMenuOpen) {
@@ -165,7 +164,7 @@ public class Mechanics {
                     if (keyEvent.key == Keyboard.Key.SPACE && !pauseMenuOpen) {
                         // If space has already been pressed
                         if (keyPresses.get("SPACE")) {
-                            if (interactingNPC != null & interactingItem == null && interactingNPC.shouldDraw()) {
+                            if (interactingNPC != null & interactingItem == null && interactingNPC.shouldDraw() && !battleScreenOpen) {
                                 // if still tiles to step through do
                                 if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().size()) {
                                     interaction.setTextContent(String.valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
@@ -176,49 +175,93 @@ public class Mechanics {
                                     keyPresses.put("SPACE", false);
                                     interactingNPC.resetScript();
                                 }
+                            } else if (battleScreenOpen) {
+                                //Step through battle dialogue
+                                if (interactingNPC.getCurrentBattleIndex() < interactingNPC.getBattleScript().size()) {
+                                    if (!dodgeGame.isFinishedDialogue()) {
+                                        dodgeGame.setTextContent(String.valueOf(interactingNPC.getBattleScript().get(interactingNPC.getCurrentBattleIndex())));
+                                        interactingNPC.incrementCurrentBattleIndex();
+                                        dodgeGame.setFinishedDialogue(false);
+                                    }
+                                }
+                                // if at tile limit, close
+                                else {
+                                    keyPresses.put("SPACE", false);
+                                    dodgeGame.setFinishedDialogue(true);
+                                    interactingNPC.setHasCompletedBattle(true);
+                                    dodgeGame.setTextContent("");
+                                }
                             }
                         }
                         // if first space, set to display first tile
                         else {
-                            if (interactingNPC != null && interactingItem == null && interactingNPC.shouldDraw()) {
-                                interaction.setCharacterName(interactingNPC.getName());
-                                interaction.setTextContent(interactingNPC.getScript().get(0));
-                                handleKeyPress(keyEvent, true);
-                            }
-                            if (interactingItem != null) {
-                                interactingItem.setAsFound(true);
+                            if (!battleScreenOpen) {
+                                if (interactingNPC != null && interactingItem == null && interactingNPC.shouldDraw()) {
+                                    interaction.setCharacterName(interactingNPC.getName());
+                                    interaction.setTextContent(interactingNPC.getScript().get(0));
+                                    handleKeyPress(keyEvent, true);
+                                }
+                                if (interactingItem != null) {
+                                    interactingItem.setAsFound(true);
+                                }
+                            } else {
+                                if (!dodgeGame.isFinishedDialogue()) {
+                                    dodgeGame.setTextContent(interactingNPC.getScript().get(0));
+                                    // dodgeGame.setCharacterName(interactingNPC.getName());
+                                    handleKeyPress(keyEvent, true);
+                                }
                             }
                         }
+                        break;
                     }
                     if (keyEvent.key == Keyboard.Key.B && !pauseMenuOpen) {
                         // If B has already been pressed
-                        if (keyPresses.get("B")) {
-                            keyPresses.put("B", false);
-                            battleScreenOpen = false;
-                        }
+                        // if (keyPresses.get("B")) {
+                        //     keyPresses.put("B", false);
+                        //     battleScreenOpen = false;
+                        // }
                         // if first B, set to display battle window
-                        else {
-                            dodgeGame = new DodgeGame(interactingNPC);
+                        // else {
+                        if (!interactingNPC.hasCompletedBattle()) {
+                            dodgeGame = new DodgeGame(interactingNPC, "EASY", this);
                             handleKeyPress(keyEvent, true);
                         }
+                        // }
                     }
-                    break;
                 case MOUSE_BUTTON_PRESSED:
-                    if (keyPresses.get("SPACE") && interactingNPC != null && interactingItem == null
-                            && interactingNPC.shouldDraw() & !pauseMenuOpen) {
-                        // if still tiles left to show, step through them
-                        if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().size()) {
-                            interaction.setTextContent(
-                                    String.valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
-                            interactingNPC.incrementCurrentIndex();
+                    if(!battleScreenOpen) {
+                        if (keyPresses.get("SPACE") && interactingNPC != null && interactingItem == null && interactingNPC.shouldDraw() && !pauseMenuOpen) {
+                            // if still tiles left to show, step through them
+                            if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().size()) {
+                                interaction.setTextContent(String.valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
+                                interactingNPC.incrementCurrentIndex();
+                            }
+                            // if have read all tiles, act as if space has been clicked to close the
+                            // dialogue box
+                            else if (interactingNPC.getCurrentIndex() >= interactingNPC.getScript().size()) {
+                                keyPresses.put("SPACE", !(keyPresses.get("SPACE")));
+                                interactingNPC.resetScript();
+                            }
                         }
-                        // if have read all tiles, act as if space has been clicked to close the
-                        // dialogue box
-                        else if (interactingNPC.getCurrentIndex() >= interactingNPC.getScript().size()) {
-                            keyPresses.put("SPACE", !(keyPresses.get("SPACE")));
-                            interactingNPC.resetScript();
+                    } else {
+                        if(dodgeGame != null){
+                            dodgeGame.setMouseButtonclicked(true);
+                            if(event.asMouseButtonEvent()!=null){
+                                dodgeGame.setMousePosition(new Vector2f(event.asMouseButtonEvent().position));
+                            }
+                            if(dodgeGame.attemptedToClose()){
+                                keyPresses.put("B", false);
+                                battleScreenOpen = false;
+                            }
                         }
                     }
+                    if(pauseMenu!=null){
+                        pauseMenu.setMouseButtonclicked(true);
+                        if(event.asMouseButtonEvent()!=null){
+                            pauseMenu.setMousePosition(new Vector2f(event.asMouseButtonEvent().position));
+                        }
+                    }
+
                 default:
                     break;
             }
@@ -228,11 +271,20 @@ public class Mechanics {
     public void isDialogue() {
         // If its the first time space is pressed, set the text
         if ((keyPresses.get("SPACE"))) {
-            interaction.draw(window, null);
+            if(dodgeGame!=null){
+                if(dodgeGame.isFinishedDialogue()){
+                    interaction.draw(window, null);
+                }
+            }
+            else{
+                interaction.draw(window, null);
+            }
         }
         if ((keyPresses.get("B"))) {
-            dodgeGame.draw(this.window);
-            battleScreenOpen = true;
+            if(dodgeGame!=null){
+                dodgeGame.draw(this.window);
+                battleScreenOpen = true;
+            }
         }
         if ((keyPresses.get("ESCAPE"))) {
             pauseMenu.draw(this.window);
@@ -246,6 +298,13 @@ public class Mechanics {
 
     public boolean isPauseMenuOpen() {
         return pauseMenuOpen;
+    }
+
+    public boolean hasPlayerQuit() {
+        if(pauseMenu != null){
+            return pauseMenu.playerHasQuit();
+        }
+        return false;
     }
 
 }

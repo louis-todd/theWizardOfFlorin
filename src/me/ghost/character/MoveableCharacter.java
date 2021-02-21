@@ -31,6 +31,7 @@ public class MoveableCharacter extends Character {
         wizardColliding = false;
     }
 
+
     public void moveCharacter(Map<String, Boolean> keyPresses, List<Drawable> toDraw, View worldView, GameMap currentMap) {
         Npc npcCollide = null;
         Item itemCollide = null;
