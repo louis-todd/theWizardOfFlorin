@@ -20,6 +20,7 @@ public abstract class Character extends Sprite {
     private File npcTextFile;
     private static ArrayList<Item> items;
     private Item associatedItem = null;
+    private static ArrayList<Item> associatedItems;
     private static Boolean taskInProgress = false;
     private static Character NPCInProgress = null;
     private final Map<String, Boolean> characterStates = new CaseInsensitiveMap<>();
