@@ -182,7 +182,7 @@ public abstract class Character extends Sprite {
                 String[] data = row.split(",");
                 data = this.wrapRoundDialogueBox(data);
                 npcBattleScript.addAll(Arrays.asList(data));
-                }
+            }
             csvReader.close();
         } catch (Exception e){
             e.printStackTrace();
