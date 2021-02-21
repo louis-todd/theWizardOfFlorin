@@ -1,6 +1,7 @@
 
 package me.ghost;
 
+import me.ghost.battle.BattleWindow;
 import me.ghost.character.MoveableCharacter;
 import me.ghost.character.Npc;
 import me.ghost.data.TileLoader;
@@ -13,6 +14,7 @@ import org.jsfml.window.VideoMode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,37 +24,50 @@ public class Game {
     private static final Vector2f LOADING_BAR_POSITION = new Vector2f(50, 400);
 
     private final RenderWindow window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");
-    private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 240, TextureType.LEFTSTILL.getTexture());
+
     private final List<Drawable> toDraw = new ArrayList<>();
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
-
-    private final Npc npc = new Npc("Mayor", 250, 300, TextureType.GHOST.getTexture());
-    private final Npc npc2 = new Npc("Placeholder2", 150, 300, TextureType.GHOST.getTexture());
-    private final Npc npc3 = new Npc("Placeholder3", 50, 300, TextureType.GHOST.getTexture());
-    private final Npc npc4 = new Npc("Placeholder4 ", 700, 300, TextureType.GHOST.getTexture());
-    private final List<Npc> NPCs = new ArrayList<>(Arrays.asList(npc, npc2, npc3, npc4));
 
     private final TileLoader tileLoader = new TileLoader();
     private final GameMap mapHouse = new GameMap("resources/map._House.csv", 50, tileLoader);
     private final GameMap currentMap = mapHouse;
     private final View worldView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
     private final View battleView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
-    private final Map<String, Integer> drawingBounds = new CaseInsensitiveMap<>();
+    private BattleWindow battleWindow = new BattleWindow();
+
+    private Item axe = new Item("axe", 300, 300, TextureType.SQUARE16.getTexture());
+
+    private Item[] itemArray = { axe };
+    private ArrayList<Item> ITEMS = new ArrayList<Item>(Arrays.asList(itemArray));
+
+    private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 240, TextureType.FRONT1.getTexture(), ITEMS);
+
+    private Npc npc = new Npc("Mayor", 250, 300, TextureType.GHOST.getTexture());
+    private Npc npc2 = new Npc("TestPerson", 150, 300, TextureType.GHOST.getTexture());
+    private Npc npc3 = new Npc("Placeholder3", 50, 300, TextureType.GHOST.getTexture());
+
+    private Npc[] npcArray = { npc, npc2, npc3 };
+    private ArrayList<Npc> NPCs = new ArrayList<Npc>(Arrays.asList(npcArray));
+
+    private Drawable[] itemsToDraw = { wizard, npc, npc2, npc3, axe };
     private final Dialogue interaction = new Dialogue(worldView, FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME", "Content Placeholder");
-    private final Mechanics game = new Mechanics(keyPresses, window, NPCs, interaction);
-    private final GameMap baseLayer = new GameMap("resources/finalmap_Base Layer.csv", 250, tileLoader);
-    private final GameMap topLayer = new GameMap("resources/finalmap_Extra Layer.csv", 250, tileLoader);
+    private Mechanics game = new Mechanics(keyPresses, window, NPCs, ITEMS, interaction, battleWindow);
+
+    private final Map<String, Integer> drawingBounds = new CaseInsensitiveMap<>();
+    private final GameMap baseLayer = new GameMap("resources/finalmapv2_Base Layer.csv", 250, tileLoader);
+    private final GameMap topLayer = new GameMap("resources/finalmapv2_Extra Layer.csv", 250, tileLoader);
 
     private int loadingBarCounter = 0;
     private Text loadingText = null;
     private RectangleShape loadingBar = null;
+
 
     /**
      * Constructor for the game class
      */
     public Game() {
         worldView.setCenter(wizard.getPosition());
-        toDraw.addAll(Arrays.asList(wizard, npc, npc2, npc3, npc4));
+        toDraw.addAll(Arrays.asList(itemsToDraw));
         window.setFramerateLimit(120);
     }
 
@@ -139,7 +154,20 @@ public class Game {
         }
 
         for (Drawable item : toDraw) {
-            window.draw(item);
+            if (item instanceof Item) {
+                if (!((Item) item).isFound() && ((Item) item).availableToCollect()) {
+                    window.draw(item);
+                }
+            }
+            // if(item instanceof Npc){
+            // if(((Npc) item).shouldDraw()) {
+            // window.draw(item);
+            // }
+            // }
+            // move wizard
+            else {
+                window.draw(item);
+            }
         }
         game.isDialogue();
 
