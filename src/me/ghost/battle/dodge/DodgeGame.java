@@ -63,7 +63,7 @@ public class DodgeGame {
         this.wizard = new MoveableCharacter("Wizard", battleWindow.getPlayerAreaCentre().x - 16, battleWindow.getPlayerAreaCentre().y - 16, TextureType.FRONT1.getTexture());
         this.addProjectilesToStack(1000);
         this.game = game;
-        Vector2f dimensions = new Vector2f(32, 32);
+        Vector2f dimensions = new Vector2f(1, 1);
         wizard.setScale(dimensions);
 
         this.battleWindow.getToDraw().add(this.battleNpc);
