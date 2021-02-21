@@ -94,48 +94,33 @@ public class MoveableCharacter extends Character {
             }
             setViewPosition(worldView, this.getPosition(), currentMap);
         } else if (npcCollide != null) {
-            float xDifference = this.collisionRectangle(npcCollide).width;
-            float yDifference = this.collisionRectangle(npcCollide).height;
-
-            if (Math.abs(npcCollide.getPosition().y - this.getPosition().y) < 15) {
-                if (npcCollide.getPosition().x > this.getPosition().x) {
-                    this.move(-xDifference, 0);
-                }
-                if (npcCollide.getPosition().x < this.getPosition().x) {
-                    this.move(xDifference, 0);
-                }
-            } else {
-                if (npcCollide.getPosition().y > this.getPosition().y) {
-                    this.move(0, -yDifference);
-                }
-                if (npcCollide.getPosition().y < this.getPosition().y) {
-                    this.move(0, yDifference);
-                }
-            }
-
-            wizardColliding = false;
+            handleCollide(this.collisionRectangle(npcCollide), npcCollide.getPosition(), npcCollide);
         } else if (itemCollide != null) {
-            float xDifference = this.collisionRectangle(itemCollide).width;
-            float yDifference = this.collisionRectangle(itemCollide).height;
-
-            if (Math.abs(itemCollide.getPosition().y - this.getPosition().y) < 15) {
-                if (itemCollide.getPosition().x > this.getPosition().x) {
-                    this.move(-xDifference, 0);
-                }
-                if (itemCollide.getPosition().x < this.getPosition().x) {
-                    this.move(xDifference, 0);
-                }
-            } else {
-                if (itemCollide.getPosition().y > this.getPosition().y) {
-                    this.move(0, -yDifference);
-                }
-                if (itemCollide.getPosition().y < this.getPosition().y) {
-                    this.move(0, yDifference);
-                }
-            }
-
-            wizardColliding = false;
+            handleCollide(this.collisionRectangle(itemCollide), itemCollide.getPosition(), npcCollide);
         }
+    }
+
+    private void handleCollide(FloatRect floatRect, Vector2f position, Npc npcCollide) {
+        float xDifference = floatRect.width;
+        float yDifference = floatRect.height;
+
+        if (Math.abs(position.y - this.getPosition().y) < 15) {
+            if (position.x > this.getPosition().x) {
+                this.move(-xDifference, 0);
+            }
+            if (position.x < this.getPosition().x) {
+                this.move(xDifference, 0);
+            }
+        } else {
+            if (position.y > this.getPosition().y) {
+                this.move(0, -yDifference);
+            }
+            if (position.y < this.getPosition().y) {
+                this.move(0, yDifference);
+            }
+        }
+
+        wizardColliding = false;
     }
 
     private void walkLeft(){
