@@ -218,7 +218,9 @@ public class Mechanics {
                     } else {
                         assert dodgeGame != null;
                         dodgeGame.setMouseButtonclicked(true);
-                        dodgeGame.setMousePosition(new Vector2f(event.asMouseButtonEvent().position));
+                        if(event.asMouseButtonEvent()!=null){
+                            dodgeGame.setMousePosition(new Vector2f(event.asMouseButtonEvent().position));
+                        }
                         if(dodgeGame.attemptedToClose()){
                             keyPresses.put("B", false);
                             battleScreenOpen = false;
@@ -244,8 +246,10 @@ public class Mechanics {
             }
         }
         if ((keyPresses.get("B"))) {
-            dodgeGame.draw(this.window);
-            battleScreenOpen = true;
+            if(dodgeGame!=null){
+                dodgeGame.draw(this.window);
+                battleScreenOpen = true;
+            }
         }
     }
 

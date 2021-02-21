@@ -248,7 +248,6 @@ public class DodgeGame {
         if(this.mouseButtonclicked){
             if(mousePosition.x <= winLoseScreen.getExitButton().getPosition().x + winLoseScreen.getExitButton().getSize().x && mousePosition.x >= winLoseScreen.getPosition().x &&
                     mousePosition.y <= winLoseScreen.getExitButton().getPosition().y + winLoseScreen.getExitButton().getSize().y && mousePosition.y >= winLoseScreen.getExitButton().getPosition().y){
-                    System.out.println("BUTTON PRESSED");
                     attemptedToClose=true;
             }
             this.mouseButtonclicked = false;
