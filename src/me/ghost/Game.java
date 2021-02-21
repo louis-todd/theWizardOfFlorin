@@ -8,6 +8,7 @@ import me.ghost.data.TileLoader;
 import me.ghost.map.GameMap;
 import me.ghost.data.FontType;
 import me.ghost.data.TextureType;
+import me.ghost.map.Tile;
 import org.jsfml.graphics.*;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.VideoMode;
@@ -38,9 +39,9 @@ public class Game {
     private Item axe = new Item("axe", 300, 300, TextureType.SQUARE16.getTexture());
 
     private Item[] itemArray = { axe };
-    private ArrayList<Item> ITEMS = new ArrayList<Item>(Arrays.asList(itemArray));
+    private ArrayList<Item> ITEMS = new ArrayList<>(Arrays.asList(itemArray));
 
-    private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 240, TextureType.FRONT1.getTexture(), ITEMS);
+    private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 150, TextureType.FRONT1.getTexture(), ITEMS);
 
     private Npc npc = new Npc("Mayor", 250, 300, TextureType.GHOST.getTexture());
     private Npc npc2 = new Npc("TestPerson", 150, 300, TextureType.GHOST.getTexture());
@@ -176,13 +177,16 @@ public class Game {
 
     private void drawTiles() {
         initialiseDrawingBounds();
-
         for (int i = drawingBounds.get("TopCameraEdge"); i <= drawingBounds.get("BottomCameraEdge"); i++) {
             for (int j = drawingBounds.get("LeftCameraEdge"); j <= drawingBounds.get("RightCameraEdge"); j++) {
                 baseLayer.getTile(i, j).draw(window, RenderStates.DEFAULT);
                 topLayer.getTile(i, j).draw(window, RenderStates.DEFAULT);
+                if(topLayer.getTile(i, j).isCollideable()) {
+                    wizard.setNearbyTiles(topLayer.getTile(i, j));
+                }
             }
         }
+
 
     }
 

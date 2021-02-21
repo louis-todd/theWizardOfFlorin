@@ -3,6 +3,7 @@ package me.ghost.character;
 import me.ghost.data.TextureType;
 import me.ghost.Item;
 import me.ghost.map.GameMap;
+import me.ghost.map.Tile;
 import org.jsfml.graphics.Drawable;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
@@ -20,6 +21,7 @@ public class MoveableCharacter extends Character {
     private int stepIndex = 0;
     private int walkFrameControl = 0;
     private int walkingPace = 2;
+    private final List<Tile> nearbyTiles = new ArrayList<>();
 
     public MoveableCharacter(String characterName, float xPosition, float yPosition, Texture characterTexture) {
         super(characterName, xPosition, yPosition, characterTexture);
@@ -66,13 +68,11 @@ public class MoveableCharacter extends Character {
             }
             if ((keyPresses.get("UP") && !keyPresses.get("SPACE"))) {
                 if (this.getPosition().y > currentMap.getMapBounds().top) {
-                    if(keyPresses.get("LEFT")){
+                    if (keyPresses.get("LEFT")) {
                         walkLeft();
-                    }
-                    else if(keyPresses.get("RIGHT")){
+                    } else if (keyPresses.get("RIGHT")) {
                         walkRight();
-                    }
-                    else{
+                    } else {
                         walkBack();
                     }
                     this.move(0, -(walkingPace));
@@ -80,13 +80,11 @@ public class MoveableCharacter extends Character {
             }
             if ((keyPresses.get("DOWN") && !keyPresses.get("SPACE"))) {
                 if (this.getPosition().y - currentMap.getMapBounds().height < 0) {
-                    if(keyPresses.get("LEFT")){
+                    if (keyPresses.get("LEFT")) {
                         walkLeft();
-                    }
-                    else if(keyPresses.get("RIGHT")){
+                    } else if (keyPresses.get("RIGHT")) {
                         walkRight();
-                    }
-                    else{
+                    } else {
                         walkForward();
                     }
                     this.move(0, (walkingPace));
@@ -94,17 +92,23 @@ public class MoveableCharacter extends Character {
             }
             setViewPosition(worldView, this.getPosition(), currentMap);
         } else if (npcCollide != null) {
-            handleCollide(this.collisionRectangle(npcCollide), npcCollide.getPosition(), npcCollide);
+            handleCollide(this.collisionRectangle(npcCollide), npcCollide.getPosition());
         } else if (itemCollide != null) {
-            handleCollide(this.collisionRectangle(itemCollide), itemCollide.getPosition(), npcCollide);
+            handleCollide(this.collisionRectangle(itemCollide), itemCollide.getPosition());
         }
+        for (Tile tile : nearbyTiles) {
+            if (this.collidesTile(tile)) {
+                handleCollide(this.tileCollision(tile), tile.getPosition());
+            }
+        }
+
+        nearbyTiles.clear();
     }
 
-    private void handleCollide(FloatRect floatRect, Vector2f position, Npc npcCollide) {
+    private void handleCollide(FloatRect floatRect, Vector2f position) {
         float xDifference = floatRect.width;
         float yDifference = floatRect.height;
-
-        if (Math.abs(position.y - this.getPosition().y) < 15) {
+        if (Math.abs(position.y - this.getPosition().y) < floatRect.width) {
             if (position.x > this.getPosition().x) {
                 this.move(-xDifference, 0);
             }
@@ -191,6 +195,14 @@ public class MoveableCharacter extends Character {
         return null;
     }
 
+    private boolean collidesTile(Tile tile){
+        return this.getGlobalBounds().intersection(tile.getGlobalBounds()) != null;
+    }
+
+    private FloatRect tileCollision(Tile tile){
+        return this.getGlobalBounds().intersection(tile.getGlobalBounds());
+    }
+
     public boolean dialogueAreaCollide(Drawable obstacle) {
         if (obstacle instanceof Npc) {
             return this.getGlobalBounds().intersection(((Npc) obstacle).dialogueArea(4)) != null;
@@ -230,4 +242,7 @@ public class MoveableCharacter extends Character {
         mapView.setCenter(viewPosition);
     }
 
+    public void setNearbyTiles(Tile nearbyTile) {
+        this.nearbyTiles.add(nearbyTile);
+    }
 }
