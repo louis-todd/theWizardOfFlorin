@@ -11,10 +11,13 @@ import me.ghost.data.TextureType;
 import me.ghost.battle.BattleWindow;
 import org.jsfml.graphics.*;
 import org.jsfml.graphics.Font;
+import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.Mouse;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.KeyEvent;
+import org.jsfml.window.event.MouseButtonEvent;
+import org.jsfml.window.event.MouseEvent;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -47,6 +50,8 @@ public class DodgeGame {
     private int dialogueIndex = 0;
     private Mechanics game;
     private Boolean finishedDialogue = false;
+    private boolean mouseButtonclicked;
+    private Vector2f mousePosition;
 
     public DodgeGame(Npc setBattleNpc, String difficulty, Mechanics game) {
         this.battleNpc = new Npc(setBattleNpc.getName(), battleWindow.getGhostAreaCentre().x - 16, battleWindow.getGhostAreaCentre().y - 80, (Texture) setBattleNpc.getTexture());
@@ -126,6 +131,8 @@ public class DodgeGame {
         WinLoseScreen test = new WinLoseScreen(true);
         this.battleWindow.getToDraw().forEach(window::draw);
         test.getToDraw().forEach(window::draw);
+        checkMouse(test);
+
 //        if (!wonOrLost) {
 //            if (finishedDialogue) {
 //                if (currentLevel < maxLevel) {
@@ -226,8 +233,15 @@ public class DodgeGame {
                 keyPresses.put("RIGHT", false);
             }
         }
-        if(event.type == Event.Type.MOUSE_BUTTON_PRESSED){
+    }
 
+    private void checkMouse(WinLoseScreen winLoseScreen){
+        if(this.mouseButtonclicked){
+            if(mousePosition.x <= winLoseScreen.getExitButton().getPosition().x + winLoseScreen.getExitButton().getSize().x && mousePosition.x >= winLoseScreen.getPosition().x &&
+                    mousePosition.y <= winLoseScreen.getExitButton().getPosition().y + winLoseScreen.getExitButton().getSize().y && mousePosition.y >= winLoseScreen.getExitButton().getPosition().y){
+                    System.out.println("BUTTON PRESSED");
+            }
+            this.mouseButtonclicked = false;
         }
     }
 
@@ -258,5 +272,13 @@ public class DodgeGame {
 
     public void setFinishedDialogue(Boolean isFinished){
         finishedDialogue=isFinished;
+    }
+
+    public void setMouseButtonclicked(boolean mouseButtonclicked) {
+        this.mouseButtonclicked = mouseButtonclicked;
+    }
+
+    public void setMousePosition(Vector2f mousePosition) {
+        this.mousePosition = mousePosition;
     }
 }

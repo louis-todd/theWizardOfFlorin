@@ -12,6 +12,7 @@ public class WinLoseScreen extends RectangleShape {
     private List<Drawable> toDraw = new ArrayList<>();
     private RectangleShape exitButton = null;
     private Text buttonText = null;
+    private Text winLossText = null;
 
     public WinLoseScreen(boolean won) {
         this.setSize(new Vector2f(400, 300));
@@ -21,13 +22,14 @@ public class WinLoseScreen extends RectangleShape {
         toDraw.add(this);
         toDraw.add(this.getExitButton());
         toDraw.add(this.getButtonText());
+        toDraw.add(this.getWinLossText(won));
     }
 
-    private RectangleShape getExitButton(){
+    public RectangleShape getExitButton(){
         if(this.exitButton == null){
             RectangleShape rectangle = new RectangleShape();
             rectangle.setFillColor(Color.BLACK);
-            rectangle.setPosition(new Vector2f(this.getPosition().x + 15, this.getPosition().y + 100));
+            rectangle.setPosition(new Vector2f(this.getPosition().x + 15, this.getPosition().y + 250));
             rectangle.setSize(new Vector2f(100, 40));
             this.exitButton = rectangle;
         }
@@ -45,6 +47,23 @@ public class WinLoseScreen extends RectangleShape {
             this.buttonText = text;
         }
         return this.buttonText;
+    }
+
+    private Text getWinLossText(boolean won) {
+        if (this.winLossText == null) {
+            Text text = new Text();
+            text.setPosition(new Vector2f(this.getPosition().x + 100, this.getPosition().y + 20));
+            if (won) {
+                text.setString("You've won the battle");
+            } else {
+                text.setString("You've lost the battle");
+            }
+            text.setColor(Color.BLACK);
+            text.setCharacterSize(20);
+            text.setFont(FontType.ROBOTO.getFont());
+            this.winLossText = text;
+        }
+        return this.winLossText;
     }
 
     public List<Drawable> getToDraw() {

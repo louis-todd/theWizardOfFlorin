@@ -5,6 +5,7 @@ import me.ghost.character.MoveableCharacter;
 import me.ghost.character.Npc;
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.View;
+import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.KeyEvent;
@@ -179,19 +180,26 @@ public class Mechanics {
                     }
                     break;
                 case MOUSE_BUTTON_PRESSED:
-                    if (keyPresses.get("SPACE")) {
-                        // if still tiles left to show, step through them
-                        if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().size()) {
-                            interaction.setTextContent(String.valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
-                            interactingNPC.incrementCurrentIndex();
+                    if(!battleScreenOpen) {
+                        if (keyPresses.get("SPACE")) {
+                            // if still tiles left to show, step through them
+                            if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().size()) {
+                                interaction.setTextContent(String.valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
+                                interactingNPC.incrementCurrentIndex();
+                            }
+                            // if have read all tiles, act as if space has been clicked to close the
+                            // dialogue box
+                            else if (interactingNPC.getCurrentIndex() >= interactingNPC.getScript().size()) {
+                                keyPresses.put("SPACE", !(keyPresses.get("SPACE")));
+                                interactingNPC.resetScript();
+                            }
                         }
-                        // if have read all tiles, act as if space has been clicked to close the
-                        // dialogue box
-                        else if (interactingNPC.getCurrentIndex() >= interactingNPC.getScript().size()) {
-                            keyPresses.put("SPACE", !(keyPresses.get("SPACE")));
-                            interactingNPC.resetScript();
-                        }
+                    } else {
+                        assert dodgeGame != null;
+                        dodgeGame.setMouseButtonclicked(true);
+                        dodgeGame.setMousePosition(new Vector2f(event.asMouseButtonEvent().position));
                     }
+
                 default:
                     break;
             }
