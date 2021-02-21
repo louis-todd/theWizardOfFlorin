@@ -36,9 +36,13 @@ public class Game {
     private final View pauseView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
     private BattleWindow battleWindow = new BattleWindow();
 
-    private Item axe = new Item("axe", 300, 300, TextureType.SQUARE16.getTexture());
-    private Item boot = new Item("boot", 250, 180, TextureType.SQUARE16.getTexture());
-    private Item heart = new Item("heart", 350, 380, TextureType.SQUARE16.getTexture());
+    private Item axe = new Item("duck", 300, 300, TextureType.DUCK.getTexture());
+    private Item boot = new Item("ice", 250, 180, TextureType.ICE.getTexture());
+    private Item heart = new Item("tambourine", 350, 380, TextureType.TAMBOURINE.getTexture());
+
+    private Item teddy = new Item("duck", 300, 300, TextureType.TEDDY.getTexture());
+    private Item whisky = new Item("ice", 250, 180, TextureType.WHISKY.getTexture());
+    private Item wood = new Item("tambourine", 350, 380, TextureType.WOOD.getTexture());
 
     private Item[] itemArray = { axe, boot, heart };
     private ArrayList<Item> ITEMS = new ArrayList<Item>(Arrays.asList(itemArray));

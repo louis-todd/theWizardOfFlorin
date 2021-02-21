@@ -38,6 +38,13 @@ public enum TextureType {
     BACK3("wizardImages/back3.png"),
     BACK4("wizardImages/back4.png"),
 
+    DUCK("Items/duck.png"),
+    ICE("Items/ice.png"),
+    TAMBOURINE("Items/tambourine.png"),
+    TEDDY("Items/teddy.png"),
+    WHISKY("Items/whisky.png"),
+    WOOD("Items/wood.png"),
+
     TEST("tiles/tile200.png32")
     ;
 
