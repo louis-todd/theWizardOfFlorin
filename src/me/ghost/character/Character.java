@@ -64,7 +64,6 @@ public abstract class Character extends Sprite {
         // if sprite does not have an associated item
         if (associatedItems.isEmpty()) {
             if (characterStates.get("AVAILABLE")) {
-                System.out.println("Line 67");
                 serveScript(0);
             } else {
                 serveScript(3);
@@ -76,7 +75,6 @@ public abstract class Character extends Sprite {
                     serveScript(4);
                 } 
                 else if (itemsFoundCount==0){
-                    System.out.println("Line 79");
                     serveScript(0);
                 }
                 else {
