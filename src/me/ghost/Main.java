@@ -7,6 +7,7 @@ public class Main {
         if(OS.equals("linux")){
             System.loadLibrary("fixXInitThreads");
         }
+        
         Game game = new Game();
         game.run();
     }
