@@ -91,7 +91,13 @@ public class Dialogue implements Drawable {
         if (toWrite.getString().substring(0, 2).equals("££")) {
             toWrite.setString(toWrite.getString().substring(2));
             return "Wizard";
-        } else {
+        } 
+        if (toWrite.getString().substring(0, 2).equals("££")) {
+            // toWrite.setString(toWrite.getString().substring(2));
+            toWrite.setString("WE SHOULD BE IN BATTLE!");
+            return "BATTLE TITLE";
+        } 
+        else {
             return originalInteractor;
         }
     }
