@@ -280,7 +280,7 @@ public class Mechanics {
                 interaction.draw(window, null);
             }
         }
-        if ((keyPresses.get("B"))) {
+        if ((keyPresses.get("B")) && !this.pauseMenuOpen) {
             if(dodgeGame!=null){
                 dodgeGame.draw(this.window);
                 battleScreenOpen = true;

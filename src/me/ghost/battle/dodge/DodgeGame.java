@@ -135,10 +135,6 @@ public class DodgeGame {
     }
 
     public void draw(RenderWindow window) {
-//        WinLoseScreen test = new WinLoseScreen(true);
-//        this.battleWindow.getToDraw().forEach(window::draw);
-//        test.getToDraw().forEach(window::draw);
-//        checkMouse(test);
 
         if (!wonOrLost) {
             if (finishedDialogue) {
