@@ -183,6 +183,9 @@ public class Mechanics {
                                 else {
                                     keyPresses.put("SPACE", false);
                                     interactingNPC.resetScript();
+                                    if(interactingNPC.hasCompletedTask()){
+                                        interactingNPC.setShouldDraw(false);
+                                    }
                                     dialogueOpen=false;
                                 }
                             } else if (battleScreenOpen) {
@@ -198,7 +201,7 @@ public class Mechanics {
                                 else {
                                     keyPresses.put("SPACE", false);
                                     dodgeGame.setFinishedDialogue(true);
-                                    interactingNPC.setHasCompletedBattle(true);
+                                    interactingNPC.setHasCompletedTask(true);
                                     dodgeGame.setTextContent("");
                                 }
                             }
@@ -234,7 +237,7 @@ public class Mechanics {
                     //     // if first B, set to display battle window
                     //     // else {
 
-                    //     if (!interactingNPC.hasCompletedBattle()) {
+                    //     if (!interactingNPC.hasCompletedTask()) {
                     //         dodgeGame = new DodgeGame(interactingNPC, "EASY", this);
                     //         handleKeyPress(keyEvent, true);
                     //     }

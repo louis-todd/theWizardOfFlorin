@@ -30,7 +30,7 @@ public abstract class Character extends Sprite {
     private int currentBattleIndex = 0;
     private final List<String> npcBattleScript = new ArrayList<>();
 
-    private boolean hasCompletedBattle = false;
+    private boolean hasCompletedTask = false;
 
     public Character(String characterName, float xPosition, float yPosition, Texture characterTexture,
             int expectedNumberOfItems) {
@@ -179,6 +179,7 @@ public abstract class Character extends Sprite {
                 if(row.contains("@")){
                     characterStates.put("SUCCESS", true);
                     row=row.replace('@', ' ');
+                    this.setHasCompletedTask(true);
                 }
                 if(row.contains("\\")){
                     int itemStart=-1;
@@ -319,12 +320,12 @@ public abstract class Character extends Sprite {
         currentBattleIndex = 1;
     }
 
-    public void setHasCompletedBattle(boolean hasCompleted){
-        hasCompletedBattle = hasCompleted;
+    public void setHasCompletedTask(boolean hasCompleted){
+        hasCompletedTask = hasCompleted;
     }
 
-    public boolean hasCompletedBattle(){
-        return hasCompletedBattle;
+    public boolean hasCompletedTask(){
+        return hasCompletedTask;
     }
     
     public static ArrayList<Item> getItems(){

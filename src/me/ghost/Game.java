@@ -192,11 +192,11 @@ public class Game {
                     window.draw(item);
                 }
             }
-            // if(item instanceof Npc){
-            // if(((Npc) item).shouldDraw()) {
-            // window.draw(item);
-            // }
-            // }
+            else if(item instanceof Npc){
+                if(((Npc) item).shouldDraw()) {
+                    window.draw(item);
+                }
+            }
             // move wizard
             else {
                 window.draw(item);
