@@ -27,7 +27,7 @@ public abstract class Character extends Sprite {
     private int expectedNumberOfItems;
     private int itemsFoundCount=0;
 
-    private int currentBattleIndex = 1;
+    private int currentBattleIndex = 0;
     private final List<String> npcBattleScript = new ArrayList<>();
 
     private boolean hasCompletedBattle = false;
@@ -158,9 +158,9 @@ public abstract class Character extends Sprite {
     public List<String> getBattleScript(){
         npcBattleScript.clear();
 
-        File npcTextFile = new File("resources/BattleDialogue/" + characterName + "1.csv");
+        File npcTextFile = new File("resources/BattleDialogue/" + characterName + ".csv");
         if(npcTextFile.exists()) {
-            addBattleDialogue("resources/BattleDialogue/" + characterName + "1.csv");
+            addBattleDialogue("resources/BattleDialogue/" + characterName + ".csv");
         }
         else{
             npcBattleScript.add("Page 1: " + characterName);
