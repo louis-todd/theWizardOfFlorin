@@ -7,7 +7,7 @@ import org.jsfml.graphics.Texture;
 
 /**
  *this class represents the item class.
- * this has an item constructor and also has all the methods relating to the item constructor 
+ * this has an item constructor and also has all the methods relating to the item constructor
  */
 public class Item extends Sprite {
 

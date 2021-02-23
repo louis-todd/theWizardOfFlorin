@@ -40,6 +40,16 @@ public class Mechanics {
     private ArrayList<Npc> NPCs = new ArrayList<>();
     private ArrayList<Item> ITEMS = new ArrayList<>();
 
+    /**
+     * main constructor for the mechanic class
+     * @param keyPresses the keys that is pressed
+     * @param window the window that the game is on.
+     * @param NPCs the NPC which is controlled like the character.
+     * @param ITEMS the items in the game
+     * @param interaction
+     * @param battleWindow
+     */
+
     public Mechanics(Map<String, Boolean> keyPresses, RenderWindow window, ArrayList<Npc> NPCs, ArrayList<Item> ITEMS, Dialogue interaction, BattleWindow battleWindow) {
         this.keyPresses = keyPresses;
         this.window = window;

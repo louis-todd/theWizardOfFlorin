@@ -14,6 +14,9 @@ import org.jsfml.window.Keyboard;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.KeyEvent;
 
+/**
+ * this class is for the pause menu UI
+ */
 
 public class PauseMenu {
 
@@ -38,6 +41,10 @@ public class PauseMenu {
 
     private Text text;
 
+    /**
+     * main constructor for the pause menu which adds all the items from the array
+     */
+
     public PauseMenu() {
         //
         toDraw.addAll(Arrays.asList(itemsToDraw));
@@ -45,10 +52,21 @@ public class PauseMenu {
         writeText("Press here to quit...", 120, 300);
     }
 
+    /**
+     *
+     * @param window the window in whuch pause menu is drawn
+     */
+
     public void draw(RenderWindow window) {
         checkMouse();
         toDraw.forEach(window::draw);
     }
+
+    /**
+     * this method handles key inputs from the W,A,S and D keys
+     * @param event this is the button that will be pressed
+     *
+     */
 
     public void handleInput(KeyEvent event) {
         if(event.type == Event.Type.KEY_PRESSED){
@@ -67,6 +85,13 @@ public class PauseMenu {
         }
     }
 
+    /**
+     * this method is used to write text on the pause menu
+     * @param function
+     * @param x this is the X position where the text will be set
+     * @param y this si the Y position of the text
+     */
+
     public void writeText(String function, int x, int y) {
         // Set and format the character's name
         text = new Text(function, font, 20) {
@@ -77,6 +102,16 @@ public class PauseMenu {
 
         toDraw.add(text);
     }
+
+    /**
+     *this method is to return a rectangle shaped text box for the text to go in and this has a default colour
+     * @param width width of the textbox
+     * @param height height of the text box
+     * @param x X position of the text box
+     * @param y Y position of the text box
+     * @param rectangleTexture the texture of the Text box
+     * @return this will return a Text Box
+     */
 
 
     private RectangleShape createTexturedRectangle(int width, int height, int x, int y, Texture rectangleTexture) {
@@ -90,6 +125,18 @@ public class PauseMenu {
         toDraw.add(textBackground);
         return textBackground;
     }
+
+    /**
+     *this method will return a box also but can add custom colours.
+     * @param width width of the text box
+     * @param height height of the text box
+     * @param x X position of the text box
+     * @param y Y position of the text box
+     * @param r this is where concentration of Red colour will go
+     * @param g this is where concentration of green will go
+     * @param b this is where concentration of  blue will go
+     * @return returns a box with the custom colour 
+     */
 
     private RectangleShape createSimpleRectangle(int width, int height, int x, int y, int r, int g, int b) {
         Vector2f dimensions = new Vector2f(width, height);

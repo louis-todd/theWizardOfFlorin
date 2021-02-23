@@ -19,7 +19,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * main Constructor
+ * this Class is where the window is coded and instances of other classes is made.
+ * this class is where most of the games comes together
  */
 
 public class Game {
@@ -108,6 +109,11 @@ public class Game {
         TileLoader.THREADS.shutdown();
     }
 
+    /**
+     *
+     * @param window
+     */
+
     private void drawLoadingScreen(RenderWindow window) {
         window.clear(Color.BLACK);
 
@@ -120,6 +126,11 @@ public class Game {
         window.draw(this.getLoadingText());
         window.display();
     }
+
+    /**
+     *
+     * @return
+     */
 
     private Text getLoadingText() {
         if (this.loadingText == null) {
@@ -135,6 +146,11 @@ public class Game {
 
         return this.loadingText;
     }
+
+    /**
+     *
+     * @return
+     */
 
     private RectangleShape getLoadingBar() {
         if (this.loadingBar == null) {
@@ -194,6 +210,10 @@ public class Game {
         window.display();
     }
 
+    /**
+     *
+     */
+
     private void drawTiles() {
         initialiseDrawingBounds();
 
@@ -205,6 +225,10 @@ public class Game {
         }
 
     }
+
+    /**
+     *
+     */
 
     private void initialiseDrawingBounds() {
         int tileSize = 16;
