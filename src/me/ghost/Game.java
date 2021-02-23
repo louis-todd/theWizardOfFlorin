@@ -52,7 +52,7 @@ public class Game {
 
     private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 240, TextureType.FRONT1.getTexture(), ITEMS);
 
-    private Npc npc1 = new Npc("TestPerson", 150, 300, TextureType.GHOST.getTexture(), 3);
+    // private Npc npc1 = new Npc("TestPerson", 150, 300, TextureType.GHOST.getTexture(), 3);
     private Npc npc2 = new Npc("Mayor", 250, 300, TextureType.GHOST.getTexture(), 0);
     private Npc npc3 = new Npc("CrazyJoe", 350, 300, TextureType.GHOST.getTexture(), 4);
     private Npc npc4 = new Npc("Gluttony", 450, 300, TextureType.GHOST.getTexture(), 0);
@@ -61,10 +61,10 @@ public class Game {
     private Npc npc7 = new Npc("Snuffles", 750, 300, TextureType.GHOST.getTexture(), 0);
     private Npc npc8 = new Npc("Summer", 850, 300, TextureType.GHOST.getTexture(), 3);
 
-    private Npc[] npcArray = { npc1, npc2, npc3, npc4, npc5, npc6, npc7, npc8 };
+    private Npc[] npcArray = { npc2, npc3, npc4, npc5, npc6, npc7, npc8 };
     private ArrayList<Npc> NPCs = new ArrayList<Npc>(Arrays.asList(npcArray));
 
-    private Drawable[] itemsToDraw = { wizard, npc1, npc2, npc3, npc4, npc5, npc6, npc7,  npc8, duck, ice, tambourine, teddy, whisky, plank, yarn };
+    private Drawable[] itemsToDraw = { wizard, npc2, npc3, npc4, npc5, npc6, npc7,  npc8, duck, ice, tambourine, teddy, whisky, plank, yarn };
     private final Dialogue interaction = new Dialogue(worldView, FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME", "Content Placeholder");
     private Mechanics game = new Mechanics(keyPresses, window, NPCs, ITEMS, interaction, battleWindow);
 
