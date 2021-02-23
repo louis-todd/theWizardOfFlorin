@@ -69,8 +69,8 @@ public class Game {
     private Mechanics game = new Mechanics(keyPresses, window, NPCs, ITEMS, interaction, battleWindow);
 
     private final Map<String, Integer> drawingBounds = new CaseInsensitiveMap<>();
-    private final GameMap baseLayer = new GameMap("resources/finalmapv2_Base Layer.csv", 250, tileLoader);
-    private final GameMap topLayer = new GameMap("resources/finalmapv2_Extra Layer.csv", 250, tileLoader);
+    private final GameMap baseLayer = new GameMap("resources/finalmapv2_Base_Layer.csv", 250, tileLoader);
+    private final GameMap topLayer = new GameMap("resources/finalmapv2_Extra_Layer.csv", 250, tileLoader);
 
     private int loadingBarCounter = 0;
     private Text loadingText = null;

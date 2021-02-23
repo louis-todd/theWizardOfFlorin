@@ -209,7 +209,8 @@ public abstract class Character extends Sprite {
             csvReader.close();
             
         } catch (Exception e){
-            e.printStackTrace();
+            System.out.println("1");
+            // e.printStackTrace();
         }
     }
 
@@ -224,7 +225,8 @@ public abstract class Character extends Sprite {
             }
             csvReader.close();
         } catch (Exception e){
-            e.printStackTrace();
+             System.out.println("2");
+            // e.printStackTrace();
         }
     }
 
@@ -278,7 +280,8 @@ public abstract class Character extends Sprite {
         try {
                 fileStream = new DataInputStream(new FileInputStream(fileName));
             } catch (Exception e) {
-                e.printStackTrace();
+                // e.printStackTrace();
+                 System.out.println("3");
             }
             return fileStream;
     }

@@ -55,7 +55,8 @@ public enum TextureType {
         try {
             this.texture.loadFromStream(Game.class.getClassLoader().getResourceAsStream(path));
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
+             System.out.println(path);
         }
     }
 
