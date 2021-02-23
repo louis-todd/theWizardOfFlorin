@@ -36,8 +36,8 @@ public class TileLoader {
         try {
             texture.loadFromStream(Game.class.getClassLoader().getResourceAsStream(path));
         } catch (Exception e) {
-            // e.printStackTrace();
-            System.out.println("Error in loading texture");
+            e.printStackTrace();
+            // System.out.println("Error in loading texture");
         }
         return texture;
     }

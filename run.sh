@@ -1,1 +1,1 @@
-java -cp lib/jsfml.jar:src/. me.ghost.Main
+java -cp lib/jsfml.jar:src/.:resources:resources/tiles/. me.ghost.Main
