@@ -193,6 +193,7 @@ public abstract class Character extends Sprite {
                             for(String itemName : RiddleItems){
                                 if (potentialItem.getName().equals(itemName)) {
                                     if(!associatedItems.contains(potentialItem)) {
+                                        System.out.println("Got item: " + itemName);
                                         associatedItems.add(potentialItem);
                                     }
                                     potentialItem.setAsAvailableToCollect(true);
