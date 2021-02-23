@@ -1,25 +1,18 @@
 package me.ghost.battle.dodge;
 
 import me.ghost.CaseInsensitiveMap;
-import me.ghost.Dialogue;
 import me.ghost.Mechanics;
 import me.ghost.battle.WinLoseScreen;
 import me.ghost.character.MoveableCharacter;
 import me.ghost.character.Npc;
-import me.ghost.data.FontType;
 import me.ghost.data.TextureType;
 import me.ghost.battle.BattleWindow;
 import org.jsfml.graphics.*;
-import org.jsfml.graphics.Font;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
-import org.jsfml.window.Mouse;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.KeyEvent;
-import org.jsfml.window.event.MouseButtonEvent;
-import org.jsfml.window.event.MouseEvent;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
