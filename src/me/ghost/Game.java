@@ -1,6 +1,7 @@
 
 package me.ghost;
 
+import com.sun.java.swing.plaf.windows.WindowsTreeUI;
 import me.ghost.battle.BattleWindow;
 import me.ghost.character.MoveableCharacter;
 import me.ghost.character.Npc;
@@ -62,6 +63,8 @@ public class Game {
     private int loadingBarCounter = 0;
     private Text loadingText = null;
     private RectangleShape loadingBar = null;
+
+    private List<CircleShape> livesDisplay = new ArrayList<>(Arrays.asList(lifeCircle(1), lifeCircle(2), lifeCircle(3)));
 
 
     /**
@@ -161,6 +164,10 @@ public class Game {
         else{
             drawTiles();
             window.setView(worldView);
+            for(CircleShape circleShape : livesDisplay){
+                window.draw(circleShape);
+            }
+            updateLifePosition(worldView);
         }
 
         // if (!game.isBattleScreenOpen()) {
@@ -189,6 +196,9 @@ public class Game {
         game.isDialogue();
 
         window.display();
+        if(this.livesDisplay.size() > this.game.getOverarchingLives() && this.livesDisplay.size() != 0){
+            this.livesDisplay.remove(this.livesDisplay.size() - 1);
+        }
         System.out.println(this.game.getOverarchingLives());
     }
 
@@ -218,6 +228,21 @@ public class Game {
                 Math.max((int) (worldView.getCenter().y / tileSize) - (cameraWidth / 2), 0));
         this.drawingBounds.put("BottomCameraEdge",
                 Math.min((int) (worldView.getCenter().y / tileSize) + (cameraWidth / 2), topLayer.getDrawHeight()));
+    }
+
+    private CircleShape lifeCircle(int positionNumber){
+        CircleShape lifeCircle = new CircleShape(6);
+        lifeCircle.setFillColor(Color.RED);
+        lifeCircle.setPosition(640-16*positionNumber, 5);
+        return lifeCircle;
+    }
+
+    private void updateLifePosition(View worldView){
+        int i = 1;
+        for(CircleShape circleShape : livesDisplay){
+            circleShape.setPosition(worldView.getCenter().x + worldView.getSize().x/2 - i * 16, worldView.getCenter().y - worldView.getSize().y/2 + 5);
+            i++;
+        }
     }
 
 }
