@@ -178,11 +178,6 @@ public class Mechanics {
                                         keyPresses.put("B", true);
                                         interaction.setCharacterName(interaction.getCharacterName());
                                     }
-                                    // else{
-                                    //     dodgeGame = new DodgeGame(interactingNPC, "EASY", this);
-                                    //     keyPresses.put("B", true);
-                                    //     interaction.setCharacterName(interaction.getCharacterName());
-                                    // }
                                 }
                                 // if at tile limit, close
                                 else {
@@ -272,7 +267,6 @@ public class Mechanics {
                                 keyPresses.put("B", false);
                                 battleScreenOpen = false;
                                 if(dialogueOpen){
-                                    System.out.println("NPC current index is : " + interactingNPC.getCurrentIndex() + "and size is " + interactingNPC.getScript().size());
                                     keyPresses.put("SPACE", true);
                                 }
                             }

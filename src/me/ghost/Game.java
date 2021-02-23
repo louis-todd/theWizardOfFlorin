@@ -47,6 +47,7 @@ public class Game {
     private Item whisky2 = new Item("whisky2", 550, 200, TextureType.WHISKY.getTexture());
     private Item plank = new Item("plank", 650, 200, TextureType.WOOD.getTexture());
     private Item yarn = new Item("yarn", 750, 200, TextureType.YARN.getTexture());
+    // private Item tree = new Item("tree", 750, 200, TextureType.TREE.getTexture());
 
     private Item[] itemArray = { duck, ice, tambourine, teddy, whisky, plank, yarn, whisky2 };
     private ArrayList<Item> ITEMS = new ArrayList<Item>(Arrays.asList(itemArray));
@@ -61,11 +62,12 @@ public class Game {
     private Npc npc6 = new Npc("Sibirius", 650, 300, TextureType.GHOST.getTexture(), 0);
     private Npc npc7 = new Npc("Snuffles", 750, 300, TextureType.GHOST.getTexture(), 0);
     private Npc npc8 = new Npc("Summer", 850, 300, TextureType.GHOST.getTexture(), 3);
+    private Npc npc9 = new Npc("Tree", 950, 300, TextureType.TREE.getTexture(), 0);
 
-    private Npc[] npcArray = { npc2, npc3, npc4, npc5, npc6, npc7, npc8 };
+    private Npc[] npcArray = { npc2, npc3, npc4, npc5, npc6, npc7, npc8, npc9 };
     private ArrayList<Npc> NPCs = new ArrayList<Npc>(Arrays.asList(npcArray));
 
-    private Drawable[] itemsToDraw = { wizard, npc2, npc3, npc4, npc5, npc6, npc7,  npc8, duck, ice, tambourine, teddy, whisky, plank, yarn, whisky2 };
+    private Drawable[] itemsToDraw = { wizard, npc2, npc3, npc4, npc5, npc6, npc7,  npc8, npc9, duck, ice, tambourine, teddy, whisky, plank, yarn, whisky2 };
     private final Dialogue interaction = new Dialogue(worldView, FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME", "Content Placeholder");
     private Mechanics game = new Mechanics(keyPresses, window, NPCs, ITEMS, interaction, battleWindow);
 
