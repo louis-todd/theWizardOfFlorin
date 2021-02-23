@@ -49,7 +49,7 @@ public class Game {
     private Npc npc3 = new Npc("Placeholder3", 50, 300, TextureType.GHOST.getTexture());
 
     private Npc[] npcArray = { npc, npc2, npc3 };
-    private ArrayList<Npc> NPCs = new ArrayList<Npc>(Arrays.asList(npcArray));
+    private ArrayList<Npc> NPCs = new ArrayList<>(Arrays.asList(npcArray));
 
     private Drawable[] itemsToDraw = { wizard, npc, npc2, npc3, axe };
     private final Dialogue interaction = new Dialogue(worldView, FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME", "Content Placeholder");
@@ -189,6 +189,7 @@ public class Game {
         game.isDialogue();
 
         window.display();
+        System.out.println(this.game.getOverarchingLives());
     }
 
     private void drawTiles() {

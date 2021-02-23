@@ -31,8 +31,10 @@ public class Mechanics {
     private PauseMenu pauseMenu;
     private BattleWindow battleWindow;
 
-    private ArrayList<Npc> NPCs = new ArrayList<>();
-    private ArrayList<Item> ITEMS = new ArrayList<>();
+    private ArrayList<Npc> NPCs;
+    private ArrayList<Item> ITEMS;
+
+    private int overarchingLives = 3;
 
     public Mechanics(Map<String, Boolean> keyPresses, RenderWindow window, ArrayList<Npc> NPCs, ArrayList<Item> ITEMS, Dialogue interaction, BattleWindow battleWindow) {
         this.keyPresses = keyPresses;
@@ -307,4 +309,11 @@ public class Mechanics {
         return false;
     }
 
+    public int getOverarchingLives() {
+        return overarchingLives;
+    }
+
+    public void setOverarchingLives(int overarchingLives) {
+        this.overarchingLives = overarchingLives;
+    }
 }

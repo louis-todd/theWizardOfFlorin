@@ -57,6 +57,7 @@ public class DodgeGame {
     private int stepIndex = 0;
     private int walkFrameControl = 0;
     private int walkingPace = 5;
+    private boolean livesChaged = false;
 
     public DodgeGame(Npc setBattleNpc, String difficulty, Mechanics game) {
         this.battleNpc = new Npc(setBattleNpc.getName(), battleWindow.getGhostAreaCentre().x - 16, battleWindow.getGhostAreaCentre().y - 80, (Texture) setBattleNpc.getTexture());
@@ -175,10 +176,14 @@ public class DodgeGame {
                 this.battleWindow.getToDraw().forEach(window::draw);
             }
         } else {
-            this.battleWindow.getToDraw().forEach(window::draw);;
+            this.battleWindow.getToDraw().forEach(window::draw);
             if (lives <= 0) {
                 battleLost = true;
                 WinLoseScreen loseScreen = new WinLoseScreen(false);
+                if(!this.livesChaged){
+                    this.game.setOverarchingLives(this.game.getOverarchingLives() - 1);
+                    this.livesChaged = true;
+                }
                 loseScreen.getToDraw().forEach(window::draw);
                 checkMouse(loseScreen);
             } else {
