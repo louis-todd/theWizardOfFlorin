@@ -5,7 +5,8 @@ import me.ghost.Game;
 import org.jsfml.graphics.Font;
 
 public enum FontType {
-    ROBOTO("Roboto-Regular.ttf")
+    ROBOTO("Roboto-Regular.ttf"),
+    UBUNTU("ubuntu.regular.ttf")
     ;
 
     private final Font font = new Font();
