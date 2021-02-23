@@ -43,7 +43,8 @@ public enum TextureType {
     TAMBOURINE("Items/tambourine.png"),
     TEDDY("Items/teddy.png"),
     WHISKY("Items/whisky.png"),
-    WOOD("Items/wood.png"),
+    WOOD("Items/planks.png"),
+    YARN("Items/yarn.png"),
 
     TEST("tiles/tile200.png32")
     ;

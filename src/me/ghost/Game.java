@@ -36,15 +36,18 @@ public class Game {
     private final View pauseView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
     private BattleWindow battleWindow = new BattleWindow();
 
-    private Item axe = new Item("duck", 300, 300, TextureType.DUCK.getTexture());
-    private Item boot = new Item("ice", 250, 180, TextureType.ICE.getTexture());
-    private Item heart = new Item("tambourine", 350, 380, TextureType.TAMBOURINE.getTexture());
+    // private Item axe = new Item("duck", 300, 300, TextureType.DUCK.getTexture());
+    // private Item boot = new Item("ice", 250, 180, TextureType.ICE.getTexture());
+    // private Item heart = new Item("tambourine", 350, 380, TextureType.TAMBOURINE.getTexture());
+    private Item duck = new Item("duck", 300, 300, TextureType.DUCK.getTexture());
+    private Item ice = new Item("ice", 250, 180, TextureType.ICE.getTexture());
+    private Item tambourine = new Item("tambourine", 350, 380, TextureType.TAMBOURINE.getTexture());
+    private Item teddy = new Item("teddy", 300, 300, TextureType.TEDDY.getTexture());
+    private Item whisky = new Item("whisky", 250, 180, TextureType.WHISKY.getTexture());
+    private Item wood = new Item("wood", 350, 380, TextureType.WOOD.getTexture());
+    private Item yarn = new Item("yarn", 350, 380, TextureType.YARN.getTexture());
 
-    private Item teddy = new Item("duck", 300, 300, TextureType.TEDDY.getTexture());
-    private Item whisky = new Item("ice", 250, 180, TextureType.WHISKY.getTexture());
-    private Item wood = new Item("tambourine", 350, 380, TextureType.WOOD.getTexture());
-
-    private Item[] itemArray = { axe, boot, heart };
+    private Item[] itemArray = { duck, ice, tambourine, teddy, whisky, wood, yarn };
     private ArrayList<Item> ITEMS = new ArrayList<Item>(Arrays.asList(itemArray));
 
     private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 240, TextureType.FRONT1.getTexture(), ITEMS);
@@ -61,7 +64,7 @@ public class Game {
     private Npc[] npcArray = { npc2, npc3, npc4, npc5, npc6, npc7, npc8 };
     private ArrayList<Npc> NPCs = new ArrayList<Npc>(Arrays.asList(npcArray));
 
-    private Drawable[] itemsToDraw = { wizard, npc2, npc3, npc4, npc5, npc6, npc7,  npc8, axe, boot, heart };
+    private Drawable[] itemsToDraw = { wizard, npc2, npc3, npc4, npc5, npc6, npc7,  npc8, duck, ice, tambourine, teddy, whisky, wood, yarn };
     private final Dialogue interaction = new Dialogue(worldView, FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME", "Content Placeholder");
     private Mechanics game = new Mechanics(keyPresses, window, NPCs, ITEMS, interaction, battleWindow);
 

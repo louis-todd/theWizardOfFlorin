@@ -1,0 +1,1 @@
+java -cp lib/jsfml.jar:src/. me.ghost.Main
