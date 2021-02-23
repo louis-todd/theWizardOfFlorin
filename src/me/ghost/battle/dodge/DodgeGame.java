@@ -2,6 +2,7 @@ package me.ghost.battle.dodge;
 
 import me.ghost.CaseInsensitiveMap;
 import me.ghost.Mechanics;
+import me.ghost.PauseMenu;
 import me.ghost.battle.WinLoseScreen;
 import me.ghost.character.MoveableCharacter;
 import me.ghost.character.Npc;
@@ -177,8 +178,13 @@ public class DodgeGame {
                     this.game.setOverarchingLives(this.game.getOverarchingLives() - 1);
                     this.livesChaged = true;
                 }
-                loseScreen.getToDraw().forEach(window::draw);
-                checkMouse(loseScreen);
+                if(this.game.getOverarchingLives() != 0) {
+                    loseScreen.getToDraw().forEach(window::draw);
+                    checkMouse(loseScreen);
+                } else {
+                    PauseMenu loseGame = new PauseMenu(false);
+                    loseGame.draw(window);
+                }
             } else {
                 battleWon = true;
                 WinLoseScreen winScreen = new WinLoseScreen(true);

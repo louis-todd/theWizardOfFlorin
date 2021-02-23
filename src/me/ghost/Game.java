@@ -1,7 +1,6 @@
 
 package me.ghost;
 
-import com.sun.java.swing.plaf.windows.WindowsTreeUI;
 import me.ghost.battle.BattleWindow;
 import me.ghost.character.MoveableCharacter;
 import me.ghost.character.Npc;
@@ -13,6 +12,7 @@ import me.ghost.map.Tile;
 import org.jsfml.graphics.*;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.VideoMode;
+import sun.security.mscapi.CPublicKey;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,6 +65,7 @@ public class Game {
     private RectangleShape loadingBar = null;
 
     private final List<CircleShape> livesDisplay = new ArrayList<>(Arrays.asList(lifeCircle(1), lifeCircle(2), lifeCircle(3)));
+    private final RectangleShape dashBoard = new RectangleShape(new Vector2f(655, 45));
 
 
     /**
@@ -74,6 +75,7 @@ public class Game {
         worldView.setCenter(wizard.getPosition());
         toDraw.addAll(Arrays.asList(itemsToDraw));
         window.setFramerateLimit(120);
+        this.dashBoard.setFillColor(Color.BLACK);
     }
 
     /**
@@ -155,9 +157,6 @@ public class Game {
     private void updateWindow() {
         window.clear(Color.RED);
 
-
-        this.game.setOverarchingLives(0);
-        if (!(this.game.getOverarchingLives() == 0)) {
             if (game.isBattleScreenOpen()) {
                 window.setView(battleView);
             } else if (game.isPauseMenuOpen()) {
@@ -165,15 +164,17 @@ public class Game {
             } else {
                 drawTiles();
                 window.setView(worldView);
+
+                updateLifePosition(worldView);
+
+
+                updateDashBoardPosition(worldView);
+                window.draw(dashBoard);
                 for (CircleShape circleShape : livesDisplay) {
                     window.draw(circleShape);
                 }
-                updateLifePosition(worldView);
             }
-        } else {
-            PauseMenu loseScreen = new PauseMenu(false);
-            loseScreen.draw(this.window);
-        }
+
 
         // if (!game.isBattleScreenOpen()) {
         //     drawTiles();
@@ -244,9 +245,14 @@ public class Game {
     private void updateLifePosition(View worldView){
         int i = 1;
         for(CircleShape circleShape : livesDisplay){
-            circleShape.setPosition(worldView.getCenter().x + worldView.getSize().x/2 - i * 16, worldView.getCenter().y - worldView.getSize().y/2 + 5);
+            circleShape.setPosition(worldView.getCenter().x + worldView.getSize().x/2 - i * 16, worldView.getCenter().y + worldView.getSize().y/2 - 25);
             i++;
         }
+    }
+
+    private void updateDashBoardPosition(View worldView){
+        this.dashBoard.setPosition(worldView.getCenter().x - worldView.getSize().x/2 - 10, worldView.getCenter().y + worldView.getSize().y/2 - 35);
+
     }
 
 }
