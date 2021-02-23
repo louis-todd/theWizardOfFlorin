@@ -23,7 +23,8 @@ public class TileLoader {
             try {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                // e.printStackTrace();
+                System.out.println("Error in loading tiles");
             }
 
             this.loaded.set(true);
@@ -35,7 +36,8 @@ public class TileLoader {
         try {
             texture.loadFromStream(Game.class.getClassLoader().getResourceAsStream(path));
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
+            System.out.println("Error in loading texture");
         }
         return texture;
     }
