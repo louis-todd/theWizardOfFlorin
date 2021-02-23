@@ -105,21 +105,21 @@ public class MoveableCharacter extends Character {
         nearbyTiles.clear();
     }
 
-    private void handleCollide(FloatRect floatRect, Vector2f position) {
+    private void handleCollide(FloatRect floatRect, Vector2f objectPosition) {
         float xDifference = floatRect.width;
         float yDifference = floatRect.height;
-        if (Math.abs(position.y - this.getPosition().y) < floatRect.width) {
-            if (position.x > this.getPosition().x) {
+        if (Math.abs(objectPosition.y - this.getPosition().y) < floatRect.height) {
+            if (objectPosition.x > this.getPosition().x) {
                 this.move(-xDifference, 0);
             }
-            if (position.x < this.getPosition().x) {
+            if (objectPosition.x < this.getPosition().x) {
                 this.move(xDifference, 0);
             }
         } else {
-            if (position.y > this.getPosition().y) {
+            if (objectPosition.y > this.getPosition().y) {
                 this.move(0, -yDifference);
             }
-            if (position.y < this.getPosition().y) {
+            if (objectPosition.y < this.getPosition().y) {
                 this.move(0, yDifference);
             }
         }
