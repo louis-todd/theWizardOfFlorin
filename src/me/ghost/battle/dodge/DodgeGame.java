@@ -205,6 +205,9 @@ public class DodgeGame {
             if(lives == 0){
                 wonOrLost = true;
             }
+            if(invincible){
+                this.wizard.setTexture(TextureType.HITWIZARD.getTexture());
+            }
         }
     }
 
