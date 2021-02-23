@@ -5,11 +5,22 @@ import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 
+/**
+ *
+ */
 public class Item extends Sprite {
 
     private Boolean availableToCollect = false;
     private Boolean isFound = false;
     private String itemName = "placeholder";
+
+    /**
+     *
+     * @param itemName
+     * @param xPosition
+     * @param yPosition
+     * @param itemTexture
+     */
 
     public Item(String itemName, float xPosition, float yPosition, Texture itemTexture) {
         this.setTexture(itemTexture);
@@ -17,13 +28,26 @@ public class Item extends Sprite {
         this.itemName = itemName;
     }
 
+    /**
+     * get method to return the name of the item
+     * @return
+     */
     public String getName() {
         return itemName;
     }
 
+    /**
+     * method to get back the item if its availible to collect
+     * @return
+     */
     public Boolean availableToCollect() {
         return availableToCollect;
     }
+
+    /**
+     * boolean to return true if the tem is found or false if item not found
+     * @return
+     */
 
     public Boolean isFound() {
         return isFound;

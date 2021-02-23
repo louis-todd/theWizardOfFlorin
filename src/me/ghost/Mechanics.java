@@ -16,6 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * this class contains the methods for key handling generally.
+ * it can determine weather the player has started a battle, paused the game or quit the game.
+ * also handles keys for movement and dialogues
+ */
+
 public class Mechanics {
 
     private final Map<String, Boolean> keyPresses;
@@ -44,6 +50,10 @@ public class Mechanics {
 
         this.initKeyPressesMap();
     }
+
+    /**
+     * this method sets all the keys that can be pressed to false by default.
+     */
 
     public void initKeyPressesMap() {
         this.keyPresses.put("RIGHT", false);
@@ -267,6 +277,10 @@ public class Mechanics {
             }
         }
     }
+
+    /**
+     * this method pops up dialogeu
+     */
 
     public void isDialogue() {
         // If its the first time space is pressed, set the text

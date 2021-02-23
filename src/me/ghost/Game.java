@@ -18,6 +18,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * main Constructor
+ */
+
 public class Game {
 
     private static final Vector2f TEXT_POSITION = new Vector2f(200, 200);
