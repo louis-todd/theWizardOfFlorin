@@ -64,7 +64,7 @@ public class Game {
     private Text loadingText = null;
     private RectangleShape loadingBar = null;
 
-    private List<CircleShape> livesDisplay = new ArrayList<>(Arrays.asList(lifeCircle(1), lifeCircle(2), lifeCircle(3)));
+    private final List<CircleShape> livesDisplay = new ArrayList<>(Arrays.asList(lifeCircle(1), lifeCircle(2), lifeCircle(3)));
 
 
     /**
@@ -155,19 +155,24 @@ public class Game {
     private void updateWindow() {
         window.clear(Color.RED);
 
-        if(game.isBattleScreenOpen()){
-            window.setView(battleView);
-        }
-        else if(game.isPauseMenuOpen()){
-            window.setView(pauseView);
-        }
-        else{
-            drawTiles();
-            window.setView(worldView);
-            for(CircleShape circleShape : livesDisplay){
-                window.draw(circleShape);
+
+        this.game.setOverarchingLives(0);
+        if (!(this.game.getOverarchingLives() == 0)) {
+            if (game.isBattleScreenOpen()) {
+                window.setView(battleView);
+            } else if (game.isPauseMenuOpen()) {
+                window.setView(pauseView);
+            } else {
+                drawTiles();
+                window.setView(worldView);
+                for (CircleShape circleShape : livesDisplay) {
+                    window.draw(circleShape);
+                }
+                updateLifePosition(worldView);
             }
-            updateLifePosition(worldView);
+        } else {
+            PauseMenu loseScreen = new PauseMenu(false);
+            loseScreen.draw(this.window);
         }
 
         // if (!game.isBattleScreenOpen()) {
@@ -196,10 +201,9 @@ public class Game {
         game.isDialogue();
 
         window.display();
-        if(this.livesDisplay.size() > this.game.getOverarchingLives() && this.livesDisplay.size() != 0){
+        if (this.livesDisplay.size() > this.game.getOverarchingLives() && this.livesDisplay.size() != 0) {
             this.livesDisplay.remove(this.livesDisplay.size() - 1);
         }
-        System.out.println(this.game.getOverarchingLives());
     }
 
     private void drawTiles() {

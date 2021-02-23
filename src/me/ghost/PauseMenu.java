@@ -38,10 +38,14 @@ public class PauseMenu {
 
     private Text text;
 
-    public PauseMenu() {
-        //
+    public PauseMenu(boolean pause) {
+        //If pause is true then it loads the pause, if false it loads the end screen
         toDraw.addAll(Arrays.asList(itemsToDraw));
-        writeText("Paused...", 155, 150);
+        if(pause) {
+            writeText("Paused...", 155, 150);
+        } else {
+            writeText("You have lost all of your lives, you have lost.", 155, 150);
+        }
         writeText("Press here to quit...", 120, 300);
     }
 

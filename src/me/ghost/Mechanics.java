@@ -138,7 +138,7 @@ public class Mechanics {
                         }
                         // if first B, set to display battle window
                         else {
-                            pauseMenu = new PauseMenu();
+                            pauseMenu = new PauseMenu(true);
                             handleKeyPress(keyEvent, true);
                         }
                     }
@@ -315,5 +315,9 @@ public class Mechanics {
 
     public void setOverarchingLives(int overarchingLives) {
         this.overarchingLives = overarchingLives;
+    }
+
+    public void setPauseMenuOpen(boolean pauseMenuOpen) {
+        this.pauseMenuOpen = pauseMenuOpen;
     }
 }
