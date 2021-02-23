@@ -279,7 +279,8 @@ public class Mechanics {
     }
 
     /**
-     * this method pops up dialogeu
+     * this method pops up dialogues using space during the map and the battle window.
+     * it is also used to bring the next dialogue
      */
 
     public void isDialogue() {
@@ -306,13 +307,31 @@ public class Mechanics {
         }
     }
 
+    /**
+     * returns the state of the battle screen
+     * if battle screen is open then True
+     * if battle screen not open then false
+     * @return True is battle screen opens and false if not open.
+     */
+
     public boolean isBattleScreenOpen() {
         return battleScreenOpen;
     }
 
+    /**
+     * return the state of the game if paused or not
+     * @return returns True if player has paused the game
+     * Returns false if player has not paused the game.
+     */
+
     public boolean isPauseMenuOpen() {
         return pauseMenuOpen;
     }
+
+    /**
+     * returns the state of the game if the player is still playing it or if they have quit
+     * @return returns false if the player is playing the game
+     */
 
     public boolean hasPlayerQuit() {
         if(pauseMenu != null){
