@@ -25,7 +25,8 @@ public class Game {
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
 
 //    private BattleWindow battleWindow = new BattleWindow();
-    private BattleWindow2 battleWindow2 = new BattleWindow2();
+    private BattleWindow2 battleWindow2 = new BattleWindow2(window);
+
     private Npc npc = new Npc("Mayor", 250, 300, TextureType.GHOST.getTexture());
     private Npc npc2 = new Npc("Placeholder2", 150, 300, TextureType.GHOST.getTexture());
     private Npc npc3 = new Npc("Placeholder3", 50, 300, TextureType.GHOST.getTexture());
@@ -68,9 +69,13 @@ public class Game {
             game.handleEvents(wizard);
             if (!game.isBattleScreenOpen()) {
                 wizard.moveCharacter(keyPresses, toDraw, worldView, topLayer);
+            } else {
+                battleWindow2.columnUpdate();
             }
+
             updateWindow();
         }
+
     }
 
     /**
