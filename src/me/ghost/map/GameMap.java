@@ -79,10 +79,10 @@ public class GameMap {
 
     private void createTiles(int rowNumber, int rowIndex){
         if(cell.get(rowNumber).get(rowIndex) == -1){
-            tileMap.get(rowNumber).add(new Tile(new Vector2f(rowIndex*16, rowNumber*16), tileLoader.getTileTexture(0)));
+            tileMap.get(rowNumber).add(new Tile(new Vector2f(rowIndex*16, rowNumber*16), tileLoader.getTileTexture(0), cell.get(rowNumber).get(rowIndex), tileLoader));
         } else {
             tileLoader.getTileTexture(cell.get(rowNumber).get(rowIndex));
-            tileMap.get(rowNumber).add(new Tile(new Vector2f(rowIndex * 16, rowNumber * 16), tileLoader.getTileTexture(cell.get(rowNumber).get(rowIndex))));
+            tileMap.get(rowNumber).add(new Tile(new Vector2f(rowIndex * 16, rowNumber * 16), tileLoader.getTileTexture(cell.get(rowNumber).get(rowIndex)), cell.get(rowNumber).get(rowIndex), tileLoader));
         }
     }
 

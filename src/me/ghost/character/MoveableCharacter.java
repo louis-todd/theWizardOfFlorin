@@ -3,6 +3,7 @@ package me.ghost.character;
 import me.ghost.data.TextureType;
 import me.ghost.Item;
 import me.ghost.map.GameMap;
+import me.ghost.map.Tile;
 import org.jsfml.graphics.Drawable;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
@@ -20,6 +21,7 @@ public class MoveableCharacter extends Character {
     private int stepIndex = 0;
     private int walkFrameControl = 0;
     private int walkingPace = 2;
+    private final List<Tile> nearbyTiles = new ArrayList<>();
 
     public MoveableCharacter(String characterName, float xPosition, float yPosition, Texture characterTexture) {
         super(characterName, xPosition, yPosition, characterTexture);
@@ -67,13 +69,11 @@ public class MoveableCharacter extends Character {
             }
             if ((keyPresses.get("UP") && !keyPresses.get("SPACE") && !keyPresses.get("ESCAPE"))) {
                 if (this.getPosition().y > currentMap.getMapBounds().top) {
-                    if(keyPresses.get("LEFT")){
+                    if (keyPresses.get("LEFT")) {
                         walkLeft();
-                    }
-                    else if(keyPresses.get("RIGHT")){
+                    } else if (keyPresses.get("RIGHT")) {
                         walkRight();
-                    }
-                    else{
+                    } else {
                         walkBack();
                     }
                     this.move(0, -(walkingPace));
@@ -81,13 +81,11 @@ public class MoveableCharacter extends Character {
             }
             if ((keyPresses.get("DOWN") && !keyPresses.get("SPACE") && !keyPresses.get("ESCAPE"))) {
                 if (this.getPosition().y - currentMap.getMapBounds().height < 0) {
-                    if(keyPresses.get("LEFT")){
+                    if (keyPresses.get("LEFT")) {
                         walkLeft();
-                    }
-                    else if(keyPresses.get("RIGHT")){
+                    } else if (keyPresses.get("RIGHT")) {
                         walkRight();
-                    }
-                    else{
+                    } else {
                         walkForward();
                     }
                     this.move(0, (walkingPace));
@@ -95,48 +93,39 @@ public class MoveableCharacter extends Character {
             }
             setViewPosition(worldView, this.getPosition(), currentMap);
         } else if (npcCollide != null) {
-            float xDifference = this.collisionRectangle(npcCollide).width;
-            float yDifference = this.collisionRectangle(npcCollide).height;
-
-            if (Math.abs(npcCollide.getPosition().y - this.getPosition().y) < 15) {
-                if (npcCollide.getPosition().x > this.getPosition().x) {
-                    this.move(-xDifference, 0);
-                }
-                if (npcCollide.getPosition().x < this.getPosition().x) {
-                    this.move(xDifference, 0);
-                }
-            } else {
-                if (npcCollide.getPosition().y > this.getPosition().y) {
-                    this.move(0, -yDifference);
-                }
-                if (npcCollide.getPosition().y < this.getPosition().y) {
-                    this.move(0, yDifference);
-                }
-            }
-
-            wizardColliding = false;
+            handleCollide(this.collisionRectangle(npcCollide), npcCollide.getPosition());
         } else if (itemCollide != null) {
-            float xDifference = this.collisionRectangle(itemCollide).width;
-            float yDifference = this.collisionRectangle(itemCollide).height;
-
-            if (Math.abs(itemCollide.getPosition().y - this.getPosition().y) < 15) {
-                if (itemCollide.getPosition().x > this.getPosition().x) {
-                    this.move(-xDifference, 0);
-                }
-                if (itemCollide.getPosition().x < this.getPosition().x) {
-                    this.move(xDifference, 0);
-                }
-            } else {
-                if (itemCollide.getPosition().y > this.getPosition().y) {
-                    this.move(0, -yDifference);
-                }
-                if (itemCollide.getPosition().y < this.getPosition().y) {
-                    this.move(0, yDifference);
-                }
-            }
-
-            wizardColliding = false;
+            handleCollide(this.collisionRectangle(itemCollide), itemCollide.getPosition());
         }
+        for (Tile tile : nearbyTiles) {
+            if (this.collidesTile(tile)) {
+                handleCollide(this.tileCollision(tile), tile.getPosition());
+            }
+        }
+
+        nearbyTiles.clear();
+    }
+
+    private void handleCollide(FloatRect floatRect, Vector2f objectPosition) {
+        float xDifference = floatRect.width;
+        float yDifference = floatRect.height;
+        if (Math.abs(objectPosition.y - this.getPosition().y) < floatRect.height) {
+            if (objectPosition.x > this.getPosition().x) {
+                this.move(-xDifference, 0);
+            }
+            if (objectPosition.x < this.getPosition().x) {
+                this.move(xDifference, 0);
+            }
+        } else {
+            if (objectPosition.y > this.getPosition().y) {
+                this.move(0, -yDifference);
+            }
+            if (objectPosition.y < this.getPosition().y) {
+                this.move(0, yDifference);
+            }
+        }
+
+        wizardColliding = false;
     }
 
     private void walkLeft(){
@@ -207,6 +196,14 @@ public class MoveableCharacter extends Character {
         return null;
     }
 
+    private boolean collidesTile(Tile tile){
+        return this.getGlobalBounds().intersection(tile.getGlobalBounds()) != null;
+    }
+
+    private FloatRect tileCollision(Tile tile){
+        return this.getGlobalBounds().intersection(tile.getGlobalBounds());
+    }
+
     public boolean dialogueAreaCollide(Drawable obstacle) {
         if (obstacle instanceof Npc) {
             return this.getGlobalBounds().intersection(((Npc) obstacle).dialogueArea(4)) != null;
@@ -246,4 +243,7 @@ public class MoveableCharacter extends Character {
         mapView.setCenter(viewPosition);
     }
 
+    public void setNearbyTiles(Tile nearbyTile) {
+        this.nearbyTiles.add(nearbyTile);
+    }
 }
