@@ -226,21 +226,21 @@ public class Mechanics {
                         }
                         break;
                     }
-                    if (keyEvent.key == Keyboard.Key.B && !pauseMenuOpen) {
-                        // If B has already been pressed
-                        // if (keyPresses.get("B")) {
-                        //     keyPresses.put("B", false);
-                        //     battleScreenOpen = false;
-                        // }
-                        // if first B, set to display battle window
-                        // else {
+                    // if (keyEvent.key == Keyboard.Key.B && !pauseMenuOpen) {
+                    //     // If B has already been pressed
+                    //     // if (keyPresses.get("B")) {
+                    //     //     keyPresses.put("B", false);
+                    //     //     battleScreenOpen = false;
+                    //     // }
+                    //     // if first B, set to display battle window
+                    //     // else {
 
-                        if (!interactingNPC.hasCompletedBattle()) {
-                            dodgeGame = new DodgeGame(interactingNPC, "EASY", this);
-                            handleKeyPress(keyEvent, true);
-                        }
-                        // }
-                    }
+                    //     if (!interactingNPC.hasCompletedBattle()) {
+                    //         dodgeGame = new DodgeGame(interactingNPC, "EASY", this);
+                    //         handleKeyPress(keyEvent, true);
+                    //     }
+                    //     // }
+                    // }
                 case MOUSE_BUTTON_PRESSED:
                     if(!battleScreenOpen) {
                         if (keyPresses.get("SPACE") && interactingNPC != null && interactingItem == null && interactingNPC.shouldDraw() && !pauseMenuOpen) {
