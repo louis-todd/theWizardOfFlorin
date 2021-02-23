@@ -23,8 +23,8 @@ public class MoveableCharacter extends Character {
     private int walkingPace = 2;
     private final List<Tile> nearbyTiles = new ArrayList<>();
 
-    public MoveableCharacter(String characterName, float xPosition, float yPosition, Texture characterTexture) {
-        super(characterName, xPosition, yPosition, characterTexture);
+    public MoveableCharacter(String characterName, float xPosition, float yPosition, Texture characterTexture, int expectedNumberOfItems) {
+        super(characterName, xPosition, yPosition, characterTexture, expectedNumberOfItems);
         wizardColliding = false;
     }
 

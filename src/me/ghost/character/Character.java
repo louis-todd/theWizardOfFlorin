@@ -19,25 +19,30 @@ public abstract class Character extends Sprite {
     private int currentIndex = 1;
     private File npcTextFile;
     private static ArrayList<Item> items;
-    private Item associatedItem = null;
+    private ArrayList<Item> associatedItems = new ArrayList<Item>();
     private static Boolean taskInProgress = false;
     private static Character NPCInProgress = null;
     private final Map<String, Boolean> characterStates = new CaseInsensitiveMap<>();
     private Boolean isFirstSuccess = true;
+    private int expectedNumberOfItems;
+    private int itemsFoundCount=0;
 
-    private int currentBattleIndex = 1;
+    private int currentBattleIndex = 0;
     private final List<String> npcBattleScript = new ArrayList<>();
 
-    private boolean hasCompletedBattle = false;
+    private boolean hasCompletedTask = false;
 
-    public Character(String characterName, float xPosition, float yPosition, Texture characterTexture) {
+    public Character(String characterName, float xPosition, float yPosition, Texture characterTexture,
+            int expectedNumberOfItems) {
         this.setTexture(characterTexture);
         this.setPosition(xPosition, yPosition);
         this.characterName = characterName;
+        this.expectedNumberOfItems = expectedNumberOfItems;
         this.initCharacterStates();
     }
 
-    public Character(String characterName, float xPosition, float yPosition, Texture characterTexture, ArrayList<Item> items) {
+    public Character(String characterName, float xPosition, float yPosition, Texture characterTexture,
+            ArrayList<Item> items) {
         Character.items = items;
         this.setTexture(characterTexture);
         this.setPosition(xPosition, yPosition);
@@ -48,39 +53,45 @@ public abstract class Character extends Sprite {
         this.characterStates.put("AVAILABLE", false);
         this.characterStates.put("IN PROGRESS", false);
         this.characterStates.put("RESOURCE FOUND", false);
+        this.characterStates.put("ALL RESOURCES FOUND", false);
         this.characterStates.put("SUCCESS", false);
     }
 
-    public ArrayList<String> getScript(){
+    public ArrayList<String> getScript() {
         NPCScript.clear();
-        updateCharacterStates(); 
+        updateCharacterStates();
 
         // if sprite does not have an associated item
-        if(associatedItem == null){
-            if(characterStates.get("AVAILABLE")){
+        if (associatedItems.isEmpty()) {
+            if (characterStates.get("AVAILABLE")) {
                 serveScript(0);
-            }
-            else{
+            } else {
                 serveScript(3);
             }
-        }
-        else{
+        } else {
             // if has associated item
-            if(characterStates.get("IN PROGRESS")){
-                if(!(characterStates.get("RESOURCE FOUND"))){
+            if (characterStates.get("IN PROGRESS")) {
+                if (itemsFoundCount!=expectedNumberOfItems && itemsFoundCount>0){
+                    serveScript(4);
+                } 
+                else if (itemsFoundCount==0){
                     serveScript(0);
                 }
-                else{
+                else {
+                    //blahblah
                     serveScript(3);
                 }
-            }
-            else{
-                //not in progress - success message or generic response
-                if(characterStates.get("RESOURCE FOUND") && (isFirstSuccess || characterStates.get("SUCCESS"))){
-                    isFirstSuccess=false;
-                    serveScript(2);
-                }
-                else{
+            } else {
+                // not in progress - success message or generic response
+                if (characterStates.get("RESOURCE FOUND") && (isFirstSuccess || characterStates.get("SUCCESS"))) {
+                    isFirstSuccess = false;
+                    if(associatedItems.size() == expectedNumberOfItems){
+                        serveScript(2);
+                    }
+                    else{
+                        serveScript(4);
+                    }
+                } else {
                     serveScript(3);
                 }
             }
@@ -89,25 +100,23 @@ public abstract class Character extends Sprite {
         return NPCScript;
     }
 
-    private void serveScript(int csvFileNumb){
-        if(csvFileNumb==0){
-            npcTextFile = new File("resources/Dialogue/" + characterName + "/" + characterName + ".csv"); 
-        }
-        else{
+    private void serveScript(int csvFileNumb) {
+        if (csvFileNumb == 0) {
+            npcTextFile = new File("resources/Dialogue/" + characterName + "/" + characterName + ".csv");
+        } else {
             npcTextFile = new File("resources/Dialogue/" + characterName + "/" + characterName + csvFileNumb + ".csv");
         }
-        if(npcTextFile.exists()) {
+        if (npcTextFile.exists()) {
             addDialogue(npcTextFile.getPath());
-        }
-        else{
+        } else {
             NPCScript.add("ERROR 1: File not found" + characterName);
         }
     }
 
-    private void updateCharacterStates(){
-        if(this.associatedItem == null){
-            //if theres a task in progress and its not mine set to false
-            if(taskInProgress && NPCInProgress.associatedItem!=null){
+    private void updateCharacterStates() {
+        if (associatedItems.isEmpty()) {
+            // if theres a task in progress and its not mine set to false
+            if (taskInProgress && !(NPCInProgress.associatedItems.isEmpty())) {
                 if(NPCInProgress!=this){
                     characterStates.put("AVAILABLE", false);
                 }
@@ -128,10 +137,20 @@ public abstract class Character extends Sprite {
             else{
                 characterStates.put("AVAILABLE", false);
             }
-            if(associatedItem.isFound()){
-                characterStates.put("RESOURCE FOUND", true);
-                characterStates.put("IN PROGRESS", false);
-                characterStates.put("AVAILABLE", false);
+            //work out if all items have been found or just some
+            for(Item item : associatedItems){
+                if(item.isFound() && !(item.hasBeenCounted())){
+                    itemsFoundCount++;
+                    item.setAsCounted();
+                }
+                if(itemsFoundCount == expectedNumberOfItems){
+                    this.characterStates.put("ALL RESOURCES FOUND", true);
+                    characterStates.put("AVAILABLE", false);
+                    characterStates.put("IN PROGRESS", false);
+                }
+                if(itemsFoundCount>0){
+                    characterStates.put("RESOURCE FOUND", true);
+                }
             }
         }
     }
@@ -139,9 +158,9 @@ public abstract class Character extends Sprite {
     public List<String> getBattleScript(){
         npcBattleScript.clear();
 
-        File npcTextFile = new File("resources/BattleDialogue/" + characterName + "1.csv");
+        File npcTextFile = new File("resources/BattleDialogue/" + characterName + ".csv");
         if(npcTextFile.exists()) {
-            addBattleDialogue("resources/BattleDialogue/" + characterName + "1.csv");
+            addBattleDialogue("resources/BattleDialogue/" + characterName + ".csv");
         }
         else{
             npcBattleScript.add("Page 1: " + characterName);
@@ -158,9 +177,31 @@ public abstract class Character extends Sprite {
             String row;
             while((row = csvReader.readLine()) != null){
                 if(row.contains("@")){
-                    if(associatedItem!=null){
-                        characterStates.put("SUCCESS", true);
-                        row=row.replace('@', ' ');
+                    characterStates.put("SUCCESS", true);
+                    row=row.replace('@', ' ');
+                    this.setHasCompletedTask(true);
+                }
+                if(row.contains("\\")){
+                    int itemStart=-1;
+                    itemStart = row.indexOf("\\");
+                    String itemList="";
+                    if(itemStart!=-1){
+                        itemList = row.substring(itemStart+2);
+
+                        //at start of item list - extract items from itemList
+                        String[] RiddleItems = itemList.split(" ");
+                        for (Item potentialItem : Character.items) {
+                            for(String itemName : RiddleItems){
+                                if (potentialItem.getName().equals(itemName)) {
+                                    if(!associatedItems.contains(potentialItem)) {
+                                        System.out.println("Got item: " + itemName);
+                                        associatedItems.add(potentialItem);
+                                    }
+                                    potentialItem.setAsAvailableToCollect(true);
+                                }
+                            }
+                        }
+                        row=row.substring(0, itemStart);
                     }
                 }
                 String[] data = row.split(",");
@@ -170,7 +211,8 @@ public abstract class Character extends Sprite {
             csvReader.close();
             
         } catch (Exception e){
-            e.printStackTrace();
+            System.out.println("1");
+            // e.printStackTrace();
         }
     }
 
@@ -182,10 +224,11 @@ public abstract class Character extends Sprite {
                 String[] data = row.split(",");
                 data = this.wrapRoundDialogueBox(data);
                 npcBattleScript.addAll(Arrays.asList(data));
-                }
+            }
             csvReader.close();
         } catch (Exception e){
-            e.printStackTrace();
+             System.out.println("2");
+            // e.printStackTrace();
         }
     }
 
@@ -220,7 +263,9 @@ public abstract class Character extends Sprite {
             item = sentence.substring(sentence.indexOf("**")+2, sentence.lastIndexOf("**"));
             for (Item potentialItem : Character.items) {
                 if (potentialItem.getName().equals(item)) {
-                    this.associatedItem = potentialItem;
+                    if(!associatedItems.contains(potentialItem)) {
+                        associatedItems.add(potentialItem);
+                    }
                     potentialItem.setAsAvailableToCollect(true);
                 }
             }
@@ -237,7 +282,8 @@ public abstract class Character extends Sprite {
         try {
                 fileStream = new DataInputStream(new FileInputStream(fileName));
             } catch (Exception e) {
-                e.printStackTrace();
+                // e.printStackTrace();
+                 System.out.println("3");
             }
             return fileStream;
     }
@@ -256,10 +302,8 @@ public abstract class Character extends Sprite {
 
     public void resetScript() {
         if(characterStates.get("SUCCESS") == true){
-            if(associatedItem!=null){
-                taskInProgress=false;
-                characterStates.put("SUCCESS", false);
-            }
+            taskInProgress=false;
+            characterStates.put("SUCCESS", false);
         }
         currentIndex = 1;
     }
@@ -276,12 +320,12 @@ public abstract class Character extends Sprite {
         currentBattleIndex = 1;
     }
 
-    public void setHasCompletedBattle(boolean hasCompleted){
-        hasCompletedBattle = hasCompleted;
+    public void setHasCompletedTask(boolean hasCompleted){
+        hasCompletedTask = hasCompleted;
     }
 
-    public boolean hasCompletedBattle(){
-        return hasCompletedBattle;
+    public boolean hasCompletedTask(){
+        return hasCompletedTask;
     }
     
     public static ArrayList<Item> getItems(){

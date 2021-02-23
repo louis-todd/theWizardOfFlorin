@@ -5,7 +5,8 @@ import me.ghost.Game;
 import org.jsfml.graphics.Font;
 
 public enum FontType {
-    ROBOTO("Roboto-Regular.ttf")
+    ROBOTO("ubuntu.regular.ttf")
+    //UBUNTU("ubuntu.regular.ttf")
     ;
 
     private final Font font = new Font();
@@ -14,7 +15,8 @@ public enum FontType {
         try {
             this.font.loadFromStream(Game.class.getClassLoader().getResourceAsStream(path));
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
+             System.out.println("4");
         }
     }
 

@@ -37,27 +37,44 @@ public class Game {
     private final View pauseView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
     private BattleWindow battleWindow = new BattleWindow();
 
-    private Item axe = new Item("axe", 300, 300, TextureType.SQUARE16.getTexture());
+    // private Item axe = new Item("duck", 300, 300, TextureType.DUCK.getTexture());
+    // private Item boot = new Item("ice", 250, 180, TextureType.ICE.getTexture());
+    // private Item heart = new Item("tambourine", 350, 380, TextureType.TAMBOURINE.getTexture());
+    private Item duck = new Item("duck", 150, 200, TextureType.DUCK.getTexture());
+    private Item ice = new Item("ice", 250, 200, TextureType.ICE.getTexture());
+    private Item tambourine = new Item("tambourine", 350, 200, TextureType.TAMBOURINE.getTexture());
+    private Item teddy = new Item("teddy", 450, 200, TextureType.TEDDY.getTexture());
+    private Item whisky = new Item("whisky", 550, 200, TextureType.WHISKY.getTexture());
+    private Item whisky2 = new Item("whisky2", 550, 200, TextureType.WHISKY.getTexture());
+    private Item plank = new Item("plank", 650, 200, TextureType.WOOD.getTexture());
+    private Item yarn = new Item("yarn", 750, 200, TextureType.YARN.getTexture());
+    // private Item tree = new Item("tree", 750, 200, TextureType.TREE.getTexture());
 
-    private Item[] itemArray = { axe };
-    private ArrayList<Item> ITEMS = new ArrayList<>(Arrays.asList(itemArray));
+    private Item[] itemArray = { duck, ice, tambourine, teddy, whisky, plank, yarn, whisky2 };
+    private ArrayList<Item> ITEMS = new ArrayList<Item>(Arrays.asList(itemArray));
 
     private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 150, TextureType.FRONT1.getTexture(), ITEMS);
 
-    private Npc npc = new Npc("Mayor", 250, 300, TextureType.GHOST.getTexture());
-    private Npc npc2 = new Npc("TestPerson", 150, 300, TextureType.GHOST.getTexture());
-    private Npc npc3 = new Npc("Placeholder3", 50, 300, TextureType.GHOST.getTexture());
+    // private Npc npc1 = new Npc("TestPerson", 150, 300, TextureType.GHOST.getTexture(), 3);
+    private Npc npc2 = new Npc("Mayor", 250, 300, TextureType.GHOST.getTexture(), 0);
+    private Npc npc3 = new Npc("CrazyJoe", 350, 300, TextureType.GHOST.getTexture(), 4);
+    private Npc npc4 = new Npc("Gluttony", 450, 300, TextureType.GHOST.getTexture(), 0);
+    private Npc npc5 = new Npc("PirateJack", 550, 300, TextureType.GHOST.getTexture(), 1);
+    private Npc npc6 = new Npc("Sibirius", 650, 300, TextureType.GHOST.getTexture(), 0);
+    private Npc npc7 = new Npc("Snuffles", 750, 300, TextureType.GHOST.getTexture(), 0);
+    private Npc npc8 = new Npc("Summer", 850, 300, TextureType.GHOST.getTexture(), 3);
+    private Npc npc9 = new Npc("Tree", 950, 300, TextureType.TREE.getTexture(), 0);
 
-    private Npc[] npcArray = { npc, npc2, npc3 };
+    private Npc[] npcArray = { npc2, npc3, npc4, npc5, npc6, npc7, npc8, npc9 };
     private ArrayList<Npc> NPCs = new ArrayList<Npc>(Arrays.asList(npcArray));
 
-    private Drawable[] itemsToDraw = { wizard, npc, npc2, npc3, axe };
+    private Drawable[] itemsToDraw = { wizard, npc2, npc3, npc4, npc5, npc6, npc7,  npc8, npc9, duck, ice, tambourine, teddy, whisky, plank, yarn, whisky2 };
     private final Dialogue interaction = new Dialogue(worldView, FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME", "Content Placeholder");
     private Mechanics game = new Mechanics(keyPresses, window, NPCs, ITEMS, interaction, battleWindow);
 
     private final Map<String, Integer> drawingBounds = new CaseInsensitiveMap<>();
-    private final GameMap baseLayer = new GameMap("resources/finalmapv2_Base Layer.csv", 250, tileLoader);
-    private final GameMap topLayer = new GameMap("resources/finalmapv2_Extra Layer.csv", 250, tileLoader);
+    private final GameMap baseLayer = new GameMap("resources/finalmapv2_Base_Layer.csv", 250, tileLoader);
+    private final GameMap topLayer = new GameMap("resources/finalmapv2_Extra_Layer.csv", 250, tileLoader);
 
     private int loadingBarCounter = 0;
     private Text loadingText = null;
@@ -176,11 +193,11 @@ public class Game {
                     window.draw(item);
                 }
             }
-            // if(item instanceof Npc){
-            // if(((Npc) item).shouldDraw()) {
-            // window.draw(item);
-            // }
-            // }
+            else if(item instanceof Npc){
+                if(((Npc) item).shouldDraw()) {
+                    window.draw(item);
+                }
+            }
             // move wizard
             else {
                 window.draw(item);
