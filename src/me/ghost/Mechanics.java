@@ -171,14 +171,18 @@ public class Mechanics {
                                 if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().size()) {
                                     interaction.setTextContent(String.valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
                                     interactingNPC.incrementCurrentIndex();
-                                    if(interaction.getCharacterName()!="BATTLE"){
-                                        interaction.setCharacterName(interaction.getCharacterName());
-                                    }
-                                    else{
+                                    String tmp = interaction.getCharacterName();
+                                    interaction.setCharacterName(tmp);
+                                    if(tmp=="BATTLE"){
                                         dodgeGame = new DodgeGame(interactingNPC, "EASY", this);
                                         keyPresses.put("B", true);
                                         interaction.setCharacterName(interaction.getCharacterName());
                                     }
+                                    // else{
+                                    //     dodgeGame = new DodgeGame(interactingNPC, "EASY", this);
+                                    //     keyPresses.put("B", true);
+                                    //     interaction.setCharacterName(interaction.getCharacterName());
+                                    // }
                                 }
                                 // if at tile limit, close
                                 else {
