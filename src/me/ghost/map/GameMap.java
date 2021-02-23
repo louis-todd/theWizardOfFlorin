@@ -72,7 +72,8 @@ public class GameMap {
         try {
             fileStream = new DataInputStream(new FileInputStream(fileName));
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
+            System.out.println("1991");
         }
         return fileStream;
     }
