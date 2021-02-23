@@ -43,7 +43,7 @@ public enum TextureType {
     TAMBOURINE("Items/tambourine.png"),
     TEDDY("Items/teddy.png"),
     WHISKY("Items/whisky.png"),
-    WOOD("Items/planks.png"),
+    WOOD("Items/plank.png"),
     YARN("Items/yarn.png"),
 
     TEST("tiles/tile200.png32")
@@ -56,7 +56,7 @@ public enum TextureType {
             this.texture.loadFromStream(Game.class.getClassLoader().getResourceAsStream(path));
         } catch (Exception e) {
             // e.printStackTrace();
-             System.out.println(path);
+             System.out.println("Error loading item from: " + path);
         }
     }
 
