@@ -195,8 +195,13 @@ public class Mechanics {
                                     keyPresses.put("SPACE", false);
                                     interactingNPC.resetScript();
                                     if(interactingNPC.hasCompletedTask() || interactingNPC.getName()=="Mayor"){
-                                        interactingNPC.setAssociatedNPCsToShow();
-                                        interactingNPC.setShouldDraw(false);
+                                        if(interactingNPC.getName() != "Gluttony"){
+                                            interactingNPC.setAssociatedNPCsToShow();
+                                            interactingNPC.setShouldDraw(false);
+                                        }
+                                        else{
+                                            System.out.println("PLAYER HAS WON GAME")
+                                        }
                                     }
                                     dialogueOpen=false;
                                 }
