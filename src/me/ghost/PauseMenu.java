@@ -40,17 +40,20 @@ public class PauseMenu {
     private Drawable[] itemsToDraw = {background, pauseBackground, exitBackground};
     private Text text;
 
-    public PauseMenu(boolean pause) {
+    public PauseMenu(boolean pause, boolean won) {
         //If pause is true then it loads the pause, if false it loads the end screen
         toDraw.addAll(Arrays.asList(itemsToDraw));
 
-        if(pause) {
-            writeText("Paused...", 155, 150);
-            writeText("Press here to quit...", 120, 300);
-
-
+        if(!won) {
+            if (pause) {
+                writeText("Paused...", 155, 150);
+                writeText("Press here to quit...", 120, 300);
+            } else {
+                writeText("You have lost all of your lives."+ System.lineSeparator() + "  click anywhere to quit", 80, 135);
+            }
         } else {
-            writeText("You have lost all of your lives.  \n click anywhere to quit", 80, 135);
+            writeText("Congratulations you have collected all " + System.lineSeparator() + "the items and still have remaining lives", 80, 135);
+            writeText("Click anywhere to exit", 120, 300);
         }
 
     }

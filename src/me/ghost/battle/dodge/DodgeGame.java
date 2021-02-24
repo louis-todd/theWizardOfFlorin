@@ -183,7 +183,7 @@ public class DodgeGame {
                     loseScreen.getToDraw().forEach(window::draw);
                     checkMouse(loseScreen);
                 } else {
-                    lostScreen = new PauseMenu(false);
+                    lostScreen = new PauseMenu(false, false);
                     lostScreen.draw(window);
                     endScreenOpen = true;
                 }
