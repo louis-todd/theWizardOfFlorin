@@ -135,7 +135,7 @@ public class PauseMenu {
      * @param r this is where concentration of Red colour will go
      * @param g this is where concentration of green will go
      * @param b this is where concentration of  blue will go
-     * @return returns a box with the custom colour 
+     * @return returns a box with the custom colour
      */
 
     private RectangleShape createSimpleRectangle(int width, int height, int x, int y, int r, int g, int b) {
@@ -149,6 +149,9 @@ public class PauseMenu {
         return textBackground;
     }
 
+    /**
+     * this method checks mouse button's functions
+     */
     private void checkMouse(){
         if(this.mouseButtonclicked){
             //handle quit
@@ -161,13 +164,28 @@ public class PauseMenu {
         }
     }
 
+    /**
+     * sets the mouse button clicked
+     * @param mouseButtonclicked the mouse button which is clicked
+     */
+
     public void setMouseButtonclicked(boolean mouseButtonclicked) {
         this.mouseButtonclicked = mouseButtonclicked;
     }
 
+
+    /**
+     * sets mouse position to a specific place on the screen
+     * @param mousePosition the position where to set the mouse position
+     */
     public void setMousePosition(Vector2f mousePosition) {
         this.mousePosition = mousePosition;
     }
+
+    /**
+     * this boolean checks if player has quit or not
+     * @return True if player quit, False if player did not
+     */
 
     public Boolean playerHasQuit() {
         return quited;
