@@ -52,8 +52,8 @@ public class PauseMenu {
                 writeText("You have lost all of your lives."+ System.lineSeparator() + "  click anywhere to quit", 80, 135);
             }
         } else {
-            writeText("Congratulations you have collected all " + System.lineSeparator() + "the items and still have remaining lives", 80, 135);
-            writeText("Click anywhere to exit", 120, 300);
+            writeText("Congratulations...you've Won!", 80, 135);
+            writeText("Click anywhere to exit", 100, 300);
         }
 
     }

@@ -181,9 +181,13 @@ public class Game {
 
             if (game.isBattleScreenOpen()) {
                 window.setView(battleView);
-            } else if (game.isPauseMenuOpen()) {
+            }else if (game.isPauseMenuOpen()) {
                 window.setView(pauseView);
-            } else {
+            }else if(this.game.isWinScreenOpen()){
+                    this.window.clear();
+                    this.window.setView(battleView);
+                    this.game.getWinScreen().draw(window);
+            }else {
                 drawTiles();
                 window.setView(worldView);
 
@@ -195,10 +199,21 @@ public class Game {
                 for (CircleShape circleShape : livesDisplay) {
                     window.draw(circleShape);
                 }
-                if(this.game.isWinScreenOpen()){
-                    this.window.clear();
-                    this.window.setView(battleView);
-                    this.game.getWinScreen().draw(window);
+                for (Drawable item : toDraw) {
+                    if (item instanceof Item) {
+                        if (!((Item) item).isFound() && ((Item) item).availableToCollect()) {
+                            window.draw(item);
+                        }
+                    }
+                    else if(item instanceof Npc){
+                        if(((Npc) item).shouldDraw()) {
+                            window.draw(item);
+                        }
+                    }
+                    // move wizard
+                    else {
+                        window.draw(item);
+                    }
                 }
             }
 
@@ -210,22 +225,7 @@ public class Game {
         //     window.setView(battleView);
         // }
 
-        for (Drawable item : toDraw) {
-            if (item instanceof Item) {
-                if (!((Item) item).isFound() && ((Item) item).availableToCollect()) {
-                    window.draw(item);
-                }
-            }
-            else if(item instanceof Npc){
-                if(((Npc) item).shouldDraw()) {
-                    window.draw(item);
-                }
-            }
-            // move wizard
-            else {
-                window.draw(item);
-            }
-        }
+    
         game.isDialogue();
 
         window.display();
