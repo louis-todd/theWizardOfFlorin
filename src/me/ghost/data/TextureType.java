@@ -28,6 +28,7 @@ public enum TextureType {
 
     GHOST("ghost.png"),
     WHISKERS("whiskers.png"),
+    SNUFFLES("snuffles.png"),
 
     FRONT1("wizardImages/front1.png"),
     FRONT2("wizardImages/front2.png"),

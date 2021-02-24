@@ -63,7 +63,7 @@ public class Game {
     private Npc npc4 = new Npc("Gluttony", 450, 300, TextureType.GHOST.getTexture(), 0);
     private Npc npc5 = new Npc("PirateJack", 550, 300, TextureType.GHOST.getTexture(), 1);
     private Npc npc6 = new Npc("Sibirius", 650, 300, TextureType.GHOST.getTexture(), 0);
-    private Npc npc7 = new Npc("Snuffles", 750, 300, TextureType.GHOST.getTexture(), 0);
+    private Npc npc7 = new Npc("Snuffles", 750, 300, TextureType.SNUFFLES.getTexture(), 0);
     private Npc npc8 = new Npc("Summer", 850, 300, TextureType.GHOST.getTexture(), 3);
     private Npc npc9 = new Npc("Tree", 950, 300, TextureType.TREE.getTexture(), 0);
 
