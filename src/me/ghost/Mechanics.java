@@ -200,7 +200,7 @@ public class Mechanics {
                                             interactingNPC.setShouldDraw(false);
                                         }
                                         else{
-                                            System.out.println("PLAYER HAS WON GAME")
+                                            System.out.println("PLAYER HAS WON GAME");
                                         }
                                     }
                                     dialogueOpen=false;
