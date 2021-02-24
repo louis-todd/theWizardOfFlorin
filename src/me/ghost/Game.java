@@ -115,6 +115,10 @@ public class Game {
             }
 
             game.handleEvents(wizard);
+            if(game.isBattleScreenOpen()){
+                game.handleWizardMovement();
+                // dodgeGame.handleWizardMovement();
+            }
             if (!game.isBattleScreenOpen()) {
                 wizard.moveCharacter(keyPresses, toDraw, worldView, topLayer, whiskers);
             }

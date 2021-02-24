@@ -50,7 +50,7 @@ public class DodgeGame {
     private Boolean attemptedToClose = false;
     private int stepIndex = 0;
     private int walkFrameControl = 0;
-    private int walkingPace = 5;
+    private int walkingPace = 2;
     private boolean livesChaged = false;
     private boolean endScreenOpen = false;
     private PauseMenu lostScreen;
@@ -89,8 +89,7 @@ public class DodgeGame {
         int minSides = 3;
         int maxSides = 10;
         Stack<Projectile> projectileStack = new Stack<>();
-//        for(int i = 0; i < numberProjectiles; i++){
-        for(int i = 0; i < 2; i++){
+       for(int i = 0; i < numberProjectiles; i++){
             Projectile push = projectileStack.push(new Projectile(6, ThreadLocalRandom.current().nextInt(maxSides - minSides + 1) + minSides));
 
             push.thrown(this.battleNpc);
@@ -219,7 +218,7 @@ public class DodgeGame {
     }
 
     public void handleInput(KeyEvent event) {
-        handleWizardMovement();
+        // handleWizardMovement();
         if(event.type == Event.Type.KEY_PRESSED){
             if (event.key == Keyboard.Key.UP) {
                 keyPresses.put("UP", true);
@@ -263,7 +262,7 @@ public class DodgeGame {
 
 
 
-    private void handleWizardMovement(){
+    public void handleWizardMovement(){
         if(keyPresses.get("UP") && wizard.getPosition().y >= this.battleWindow.getPlayerArea().getPosition().y){
             this.wizard.setPosition(this.wizard.getPosition().x, this.wizard.getPosition().y - 3);
             if(keyPresses.get("LEFT")){

@@ -111,7 +111,6 @@ public class MoveableCharacter extends Character {
         }
 
         nearbyTiles.clear();
-        System.out.println(this.getPosition());
     }
 
     private void handleCollide(FloatRect floatRect, Vector2f objectPosition) {

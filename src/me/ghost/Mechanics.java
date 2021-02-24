@@ -394,4 +394,10 @@ public class Mechanics {
     public boolean isWinScreenOpen() {
         return winScreenOpen;
     }
+
+    public void handleWizardMovement(){
+        if(dodgeGame!=null){
+            dodgeGame.handleWizardMovement();
+        }
+    }
 }
