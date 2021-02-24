@@ -1,5 +1,8 @@
 package me.ghost;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jsfml.graphics.FloatRect;
 
 import org.jsfml.graphics.Sprite;
@@ -11,6 +14,7 @@ public class Item extends Sprite {
     private Boolean isFound = false;
     private String itemName = "placeholder";
     private boolean hasBeenCounted = false;
+    private static List<Item> toDrawOnDashboard = new ArrayList<Item>();
 
     public Item(String itemName, float xPosition, float yPosition, Texture itemTexture) {
         this.setTexture(itemTexture);
@@ -31,11 +35,26 @@ public class Item extends Sprite {
     }
 
     public void setAsAvailableToCollect(Boolean isAvailableToCollect) {
+        if(isAvailableToCollect==true){
+            toDrawOnDashboard.add(new Item(this.getName(), 0, 0, (Texture) this.getTexture()));
+        }
         this.availableToCollect = isAvailableToCollect;
     }
 
     public void setAsFound(Boolean isFound) {
+        if(isFound==true){
+            toDrawOnDashboard.remove(this.getItemByName(this.getName()));
+        }
         this.isFound = isFound;
+    }
+
+    public Item getItemByName(String itemName){
+        for (Item singleItem : toDrawOnDashboard){
+            if(singleItem.getName().equals(itemName)){
+                return singleItem;
+            }
+        }
+        return null;
     }
 
     public FloatRect dialogueArea(float scaleFactor) {
@@ -54,6 +73,10 @@ public class Item extends Sprite {
 
     public void setAsCounted(){
         hasBeenCounted=true;
+    }
+
+    public static List<Item> getItemsToDrawOnDashboard(){
+        return toDrawOnDashboard;
     }
 
 }

@@ -185,7 +185,6 @@ public class Mechanics {
                                     if(tmp=="..."){
                                         if(((Npc) Npc.getCharacterByName("Whiskers")) != null){
                                             ((Npc) Npc.getCharacterByName("Whiskers")).setShouldDraw(true);
-                                            Boolean tmpVar = ((Npc) Npc.getCharacterByName("Whiskers")).shouldDraw();
                                         }
                                         keyPresses.put("SPACE", true);
                                     }

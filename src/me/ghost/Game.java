@@ -195,6 +195,10 @@ public class Game {
                 for (CircleShape circleShape : livesDisplay) {
                     window.draw(circleShape);
                 }
+                for(Item itemToFind : Item.getItemsToDrawOnDashboard()){
+                    System.out.println(itemToFind.getName());
+                    window.draw(itemToFind);
+                }
             }
 
 
