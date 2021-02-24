@@ -35,22 +35,23 @@ public class Item extends Sprite {
     }
 
     public void setAsAvailableToCollect(Boolean isAvailableToCollect) {
-        if(isAvailableToCollect==true){
+        if(isAvailableToCollect){
             toDrawOnDashboard.add(new Item(this.getName(), 0, 0, (Texture) this.getTexture()));
         }
         this.availableToCollect = isAvailableToCollect;
     }
 
     public void setAsFound(Boolean isFound) {
-        if(isFound==true){
+        if(isFound){
             toDrawOnDashboard.remove(this.getItemByName(this.getName()));
         }
         this.isFound = isFound;
     }
 
-    public Item getItemByName(String itemName){
+    private Item getItemByName(String itemName){
         for (Item singleItem : toDrawOnDashboard){
             if(singleItem.getName().equals(itemName)){
+                System.out.println(singleItem + " " +singleItem.getName() + "GETTING ITEM");
                 return singleItem;
             }
         }

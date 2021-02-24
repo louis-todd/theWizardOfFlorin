@@ -196,7 +196,8 @@ public class Game {
                     window.draw(circleShape);
                 }
                 for(Item itemToFind : Item.getItemsToDrawOnDashboard()){
-                    System.out.println(itemToFind.getName());
+                   // System.out.println(itemToFind.getName());
+                    System.out.println(itemToFind + " " + itemToFind.getName() + " ITEMS IN LIST");
                     window.draw(itemToFind);
                 }
             }
