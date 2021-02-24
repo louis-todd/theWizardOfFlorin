@@ -52,7 +52,7 @@ public class PauseMenu {
                 writeText("You have lost all of your lives."+ System.lineSeparator() + "  click anywhere to quit", 80, 135);
             }
         } else {
-            writeText("Congratulations...you've Won!", 80, 135);
+            writeText("Congratulations... you've Won!", 60, 150);
             writeText("Click anywhere to exit", 100, 300);
         }
 

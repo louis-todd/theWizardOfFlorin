@@ -314,6 +314,8 @@ public class Mechanics {
                         winScreen.setMouseButtonclicked(true);
                         if(event.asMouseButtonEvent() != null){
                             endScreenClicked = true;
+                            window.clear();
+                            window.close();
                         }
                     }
 
