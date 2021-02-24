@@ -96,6 +96,10 @@ public class Dialogue implements Drawable {
             toWrite.setString(toWrite.getString().substring(2));
             return "Whiskers";
         } 
+        if (toWrite.getString().substring(0, 2).equals("]]")) {
+            toWrite.setString(toWrite.getString().substring(2));
+            return "...unknown";
+        } 
         if (toWrite.getString().substring(0, 2).equals("%%")) {
             // toWrite.setString(toWrite.getString().substring(2));
             toWrite.setString("AHHHHHHH!");

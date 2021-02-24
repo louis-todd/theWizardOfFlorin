@@ -221,6 +221,9 @@ public class Mechanics {
                                 if (interactingNPC != null && interactingItem == null && interactingNPC.shouldDraw()) {
                                     interaction.setCharacterName(interactingNPC.getName());
                                     interaction.setOriginalInteractor(interactingNPC.getName());
+                                    if(interactingNPC.getName()=="Snuffles"){
+                                        interaction.setCharacterName("...");
+                                    }
                                     interaction.setTextContent(interactingNPC.getScript().get(0));
                                     handleKeyPress(keyEvent, true);
                                 }
