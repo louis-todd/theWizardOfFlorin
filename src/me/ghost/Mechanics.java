@@ -13,6 +13,12 @@ import org.jsfml.window.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * this class contains the methods for key handling generally.
+ * it can determine weather the player has started a battle, paused the game or quit the game.
+ * also handles keys for movement and dialogues
+ */
+
 public class Mechanics {
 
     private final Map<String, Boolean> keyPresses;
@@ -38,6 +44,16 @@ public class Mechanics {
     private PauseMenu winScreen;
     private boolean winScreenOpen = false;
 
+    /**
+     * main constructor for the mechanic class
+     * @param keyPresses the keys that is pressed
+     * @param window the window that the game is on.
+     * @param NPCs the NPC which is controlled like the character.
+     * @param ITEMS the items in the game
+     * @param interaction
+     * @param battleWindow
+     */
+
     public Mechanics(Map<String, Boolean> keyPresses, RenderWindow window, ArrayList<Npc> NPCs, ArrayList<Item> ITEMS, Dialogue interaction, BattleWindow battleWindow) {
         this.keyPresses = keyPresses;
         this.window = window;
@@ -48,6 +64,10 @@ public class Mechanics {
 
         this.initKeyPressesMap();
     }
+
+    /**
+     * this method sets all the keys that can be pressed to false by default.
+     */
 
     public void initKeyPressesMap() {
         this.keyPresses.put("RIGHT", false);
@@ -327,6 +347,11 @@ public class Mechanics {
         }
     }
 
+    /**
+     * this method pops up dialogues using space during the map and the battle window.
+     * it is also used to bring the next dialogue
+     */
+
     public void isDialogue() {
         // If its the first time space is pressed, set the text
         if ((keyPresses.get("SPACE"))) {
@@ -353,13 +378,31 @@ public class Mechanics {
         }
     }
 
+    /**
+     * returns the state of the battle screen
+     * if battle screen is open then True
+     * if battle screen not open then false
+     * @return True is battle screen opens and false if not open.
+     */
+
     public boolean isBattleScreenOpen() {
         return battleScreenOpen;
     }
 
+    /**
+     * return the state of the game if paused or not
+     * @return returns True if player has paused the game
+     * Returns false if player has not paused the game.
+     */
+
     public boolean isPauseMenuOpen() {
         return pauseMenuOpen;
     }
+
+    /**
+     * returns the state of the game if the player is still playing it or if they have quit
+     * @return returns false if the player is playing the game
+     */
 
     public boolean hasPlayerQuit() {
         if(pauseMenu != null){
