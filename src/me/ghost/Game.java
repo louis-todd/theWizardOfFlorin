@@ -84,7 +84,8 @@ public class Game {
     private Text loadingText = null;
     private RectangleShape loadingBar = null;
 
-    private final List<CircleShape> livesDisplay = new ArrayList<>(Arrays.asList(lifeCircle(1), lifeCircle(2), lifeCircle(3)));
+    //private final List<CircleShape> livesDisplay = new ArrayList<>(Arrays.asList(lifeCircle(1), lifeCircle(2), lifeCircle(3)));
+    private final List<Sprite> liveDisplay = new ArrayList<>(Arrays.asList(createHeart(1), createHeart(2), createHeart(3)));
     private final RectangleShape dashBoard = new RectangleShape(new Vector2f(655, 45));
 
 
@@ -196,9 +197,14 @@ public class Game {
 
                 updateDashBoardPosition(worldView);
                 window.draw(dashBoard);
-                for (CircleShape circleShape : livesDisplay) {
-                    window.draw(circleShape);
+
+//                for (CircleShape circleShape : livesDisplay) {
+//                    window.draw(circleShape);
+//                }
+                for(Sprite heart : liveDisplay){
+                    window.draw(heart);
                 }
+
                 for (Drawable item : toDraw) {
                     if (item instanceof Item) {
                         if (!((Item) item).isFound() && ((Item) item).availableToCollect()) {
@@ -229,8 +235,8 @@ public class Game {
         game.isDialogue();
 
         window.display();
-        if (this.livesDisplay.size() > this.game.getOverarchingLives() && this.livesDisplay.size() != 0) {
-            this.livesDisplay.remove(this.livesDisplay.size() - 1);
+        if (this.liveDisplay.size() > this.game.getOverarchingLives() && this.liveDisplay.size() != 0) {
+            this.liveDisplay.remove(this.liveDisplay.size() - 1);
         }
     }
 
@@ -269,10 +275,16 @@ public class Game {
         return lifeCircle;
     }
 
+    private Sprite createHeart(int positionNumber){
+        Sprite heartShape = new Sprite(TextureType.HEART.getTexture());
+        heartShape.setPosition(640 - 32 * positionNumber, 5);
+        return heartShape;
+    }
+
     private void updateLifePosition(View worldView){
         int i = 1;
-        for(CircleShape circleShape : livesDisplay){
-            circleShape.setPosition(worldView.getCenter().x + worldView.getSize().x/2 - i * 16, worldView.getCenter().y + worldView.getSize().y/2 - 25);
+        for(Sprite heart : liveDisplay){
+            heart.setPosition(worldView.getCenter().x + worldView.getSize().x/2 - i * 35, worldView.getCenter().y + worldView.getSize().y/2 - 32);
             i++;
         }
     }
