@@ -31,8 +31,11 @@ public class Mechanics {
     private PauseMenu pauseMenu;
     private BattleWindow battleWindow;
 
-    private ArrayList<Npc> NPCs = new ArrayList<>();
-    private ArrayList<Item> ITEMS = new ArrayList<>();
+    private ArrayList<Npc> NPCs;
+    private ArrayList<Item> ITEMS;
+
+    private int overarchingLives = 3;
+    private boolean loseScreenClicked = false;
 
     private Boolean dialogueOpen = false;
 
@@ -138,7 +141,7 @@ public class Mechanics {
                         }
                         // if first B, set to display battle window
                         else {
-                            pauseMenu = new PauseMenu();
+                            pauseMenu = new PauseMenu(true);
                             handleKeyPress(keyEvent, true);
                         }
                     }
@@ -293,6 +296,14 @@ public class Mechanics {
                             pauseMenu.setMousePosition(new Vector2f(event.asMouseButtonEvent().position));
                         }
                     }
+                    if(dodgeGame!=null) {
+                        if (dodgeGame.isEndScreenOpen()) {
+                            dodgeGame.getLostScreen().setMouseButtonclicked(true);
+                            if (event.asMouseButtonEvent() != null) {
+                                loseScreenClicked = true;
+                            }
+                        }
+                    }
 
                 default:
                     break;
@@ -338,7 +349,25 @@ public class Mechanics {
         if(pauseMenu != null){
             return pauseMenu.playerHasQuit();
         }
+        if(dodgeGame != null) {
+            if (dodgeGame.isEndScreenOpen()) {
+               if(loseScreenClicked){
+                   return true;
+               }
+            }
+        }
         return false;
     }
 
+    public int getOverarchingLives() {
+        return overarchingLives;
+    }
+
+    public void setOverarchingLives(int overarchingLives) {
+        this.overarchingLives = overarchingLives;
+    }
+
+    public void setPauseMenuOpen(boolean pauseMenuOpen) {
+        this.pauseMenuOpen = pauseMenuOpen;
+    }
 }

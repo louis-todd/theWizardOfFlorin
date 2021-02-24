@@ -40,6 +40,7 @@ public enum TextureType {
     BACK3("wizardImages/back3.png"),
     BACK4("wizardImages/back4.png"),
 
+
     DUCK("Items/duck.png"),
     ICE("Items/ice.png"),
     TAMBOURINE("Items/tambourine.png"),
@@ -48,6 +49,9 @@ public enum TextureType {
     WOOD("Items/plank.png"),
     YARN("Items/yarn.png"),
     TREE("tree.png"),
+
+    HITWIZARD("wizardImages/hit-wizard.png"),
+
 
     TEST("tiles/tile200.png32")
     ;

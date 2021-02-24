@@ -1,25 +1,19 @@
 package me.ghost.battle.dodge;
 
 import me.ghost.CaseInsensitiveMap;
-import me.ghost.Dialogue;
 import me.ghost.Mechanics;
+import me.ghost.PauseMenu;
 import me.ghost.battle.WinLoseScreen;
 import me.ghost.character.MoveableCharacter;
 import me.ghost.character.Npc;
-import me.ghost.data.FontType;
 import me.ghost.data.TextureType;
 import me.ghost.battle.BattleWindow;
 import org.jsfml.graphics.*;
-import org.jsfml.graphics.Font;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
-import org.jsfml.window.Mouse;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.KeyEvent;
-import org.jsfml.window.event.MouseButtonEvent;
-import org.jsfml.window.event.MouseEvent;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -57,6 +51,9 @@ public class DodgeGame {
     private int stepIndex = 0;
     private int walkFrameControl = 0;
     private int walkingPace = 5;
+    private boolean livesChaged = false;
+    private boolean endScreenOpen = false;
+    private PauseMenu lostScreen;
 
     public DodgeGame(Npc setBattleNpc, String difficulty, Mechanics game) {
         this.battleNpc = new Npc(setBattleNpc.getName(), battleWindow.getGhostAreaCentre().x - 16, battleWindow.getGhostAreaCentre().y - 80, (Texture) setBattleNpc.getTexture(), 0);
@@ -71,7 +68,6 @@ public class DodgeGame {
         this.setDifficulty(difficulty);
         this.initKeyPresses();
         addDialogue();
-
     }
 
     private void initKeyPresses(){
@@ -175,12 +171,22 @@ public class DodgeGame {
                 this.battleWindow.getToDraw().forEach(window::draw);
             }
         } else {
-            this.battleWindow.getToDraw().forEach(window::draw);;
+            this.battleWindow.getToDraw().forEach(window::draw);
             if (lives <= 0) {
                 battleLost = true;
                 WinLoseScreen loseScreen = new WinLoseScreen(false);
-                loseScreen.getToDraw().forEach(window::draw);
-                checkMouse(loseScreen);
+                if(!this.livesChaged){
+                    this.game.setOverarchingLives(this.game.getOverarchingLives() - 1);
+                    this.livesChaged = true;
+                }
+                if(this.game.getOverarchingLives() != 0) {
+                    loseScreen.getToDraw().forEach(window::draw);
+                    checkMouse(loseScreen);
+                } else {
+                    lostScreen = new PauseMenu(false);
+                    lostScreen.draw(window);
+                    endScreenOpen = true;
+                }
             } else {
                 battleWon = true;
                 WinLoseScreen winScreen = new WinLoseScreen(true);
@@ -204,6 +210,9 @@ public class DodgeGame {
             }
             if(lives == 0){
                 wonOrLost = true;
+            }
+            if(invincible){
+                this.wizard.setTexture(TextureType.HITWIZARD.getTexture());
             }
         }
     }
@@ -249,6 +258,7 @@ public class DodgeGame {
             this.mouseButtonclicked = false;
         }
     }
+
 
 
     private void handleWizardMovement(){
@@ -366,5 +376,13 @@ public class DodgeGame {
 
     public Boolean attemptedToClose(){
         return attemptedToClose;
+    }
+
+    public boolean isEndScreenOpen() {
+        return endScreenOpen;
+    }
+
+    public PauseMenu getLostScreen() {
+        return lostScreen;
     }
 }

@@ -6,7 +6,6 @@ import org.jsfml.system.Vector2f;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 public class WinLoseScreen extends RectangleShape {
     private List<Drawable> toDraw = new ArrayList<>();
