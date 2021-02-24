@@ -254,6 +254,7 @@ public class DodgeGame {
         if(this.mouseButtonclicked && mousePosition!=null && winLoseScreen!=null){
             if(mousePosition.x <= winLoseScreen.getExitButton().getPosition().x + winLoseScreen.getExitButton().getSize().x && mousePosition.x >= winLoseScreen.getPosition().x &&
                     mousePosition.y <= winLoseScreen.getExitButton().getPosition().y + winLoseScreen.getExitButton().getSize().y && mousePosition.y >= winLoseScreen.getExitButton().getPosition().y){
+                    winLoseScreen.getExitButton().setFillColor(new Color(255, 255, 255));
                     attemptedToClose=true;
             }
             this.mouseButtonclicked = false;
