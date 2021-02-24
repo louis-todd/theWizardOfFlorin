@@ -195,6 +195,11 @@ public class Game {
                 for (CircleShape circleShape : livesDisplay) {
                     window.draw(circleShape);
                 }
+                if(this.game.isWinScreenOpen()){
+                    this.window.clear();
+                    this.window.setView(battleView);
+                    this.game.getWinScreen().draw(window);
+                }
             }
 
 

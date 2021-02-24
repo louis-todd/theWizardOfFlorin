@@ -35,7 +35,8 @@ public class Mechanics {
     private boolean endScreenClicked = false;
 
     private Boolean dialogueOpen = false;
-    PauseMenu winScreen;
+    private PauseMenu winScreen;
+    private boolean winScreenOpen = false;
 
     public Mechanics(Map<String, Boolean> keyPresses, RenderWindow window, ArrayList<Npc> NPCs, ArrayList<Item> ITEMS, Dialogue interaction, BattleWindow battleWindow) {
         this.keyPresses = keyPresses;
@@ -200,6 +201,7 @@ public class Mechanics {
                                         else{
                                             System.out.println("PLAYER HAS WON GAME");
                                             winScreen = new PauseMenu(false, true);
+                                            winScreenOpen = true;
                                         }
                                     }
                                     dialogueOpen=false;
@@ -379,5 +381,13 @@ public class Mechanics {
 
     public void setPauseMenuOpen(boolean pauseMenuOpen) {
         this.pauseMenuOpen = pauseMenuOpen;
+    }
+
+    public PauseMenu getWinScreen() {
+        return winScreen;
+    }
+
+    public boolean isWinScreenOpen() {
+        return winScreenOpen;
     }
 }
