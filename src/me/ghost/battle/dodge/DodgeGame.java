@@ -68,8 +68,6 @@ public class DodgeGame {
         this.setDifficulty(difficulty);
         this.initKeyPresses();
         addDialogue();
-        this.game.setOverarchingLives(1);
-
     }
 
     private void initKeyPresses(){
