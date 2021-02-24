@@ -189,6 +189,7 @@ public class Game {
                 window.setView(worldView);
 
                 updateLifePosition(worldView);
+                updateItemPosition(worldView);
 
 
                 updateDashBoardPosition(worldView);
@@ -197,8 +198,6 @@ public class Game {
                     window.draw(circleShape);
                 }
                 for(Item itemToFind : Item.getItemsToDrawOnDashboard()){
-                   // System.out.println(itemToFind.getName());
-                    // System.out.println(itemToFind + " " + itemToFind.getName() + " ITEMS IN LIST");
                     window.draw(itemToFind);
                 }
             }
@@ -274,6 +273,14 @@ public class Game {
         int i = 1;
         for(CircleShape circleShape : livesDisplay){
             circleShape.setPosition(worldView.getCenter().x + worldView.getSize().x/2 - i * 16, worldView.getCenter().y + worldView.getSize().y/2 - 25);
+            i++;
+        }
+    }
+
+    private void updateItemPosition(View worldView){
+        int i = 1;
+        for(Item itemToFind : Item.getItemsToDrawOnDashboard()){
+            itemToFind.setPosition(worldView.getCenter().x - worldView.getSize().x/2 + i * 36, worldView.getCenter().y + worldView.getSize().y/2 - 30);
             i++;
         }
     }
