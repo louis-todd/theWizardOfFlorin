@@ -2,18 +2,15 @@ package me.ghost;
 
 import me.ghost.battle.BattleWindow;
 import me.ghost.battle.dodge.DodgeGame;
-import me.ghost.PauseMenu;
 import me.ghost.character.MoveableCharacter;
 import me.ghost.character.Npc;
 import org.jsfml.graphics.RenderWindow;
-import org.jsfml.graphics.View;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.KeyEvent;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class Mechanics {
@@ -35,9 +32,11 @@ public class Mechanics {
     private ArrayList<Item> ITEMS;
 
     private int overarchingLives = 3;
-    private boolean loseScreenClicked = false;
+    private boolean endScreenClicked = false;
 
     private Boolean dialogueOpen = false;
+    private PauseMenu winScreen;
+    private boolean winScreenOpen = false;
 
     public Mechanics(Map<String, Boolean> keyPresses, RenderWindow window, ArrayList<Npc> NPCs, ArrayList<Item> ITEMS, Dialogue interaction, BattleWindow battleWindow) {
         this.keyPresses = keyPresses;
@@ -141,7 +140,7 @@ public class Mechanics {
                         }
                         // if first B, set to display battle window
                         else {
-                            pauseMenu = new PauseMenu(true);
+                            pauseMenu = new PauseMenu(true, false);
                             handleKeyPress(keyEvent, true);
                         }
                     }
@@ -194,8 +193,15 @@ public class Mechanics {
                                     keyPresses.put("SPACE", false);
                                     interactingNPC.resetScript();
                                     if(interactingNPC.hasCompletedTask() || interactingNPC.getName()=="Mayor"){
-                                        interactingNPC.setAssociatedNPCsToShow();
-                                        interactingNPC.setShouldDraw(false);
+                                        if(interactingNPC.getName() != "Gluttony"){
+                                            interactingNPC.setAssociatedNPCsToShow();
+                                            interactingNPC.setShouldDraw(false);
+                                        }
+                                        else{
+                                            System.out.println("PLAYER HAS WON GAME");
+                                            winScreen = new PauseMenu(false, true);
+                                            winScreenOpen = true;
+                                        }
                                     }
                                     dialogueOpen=false;
                                 }
@@ -299,8 +305,16 @@ public class Mechanics {
                         if (dodgeGame.isEndScreenOpen()) {
                             dodgeGame.getLostScreen().setMouseButtonclicked(true);
                             if (event.asMouseButtonEvent() != null) {
-                                loseScreenClicked = true;
+                                endScreenClicked = true;
                             }
+                        }
+                    }
+                    if(winScreen != null){
+                        winScreen.setMouseButtonclicked(true);
+                        if(event.asMouseButtonEvent() != null){
+                            endScreenClicked = true;
+                            window.clear();
+                            window.close();
                         }
                     }
 
@@ -350,7 +364,7 @@ public class Mechanics {
         }
         if(dodgeGame != null) {
             if (dodgeGame.isEndScreenOpen()) {
-               if(loseScreenClicked){
+               if(endScreenClicked){
                    return true;
                }
             }
@@ -368,5 +382,13 @@ public class Mechanics {
 
     public void setPauseMenuOpen(boolean pauseMenuOpen) {
         this.pauseMenuOpen = pauseMenuOpen;
+    }
+
+    public PauseMenu getWinScreen() {
+        return winScreen;
+    }
+
+    public boolean isWinScreenOpen() {
+        return winScreenOpen;
     }
 }

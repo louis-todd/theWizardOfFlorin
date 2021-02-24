@@ -89,7 +89,8 @@ public class DodgeGame {
         int minSides = 3;
         int maxSides = 10;
         Stack<Projectile> projectileStack = new Stack<>();
-        for(int i = 0; i < 1; i++){
+//        for(int i = 0; i < numberProjectiles; i++){
+        for(int i = 0; i < 2; i++){
             Projectile push = projectileStack.push(new Projectile(6, ThreadLocalRandom.current().nextInt(maxSides - minSides + 1) + minSides));
 
             push.thrown(this.battleNpc);
@@ -183,7 +184,7 @@ public class DodgeGame {
                     loseScreen.getToDraw().forEach(window::draw);
                     checkMouse(loseScreen);
                 } else {
-                    lostScreen = new PauseMenu(false);
+                    lostScreen = new PauseMenu(false, false);
                     lostScreen.draw(window);
                     endScreenOpen = true;
                 }
