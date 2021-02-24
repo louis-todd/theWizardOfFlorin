@@ -255,19 +255,21 @@ public class Mechanics {
                                 keyPresses.put("B", false);
                                 battleScreenOpen = false;
                             }
-                            if(dodgeGame.isEndScreenOpen()){
-                                System.out.println("END SCREEN IS OPEN");
-                                dodgeGame.getLostScreen().setMouseButtonclicked(true);
-                                if(event.asMouseButtonEvent()!=null){
-                                    dodgeGame.getLostScreen().setMousePosition(new Vector2f(event.asMouseButtonEvent().position));
-                                }
-                            }
                         }
                     }
                     if(pauseMenu!=null){
                         pauseMenu.setMouseButtonclicked(true);
                         if(event.asMouseButtonEvent()!=null){
                             pauseMenu.setMousePosition(new Vector2f(event.asMouseButtonEvent().position));
+                        }
+                    }
+                    if(dodgeGame!=null){
+                        if(dodgeGame.isEndScreenOpen()){
+                            dodgeGame.getLostScreen().setMouseButtonclicked(true);
+                            if(event.asMouseButtonEvent()!=null){
+                                System.out.println("QUIT SCREEN PRESSED");
+                                dodgeGame.getLostScreen().setMousePosition(new Vector2f(event.asMouseButtonEvent().position));
+                            }
                         }
                     }
 
@@ -314,9 +316,7 @@ public class Mechanics {
             return pauseMenu.playerHasQuit();
         }
         if(dodgeGame != null) {
-            System.out.println("GETTING IN THIS");
             if (dodgeGame.isEndScreenOpen()) {
-                System.out.println("NOW IN THIS");
                 return dodgeGame.getLostScreen().playerHasQuit();
             }
         }
