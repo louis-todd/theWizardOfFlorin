@@ -95,8 +95,6 @@ public class Game {
         worldView.setCenter(wizard.getPosition());
         toDraw.addAll(Arrays.asList(itemsToDraw));
         mayor.setShouldDraw(true);
-        // whiskers.setShouldDraw(true);
-        npc3.setShouldDraw(true);
         window.setFramerateLimit(120);
         this.dashBoard.setFillColor(Color.BLACK);
     }
