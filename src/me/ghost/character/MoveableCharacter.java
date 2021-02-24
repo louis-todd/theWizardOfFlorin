@@ -86,7 +86,7 @@ public class MoveableCharacter extends Character {
                 }
             }
             if ((keyPresses.get("DOWN") && !keyPresses.get("SPACE") && !keyPresses.get("ESCAPE"))) {
-                if (this.getPosition().y - currentMap.getMapBounds().height < 0) {
+                if (this.getPosition().y - currentMap.getMapBounds().height + 21 < 0) {
                     if (keyPresses.get("LEFT")) {
                         walkLeft();
                     } else if (keyPresses.get("RIGHT")) {
@@ -238,8 +238,8 @@ public class MoveableCharacter extends Character {
             x = mapView.getSize().x / 2;
             changed = true;
         }
-        if (position.y > (currentMap.getDrawHeight() + 1) * 16 - mapView.getSize().y / 2) {
-            y = (currentMap.getDrawHeight() + 1) * 16 - mapView.getSize().y / 2;
+        if (position.y > (currentMap.getDrawHeight() + 1) * 16 - mapView.getSize().y / 2 + 32) {
+            y = (currentMap.getDrawHeight() + 1) * 16 - mapView.getSize().y / 2 + 32;
             changed = true;
         }
         if (position.y < mapView.getSize().y / 2) {
