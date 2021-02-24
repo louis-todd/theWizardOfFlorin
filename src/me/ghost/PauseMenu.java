@@ -44,7 +44,7 @@ public class PauseMenu {
         if(pause) {
             writeText("Paused...", 155, 150);
         } else {
-            writeText("You have lost all of your lives, you have lost.", 155, 150);
+            writeText("You have lost all of your lives\n            you have lost.", 80, 135);
         }
         writeText("Press here to quit...", 120, 300);
     }
@@ -73,11 +73,9 @@ public class PauseMenu {
 
     public void writeText(String function, int x, int y) {
         // Set and format the character's name
-        text = new Text(function, font, 20) {
-            {
-                this.setPosition(x + 120, y + 20);
-            }
-        };
+        text = new Text(function, font, 20);
+        text.setPosition(x + 120, y + 20);
+
 
         toDraw.add(text);
     }
