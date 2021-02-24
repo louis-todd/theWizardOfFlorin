@@ -146,7 +146,7 @@ public class Mechanics {
                     // Calculate which NPC is being interacted with
                     interactingNPC = null;
                     for (Npc npc : NPCs) {
-                        if (wizard.dialogueAreaCollide(npc) && npc.shouldDraw()) {
+                        if (wizard.dialogueAreaCollide(npc) && npc.shouldDraw() && npc.getName()!="Whiskers") {
                             interactingNPC = npc;
                         }
                     }
@@ -167,6 +167,7 @@ public class Mechanics {
                         // If space has already been pressed
                         if (keyPresses.get("SPACE")) {
                             if (interactingNPC != null & interactingItem == null && interactingNPC.shouldDraw() && !battleScreenOpen) {
+                                System.out.println("current is " + interactingNPC.getCurrentIndex() + "and size is " + interactingNPC.getScript().size());
                                 // if still tiles to step through do
                                 if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().size()) {
                                     interaction.setTextContent(String.valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
@@ -177,6 +178,13 @@ public class Mechanics {
                                         dodgeGame = new DodgeGame(interactingNPC, "EASY", this);
                                         keyPresses.put("B", true);
                                         interaction.setCharacterName(interaction.getCharacterName());
+                                    }
+                                    if(tmp=="..."){
+                                        if(((Npc) Npc.getCharacterByName("Whiskers")) != null){
+                                            ((Npc) Npc.getCharacterByName("Whiskers")).setShouldDraw(true);
+                                            Boolean tmpVar = ((Npc) Npc.getCharacterByName("Whiskers")).shouldDraw();
+                                        }
+                                        keyPresses.put("SPACE", true);
                                     }
                                 }
                                 // if at tile limit, close

@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
+
 public class MoveableCharacter extends Character {
 
     private boolean wizardColliding;
@@ -22,6 +24,7 @@ public class MoveableCharacter extends Character {
     private int walkFrameControl = 0;
     private int walkingPace = 2;
     private final List<Tile> nearbyTiles = new ArrayList<>();
+    private Npc whiskers;
 
     public MoveableCharacter(String characterName, float xPosition, float yPosition, Texture characterTexture, int expectedNumberOfItems) {
         super(characterName, xPosition, yPosition, characterTexture, expectedNumberOfItems);
@@ -34,9 +37,10 @@ public class MoveableCharacter extends Character {
     }
 
 
-    public void moveCharacter(Map<String, Boolean> keyPresses, List<Drawable> toDraw, View worldView, GameMap currentMap) {
+    public void moveCharacter(Map<String, Boolean> keyPresses, List<Drawable> toDraw, View worldView, GameMap currentMap, Npc whiskers) {
         Npc npcCollide = null;
         Item itemCollide = null;
+        this.whiskers = whiskers;
 
         for (Drawable obstacle : toDraw) {
             if (this.collides(obstacle)) {
@@ -59,12 +63,14 @@ public class MoveableCharacter extends Character {
                 if (this.getPosition().x - currentMap.getMapBounds().width < 0) {
                     this.walkRight();
                     this.move(walkingPace, 0);
+                    whiskers.move(walkingPace, 0);
                 }
             }
             if ((keyPresses.get("LEFT") && !keyPresses.get("SPACE") && !keyPresses.get("ESCAPE"))) {
                 if (this.getPosition().x > currentMap.getMapBounds().left) {
                     this.walkLeft();
                     this.move(-(walkingPace), 0);
+                    whiskers.move(-(walkingPace), 0);
                 }
             }
             if ((keyPresses.get("UP") && !keyPresses.get("SPACE") && !keyPresses.get("ESCAPE"))) {
@@ -77,6 +83,7 @@ public class MoveableCharacter extends Character {
                         walkBack();
                     }
                     this.move(0, -(walkingPace));
+                    whiskers.move(0, -(walkingPace));
                 }
             }
             if ((keyPresses.get("DOWN") && !keyPresses.get("SPACE") && !keyPresses.get("ESCAPE"))) {
@@ -89,6 +96,7 @@ public class MoveableCharacter extends Character {
                         walkForward();
                     }
                     this.move(0, (walkingPace));
+                    whiskers.move(0, (walkingPace));
                 }
             }
             setViewPosition(worldView, this.getPosition(), currentMap);
@@ -112,16 +120,20 @@ public class MoveableCharacter extends Character {
         if (Math.abs(objectPosition.y - this.getPosition().y) < floatRect.height) {
             if (objectPosition.x > this.getPosition().x) {
                 this.move(-xDifference, 0);
+                whiskers.move(-xDifference, 0);
             }
             if (objectPosition.x < this.getPosition().x) {
                 this.move(xDifference, 0);
+                whiskers.move(xDifference, 0);
             }
         } else {
             if (objectPosition.y > this.getPosition().y) {
                 this.move(0, -yDifference);
+                whiskers.move(0, -yDifference);
             }
             if (objectPosition.y < this.getPosition().y) {
                 this.move(0, yDifference);
+                whiskers.move(0, yDifference);
             }
         }
 

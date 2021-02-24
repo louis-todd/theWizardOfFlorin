@@ -27,6 +27,7 @@ public enum TextureType {
     RIGHTMOVEMENT8("wizardImages/right-movement8.png"),
 
     GHOST("ghost.png"),
+    WHISKERS("whiskers.png"),
 
     FRONT1("wizardImages/front1.png"),
     FRONT2("wizardImages/front2.png"),

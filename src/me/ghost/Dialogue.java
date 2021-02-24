@@ -101,6 +101,11 @@ public class Dialogue implements Drawable {
             toWrite.setString("AHHHHHHH!");
             return "BATTLE";
         } 
+        if (toWrite.getString().substring(0, 2).equals("||")) {
+            // toWrite.setString(toWrite.getString().substring(2));
+            toWrite.setString("...");
+            return "...";
+        } 
         else {
             return originalInteractor;
         }
