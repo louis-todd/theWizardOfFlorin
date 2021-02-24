@@ -34,7 +34,7 @@ public class PauseMenu {
     private boolean mouseButtonclicked;
     private Vector2f mousePosition;
     private Boolean quited = false;
-    private final RectangleShape background = createTexturedRectangle(640, 480, 0, 0, backgroundTexture);
+    private final RectangleShape background = createTexturedRectangle(640, 480, 0, 0, TextureType.SQUARE16.getTexture());
     private final RectangleShape pauseBackground = createSimpleRectangle(buttonLength, buttonHeight, 165, 150, 120, 119, 161);
     private final RectangleShape exitBackground = createSimpleRectangle(buttonLength, buttonHeight, 165, 300, 120, 119, 161);
     private Drawable[] itemsToDraw = {background, pauseBackground, exitBackground};
