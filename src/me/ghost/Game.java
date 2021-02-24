@@ -54,6 +54,7 @@ public class Game {
     private ArrayList<Item> ITEMS = new ArrayList<Item>(Arrays.asList(itemArray));
 
     private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 150, TextureType.FRONT1.getTexture(), ITEMS);
+
     // private final MoveableCharacter whiskers = new MoveableCharacter("Name Placeholder", 300, 170, TextureType.WHISKERS.getTexture(), ITEMS);
     private Npc whiskers = new Npc("Whiskers", 300, 170, TextureType.WHISKERS.getTexture(), 0);
 
@@ -83,6 +84,9 @@ public class Game {
     private Text loadingText = null;
     private RectangleShape loadingBar = null;
 
+    private final List<CircleShape> livesDisplay = new ArrayList<>(Arrays.asList(lifeCircle(1), lifeCircle(2), lifeCircle(3)));
+    private final RectangleShape dashBoard = new RectangleShape(new Vector2f(655, 45));
+
 
     /**
      * Constructor for the game class
@@ -93,6 +97,7 @@ public class Game {
         mayor.setShouldDraw(true);
         // whiskers.setShouldDraw(true);
         window.setFramerateLimit(120);
+        this.dashBoard.setFillColor(Color.BLACK);
     }
 
     /**
@@ -174,16 +179,24 @@ public class Game {
     private void updateWindow() {
         window.clear(Color.RED);
 
-        if(game.isBattleScreenOpen()){
-            window.setView(battleView);
-        }
-        else if(game.isPauseMenuOpen()){
-            window.setView(pauseView);
-        }
-        else{
-            drawTiles();
-            window.setView(worldView);
-        }
+            if (game.isBattleScreenOpen()) {
+                window.setView(battleView);
+            } else if (game.isPauseMenuOpen()) {
+                window.setView(pauseView);
+            } else {
+                drawTiles();
+                window.setView(worldView);
+
+                updateLifePosition(worldView);
+
+
+                updateDashBoardPosition(worldView);
+                window.draw(dashBoard);
+                for (CircleShape circleShape : livesDisplay) {
+                    window.draw(circleShape);
+                }
+            }
+
 
         // if (!game.isBattleScreenOpen()) {
         //     drawTiles();
@@ -211,6 +224,9 @@ public class Game {
         game.isDialogue();
 
         window.display();
+        if (this.livesDisplay.size() > this.game.getOverarchingLives() && this.livesDisplay.size() != 0) {
+            this.livesDisplay.remove(this.livesDisplay.size() - 1);
+        }
     }
 
     private void drawTiles() {
@@ -239,6 +255,26 @@ public class Game {
                 Math.max((int) (worldView.getCenter().y / tileSize) - (cameraWidth / 2), 0));
         this.drawingBounds.put("BottomCameraEdge",
                 Math.min((int) (worldView.getCenter().y / tileSize) + (cameraWidth / 2), topLayer.getDrawHeight()));
+    }
+
+    private CircleShape lifeCircle(int positionNumber){
+        CircleShape lifeCircle = new CircleShape(6);
+        lifeCircle.setFillColor(Color.RED);
+        lifeCircle.setPosition(640-16*positionNumber, 5);
+        return lifeCircle;
+    }
+
+    private void updateLifePosition(View worldView){
+        int i = 1;
+        for(CircleShape circleShape : livesDisplay){
+            circleShape.setPosition(worldView.getCenter().x + worldView.getSize().x/2 - i * 16, worldView.getCenter().y + worldView.getSize().y/2 - 25);
+            i++;
+        }
+    }
+
+    private void updateDashBoardPosition(View worldView){
+        this.dashBoard.setPosition(worldView.getCenter().x - worldView.getSize().x/2 - 10, worldView.getCenter().y + worldView.getSize().y/2 - 35);
+
     }
 
 }
