@@ -12,7 +12,6 @@ import me.ghost.map.Tile;
 import org.jsfml.graphics.*;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.VideoMode;
-import sun.security.mscapi.CPublicKey;
 
 import java.util.ArrayList;
 import java.util.Arrays;
