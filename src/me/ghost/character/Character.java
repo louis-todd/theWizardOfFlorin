@@ -198,7 +198,6 @@ public abstract class Character extends Sprite {
                             for(String itemName : RiddleItems){
                                 if (potentialItem.getName().equals(itemName)) {
                                     if(!associatedItems.contains(potentialItem)) {
-                                        System.out.println("Got item: " + itemName);
                                         associatedItems.add(potentialItem);
                                     }
                                     potentialItem.setAsAvailableToCollect(true);
@@ -215,8 +214,7 @@ public abstract class Character extends Sprite {
             csvReader.close();
             
         } catch (Exception e){
-            System.out.println("1");
-            // e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
@@ -231,8 +229,7 @@ public abstract class Character extends Sprite {
             }
             csvReader.close();
         } catch (Exception e){
-             System.out.println("2");
-            // e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
@@ -286,8 +283,7 @@ public abstract class Character extends Sprite {
         try {
                 fileStream = new DataInputStream(new FileInputStream(fileName));
             } catch (Exception e) {
-                // e.printStackTrace();
-                 System.out.println("3");
+                e.printStackTrace();
             }
             return fileStream;
     }
@@ -355,33 +351,27 @@ public abstract class Character extends Sprite {
     // private Npc npc9 = new Npc("Tree", 950, 300, TextureType.TREE.getTexture(), 0);
 
     public void setAssociatedNPCsToShow(){
-        System.out.println("Getting associated characters for..." + this.characterName);
         switch (this.characterName) {
             case "Mayor":
                 if(Character.getCharacterByName("Snuffles") instanceof Npc){
-                    System.out.println("1");
                     ((Npc) Character.getCharacterByName("Snuffles")).setShouldDraw(true);
                 }
                 break;
             case "Snuffles":
                 if(Character.getCharacterByName("Tree") instanceof Npc){
-                    System.out.println("2");
                     ((Npc) Character.getCharacterByName("Tree")).setShouldDraw(true);
                 }
                 break;
             case "Tree":
                 if(Character.getCharacterByName("CrazyJoe") instanceof Npc){
-                    System.out.println("3");
                     ((Npc) Character.getCharacterByName("CrazyJoe")).setShouldDraw(true);
                 }
                 if(Character.getCharacterByName("Summer") instanceof Npc){
-                    System.out.println("4");
                     ((Npc) Character.getCharacterByName("Summer")).setShouldDraw(true);
                 }
                 break;
             case "CrazyJoe":
                 if(Character.getCharacterByName("PirateJack") instanceof Npc){
-                    System.out.println("5");
                     ((Npc) Character.getCharacterByName("PirateJack")).setShouldDraw(true);
                 }
                 break;
@@ -389,13 +379,11 @@ public abstract class Character extends Sprite {
             //     associatedNPCs.add(Character.getCharacterByName("Snuffles"));
             // break;
             case "PirateJack":
-                System.out.println("6");
                 if(Character.getCharacterByName("Sibirius") instanceof Npc){
                     ((Npc) Character.getCharacterByName("Sibirius")).setShouldDraw(true);
                 }
                 break;
             case "Sibirius":
-                System.out.println("7");
                 if(Character.getCharacterByName("Gluttony") instanceof Npc){
                     ((Npc) Character.getCharacterByName("Gluttony")).setShouldDraw(true);
                 }
@@ -404,7 +392,6 @@ public abstract class Character extends Sprite {
             //     associatedNPCs.add(Character.getCharacterByName("Snuffles"));
             // break;
             default:
-                System.out.println("8");
                 break;
         }
     }

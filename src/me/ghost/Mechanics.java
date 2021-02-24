@@ -169,7 +169,6 @@ public class Mechanics {
                         // If space has already been pressed
                         if (keyPresses.get("SPACE")) {
                             if (interactingNPC != null & interactingItem == null && interactingNPC.shouldDraw() && !battleScreenOpen) {
-                                System.out.println("current is " + interactingNPC.getCurrentIndex() + "and size is " + interactingNPC.getScript().size());
                                 // if still tiles to step through do
                                 if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().size()) {
                                     interaction.setTextContent(String.valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
@@ -177,14 +176,18 @@ public class Mechanics {
                                     String tmp = interaction.getCharacterName();
                                     interaction.setCharacterName(tmp);
                                     if(tmp=="BATTLE"){
-                                        dodgeGame = new DodgeGame(interactingNPC, "EASY", this);
+                                        if(interactingNPC.getBattleDifficulty()!=""){
+                                            dodgeGame = new DodgeGame(interactingNPC, interactingNPC.getBattleDifficulty(), this);
+                                        }
+                                        else{
+                                            dodgeGame = new DodgeGame(interactingNPC, "EASY", this);
+                                        }
                                         keyPresses.put("B", true);
                                         interaction.setCharacterName(interaction.getCharacterName());
                                     }
                                     if(tmp=="..."){
                                         if(((Npc) Npc.getCharacterByName("Whiskers")) != null){
                                             ((Npc) Npc.getCharacterByName("Whiskers")).setShouldDraw(true);
-                                            Boolean tmpVar = ((Npc) Npc.getCharacterByName("Whiskers")).shouldDraw();
                                         }
                                         keyPresses.put("SPACE", true);
                                     }
@@ -199,7 +202,6 @@ public class Mechanics {
                                             interactingNPC.setShouldDraw(false);
                                         }
                                         else{
-                                            System.out.println("PLAYER HAS WON GAME");
                                             winScreen = new PauseMenu(false, true);
                                             winScreenOpen = true;
                                         }

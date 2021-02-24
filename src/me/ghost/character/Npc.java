@@ -8,8 +8,9 @@ import me.ghost.Item;
 public class Npc extends Character {
 
     private Boolean shouldDraw = false;
+    private String battleDifficulty = "EASY";
 
-    public Npc(String characterName, float xPosition, float yPosition, Texture npcTexture, int expectedNumberOfItems) {
+    public Npc(String characterName, float xPosition, float yPosition, Texture npcTexture, int expectedNumberOfItems, String battleDifficulty) {
         super(characterName, xPosition, yPosition, npcTexture, expectedNumberOfItems);
     }
 
@@ -29,6 +30,10 @@ public class Npc extends Character {
 
     public void setShouldDraw(Boolean shouldDraw) {
         this.shouldDraw = shouldDraw;
+    }
+
+    public String getBattleDifficulty(){
+        return battleDifficulty;
     }
 
 }

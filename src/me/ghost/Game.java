@@ -56,17 +56,17 @@ public class Game {
     private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 150, TextureType.FRONT1.getTexture(), ITEMS);
 
     // private final MoveableCharacter whiskers = new MoveableCharacter("Name Placeholder", 300, 170, TextureType.WHISKERS.getTexture(), ITEMS);
-    private Npc whiskers = new Npc("Whiskers", 300, 170, TextureType.WHISKERS.getTexture(), 0);
+    private Npc whiskers = new Npc("Whiskers", 300, 170, TextureType.WHISKERS.getTexture(), 0, "");
 
     // private Npc npc1 = new Npc("TestPerson", 150, 300, TextureType.GHOST.getTexture(), 3);
-    private Npc mayor = new Npc("Mayor", 250, 300, TextureType.GHOST.getTexture(), 0);
-    private Npc npc3 = new Npc("CrazyJoe", 350, 300, TextureType.GHOST.getTexture(), 4);
-    private Npc npc4 = new Npc("Gluttony", 450, 300, TextureType.GHOST.getTexture(), 0);
-    private Npc npc5 = new Npc("PirateJack", 550, 300, TextureType.GHOST.getTexture(), 1);
-    private Npc npc6 = new Npc("Sibirius", 650, 300, TextureType.GHOST.getTexture(), 0);
-    private Npc npc7 = new Npc("Snuffles", 750, 300, TextureType.SNUFFLES.getTexture(), 0);
-    private Npc npc8 = new Npc("Summer", 850, 300, TextureType.GHOST.getTexture(), 3);
-    private Npc npc9 = new Npc("Tree", 950, 300, TextureType.TREE.getTexture(), 0);
+    private Npc mayor = new Npc("Mayor", 250, 300, TextureType.GHOST.getTexture(), 0, "");
+    private Npc npc3 = new Npc("CrazyJoe", 350, 300, TextureType.GHOST.getTexture(), 4, "");
+    private Npc npc4 = new Npc("Gluttony", 450, 300, TextureType.GHOST.getTexture(), 0, "HARD");
+    private Npc npc5 = new Npc("PirateJack", 550, 300, TextureType.GHOST.getTexture(), 1, "");
+    private Npc npc6 = new Npc("Sibirius", 650, 300, TextureType.GHOST.getTexture(), 0, "INTERMEDIATE");
+    private Npc npc7 = new Npc("Snuffles", 750, 300, TextureType.SNUFFLES.getTexture(), 0, "EASY");
+    private Npc npc8 = new Npc("Summer", 850, 300, TextureType.GHOST.getTexture(), 3, "");
+    private Npc npc9 = new Npc("Tree", 950, 300, TextureType.TREE.getTexture(), 0, "EASY");
 
     private Npc[] npcArray = { mayor, npc3, npc4, npc5, npc6, npc7, npc8, npc9, whiskers };
     // private Npc[] npcArray = { mayor, npc3, npc4, npc5, npc6, npc7, npc8, npc9 };

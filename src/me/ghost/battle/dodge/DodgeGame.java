@@ -56,7 +56,7 @@ public class DodgeGame {
     private PauseMenu lostScreen;
 
     public DodgeGame(Npc setBattleNpc, String difficulty, Mechanics game) {
-        this.battleNpc = new Npc(setBattleNpc.getName(), battleWindow.getGhostAreaCentre().x - 16, battleWindow.getGhostAreaCentre().y - 80, (Texture) setBattleNpc.getTexture(), 0);
+        this.battleNpc = new Npc(setBattleNpc.getName(), battleWindow.getGhostAreaCentre().x - 16, battleWindow.getGhostAreaCentre().y - 80, (Texture) setBattleNpc.getTexture(), 0, "");
         this.wizard = new MoveableCharacter("Wizard", battleWindow.getPlayerAreaCentre().x - 16, battleWindow.getPlayerAreaCentre().y - 16, TextureType.FRONT1.getTexture(), 0);
         this.addProjectilesToStack(1000);
         this.game = game;

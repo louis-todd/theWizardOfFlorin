@@ -15,8 +15,7 @@ public enum FontType {
         try {
             this.font.loadFromStream(Game.class.getClassLoader().getResourceAsStream(path));
         } catch (Exception e) {
-            // e.printStackTrace();
-             System.out.println("4");
+            e.printStackTrace();
         }
     }
 
