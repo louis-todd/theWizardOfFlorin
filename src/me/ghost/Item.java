@@ -36,13 +36,24 @@ public class Item extends Sprite {
 
     public void setAsAvailableToCollect(Boolean isAvailableToCollect) {
         if(isAvailableToCollect){
-            toDrawOnDashboard.add(new Item(this.getName(), 0, 0, (Texture) this.getTexture()));
+            //Check if the array contains an item with this name
+            String nameOfItemToAdd = this.getName();
+            Boolean alreadyIn = false;
+            for(Item tmp:toDrawOnDashboard){
+                if(tmp.getName()==nameOfItemToAdd){
+                    alreadyIn = true;
+                }
+            }
+            if(alreadyIn == false){
+                toDrawOnDashboard.add(new Item(this.getName(), 0, 0, (Texture) this.getTexture()));
+            }
         }
         this.availableToCollect = isAvailableToCollect;
     }
 
     public void setAsFound(Boolean isFound) {
         if(isFound){
+            System.out.println("REMOVING ITEM: " + this.getName());
             toDrawOnDashboard.remove(this.getItemByName(this.getName()));
         }
         this.isFound = isFound;
@@ -51,7 +62,6 @@ public class Item extends Sprite {
     private Item getItemByName(String itemName){
         for (Item singleItem : toDrawOnDashboard){
             if(singleItem.getName().equals(itemName)){
-                System.out.println(singleItem + " " +singleItem.getName() + "GETTING ITEM");
                 return singleItem;
             }
         }

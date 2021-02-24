@@ -96,6 +96,7 @@ public class Game {
         toDraw.addAll(Arrays.asList(itemsToDraw));
         mayor.setShouldDraw(true);
         // whiskers.setShouldDraw(true);
+        npc3.setShouldDraw(true);
         window.setFramerateLimit(120);
         this.dashBoard.setFillColor(Color.BLACK);
     }
@@ -197,7 +198,7 @@ public class Game {
                 }
                 for(Item itemToFind : Item.getItemsToDrawOnDashboard()){
                    // System.out.println(itemToFind.getName());
-                    System.out.println(itemToFind + " " + itemToFind.getName() + " ITEMS IN LIST");
+                    // System.out.println(itemToFind + " " + itemToFind.getName() + " ITEMS IN LIST");
                     window.draw(itemToFind);
                 }
             }
