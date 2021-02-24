@@ -52,6 +52,8 @@ public class DodgeGame {
     private int walkFrameControl = 0;
     private int walkingPace = 5;
     private boolean livesChaged = false;
+    private boolean endScreenOpen = false;
+    private PauseMenu lostScreen;
 
     public DodgeGame(Npc setBattleNpc, String difficulty, Mechanics game) {
         this.battleNpc = new Npc(setBattleNpc.getName(), battleWindow.getGhostAreaCentre().x - 16, battleWindow.getGhostAreaCentre().y - 80, (Texture) setBattleNpc.getTexture());
@@ -183,8 +185,9 @@ public class DodgeGame {
                     loseScreen.getToDraw().forEach(window::draw);
                     checkMouse(loseScreen);
                 } else {
-                    PauseMenu loseGame = new PauseMenu(false);
-                    loseGame.draw(window);
+                    lostScreen = new PauseMenu(false);
+                    lostScreen.draw(window);
+                    endScreenOpen = true;
                 }
             } else {
                 battleWon = true;
@@ -254,6 +257,7 @@ public class DodgeGame {
             this.mouseButtonclicked = false;
         }
     }
+
 
 
     private void handleWizardMovement(){
@@ -371,5 +375,13 @@ public class DodgeGame {
 
     public Boolean attemptedToClose(){
         return attemptedToClose;
+    }
+
+    public boolean isEndScreenOpen() {
+        return endScreenOpen;
+    }
+
+    public PauseMenu getLostScreen() {
+        return lostScreen;
     }
 }

@@ -255,6 +255,13 @@ public class Mechanics {
                                 keyPresses.put("B", false);
                                 battleScreenOpen = false;
                             }
+                            if(dodgeGame.isEndScreenOpen()){
+                                System.out.println("END SCREEN IS OPEN");
+                                dodgeGame.getLostScreen().setMouseButtonclicked(true);
+                                if(event.asMouseButtonEvent()!=null){
+                                    dodgeGame.getLostScreen().setMousePosition(new Vector2f(event.asMouseButtonEvent().position));
+                                }
+                            }
                         }
                     }
                     if(pauseMenu!=null){
@@ -305,6 +312,13 @@ public class Mechanics {
     public boolean hasPlayerQuit() {
         if(pauseMenu != null){
             return pauseMenu.playerHasQuit();
+        }
+        if(dodgeGame != null) {
+            System.out.println("GETTING IN THIS");
+            if (dodgeGame.isEndScreenOpen()) {
+                System.out.println("NOW IN THIS");
+                return dodgeGame.getLostScreen().playerHasQuit();
+            }
         }
         return false;
     }

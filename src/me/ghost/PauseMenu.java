@@ -127,5 +127,10 @@ public class PauseMenu {
     public Boolean playerHasQuit() {
         return quited;
     }
-    
+
+    public RectangleShape getExitBackground() {
+        return exitBackground;
+    }
+
+
 }
