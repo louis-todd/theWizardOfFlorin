@@ -120,6 +120,7 @@ public class PauseMenu {
                 System.out.println("GETTING IN HERE");
                 if(mousePosition.x <= quitX + buttonLength && mousePosition.x >= quitX && mousePosition.y <= quitY + buttonHeight && mousePosition.y >= quitY){
                     quited=true;
+                    exitBackground.setFillColor(new Color(255, 255, 255));
                 }
             }
             this.mouseButtonclicked = false;
