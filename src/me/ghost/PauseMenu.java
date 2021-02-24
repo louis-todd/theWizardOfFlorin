@@ -21,7 +21,6 @@ public class PauseMenu {
     private final BattleWindow battleWindow = new BattleWindow();
     private final boolean pauseOpen = true;
     private final List<Drawable> toDraw = new ArrayList<>();
-    private Texture backgroundTexture = TextureType.PAUSEBACKGROUND.getTexture();
     private final int pauseX = 165;
     private final int quitX = 165;
     private final int pauseY = 150;
@@ -35,9 +34,8 @@ public class PauseMenu {
     private Vector2f mousePosition;
     private Boolean quited = false;
     private final RectangleShape background = createTexturedRectangle(640, 480, 0, 0, TextureType.SQUARE16.getTexture());
-    private final RectangleShape pauseBackground = createSimpleRectangle(buttonLength, buttonHeight, 165, 150, 120, 119, 161);
     private final RectangleShape exitBackground = createSimpleRectangle(buttonLength, buttonHeight, 165, 300, 120, 119, 161);
-    private Drawable[] itemsToDraw = {background, pauseBackground, exitBackground};
+    private Drawable[] itemsToDraw = {background, exitBackground};
     private Text text;
 
     public PauseMenu(boolean pause, boolean won) {
