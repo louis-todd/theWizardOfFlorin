@@ -13,7 +13,6 @@ import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.KeyEvent;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,25 +23,20 @@ import java.util.concurrent.ThreadLocalRandom;
 public class DodgeGame {
 
     private final BattleWindow battleWindow = new BattleWindow();
-
     private final Npc battleNpc;
     private final MoveableCharacter wizard;
     private final Stack<Projectile> projectileInMotion = new Stack<>();
-    private final boolean battleOpen = true;
+    private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
+    private final List<Stack<Projectile>> levels = new ArrayList<>();
     private int lives = 3;
     private boolean invincible = false;
-    private boolean battleWon = false;
-    private boolean battleLost = false;
     private boolean wonOrLost = false;
-    private final List<Stack<Projectile>> levels = new ArrayList<>();
     private int maxLevel;
     private int currentLevel = 0;
     private boolean projectilesOnScreen = false;
     private boolean projectileStillOnScreen = false;
     private int collideTime;
-    private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
     private List<String> battleDialogue = new ArrayList<>();
-    private int dialogueIndex = 0;
     private Mechanics game;
     private Boolean finishedDialogue = false;
     private boolean mouseButtonclicked;
@@ -55,6 +49,12 @@ public class DodgeGame {
     private boolean endScreenOpen = false;
     private PauseMenu lostScreen;
 
+    /**
+     * Sole constructor.
+     * @param setBattleNpc sets the NPC to that which instigated the battle.
+     * @param difficulty sets the difficulty of the battle.
+     * @param game transfers the Mechanics class across to access its functionality in state handling.
+     */
     public DodgeGame(Npc setBattleNpc, String difficulty, Mechanics game) {
         this.battleNpc = new Npc(setBattleNpc.getName(), battleWindow.getGhostAreaCentre().x - 16, battleWindow.getGhostAreaCentre().y - 80, (Texture) setBattleNpc.getTexture(), 0, "");
         this.wizard = new MoveableCharacter("Wizard", battleWindow.getPlayerAreaCentre().x - 16, battleWindow.getPlayerAreaCentre().y - 16, TextureType.FRONT1.getTexture(), 0);
@@ -70,6 +70,9 @@ public class DodgeGame {
         addDialogue();
     }
 
+    /**
+     * Maintain state of key presses
+     */
     private void initKeyPresses(){
         this.keyPresses.put("RIGHT", false);
         this.keyPresses.put("LEFT", false);
@@ -78,18 +81,25 @@ public class DodgeGame {
         this.keyPresses.put("SPACE", false);
     }
 
+    /**
+     * Adds placeholder data to the battle dialogue.
+     */
     private void addDialogue(){
         this.battleDialogue.add("FIRST TEXT");
         this.battleDialogue.add("SECOND TEXT");
         this.battleDialogue.add("THIRD TEXT");
     }
 
-
+    /** 
+     * Throws obstacles from the NPC towards the player.
+     * @param numberProjectiles sets the number of items which are thrown towards the players.
+     * @return the objects to be thrown at the player.
+     */
     private Stack<Projectile> addProjectilesToStack(int numberProjectiles){
         int minSides = 3;
         int maxSides = 10;
         Stack<Projectile> projectileStack = new Stack<>();
-       for(int i = 0; i < numberProjectiles; i++){
+        for(int i = 0; i < numberProjectiles; i++){
             Projectile push = projectileStack.push(new Projectile(6, ThreadLocalRandom.current().nextInt(maxSides - minSides + 1) + minSides));
 
             push.thrown(this.battleNpc);
@@ -97,8 +107,11 @@ public class DodgeGame {
         return projectileStack;
     }
 
+    /** 
+     * Defines how many projectiles should be thrown dependent on the difficulty level specified.
+     * @param difficulty sets the difficulty of the battle
+     */
     private void setDifficulty(String difficulty){
-
         switch (difficulty) {
             case "EASY":
                 for (int i = 1; i <= 10; i++) {
@@ -121,6 +134,9 @@ public class DodgeGame {
         }
     }
 
+    /**
+     * Throws an object towards the player.
+     */
     private void throwObject() {
         this.projectileInMotion.addAll(this.levels.get(currentLevel));
         this.levels.get(currentLevel).clear();
@@ -130,8 +146,12 @@ public class DodgeGame {
         }
     }
 
+    
+    /** 
+     * Draws the items within the battle, or associated windows: pause, lose, and win.
+     * @param window
+     */
     public void draw(RenderWindow window) {
-
         if (!wonOrLost) {
             if (finishedDialogue) {
                 if (currentLevel < maxLevel) {
@@ -173,7 +193,6 @@ public class DodgeGame {
         } else {
             this.battleWindow.getToDraw().forEach(window::draw);
             if (lives <= 0) {
-                battleLost = true;
                 WinLoseScreen loseScreen = new WinLoseScreen(false);
                 if(!this.livesChaged){
                     this.game.setOverarchingLives(this.game.getOverarchingLives() - 1);
@@ -188,7 +207,6 @@ public class DodgeGame {
                     endScreenOpen = true;
                 }
             } else {
-                battleWon = true;
                 WinLoseScreen winScreen = new WinLoseScreen(true);
                 winScreen.getToDraw().forEach(window::draw);
                 checkMouse(winScreen);
@@ -196,6 +214,11 @@ public class DodgeGame {
         }
     }
 
+    
+    /** 
+     * Handles the collision of the player with the objects being thrown.
+     * @param p sets a the current object being thrown.
+     */
     private void collideProjectile(Projectile p){
         if(((int)System.currentTimeMillis() - collideTime > 3000)){
             invincible = false;
@@ -217,8 +240,11 @@ public class DodgeGame {
         }
     }
 
+    /** 
+     * Handles the movement of the player within the battle.
+     * @param event sets the current key which is being pressed.
+     */
     public void handleInput(KeyEvent event) {
-        // handleWizardMovement();
         if(event.type == Event.Type.KEY_PRESSED){
             if (event.key == Keyboard.Key.UP) {
                 keyPresses.put("UP", true);
@@ -249,6 +275,11 @@ public class DodgeGame {
         }
     }
 
+    
+    /** 
+     * Checks the position of the mouse to check if the player has attempted to quit the game.
+     * @param winLoseScreen sets the current screen being displayed.
+     */
     private void checkMouse(WinLoseScreen winLoseScreen){
         if(this.mouseButtonclicked && mousePosition!=null && winLoseScreen!=null){
             if(mousePosition.x <= winLoseScreen.getExitButton().getPosition().x + winLoseScreen.getExitButton().getSize().x && mousePosition.x >= winLoseScreen.getPosition().x &&
@@ -260,8 +291,9 @@ public class DodgeGame {
         }
     }
 
-
-
+    /**
+     * Handles the movement of the wizard and sets graphic accordingly.
+     */
     public void handleWizardMovement(){
         if(keyPresses.get("UP") && wizard.getPosition().y >= this.battleWindow.getPlayerArea().getPosition().y){
             this.wizard.setPosition(this.wizard.getPosition().x, this.wizard.getPosition().y - 3);
@@ -277,12 +309,10 @@ public class DodgeGame {
             wizard.move(0, -(walkingPace));
         }
         if(keyPresses.get("LEFT") && wizard.getPosition().x >= this.battleWindow.getPlayerArea().getPosition().x){
-            // this.wizard.setPosition(this.wizard.getPosition().x - 3, this.wizard.getPosition().y);
             this.walkLeft();
             wizard.move(-(walkingPace), 0);
         }
         if(keyPresses.get("DOWN") && wizard.getPosition().y <= this.battleWindow.getPlayerArea().getPosition().y + this.battleWindow.getPlayerArea().getSize().y - wizard.getGlobalBounds().height){
-            // this.wizard.setPosition(this.wizard.getPosition().x, this.wizard.getPosition().y + 3);
             if(keyPresses.get("LEFT")){
                 walkLeft();
             }
@@ -295,11 +325,14 @@ public class DodgeGame {
             wizard.move(0, (walkingPace));
         }
         if(keyPresses.get("RIGHT") && wizard.getPosition().x <= this.battleWindow.getPlayerArea().getPosition().x + this.battleWindow.getPlayerArea().getSize().x - wizard.getGlobalBounds().width){
-            // this.wizard.setPosition(this.wizard.getPosition().x + 3, this.wizard.getPosition().y);
             this.walkRight();
             wizard.move(walkingPace, 0);
         }
     }
+
+    /**
+     * Changes the graphic of the wizard dependent on direction.
+     */
     private void walkLeft(){
         wizard.setTexture(TextureType.getLeftTextureByIndex(stepIndex));
         walkFrameControl++;
@@ -312,6 +345,9 @@ public class DodgeGame {
         }
     }
 
+    /**
+     * Changes the graphic of the wizard dependent on direction.
+     */
     private void walkRight(){
         wizard.setTexture(TextureType.getRightTextureByIndex(stepIndex));
         walkFrameControl++;
@@ -324,6 +360,9 @@ public class DodgeGame {
         }
     }
 
+    /**
+     * Changes the graphic of the wizard dependent on direction.
+     */
     private void walkBack(){
         if(stepIndex>3){
             stepIndex=0;
@@ -339,6 +378,9 @@ public class DodgeGame {
         }
     }
 
+    /**
+     * Changes the graphic of the wizard dependent on direction.
+     */
     private void walkForward(){
         if(stepIndex>3){
             stepIndex=0;
@@ -353,36 +395,59 @@ public class DodgeGame {
             stepIndex=0;
         }
     }
-
-
+    
+    /** 
+     * @param newText sets the content of the dialogue to be displayed in the battle dialogue box.
+     */
     public void setTextContent(String newText){
         this.battleWindow.setBattleText(newText);
     }
 
+    /** 
+     * @return if the player has stepped through all the set dialogue.
+     */
     public Boolean isFinishedDialogue(){
         return finishedDialogue;
     }
 
+    /** 
+     * @param isFinished sets whether the battle dialogue has all been stepped through.
+     */
     public void setFinishedDialogue(Boolean isFinished){
         finishedDialogue=isFinished;
     }
 
+    /** 
+     * @param mouseButtonclicked sets whether the mouse has been clicked.
+     */
     public void setMouseButtonclicked(boolean mouseButtonclicked) {
         this.mouseButtonclicked = mouseButtonclicked;
     }
 
+    /** 
+     * @param mousePosition sets the position of the mouse.
+     */
     public void setMousePosition(Vector2f mousePosition) {
         this.mousePosition = mousePosition;
     }
-
+    
+    /** 
+     * @return whether the player has attempted to close this window
+     */
     public Boolean attemptedToClose(){
         return attemptedToClose;
     }
 
+    /** 
+     * @return whether the player has reached the end of the game.
+     */
     public boolean isEndScreenOpen() {
         return endScreenOpen;
     }
 
+    /** 
+     * @return the lose screen.
+     */
     public PauseMenu getLostScreen() {
         return lostScreen;
     }

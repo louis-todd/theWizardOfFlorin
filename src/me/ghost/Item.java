@@ -1,13 +1,15 @@
 package me.ghost;
 
 import org.jsfml.graphics.FloatRect;
-
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 
 /**
- *this class represents the item class.
- * this has an item constructor and also has all the methods relating to the item constructor
+ *
+ * {@inheritDoc}
+ * The Item class is used to represent the entities set to collect by the NPCs.
+ * The Item class is also used for the dashboard in showing which items are to be collected
+ * 
  */
 public class Item extends Sprite {
 
@@ -17,11 +19,11 @@ public class Item extends Sprite {
     private boolean hasBeenCounted = false;
 
     /**
-     *this method is the constructor for the item
-     * @param itemName to set the name of the item
-     * @param xPosition to set the item's X position of the map
-     * @param yPosition to set the item's Y position on the map
-     * @param itemTexture to set the graphic for the item
+     * The class Item only has a default constructor which sets the items appearance, position, and name.
+     * @param itemName sets the name of the item.
+     * @param xPosition sets the item's X position of the map.
+     * @param yPosition sets the item's Y position on the map.
+     * @param itemTexture sets the graphic for the item.
      */
 
     public Item(String itemName, float xPosition, float yPosition, Texture itemTexture) {
@@ -31,25 +33,24 @@ public class Item extends Sprite {
     }
 
     /**
-     * get method to return the name of the item
-     * @return returns ths name of the item in string form
+     * Gets the name of this Item.
+     * @return the name of the item.
      */
     public String getName() {
         return itemName;
     }
 
     /**
-     * method to get back the item if its available to collect
-     * @return returns true if item is picked up already
-     * returns false if the item is dropped
+     * Gets availableToCollect which is set when this item has been included as part of the NPC brief.
+     * @return whether the item is inclued as part of the current fetch quest.
      */
     public Boolean availableToCollect() {
         return availableToCollect;
     }
 
     /**
-     * boolean to return true if the item is found or false if item not found
-     * @return returns True if item is found and false
+     * Gets isFound which is updated when this item is picked up by the user.
+     * @return whether this item has been picked up by the player.
      */
 
     public Boolean isFound() {
@@ -57,8 +58,8 @@ public class Item extends Sprite {
     }
 
     /**
-     * theis method sets the item to available to collect when the item is dropped
-     * @param isAvailableToCollect Name of the item which has to be set available to collect
+     * Sets availableToCollect once this item has been included as part of the NPC brief.
+     * @param isAvailableToCollect sets whether the item should be availableToCollect.
      */
 
     public void setAsAvailableToCollect(Boolean isAvailableToCollect) {
@@ -66,8 +67,8 @@ public class Item extends Sprite {
     }
 
     /**
-     * when the item is collect and given to the ghost it's isFound is set to TRUE
-     * @param isFound if the quest item is handed to the ghost it is set to found.
+     * Sets this item to found, intended to be used once an item has been picked up.
+     * @param isFound sets whether the item has been picked up by the player.
      */
 
     public void setAsFound(Boolean isFound) {
@@ -76,8 +77,10 @@ public class Item extends Sprite {
 
     /**
      *
-     * @param scaleFactor
-     * @return
+     * Gets the radius in which a player can interact with an object. This is named dialogueArea for consistency as it is derived from the area in which
+     * a player can interact with a NPC. 
+     * @param scaleFactor sets the scale factor of the radius.
+     * @return the area in which the player can interact with this item.
      */
 
     public FloatRect dialogueArea(float scaleFactor) {
@@ -90,10 +93,17 @@ public class Item extends Sprite {
         return new FloatRect(newLeft, newTop, newWidth, newHeight);
     }
     
+    /** 
+     * Gets whether the item has already been included in the total number of items collected from its associated NPC.
+     * @return whether the item has already been included in collected total.
+     */
     public Boolean hasBeenCounted(){
         return hasBeenCounted;
     }
 
+    /** 
+     * Sets counted state to true to track whether this item has been collected.
+     */
     public void setAsCounted(){
         hasBeenCounted=true;
     }

@@ -13,27 +13,31 @@ import me.ghost.Item;
 
 public abstract class Character extends Sprite {
 
+    private static ArrayList<Item> items;
+    private static Boolean taskInProgress = false;
+    private static Character NPCInProgress = null;
+    private static ArrayList<Character>  allCharacters = new ArrayList<Character>();
+    private final Map<String, Boolean> characterStates = new CaseInsensitiveMap<>();
+    private final List<String> npcBattleScript = new ArrayList<>();
     private ArrayList<String> NPCScript = new ArrayList<String>();
     private String characterName;
     private int currentIndex = 1;
     private File npcTextFile;
-    private static ArrayList<Item> items;
     private ArrayList<Item> associatedItems = new ArrayList<Item>();
-    private static Boolean taskInProgress = false;
-    private static Character NPCInProgress = null;
-    private final Map<String, Boolean> characterStates = new CaseInsensitiveMap<>();
     private Boolean isFirstSuccess = true;
     private int expectedNumberOfItems;
     private int itemsFoundCount=0;
-
     private int currentBattleIndex = 0;
-    private final List<String> npcBattleScript = new ArrayList<>();
-
-    private static ArrayList<Character>  allCharacters = new ArrayList<Character>();
-    private static ArrayList<Character>  associatedNPCs = new ArrayList<Character>();
-
     private boolean hasCompletedTask = false;
 
+    /**
+     * 1/2 constructors - this one has the addition of expectedNumber of items.
+     * @param characterName sets the name of this character.
+     * @param xPosition sets the X position of this character.
+     * @param yPosition sets the Y position of this character.
+     * @param characterTexture sets the texture of this character.
+     * @param expectedNumberOfItems sets the number of items associated with this character - NPC only.
+     */
     public Character(String characterName, float xPosition, float yPosition, Texture characterTexture,
             int expectedNumberOfItems) {
         this.setTexture(characterTexture);
@@ -44,6 +48,14 @@ public abstract class Character extends Sprite {
         allCharacters.add(this);
     }
 
+    /**
+     * 2/2 constructors - this one has the addition of all items within the game.
+     * @param characterName sets the name of this character.
+     * @param xPosition sets the X position of this character.
+     * @param yPosition sets the Y position of this character.
+     * @param characterTexture sets the texture of this character.
+     * @param items sets all items in the game.
+     */
     public Character(String characterName, float xPosition, float yPosition, Texture characterTexture,
             ArrayList<Item> items) {
         Character.items = items;
@@ -52,6 +64,9 @@ public abstract class Character extends Sprite {
         this.characterName = characterName;
     }
 
+    /**
+     * Manages the state of items
+     */
     public void initCharacterStates() {
         this.characterStates.put("AVAILABLE", false);
         this.characterStates.put("IN PROGRESS", false);
@@ -60,11 +75,14 @@ public abstract class Character extends Sprite {
         this.characterStates.put("SUCCESS", false);
     }
 
+    /** 
+     * Retrieves the associated CSV for this character.
+     * @return the script associated with this character.
+     */
     public ArrayList<String> getScript() {
         NPCScript.clear();
         updateCharacterStates();
 
-        // if sprite does not have an associated item
         if (associatedItems.isEmpty()) {
             if (characterStates.get("AVAILABLE")) {
                 serveScript(0);
@@ -72,7 +90,6 @@ public abstract class Character extends Sprite {
                 serveScript(3);
             }
         } else {
-            // if has associated item
             if (characterStates.get("IN PROGRESS")) {
                 if (itemsFoundCount!=expectedNumberOfItems && itemsFoundCount>0){
                     serveScript(4);
@@ -81,11 +98,9 @@ public abstract class Character extends Sprite {
                     serveScript(0);
                 }
                 else {
-                    //blahblah
                     serveScript(3);
                 }
             } else {
-                // not in progress - success message or generic response
                 if (characterStates.get("RESOURCE FOUND") && (isFirstSuccess || characterStates.get("SUCCESS"))) {
                     isFirstSuccess = false;
                     if(associatedItems.size() == expectedNumberOfItems){
@@ -98,11 +113,15 @@ public abstract class Character extends Sprite {
                     serveScript(3);
                 }
             }
-
         }
         return NPCScript;
     }
 
+    
+    /** 
+     * Gets the script from the associated CSV.
+     * @param csvFileNumb sets which CSV retrieved dependent on progress of this character's quest.
+     */
     private void serveScript(int csvFileNumb) {
         if (csvFileNumb == 0) {
             npcTextFile = new File("resources/Dialogue/" + characterName + "/" + characterName + ".csv");
@@ -116,22 +135,22 @@ public abstract class Character extends Sprite {
         }
     }
 
+    /**
+     * Updates state of this character's quest.
+     */
     private void updateCharacterStates() {
         if (associatedItems.isEmpty()) {
-            // if theres a task in progress and its not mine set to false
             if (taskInProgress && !(NPCInProgress.associatedItems.isEmpty())) {
                 if(NPCInProgress!=this){
                     characterStates.put("AVAILABLE", false);
                 }
             }
-            //if theres a task in progress and its mine - set all to true
             else{
                 characterStates.put("AVAILABLE", true);
                 NPCInProgress = this;
                 taskInProgress=true;
             }
         }
-        //if this character has been already assigned an item
         else{
             if(NPCInProgress == this){
                 characterStates.put("IN PROGRESS", true);
@@ -140,7 +159,6 @@ public abstract class Character extends Sprite {
             else{
                 characterStates.put("AVAILABLE", false);
             }
-            //work out if all items have been found or just some
             for(Item item : associatedItems){
                 if(item.isFound() && !(item.hasBeenCounted())){
                     itemsFoundCount++;
@@ -159,6 +177,10 @@ public abstract class Character extends Sprite {
         }
     }
 
+    
+    /** 
+     * @return the script to be displayed within the battle window.
+     */
     public List<String> getBattleScript(){
         npcBattleScript.clear();
 
@@ -174,6 +196,10 @@ public abstract class Character extends Sprite {
         return npcBattleScript;
     }
 
+    /** 
+     * Retrieves the dialogue associated with this character - parsing special characters to get items.
+     * @param fileName sets the name of the file to be read in as dialogue.
+     */
     private void addDialogue(String fileName) {
         BufferedReader csvReader = returnBufferedReader(fileName);
         characterStates.put("SUCCESS", false);
@@ -212,12 +238,15 @@ public abstract class Character extends Sprite {
                 NPCScript.addAll(Arrays.asList(data));
             }
             csvReader.close();
-            
         } catch (Exception e){
             e.printStackTrace();
         }
     }
-
+    
+    /** 
+     * Retrieves the battle dialogue associated with this character.
+     * @param fileName sets the name of the file to be read in as dialogue.
+     */
     private void addBattleDialogue(String fileName) {
         BufferedReader csvReader = returnBufferedReader(fileName);
         try{
@@ -233,6 +262,11 @@ public abstract class Character extends Sprite {
         }
     }
 
+    /** 
+     * Modifies dialogue to fit the size of the dialogue box.
+     * @param data sets the sentence that is appearing in the box at that current time.
+     * @return the new string with a return where the text is too long.
+     */
     private String[] wrapRoundDialogueBox(String[] data){
         int widthOfDialogue=50;
         int tmp = 0;
@@ -256,6 +290,12 @@ public abstract class Character extends Sprite {
         return updatedData.toArray(new String[0]);
     }
 
+    
+    /** 
+     * Surveys text to find special characters, and if found; extracts the items.
+     * @param sentence sets the sentence that is currently to be surveyed.
+     * @return the positions of where to extract the item from.
+     */
     private int[] checkForItem(String sentence){
         String item = "";
         int itemStart = sentence.indexOf("**");
@@ -274,10 +314,19 @@ public abstract class Character extends Sprite {
         int[] positions = {itemStart, itemEnd};
         return positions;
     }
-
+    
+    /** 
+     * @param fileName sets the file to be read.
+     * @return BufferedReader
+     */
     private BufferedReader returnBufferedReader(String fileName) {
         return new BufferedReader(new InputStreamReader(getFileStream(fileName)));
     }
+    
+    /** 
+     * @param fileName
+     * @return InputStream
+     */
     private InputStream getFileStream(String fileName) {
             InputStream fileStream = null;
         try {
@@ -288,10 +337,17 @@ public abstract class Character extends Sprite {
             return fileStream;
     }
 
+    /** 
+     * @return the name of this character.
+     */
     public String getName() {
         return characterName;
     }
-
+    
+    /** 
+     * @param name sets the name of the character to search for.
+     * @return the characters with the associated name.
+     */
     public static Character getCharacterByName(String name){
         for(Character each : allCharacters){
             if(each.getName() == name){
@@ -301,14 +357,23 @@ public abstract class Character extends Sprite {
         return null;
     }
 
+    /** 
+     * @return the current position in the CSV.
+     */
     public int getCurrentIndex() {
         return currentIndex;
     }
 
+    /**
+     * Step to the next line in the CSV.
+     */
     public void incrementCurrentIndex() {
         currentIndex++;
     }
 
+    /**
+     * Set the pointer within the CSV to the beginning.
+     */
     public void resetScript() {
         if(characterStates.get("SUCCESS") == true){
             taskInProgress=false;
@@ -317,39 +382,51 @@ public abstract class Character extends Sprite {
         currentIndex = 1;
     }
 
+    /** 
+     * @return the current position in the CSV.
+     */
     public int getCurrentBattleIndex() {
         return currentBattleIndex;
     }
 
+    /**
+     * Step to the next line in the CSV.
+     */
     public void incrementCurrentBattleIndex() {
         currentBattleIndex++;
     }
 
+    /**
+     * Set the pointer within the CSV to the beginning.
+     */
     public void resetBattleScript() {
         currentBattleIndex = 1;
     }
 
+    /** 
+     * @param hasCompleted sets whether this ghosts mission has been resolved - be it battle or fetch quest.
+     */
     public void setHasCompletedTask(boolean hasCompleted){
         hasCompletedTask = hasCompleted;
     }
 
+    /** 
+     * @return whether the player has completed this characters associated task.
+     */
     public boolean hasCompletedTask(){
         return hasCompletedTask;
     }
     
+    /** 
+     * @return all items in the game.
+     */
     public static ArrayList<Item> getItems(){
         return Character.items;
     }
 
-    // private Npc npc2 = new Npc("Mayor", 250, 300, TextureType.GHOST.getTexture(), 0);
-    // private Npc npc3 = new Npc("CrazyJoe", 350, 300, TextureType.GHOST.getTexture(), 4);
-    // private Npc npc4 = new Npc("Gluttony", 450, 300, TextureType.GHOST.getTexture(), 0);
-    // private Npc npc5 = new Npc("PirateJack", 550, 300, TextureType.GHOST.getTexture(), 1);
-    // private Npc npc6 = new Npc("Sibirius", 650, 300, TextureType.GHOST.getTexture(), 0);
-    // private Npc npc7 = new Npc("Snuffles", 750, 300, TextureType.GHOST.getTexture(), 0);
-    // private Npc npc8 = new Npc("Summer", 850, 300, TextureType.GHOST.getTexture(), 3);
-    // private Npc npc9 = new Npc("Tree", 950, 300, TextureType.TREE.getTexture(), 0);
-
+    /**
+     * Manages ordering of when NPCs appear in game.
+     */
     public void setAssociatedNPCsToShow(){
         switch (this.characterName) {
             case "Mayor":
@@ -375,9 +452,6 @@ public abstract class Character extends Sprite {
                     ((Npc) Character.getCharacterByName("PirateJack")).setShouldDraw(true);
                 }
                 break;
-            // case "Summer":
-            //     associatedNPCs.add(Character.getCharacterByName("Snuffles"));
-            // break;
             case "PirateJack":
                 if(Character.getCharacterByName("Sibirius") instanceof Npc){
                     ((Npc) Character.getCharacterByName("Sibirius")).setShouldDraw(true);
@@ -388,9 +462,6 @@ public abstract class Character extends Sprite {
                     ((Npc) Character.getCharacterByName("Gluttony")).setShouldDraw(true);
                 }
                 break;
-            // case "Gluttony":
-            //     associatedNPCs.add(Character.getCharacterByName("Snuffles"));
-            // break;
             default:
                 break;
         }

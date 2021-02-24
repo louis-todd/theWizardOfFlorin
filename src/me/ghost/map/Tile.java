@@ -8,6 +8,10 @@ public class Tile extends RectangleShape {
 
     private boolean collideable;
     private int tileNumber;
+
+    /**
+     * Soul constructor for the tile class which sets this tiles metadata.
+     */
     public Tile(Vector2f position, Texture setTexture, int setTileNumber, TileLoader tileLoader) {
         super(position);
         this.setPosition(position.x, position.y);
@@ -17,10 +21,16 @@ public class Tile extends RectangleShape {
         this.setCollideable(tileLoader);
     }
 
+    /** 
+     * @param tileLoader
+     */
     private void setCollideable(TileLoader tileLoader){
         collideable = tileLoader.getCollidableTiles().contains(tileNumber);
     }
 
+    /** 
+     * @return boolean
+     */
     public boolean isCollideable() {
         return collideable;
     }

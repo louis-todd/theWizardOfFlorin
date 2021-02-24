@@ -10,12 +10,11 @@ public class Dialogue implements Drawable {
 
     private final Font font;
     private final View currentWorld;
-    private String originalInteractor = "";
     private final String speakingCharacter;
     private final String dialogueText;
     private final Texture boardTexture;
     private final List<Drawable> toDraw = new ArrayList<>();
-
+    private String originalInteractor = "";
     private Text characterName;
     private Text toWrite;
     private float xBoundary;
@@ -23,6 +22,14 @@ public class Dialogue implements Drawable {
     private Vector2f dimensions;
     private RectangleShape textBackground;
 
+    /**
+     * Soul constructor for the dialogue box that appears at the bottom of the screen when interacting with an NPC.
+     * @param currentWorld sets the current view of the world.
+     * @param font sets the font of the text within the dialogue box.
+     * @param boardTexture sets the texture of the dialogue box background.
+     * @param speakingCharacter sets the header of the dialogue box to the character currently speaking.
+     * @param dialogueText sets the message to be spoken.
+     */
     public Dialogue(View currentWorld, Font font, Texture boardTexture, String speakingCharacter, String dialogueText) {
         this.speakingCharacter = speakingCharacter;
         this.dialogueText = dialogueText;
@@ -37,8 +44,10 @@ public class Dialogue implements Drawable {
         writeText();
     }
 
+    /**
+     * Set the character name and main message to be displayed in the dialogue.
+     */
     public void writeText() {
-        // Set and format the character's name
         characterName = new Text(speakingCharacter, font, 20) {
             {
                 this.setPosition(xBoundary + 100, yBoundary + 20);
@@ -46,7 +55,6 @@ public class Dialogue implements Drawable {
         };
         toDraw.add(characterName);
 
-        // Set Message
         toWrite = new Text(dialogueText, font, 20) {
             {
                 this.setPosition(xBoundary + 40, yBoundary + 70);
@@ -55,21 +63,24 @@ public class Dialogue implements Drawable {
         toDraw.add(toWrite);
     }
 
+    /**
+     * Format the textbox for the text to sit in.
+     */
     public void formatText() {
-        // Set the rectangle for the text to sit in
         dimensions = new Vector2f(600, 200);
-        // this.setFillColor(new Color(98,52,18));
         textBackground = new RectangleShape(dimensions) {
             {
                 this.setPosition(xBoundary, yBoundary);
                 this.setSize(dimensions);
-                // this.setFillColor(new Color(98,52,18));
                 this.setTexture(boardTexture);
             }
         };
         toDraw.add(textBackground);
     }
 
+    /** 
+     * @param contentToWrite sets the main text within the dialogue graphic.
+     */
     public void setTextContent(String contentToWrite) {
         xBoundary = (currentWorld.getCenter().x) - 300;
         yBoundary = (currentWorld.getCenter().y) + 60;
@@ -78,15 +89,25 @@ public class Dialogue implements Drawable {
         characterName.setPosition(xBoundary + 100, yBoundary + 20);
         toWrite.setPosition(xBoundary + 40, yBoundary + 70);
     }
-
+    
+    /** 
+     * @param nameToWrite sets the name displayed in the dialogue box.
+     */
     public void setCharacterName(String nameToWrite) {
         characterName.setString(nameToWrite);
     }
 
+    /** 
+     * @return the text displayed in the message component of the dialogue box.
+     */
     public String getTextContent() {
         return toWrite.getString();
     }
 
+    /** 
+     * Uses the special characters in the dialogue to determine who should display as speaking in the dialogue box.
+     * @return the character name being displayed within the dialogue box.
+     */
     public String getCharacterName() {
         if (toWrite.getString().substring(0, 2).equals("££")) {
             toWrite.setString(toWrite.getString().substring(2));
@@ -115,14 +136,24 @@ public class Dialogue implements Drawable {
         }
     }
 
+    /** 
+     * @param nameToWrite sets the original NPC which has instigated the dialogue.
+     */
     public void setOriginalInteractor(String nameToWrite) {
         originalInteractor = nameToWrite;
     }
 
+    /** 
+     * @return gets the original NPC which has instigated the dialogue.
+     */
     public String getOriginalInteractor() {
         return originalInteractor;
     }
 
+    /** 
+     * {@inheritDoc}
+     * Draws all components of the dialogue graphic.
+     */
     @Override
     public void draw(RenderTarget renderTarget, RenderStates renderStates) {
         for (Drawable item : toDraw) {
