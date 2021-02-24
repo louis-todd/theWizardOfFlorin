@@ -40,33 +40,29 @@ public class Game {
     // private Item axe = new Item("duck", 300, 300, TextureType.DUCK.getTexture());
     // private Item boot = new Item("ice", 250, 180, TextureType.ICE.getTexture());
     // private Item heart = new Item("tambourine", 350, 380, TextureType.TAMBOURINE.getTexture());
-    private Item duck = new Item("duck", 150, 200, TextureType.DUCK.getTexture());
-    private Item ice = new Item("ice", 250, 200, TextureType.ICE.getTexture());
-    private Item tambourine = new Item("tambourine", 350, 200, TextureType.TAMBOURINE.getTexture());
-    private Item teddy = new Item("teddy", 450, 200, TextureType.TEDDY.getTexture());
-    private Item whisky = new Item("whisky", 550, 200, TextureType.WHISKY.getTexture());
-    private Item whisky2 = new Item("whisky2", 550, 200, TextureType.WHISKY.getTexture());
-    private Item plank = new Item("plank", 650, 200, TextureType.WOOD.getTexture());
-    private Item yarn = new Item("yarn", 750, 200, TextureType.YARN.getTexture());
+    private Item duck = new Item("duck", 2914, 2114, TextureType.DUCK.getTexture());
+    private Item ice = new Item("ice", 907, 3582, TextureType.ICE.getTexture());
+    private Item tambourine = new Item("tambourine", 2312, 2413, TextureType.TAMBOURINE.getTexture());
+    private Item teddy = new Item("teddy", 3545, 327, TextureType.TEDDY.getTexture());
+    private Item whisky = new Item("whisky", 1901, 1930, TextureType.WHISKY.getTexture());
+    private Item whisky2 = new Item("whisky2", 2697, 3596, TextureType.WHISKY.getTexture());
+    private Item plank = new Item("plank", 692, 616, TextureType.WOOD.getTexture());
+    private Item yarn = new Item("yarn", 3655, 3895, TextureType.YARN.getTexture());
     // private Item tree = new Item("tree", 750, 200, TextureType.TREE.getTexture());
 
     private Item[] itemArray = { duck, ice, tambourine, teddy, whisky, plank, yarn, whisky2 };
     private ArrayList<Item> ITEMS = new ArrayList<Item>(Arrays.asList(itemArray));
 
     private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 150, TextureType.FRONT1.getTexture(), ITEMS);
-
-    // private final MoveableCharacter whiskers = new MoveableCharacter("Name Placeholder", 300, 170, TextureType.WHISKERS.getTexture(), ITEMS);
     private Npc whiskers = new Npc("Whiskers", 300, 170, TextureType.WHISKERS.getTexture(), 0, "");
-
-    // private Npc npc1 = new Npc("TestPerson", 150, 300, TextureType.GHOST.getTexture(), 3);
-    private Npc mayor = new Npc("Mayor", 250, 300, TextureType.GHOST.getTexture(), 0, "");
-    private Npc npc3 = new Npc("CrazyJoe", 350, 300, TextureType.GHOST.getTexture(), 4, "");
-    private Npc npc4 = new Npc("Gluttony", 450, 300, TextureType.GHOST.getTexture(), 0, "HARD");
-    private Npc npc5 = new Npc("PirateJack", 550, 300, TextureType.GHOST.getTexture(), 1, "");
-    private Npc npc6 = new Npc("Sibirius", 650, 300, TextureType.GHOST.getTexture(), 0, "INTERMEDIATE");
-    private Npc npc7 = new Npc("Snuffles", 750, 300, TextureType.SNUFFLES.getTexture(), 0, "EASY");
-    private Npc npc8 = new Npc("Summer", 850, 300, TextureType.GHOST.getTexture(), 3, "");
-    private Npc npc9 = new Npc("Tree", 950, 300, TextureType.TREE.getTexture(), 0, "EASY");
+    private Npc mayor = new Npc("Mayor", 260, 150, TextureType.GHOST.getTexture(), 0, "");
+    private Npc npc3 = new Npc("CrazyJoe", 3155, 3176, TextureType.GHOST.getTexture(), 4, "");
+    private Npc npc4 = new Npc("Gluttony", 3029, 1062, TextureType.GHOST.getTexture(), 0, "HARD");
+    private Npc npc5 = new Npc("PirateJack", 2697, 588, TextureType.GHOST.getTexture(), 1, "");
+    private Npc npc6 = new Npc("Sibirius", 580, 3727, TextureType.GHOST.getTexture(), 0, "INTERMEDIATE");
+    private Npc npc7 = new Npc("Snuffles", 349, 140, TextureType.SNUFFLES.getTexture(), 0, "EASY");
+    private Npc npc8 = new Npc("Summer", 2402, 1469, TextureType.GHOST.getTexture(), 3, "");
+    private Npc npc9 = new Npc("Tree", 990, 1853, TextureType.TREE.getTexture(), 0, "EASY");
 
     private Npc[] npcArray = { mayor, npc3, npc4, npc5, npc6, npc7, npc8, npc9, whiskers };
     // private Npc[] npcArray = { mayor, npc3, npc4, npc5, npc6, npc7, npc8, npc9 };
@@ -84,7 +80,7 @@ public class Game {
     private Text loadingText = null;
     private RectangleShape loadingBar = null;
 
-    private final List<CircleShape> livesDisplay = new ArrayList<>(Arrays.asList(lifeCircle(1), lifeCircle(2), lifeCircle(3)));
+    private final List<Sprite> liveDisplay = new ArrayList<>(Arrays.asList(createHeart(1), createHeart(2), createHeart(3)));
     private final RectangleShape dashBoard = new RectangleShape(new Vector2f(655, 45));
 
 
@@ -131,7 +127,7 @@ public class Game {
 
         TileLoader.THREADS.shutdown();
     }
-/////
+
     private void drawLoadingScreen(RenderWindow window) {
         window.clear(Color.BLACK);
 
@@ -196,9 +192,14 @@ public class Game {
 
                 updateDashBoardPosition(worldView);
                 window.draw(dashBoard);
-                for (CircleShape circleShape : livesDisplay) {
-                    window.draw(circleShape);
+
+//                for (CircleShape circleShape : livesDisplay) {
+//                    window.draw(circleShape);
+//                }
+                for(Sprite heart : liveDisplay){
+                    window.draw(heart);
                 }
+
                 for (Drawable item : toDraw) {
                     if (item instanceof Item) {
                         if (!((Item) item).isFound() && ((Item) item).availableToCollect()) {
@@ -229,8 +230,8 @@ public class Game {
         game.isDialogue();
 
         window.display();
-        if (this.livesDisplay.size() > this.game.getOverarchingLives() && this.livesDisplay.size() != 0) {
-            this.livesDisplay.remove(this.livesDisplay.size() - 1);
+        if (this.liveDisplay.size() > this.game.getOverarchingLives() && this.liveDisplay.size() != 0) {
+            this.liveDisplay.remove(this.liveDisplay.size() - 1);
         }
     }
 
@@ -262,17 +263,17 @@ public class Game {
                 Math.min((int) (worldView.getCenter().y / tileSize) + (cameraWidth / 2), topLayer.getDrawHeight()));
     }
 
-    private CircleShape lifeCircle(int positionNumber){
-        CircleShape lifeCircle = new CircleShape(6);
-        lifeCircle.setFillColor(Color.RED);
-        lifeCircle.setPosition(640-16*positionNumber, 5);
-        return lifeCircle;
+
+    private Sprite createHeart(int positionNumber){
+        Sprite heartShape = new Sprite(TextureType.HEART.getTexture());
+        heartShape.setPosition(640 - 32 * positionNumber, 5);
+        return heartShape;
     }
 
     private void updateLifePosition(View worldView){
         int i = 1;
-        for(CircleShape circleShape : livesDisplay){
-            circleShape.setPosition(worldView.getCenter().x + worldView.getSize().x/2 - i * 16, worldView.getCenter().y + worldView.getSize().y/2 - 25);
+        for(Sprite heart : liveDisplay){
+            heart.setPosition(worldView.getCenter().x + worldView.getSize().x/2 - i * 35, worldView.getCenter().y + worldView.getSize().y/2 - 32);
             i++;
         }
     }
