@@ -208,7 +208,7 @@ public abstract class Character extends Sprite {
                         row=row.substring(0, itemStart);
                     }
                 }
-                String[] data = row.split(",");
+                String[] data = row.split(",,");
                 data = this.wrapRoundDialogueBox(data);
                 NPCScript.addAll(Arrays.asList(data));
             }
@@ -225,7 +225,7 @@ public abstract class Character extends Sprite {
         try{
             String row;
             while((row = csvReader.readLine()) != null){
-                String[] data = row.split(",");
+                String[] data = row.split(",,");
                 data = this.wrapRoundDialogueBox(data);
                 npcBattleScript.addAll(Arrays.asList(data));
             }
