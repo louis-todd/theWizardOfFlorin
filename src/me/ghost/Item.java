@@ -10,6 +10,7 @@ public class Item extends Sprite {
     private Boolean availableToCollect = false;
     private Boolean isFound = false;
     private String itemName = "placeholder";
+    private boolean hasBeenCounted = false;
 
     public Item(String itemName, float xPosition, float yPosition, Texture itemTexture) {
         this.setTexture(itemTexture);
@@ -45,6 +46,14 @@ public class Item extends Sprite {
         float newLeft = centrex - (newWidth / 2);
         float newTop = centrey - (newHeight / 2);
         return new FloatRect(newLeft, newTop, newWidth, newHeight);
+    }
+    
+    public Boolean hasBeenCounted(){
+        return hasBeenCounted;
+    }
+
+    public void setAsCounted(){
+        hasBeenCounted=true;
     }
 
 }

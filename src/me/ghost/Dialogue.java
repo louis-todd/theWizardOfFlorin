@@ -10,6 +10,7 @@ public class Dialogue implements Drawable {
 
     private final Font font;
     private final View currentWorld;
+    private String originalInteractor = "";
     private final String speakingCharacter;
     private final String dialogueText;
     private final Texture boardTexture;
@@ -24,7 +25,7 @@ public class Dialogue implements Drawable {
 
     public Dialogue(View currentWorld, Font font, Texture boardTexture, String speakingCharacter, String dialogueText) {
         this.speakingCharacter = speakingCharacter;
-        this.dialogueText = dialogueText;                                                                                                   
+        this.dialogueText = dialogueText;
         this.currentWorld = currentWorld;
         this.boardTexture = boardTexture;
         this.font = font;
@@ -87,7 +88,30 @@ public class Dialogue implements Drawable {
     }
 
     public String getCharacterName() {
-        return characterName.getString();
+        if (toWrite.getString().substring(0, 2).equals("££")) {
+            toWrite.setString(toWrite.getString().substring(2));
+            return "Wizard";
+        } 
+        if (toWrite.getString().substring(0, 2).equals("$$")) {
+            toWrite.setString(toWrite.getString().substring(2));
+            return "Whiskers";
+        } 
+        if (toWrite.getString().substring(0, 2).equals("%%")) {
+            // toWrite.setString(toWrite.getString().substring(2));
+            toWrite.setString("AHHHHHHH!");
+            return "BATTLE";
+        } 
+        else {
+            return originalInteractor;
+        }
+    }
+
+    public void setOriginalInteractor(String nameToWrite) {
+        originalInteractor = nameToWrite;
+    }
+
+    public String getOriginalInteractor() {
+        return originalInteractor;
     }
 
     @Override
