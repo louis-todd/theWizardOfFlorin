@@ -40,14 +40,14 @@ public class Game {
     // private Item axe = new Item("duck", 300, 300, TextureType.DUCK.getTexture());
     // private Item boot = new Item("ice", 250, 180, TextureType.ICE.getTexture());
     // private Item heart = new Item("tambourine", 350, 380, TextureType.TAMBOURINE.getTexture());
-    private Item duck = new Item("duck", 150, 200, TextureType.DUCK.getTexture());
-    private Item ice = new Item("ice", 250, 200, TextureType.ICE.getTexture());
-    private Item tambourine = new Item("tambourine", 350, 200, TextureType.TAMBOURINE.getTexture());
-    private Item teddy = new Item("teddy", 450, 200, TextureType.TEDDY.getTexture());
-    private Item whisky = new Item("whisky", 550, 200, TextureType.WHISKY.getTexture());
-    private Item whisky2 = new Item("whisky2", 550, 200, TextureType.WHISKY.getTexture());
-    private Item plank = new Item("plank", 650, 200, TextureType.WOOD.getTexture());
-    private Item yarn = new Item("yarn", 750, 200, TextureType.YARN.getTexture());
+    private Item duck = new Item("duck", 2914, 2114, TextureType.DUCK.getTexture());
+    private Item ice = new Item("ice", 907, 3582, TextureType.ICE.getTexture());
+    private Item tambourine = new Item("tambourine", 2312, 2413, TextureType.TAMBOURINE.getTexture());
+    private Item teddy = new Item("teddy", 3545, 327, TextureType.TEDDY.getTexture());
+    private Item whisky = new Item("whisky", 1901, 1930, TextureType.WHISKY.getTexture());
+    private Item whisky2 = new Item("whisky2", 2697, 3596, TextureType.WHISKY.getTexture());
+    private Item plank = new Item("plank", 692, 616, TextureType.WOOD.getTexture());
+    private Item yarn = new Item("yarn", 3655, 3895, TextureType.YARN.getTexture());
     // private Item tree = new Item("tree", 750, 200, TextureType.TREE.getTexture());
 
     private Item[] itemArray = { duck, ice, tambourine, teddy, whisky, plank, yarn, whisky2 };
@@ -59,14 +59,14 @@ public class Game {
     private Npc whiskers = new Npc("Whiskers", 300, 170, TextureType.WHISKERS.getTexture(), 0);
 
     // private Npc npc1 = new Npc("TestPerson", 150, 300, TextureType.GHOST.getTexture(), 3);
-    private Npc mayor = new Npc("Mayor", 250, 300, TextureType.GHOST.getTexture(), 0);
-    private Npc npc3 = new Npc("CrazyJoe", 350, 300, TextureType.GHOST.getTexture(), 4);
-    private Npc npc4 = new Npc("Gluttony", 450, 300, TextureType.GHOST.getTexture(), 0);
-    private Npc npc5 = new Npc("PirateJack", 550, 300, TextureType.GHOST.getTexture(), 1);
-    private Npc npc6 = new Npc("Sibirius", 650, 300, TextureType.GHOST.getTexture(), 0);
-    private Npc npc7 = new Npc("Snuffles", 750, 300, TextureType.SNUFFLES.getTexture(), 0);
-    private Npc npc8 = new Npc("Summer", 850, 300, TextureType.GHOST.getTexture(), 3);
-    private Npc npc9 = new Npc("Tree", 950, 300, TextureType.TREE.getTexture(), 0);
+    private Npc mayor = new Npc("Mayor", 260, 150, TextureType.GHOST.getTexture(), 0);
+    private Npc npc3 = new Npc("CrazyJoe", 3155, 3176, TextureType.GHOST.getTexture(), 4);
+    private Npc npc4 = new Npc("Gluttony", 3029, 1062, TextureType.GHOST.getTexture(), 0);
+    private Npc npc5 = new Npc("PirateJack", 2697, 588, TextureType.GHOST.getTexture(), 1);
+    private Npc npc6 = new Npc("Sibirius", 580, 3727, TextureType.GHOST.getTexture(), 0);
+    private Npc npc7 = new Npc("Snuffles", 349, 140, TextureType.SNUFFLES.getTexture(), 0);
+    private Npc npc8 = new Npc("Summer", 2402, 1469, TextureType.GHOST.getTexture(), 3);
+    private Npc npc9 = new Npc("Tree", 990, 1853, TextureType.TREE.getTexture(), 0);
 
     private Npc[] npcArray = { mayor, npc3, npc4, npc5, npc6, npc7, npc8, npc9, whiskers };
     // private Npc[] npcArray = { mayor, npc3, npc4, npc5, npc6, npc7, npc8, npc9 };

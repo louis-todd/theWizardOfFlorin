@@ -15,14 +15,13 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
 
 public class MoveableCharacter extends Character {
 
     private boolean wizardColliding;
     private int stepIndex = 0;
     private int walkFrameControl = 0;
-    private int walkingPace = 2;
+    private int walkingPace = 5;
     private final List<Tile> nearbyTiles = new ArrayList<>();
     private Npc whiskers;
 
@@ -112,6 +111,7 @@ public class MoveableCharacter extends Character {
         }
 
         nearbyTiles.clear();
+        System.out.println(this.getPosition());
     }
 
     private void handleCollide(FloatRect floatRect, Vector2f objectPosition) {
