@@ -8,7 +8,6 @@ import java.util.Map;
 
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
-
 import me.ghost.CaseInsensitiveMap;
 import me.ghost.Item;
 
@@ -30,6 +29,9 @@ public abstract class Character extends Sprite {
     private int currentBattleIndex = 0;
     private final List<String> npcBattleScript = new ArrayList<>();
 
+    private static ArrayList<Character>  allCharacters = new ArrayList<Character>();
+    private static ArrayList<Character>  associatedNPCs = new ArrayList<Character>();
+
     private boolean hasCompletedTask = false;
 
     public Character(String characterName, float xPosition, float yPosition, Texture characterTexture,
@@ -39,6 +41,7 @@ public abstract class Character extends Sprite {
         this.characterName = characterName;
         this.expectedNumberOfItems = expectedNumberOfItems;
         this.initCharacterStates();
+        allCharacters.add(this);
     }
 
     public Character(String characterName, float xPosition, float yPosition, Texture characterTexture,
@@ -147,6 +150,7 @@ public abstract class Character extends Sprite {
                     this.characterStates.put("ALL RESOURCES FOUND", true);
                     characterStates.put("AVAILABLE", false);
                     characterStates.put("IN PROGRESS", false);
+                    this.setHasCompletedTask(true);
                 }
                 if(itemsFoundCount>0){
                     characterStates.put("RESOURCE FOUND", true);
@@ -292,6 +296,15 @@ public abstract class Character extends Sprite {
         return characterName;
     }
 
+    public static Character getCharacterByName(String name){
+        for(Character each : allCharacters){
+            if(each.getName() == name){
+                return each;
+            }
+        }
+        return null;
+    }
+
     public int getCurrentIndex() {
         return currentIndex;
     }
@@ -330,6 +343,70 @@ public abstract class Character extends Sprite {
     
     public static ArrayList<Item> getItems(){
         return Character.items;
+    }
+
+    // private Npc npc2 = new Npc("Mayor", 250, 300, TextureType.GHOST.getTexture(), 0);
+    // private Npc npc3 = new Npc("CrazyJoe", 350, 300, TextureType.GHOST.getTexture(), 4);
+    // private Npc npc4 = new Npc("Gluttony", 450, 300, TextureType.GHOST.getTexture(), 0);
+    // private Npc npc5 = new Npc("PirateJack", 550, 300, TextureType.GHOST.getTexture(), 1);
+    // private Npc npc6 = new Npc("Sibirius", 650, 300, TextureType.GHOST.getTexture(), 0);
+    // private Npc npc7 = new Npc("Snuffles", 750, 300, TextureType.GHOST.getTexture(), 0);
+    // private Npc npc8 = new Npc("Summer", 850, 300, TextureType.GHOST.getTexture(), 3);
+    // private Npc npc9 = new Npc("Tree", 950, 300, TextureType.TREE.getTexture(), 0);
+
+    public void setAssociatedNPCsToShow(){
+        System.out.println("Getting associated characters for..." + this.characterName);
+        switch (this.characterName) {
+            case "Mayor":
+                if(Character.getCharacterByName("Snuffles") instanceof Npc){
+                    System.out.println("1");
+                    ((Npc) Character.getCharacterByName("Snuffles")).setShouldDraw(true);
+                }
+                break;
+            case "Snuffles":
+                if(Character.getCharacterByName("Tree") instanceof Npc){
+                    System.out.println("2");
+                    ((Npc) Character.getCharacterByName("Tree")).setShouldDraw(true);
+                }
+                break;
+            case "Tree":
+                if(Character.getCharacterByName("CrazyJoe") instanceof Npc){
+                    System.out.println("3");
+                    ((Npc) Character.getCharacterByName("CrazyJoe")).setShouldDraw(true);
+                }
+                if(Character.getCharacterByName("Summer") instanceof Npc){
+                    System.out.println("4");
+                    ((Npc) Character.getCharacterByName("Summer")).setShouldDraw(true);
+                }
+                break;
+            case "CrazyJoe":
+                if(Character.getCharacterByName("PirateJack") instanceof Npc){
+                    System.out.println("5");
+                    ((Npc) Character.getCharacterByName("PirateJack")).setShouldDraw(true);
+                }
+                break;
+            // case "Summer":
+            //     associatedNPCs.add(Character.getCharacterByName("Snuffles"));
+            // break;
+            case "PirateJack":
+                System.out.println("6");
+                if(Character.getCharacterByName("Sibirius") instanceof Npc){
+                    ((Npc) Character.getCharacterByName("Sibirius")).setShouldDraw(true);
+                }
+                break;
+            case "Sibirius":
+                System.out.println("7");
+                if(Character.getCharacterByName("Gluttony") instanceof Npc){
+                    ((Npc) Character.getCharacterByName("Gluttony")).setShouldDraw(true);
+                }
+                break;
+            // case "Gluttony":
+            //     associatedNPCs.add(Character.getCharacterByName("Snuffles"));
+            // break;
+            default:
+                System.out.println("8");
+                break;
+        }
     }
 
 }

@@ -183,7 +183,8 @@ public class Mechanics {
                                 else {
                                     keyPresses.put("SPACE", false);
                                     interactingNPC.resetScript();
-                                    if(interactingNPC.hasCompletedTask()){
+                                    if(interactingNPC.hasCompletedTask() || interactingNPC.getName()=="Mayor"){
+                                        interactingNPC.setAssociatedNPCsToShow();
                                         interactingNPC.setShouldDraw(false);
                                     }
                                     dialogueOpen=false;

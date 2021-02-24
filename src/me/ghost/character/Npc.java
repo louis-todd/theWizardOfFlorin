@@ -7,7 +7,7 @@ import me.ghost.Item;
 
 public class Npc extends Character {
 
-    private Boolean shouldDraw = true;
+    private Boolean shouldDraw = false;
 
     public Npc(String characterName, float xPosition, float yPosition, Texture npcTexture, int expectedNumberOfItems) {
         super(characterName, xPosition, yPosition, npcTexture, expectedNumberOfItems);
