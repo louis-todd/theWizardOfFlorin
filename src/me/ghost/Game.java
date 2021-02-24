@@ -84,7 +84,6 @@ public class Game {
     private Text loadingText = null;
     private RectangleShape loadingBar = null;
 
-    //private final List<CircleShape> livesDisplay = new ArrayList<>(Arrays.asList(lifeCircle(1), lifeCircle(2), lifeCircle(3)));
     private final List<Sprite> liveDisplay = new ArrayList<>(Arrays.asList(createHeart(1), createHeart(2), createHeart(3)));
     private final RectangleShape dashBoard = new RectangleShape(new Vector2f(655, 45));
 
@@ -268,12 +267,6 @@ public class Game {
                 Math.min((int) (worldView.getCenter().y / tileSize) + (cameraWidth / 2), topLayer.getDrawHeight()));
     }
 
-    private CircleShape lifeCircle(int positionNumber){
-        CircleShape lifeCircle = new CircleShape(6);
-        lifeCircle.setFillColor(Color.RED);
-        lifeCircle.setPosition(640-16*positionNumber, 5);
-        return lifeCircle;
-    }
 
     private Sprite createHeart(int positionNumber){
         Sprite heartShape = new Sprite(TextureType.HEART.getTexture());
