@@ -131,7 +131,7 @@ public class Game {
 
         TileLoader.THREADS.shutdown();
     }
-/////
+
     private void drawLoadingScreen(RenderWindow window) {
         window.clear(Color.BLACK);
 
