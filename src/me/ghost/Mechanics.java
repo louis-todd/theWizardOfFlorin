@@ -35,6 +35,7 @@ public class Mechanics {
     private ArrayList<Item> ITEMS;
 
     private int overarchingLives = 3;
+    private boolean loseScreenClicked = false;
 
     public Mechanics(Map<String, Boolean> keyPresses, RenderWindow window, ArrayList<Npc> NPCs, ArrayList<Item> ITEMS, Dialogue interaction, BattleWindow battleWindow) {
         this.keyPresses = keyPresses;
@@ -263,12 +264,11 @@ public class Mechanics {
                             pauseMenu.setMousePosition(new Vector2f(event.asMouseButtonEvent().position));
                         }
                     }
-                    if(dodgeGame!=null){
-                        if(dodgeGame.isEndScreenOpen()){
+                    if(dodgeGame!=null) {
+                        if (dodgeGame.isEndScreenOpen()) {
                             dodgeGame.getLostScreen().setMouseButtonclicked(true);
-                            if(event.asMouseButtonEvent()!=null){
-                                System.out.println("QUIT SCREEN PRESSED");
-                                dodgeGame.getLostScreen().setMousePosition(new Vector2f(event.asMouseButtonEvent().position));
+                            if (event.asMouseButtonEvent() != null) {
+                                loseScreenClicked = true;
                             }
                         }
                     }
@@ -317,7 +317,9 @@ public class Mechanics {
         }
         if(dodgeGame != null) {
             if (dodgeGame.isEndScreenOpen()) {
-                return dodgeGame.getLostScreen().playerHasQuit();
+               if(loseScreenClicked){
+                   return true;
+               }
             }
         }
         return false;

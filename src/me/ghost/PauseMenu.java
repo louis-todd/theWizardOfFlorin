@@ -13,6 +13,7 @@ import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.KeyEvent;
+import org.w3c.dom.css.Rect;
 
 
 public class PauseMenu {
@@ -21,32 +22,37 @@ public class PauseMenu {
     private final boolean pauseOpen = true;
     private final List<Drawable> toDraw = new ArrayList<>();
     private Texture backgroundTexture = TextureType.PAUSEBACKGROUND.getTexture();
-    private final RectangleShape background = createTexturedRectangle(640, 480, 0, 0, backgroundTexture);
     private final int pauseX = 165;
     private final int quitX = 165;
     private final int pauseY = 150;
     private final int quitY = 300;
     private final int buttonLength = 320;
     private final int buttonHeight = 60;
-    private final RectangleShape pauseBackground = createSimpleRectangle(buttonLength, buttonHeight, 165, 150, 120, 119, 161);
-    private final RectangleShape exitBackground = createSimpleRectangle(buttonLength, buttonHeight, 165, 300, 120, 119, 161);
-    private Drawable[] itemsToDraw = {background, pauseBackground, exitBackground};  
+
+
     private final Font font = FontType.ROBOTO.getFont();  
     private boolean mouseButtonclicked;
     private Vector2f mousePosition;
     private Boolean quited = false;
-
+    private final RectangleShape background = createTexturedRectangle(640, 480, 0, 0, backgroundTexture);
+    private final RectangleShape pauseBackground = createSimpleRectangle(buttonLength, buttonHeight, 165, 150, 120, 119, 161);
+    private final RectangleShape exitBackground = createSimpleRectangle(buttonLength, buttonHeight, 165, 300, 120, 119, 161);
+    private Drawable[] itemsToDraw = {background, pauseBackground, exitBackground};
     private Text text;
 
     public PauseMenu(boolean pause) {
         //If pause is true then it loads the pause, if false it loads the end screen
         toDraw.addAll(Arrays.asList(itemsToDraw));
+
         if(pause) {
             writeText("Paused...", 155, 150);
+            writeText("Press here to quit...", 120, 300);
+
+
         } else {
-            writeText("You have lost all of your lives\n            you have lost.", 80, 135);
+            writeText("You have lost all of your lives.  \n click anywhere to quit", 80, 135);
         }
-        writeText("Press here to quit...", 120, 300);
+
     }
 
     public void draw(RenderWindow window) {
@@ -106,8 +112,9 @@ public class PauseMenu {
 
     private void checkMouse(){
         if(this.mouseButtonclicked){
-            //handle quit
+            //handle quit=
             if(mousePosition!=null){
+                System.out.println("GETTING IN HERE");
                 if(mousePosition.x <= quitX + buttonLength && mousePosition.x >= quitX && mousePosition.y <= quitY + buttonHeight && mousePosition.y >= quitY){
                     quited=true;
                 }
@@ -128,9 +135,6 @@ public class PauseMenu {
         return quited;
     }
 
-    public RectangleShape getExitBackground() {
-        return exitBackground;
-    }
 
 
 }
