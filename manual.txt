@@ -35,6 +35,10 @@ and the tasks becomes challenging after each subsequent ghost encounter.
 
 ---------------------------------------------------------------------------
 
+Game Play
+
+The player will be spawned in the center where they can interact with the mayor, and NPCs from this point forward using the space button to step through dialogue. Interacting with each NPC causes a different mission to appear on the map which the player will have to find. For example to get you started; after interacting with Whiskers, he will leave a clue to find the Yarn tree which the player can find towards the South of the map. Using the arrow keys, the player can navigate to a lone tree - note, not the forest trees! - where they can then interact with the tree following space, which again upon completion, will leave the player free to further navigate the map and find the next NPC.
+
 Controls:
 1. Arrow keys to move.
 2. Press space to interact with characters (including ghosts) and picking up items.
