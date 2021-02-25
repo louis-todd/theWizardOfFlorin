@@ -21,7 +21,7 @@ public class PauseMenu {
     private final int buttonLength = 320;
     private final int buttonHeight = 60;
     private final Font font = FontType.ROBOTO.getFont();  
-    private final RectangleShape background = createTexturedRectangle(640, 480, 0, 0, TextureType.SQUARE16.getTexture());
+    private final RectangleShape background = createSimpleRectangle(640, 480, 0, 0, 0, 0, 0);
     private final RectangleShape exitBackground = createSimpleRectangle(buttonLength, buttonHeight, 165, 300, 120, 119, 161);
     private boolean mouseButtonclicked;
     private Vector2f mousePosition;

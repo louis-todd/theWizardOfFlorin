@@ -12,8 +12,8 @@ public enum FontType {
     private final Font font = new Font();
 
     /**
-     * Sole constructor for the FontType Enum
-     * @param path Path of the Font
+     * Sole constructor.
+     * @param path sets the path of the Font.
      */
     FontType(String path) {
         try {
@@ -25,7 +25,7 @@ public enum FontType {
 
     /**
      *
-     * @return Returns the font
+     * @return the font.
      */
     public Font getFont() {
         return this.font;

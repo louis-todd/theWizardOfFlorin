@@ -4,9 +4,7 @@ import me.ghost.Game;
 import org.jsfml.graphics.Texture;
 
 public enum TextureType {
-    SQUARE16("square-16.png"),
     BOARD("DialogueBoard.png"),
-    PAUSEBACKGROUND("woodenBackground.png"),
 
     LEFTMOVEMENT1("wizardImages/left-movement1.png"),
     LEFTMOVEMENT2("wizardImages/left-movement2.png"),
@@ -51,9 +49,7 @@ public enum TextureType {
     TREE("tree.png"),
 
     HITWIZARD("wizardImages/hit-wizard.png"),
-
-    HEART("heart.png"),
-    TEST("tiles/tile200.png32");
+    HEART("heart.png");
 
     private final Texture texture = new Texture();
 
@@ -71,16 +67,15 @@ public enum TextureType {
     }
 
     /**
-     *
-     * @return Returns the texture
+     * @return the texture.
      */
     public Texture getTexture() {
         return this.texture;
     }
 
     /**
-     * @param index The index the state of the character is in
-     * @return The correct left texture based on how the player has moved
+     * @param index sets the index to lookup.
+     * @return the correct left texture based on index of movement in this direction.
      */
     public static Texture getLeftTextureByIndex(int index) {
         Texture[] allTextures = {LEFTMOVEMENT1.getTexture(), LEFTMOVEMENT2.getTexture(), LEFTMOVEMENT3.getTexture(), LEFTMOVEMENT4.getTexture(), LEFTMOVEMENT5.getTexture(),
@@ -88,8 +83,8 @@ public enum TextureType {
         return allTextures[index];
     }
     /**
-     * @param index The index the state of the character is in
-     * @return The correct right texture based on how the player has moved
+     * @param index sets the index to lookup.
+     * @return the correct right texture based on index of movement in this direction.
      */
     public static Texture getRightTextureByIndex(int index) {
         Texture[] allTextures = {RIGHTMOVEMENT1.getTexture(), RIGHTMOVEMENT2.getTexture(), RIGHTMOVEMENT3.getTexture(), RIGHTMOVEMENT4.getTexture(), RIGHTMOVEMENT5.getTexture(),
@@ -98,8 +93,8 @@ public enum TextureType {
     }
 
     /**
-     * @param index The index the state of the character is in
-     * @return The correct back texture based on how the player has moved
+     * @param index sets the index to lookup.
+     * @return the correct back texture based on index of movement in this direction.
      */
     public static Texture getBackTextureByIndex(int index) {
         Texture[] allTextures = {BACK1.getTexture(), BACK2.getTexture(), BACK3.getTexture(), BACK4.getTexture()};
@@ -107,8 +102,8 @@ public enum TextureType {
     }
 
     /**
-     * @param index The index the state of the character is in
-     * @return The correct front texture based on how the player has moved
+     * @param index sets the index to lookup.
+     * @return the correct back texture based on index of movement in this direction.
      */
     public static Texture getFrontTextureByIndex(int index) {
         Texture[] allTextures = {FRONT1.getTexture(), FRONT2.getTexture(), FRONT3.getTexture(), FRONT4.getTexture()};
