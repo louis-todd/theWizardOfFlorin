@@ -13,7 +13,7 @@ Microsoft reserves all rights not expressly granted herein, whether by implicati
 4. Game/resources/Items/whisky (https://vectorpixelstar.itch.io/food).
 5. Game/resources/wizardImages/whiskers (https://pipoya.itch.io/pipoya-free-rpg-character-sprites-nekonin)
 6. Game/resources/wizardImages/snuffles (https://pipoya.itch.io/pipoya-free-rpg-character-sprites-nekonin)
-
+7. Game/resources/DialogueBoard (https://www.kisscc0.com/clipart/dialog-box-video-games-sambad-text-box-video-game-sy8nxk/)
 
 
 %%  resources/tiles/tile[0-3419] NOTICES AND INFORMATION BEGIN HERE
