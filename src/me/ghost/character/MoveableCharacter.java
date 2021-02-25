@@ -268,7 +268,7 @@ public class MoveableCharacter extends Character {
      * @param tile sets the dialogue area that is being collided with.
      * @return the radius around an NPC in which this character collides with.
      */
-    public boolean dialogueAreaCollide(Drawable obstacle) {
+    public boolean isWithinInteractionRadius(Drawable obstacle) {
         if (obstacle instanceof Npc) {
             return this.getGlobalBounds().intersection(((Npc) obstacle).interactionRadius(4)) != null;
         } else if (obstacle instanceof Item) {

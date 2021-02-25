@@ -216,7 +216,7 @@ public class Game {
                 }
             }
     
-        game.isDialogue();
+        game.setWindowStates();
 
         window.display();
         if (this.liveDisplay.size() > this.game.getOverarchingLives() && this.liveDisplay.size() != 0) {

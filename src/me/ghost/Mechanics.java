@@ -152,14 +152,14 @@ public class Mechanics {
 
                     interactingNPC = null;
                     for (Npc npc : NPCs) {
-                        if (wizard.dialogueAreaCollide(npc) && npc.shouldDraw() && npc.getName()!="Whiskers") {
+                        if (wizard.isWithinInteractionRadius(npc) && npc.shouldDraw() && npc.getName()!="Whiskers") {
                             interactingNPC = npc;
                         }
                     }
 
                     interactingItem = null;
                     for (Item item : ITEMS) {
-                        if (wizard.dialogueAreaCollide(item) && !(item.isFound()) && item.availableToCollect()) {
+                        if (wizard.isWithinInteractionRadius(item) && !(item.isFound()) && item.availableToCollect()) {
                             interactingItem = item;
                         }
                     }
@@ -316,7 +316,7 @@ public class Mechanics {
      * Handles which screen is to be displayed, i.e. dialogue, dodge game, battle, or pause
      */
 
-    public void isDialogue() {
+    public void setWindowStates() {
         if ((keyPresses.get("SPACE"))) {
             if(dodgeGame!=null){
                 if(dodgeGame.isFinishedDialogue()){
