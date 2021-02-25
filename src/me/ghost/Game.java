@@ -286,6 +286,10 @@ public class Game {
         }
     }
 
+    /**
+     * Sets the position of items on the dashboard; shifting them when an item is found.
+     * @param worldView sets the current world view so the item is drawn respectively to the view.
+     */
     private void updateItemPosition(View worldView){
         int i = 1;
         for(Item itemToFind : Item.getItemsToDrawOnDashboard()){
@@ -300,7 +304,6 @@ public class Game {
      */
     private void updateDashBoardPosition(View worldView){
         this.dashBoard.setPosition(worldView.getCenter().x - worldView.getSize().x/2 - 10, worldView.getCenter().y + worldView.getSize().y/2 - 35);
-
     }
 
 }
