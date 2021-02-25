@@ -12,6 +12,8 @@ public class BattleWindow {
     private final List<Drawable> toDraw = new ArrayList<>();
     private final List<CircleShape> healthCircles = new ArrayList<>();
     private final RectangleShape background = createDrawnRectangle(640, 480, 0, 0, 0, 0, 0);
+    private final RectangleShape dialogueBox = this.createDrawnRectangle(620, 100, 10, 370, 98, 52, 18);
+    private final RectangleShape healthLabel = createDrawnRectangle(30, 20, 10, 340, 255, 30, 0);
     private final RectangleShape ghostArea = createDrawnRectangle(500, 180, 70, 10, 255, 255, 255);
     private final RectangleShape playerArea = createDrawnRectangle(350, 100, 150, 210, 255, 255, 255);
     private final Text dialogueText = new Text("...REMINDER: Use arrow keys to avoid the ghosts wrath!!...", FontType.ROBOTO.getFont());
