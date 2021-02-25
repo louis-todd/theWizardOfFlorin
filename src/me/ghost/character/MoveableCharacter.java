@@ -21,7 +21,7 @@ public class MoveableCharacter extends Character {
     private boolean wizardColliding;
     private int stepIndex = 0;
     private int walkFrameControl = 0;
-    private int walkingPace = 5;
+    private int walkingPace = 3;
     private Npc whiskers;
 
     /**

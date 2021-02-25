@@ -18,8 +18,8 @@ Your job is to reconcile both parties, resolving the ghosts’ grudges so the ca
 and the village people can hold their Christmas gathering at the castle once again.
 
 Goal of Game:
-The user plays as a Wizard of Florin with the goal of calming each ghost and resolving their cause of distress.
-To free the ghost, the player will have the option to battle the ghost and/or return the missing item tasked
+The user plays as the great Wizard of Florin with the goal of calming each ghost and resolving their cause of distress.
+To free the ghost, the player will either be prompted into battle, or be prompted to return the missing item tasked
 by the ghost. However, the game is designed to challenge the player, and to do this the difficulty of the battles
 and the tasks becomes challenging after each subsequent ghost encounter.
 
@@ -27,12 +27,15 @@ Controls:
 1. Arrow keys to move.
 2. Press space to interact with characters (including ghosts) and picking up items.
 3. Escape button pauses the game.
-4. Mouse click
+4. Mouse click used to step through dialogue, and interact with buttons.
 
 Battle Mechanism:
 The player starts with only three heart shaped health throughout the game which can be lost by losing a battle.
 Losing a battle would deduct one heart from the player and losing all the hearts would mean the player lost the game.
-However, during a battle a player is given an additional three health in the shape of a circle that renews every battle.
-Losing those three circled health would cause the player to lose the battle, which would cost a player’s health.
-The battle requires the player to use the “WASD” movement keys to dodge incoming objects in order to win.
 
+Within each battle a player is given three secondary measures of health which renew every battle.
+Losing those three circled health would cause the player to lose the battle, which would cost a player’s overarching health.
+
+In order to win a battle, the player must use the arrow keys to avoid the incoming projectiles thrown by the NPC. The player wins the game by enduring the time period, whilst not having lost all lives. 
+
+We hope you enjoy our game!
