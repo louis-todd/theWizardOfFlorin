@@ -1,3 +1,11 @@
+n.b. for running this program on a different OS to that intended:
+
+This game uses font styles native to our target operating system and flavour; Linux Ubuntu. If you wish to, you may change the font within the game to Roboto.tff, and move this tff into the build folder. 
+
+This has been documented as an emergency precaution in case of troubleshooting this code on an alternate operating system.
+
+---------------------------------------------------------------------------
+
 Story
 1956: The great wizard of Florin passed – the village was left in despair.
 A new wizard was to be selected at the Village’s Annual Pumpkin Community Fair.
@@ -17,11 +25,15 @@ Escaping out the window, the children fled the town hall and so began the ancien
 Your job is to reconcile both parties, resolving the ghosts’ grudges so the castle can be free,
 and the village people can hold their Christmas gathering at the castle once again.
 
+---------------------------------------------------------------------------
+
 Goal of Game:
 The user plays as the great Wizard of Florin with the goal of calming each ghost and resolving their cause of distress.
 To free the ghost, the player will either be prompted into battle, or be prompted to return the missing item tasked
 by the ghost. However, the game is designed to challenge the player, and to do this the difficulty of the battles
 and the tasks becomes challenging after each subsequent ghost encounter.
+
+---------------------------------------------------------------------------
 
 Controls:
 1. Arrow keys to move.
@@ -36,6 +48,9 @@ Losing a battle would deduct one heart from the player and losing all the hearts
 Within each battle a player is given three secondary measures of health which renew every battle.
 Losing those three circled health would cause the player to lose the battle, which would cost a player’s overarching health.
 
-In order to win a battle, the player must use the arrow keys to avoid the incoming projectiles thrown by the NPC. The player wins the game by enduring the time period, whilst not having lost all lives. 
+In order to win a battle, the player must use the arrow keys to avoid the incoming projectiles thrown by the NPC. The player wins the game by enduring the time period, whilst not having lost all lives.
 
-We hope you enjoy our game!
+---------------------------------------------------------------------------
+
+We hope you enjoy our game as much as we did making it!
+
