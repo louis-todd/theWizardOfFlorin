@@ -42,7 +42,8 @@ public class PauseMenu {
                 writeText("Paused...", 155, 150);
                 writeText("Press here to quit...", 120, 300);
             } else {
-                writeText("You have lost all of your lives."+ System.lineSeparator() + "  click anywhere to quit", 80, 135);
+                writeText("You have lost all of your lives!"+ System.lineSeparator() + "...click anywhere to quit", 80, 135);
+                toDraw.remove(exitBackground);
             }
         } else {
             writeText("Congratulations... you've Won!", 60, 150);
