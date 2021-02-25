@@ -41,6 +41,7 @@ public class Mechanics {
     private boolean dialogueOpen = false;
     private PauseMenu winScreen;
     private boolean winScreenOpen = false;
+    private boolean handledClick = false;
 
     /**
      * Sole constructor for the machanics class.
@@ -142,6 +143,7 @@ public class Mechanics {
                     if (keyEvent.key == Keyboard.Key.ESCAPE) {
                         if (keyPresses.get("ESCAPE")) {
                             keyPresses.put("ESCAPE", false);
+                            handledClick=true;
                             pauseMenuOpen = false;
                         }
                         else {
@@ -194,7 +196,6 @@ public class Mechanics {
                                         keyPresses.put("SPACE", true);
                                     }
                                 }
-
                                 else {
                                     keyPresses.put("SPACE", false);
                                     interactingNPC.resetScript();
@@ -211,7 +212,6 @@ public class Mechanics {
                                     dialogueOpen=false;
                                 }
                             } else if (battleScreenOpen) {
-
                                 if (interactingNPC.getCurrentBattleIndex() < interactingNPC.getBattleScript().size()) {
                                     if (!dodgeGame.isFinishedDialogue()) {
                                         dodgeGame.setTextContent(String.valueOf(interactingNPC.getBattleScript().get(interactingNPC.getCurrentBattleIndex())));
@@ -253,22 +253,27 @@ public class Mechanics {
                         break;
                     }
                 case MOUSE_BUTTON_PRESSED:
-                    if(!battleScreenOpen) {
-                        if (keyPresses.get("SPACE") && interactingNPC != null && interactingItem == null && interactingNPC.shouldDraw() && !pauseMenuOpen) {
+                    if(pauseMenuOpen && pauseMenu!=null){
+                        pauseMenu.setMouseButtonclicked(true);
+                        if(event.asMouseButtonEvent()!=null){
+                            pauseMenu.setMousePosition(new Vector2f(event.asMouseButtonEvent().position));
+                        }
+                    }
+                    if(!battleScreenOpen && !pauseMenuOpen && !keyPresses.get("ESCAPE") && !handledClick){
+                        if (keyPresses.get("SPACE") && interactingNPC != null && interactingItem == null && interactingNPC.shouldDraw()) {
 
                             if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().size()) {
                                 interaction.setTextContent(String.valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
                                 interactingNPC.incrementCurrentIndex();
                                 interaction.setCharacterName(interaction.getCharacterName());
-                            }
-
-                            else if (interactingNPC.getCurrentIndex() >= interactingNPC.getScript().size()) {
+                            }else if (interactingNPC.getCurrentIndex() >= interactingNPC.getScript().size()) {
                                 keyPresses.put("SPACE", !(keyPresses.get("SPACE")));
                                 interactingNPC.resetScript();
                                 dialogueOpen=false;
                             }
                         }
                     } else {
+                        handledClick=false;
                         if(dodgeGame != null){
                             dodgeGame.setMouseButtonclicked(true);
                             if(event.asMouseButtonEvent()!=null){
@@ -281,12 +286,6 @@ public class Mechanics {
                                     keyPresses.put("SPACE", true);
                                 }
                             }
-                        }
-                    }
-                    if(pauseMenu!=null){
-                        pauseMenu.setMouseButtonclicked(true);
-                        if(event.asMouseButtonEvent()!=null){
-                            pauseMenu.setMousePosition(new Vector2f(event.asMouseButtonEvent().position));
                         }
                     }
                     if(dodgeGame!=null) {
@@ -305,7 +304,6 @@ public class Mechanics {
                             window.close();
                         }
                     }
-
                 default:
                     break;
             }
