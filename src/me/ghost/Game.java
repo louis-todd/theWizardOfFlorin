@@ -36,7 +36,7 @@ public class Game {
 
     private Item duck = new Item("duck", 2914, 2114, TextureType.DUCK.getTexture());
     private Item ice = new Item("ice", 907, 3582, TextureType.ICE.getTexture());
-    private Item tambourine = new Item("tambourine", 2312, 2413, TextureType.TAMBOURINE.getTexture());
+    private Item tambourine = new Item("tambourine", 320, 150, TextureType.TAMBOURINE.getTexture());
     private Item teddy = new Item("teddy", 3545, 327, TextureType.TEDDY.getTexture());
     private Item whisky = new Item("whisky", 1901, 1930, TextureType.WHISKY.getTexture());
     private Item whisky2 = new Item("whisky2", 2697, 3596, TextureType.WHISKY.getTexture());
