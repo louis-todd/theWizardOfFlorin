@@ -21,15 +21,16 @@ public class Tile extends RectangleShape {
         this.setCollideable(tileLoader);
     }
 
-    /** Sets the tile to either collideable or not when the tile is loaded
-     * @param tileLoader Instance of TileLoader
+    /** 
+     * Sets whether the tile is collidable.
+     * @param tileLoader sets the instance of TileLoader.
      */
     private void setCollideable(TileLoader tileLoader){
         collideable = tileLoader.getCollidableTiles().contains(tileNumber);
     }
 
-    /** Getter for if the tile is collideable
-     * @return boolean
+    /** 
+     * @return whether the tile is collidable.
      */
     public boolean isCollideable() {
         return collideable;

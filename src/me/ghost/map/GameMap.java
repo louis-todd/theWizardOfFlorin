@@ -42,7 +42,7 @@ public class GameMap {
 
     /**
      * Loads the map by reading in the csv and setting an arrayList to store the tileNumber and
-     * creates an ArrayList to store the tiles that are created
+     * creates an ArrayList to store the tiles that are created.
      */
     public void loadMap(){
         this.hasLoaded = true;
@@ -97,7 +97,7 @@ public class GameMap {
     }
 
     /** Creates the tiles if the tile = -1 it loads a transparent tile otherwise it gets the tile texture from the tileLoader
-     * tiles are set to collideable using this
+     * tiles are set to collideable using this.
      * @param rowNumber sets row number.
      * @param rowIndex sets row index.
      */
@@ -111,7 +111,6 @@ public class GameMap {
     }
 
     /**
-     * Getter for tiles in the tileMap
      * @param x defines the x positino of the file.
      * @param y defines the y positino of the file.
      * @return the requested tile by its coordinates.
@@ -121,7 +120,7 @@ public class GameMap {
     }
 
     /**
-     * Gets the width/number of tiles needed to draw the map
+     * Gets the width/number of tiles needed to draw the map.
      * @return width of the csv.
      */
     public int getDrawWidth() {
@@ -129,7 +128,7 @@ public class GameMap {
     }
 
     /**
-     * Gets the height/number of tiles needed to draw the map
+     * Gets the height/number of tiles needed to draw the map.
      * @return height of the csv.
      */
     public int getDrawHeight() {
@@ -137,8 +136,8 @@ public class GameMap {
     }
 
     /**
-     * Gets the boundaries of the map
-     * @return the boundaries of the map
+     * Gets the boundaries of the map.
+     * @return the boundaries of the map.
      */
     public FloatRect getMapBounds(){
         return new FloatRect(0, 0, getDrawWidth() * 16, getDrawHeight() * 16);

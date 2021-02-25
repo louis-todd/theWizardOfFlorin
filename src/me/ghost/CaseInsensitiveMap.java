@@ -19,7 +19,7 @@ public class CaseInsensitiveMap<V> extends HashMap<String, V> {
     }
 
     /**
-     * Constructor for case insensitive map
+     * Constructor for case insensitive map.
      */
     public CaseInsensitiveMap() {
     }
@@ -29,23 +29,21 @@ public class CaseInsensitiveMap<V> extends HashMap<String, V> {
     }
 
     /**
-     * Gets the key of the map in lower case
-     * @param key The Key
-     * @return V
+     * @param key sets the key.
+     * @return the key of the map in lower case.
      */
     @Override
     public V get(Object key) {
         if (!(key instanceof String)) {
             throw new IllegalArgumentException("CaseInsensitiveMap only accepts strings as keys");
         }
-
         return super.get(((String) key).toLowerCase());
     }
 
-    /** Puts the value in the map as lower case
-     * @param key The key
-     * @param value The value
-     * @return V
+    /** 
+     * @param key sets the key.
+     * @param value sets the value.
+     * @return the value in the map as lower case.
      */
     @Override
     public V put(String key, V value) {
