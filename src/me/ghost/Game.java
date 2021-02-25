@@ -84,7 +84,6 @@ public class Game {
         worldView.setCenter(wizard.getPosition());
         toDraw.addAll(Arrays.asList(itemsToDraw));
         Mayor.setShouldDraw(true);
-        CrazyJoe.setShouldDraw(true);
         window.setFramerateLimit(120);
         this.dashBoard.setFillColor(Color.BLACK);
     }

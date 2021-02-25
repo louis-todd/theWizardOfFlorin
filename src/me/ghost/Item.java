@@ -81,19 +81,23 @@ public class Item extends Sprite {
         }
         this.availableToCollect = isAvailableToCollect;
     }
+
     /**
-     * 
      * Sets this item to found, intended to be used once an item has been picked up.
      * @param isFound sets whether the item has been picked up by the player.
      */
     public void setAsFound(Boolean isFound) {
         if(isFound){
-            System.out.println("REMOVING ITEM: " + this.getName());
             toDrawOnDashboard.remove(this.getItemByName(this.getName()));
         }
         this.isFound = isFound;
     }
 
+    /**
+     * This method provides an item lookup by name within the set of items displayed on the dashboard.
+     * @param itemName sets the name of the item searching for.
+     * @return the item which has the associated name, or null if it does not exist.
+     */
     private Item getItemByName(String itemName){
         for (Item singleItem : toDrawOnDashboard){
             if(singleItem.getName().equals(itemName)){
@@ -102,14 +106,6 @@ public class Item extends Sprite {
         }
         return null;
     }
-    
-    /**
-     * Sets this item to found, intended to be used once an item has been picked up.
-     * @param isFound sets whether the item has been picked up by the player.
-     */
-    public void setAsFound(boolean isFound) {
-        this.isFound = isFound;
-    }
 
     /**
      *
@@ -117,7 +113,6 @@ public class Item extends Sprite {
      * @param scaleFactor sets the scale factor of the radius.
      * @return the area in which the player can interact with this item.
      */
-
     public FloatRect interactionRadius(float scaleFactor) {
         float centrex = this.getGlobalBounds().left + (this.getGlobalBounds().width / 2);
         float centrey = this.getGlobalBounds().top + (this.getGlobalBounds().height / 2);
@@ -143,6 +138,9 @@ public class Item extends Sprite {
         hasBeenCounted=true;
     }
 
+    /**
+     * @return the set of items that are currently to be displayed on the dashboard.
+     */
     public static List<Item> getItemsToDrawOnDashboard(){
         return toDrawOnDashboard;
     }
