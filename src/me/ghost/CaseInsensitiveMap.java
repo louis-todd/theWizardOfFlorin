@@ -18,6 +18,9 @@ public class CaseInsensitiveMap<V> extends HashMap<String, V> {
         super(initialCapacity);
     }
 
+    /**
+     * Constructor for case insensitive map
+     */
     public CaseInsensitiveMap() {
     }
 
@@ -25,8 +28,9 @@ public class CaseInsensitiveMap<V> extends HashMap<String, V> {
         super(m);
     }
 
-    /** 
-     * @param key
+    /**
+     * Gets the key of the map in lower case
+     * @param key The Key
      * @return V
      */
     @Override
@@ -38,9 +42,9 @@ public class CaseInsensitiveMap<V> extends HashMap<String, V> {
         return super.get(((String) key).toLowerCase());
     }
 
-    /** 
-     * @param key
-     * @param value
+    /** Puts the value in the map as lower case
+     * @param key The key
+     * @param value The value
      * @return V
      */
     @Override

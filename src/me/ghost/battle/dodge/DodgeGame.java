@@ -101,7 +101,6 @@ public class DodgeGame {
         Stack<Projectile> projectileStack = new Stack<>();
         for(int i = 0; i < numberProjectiles; i++){
             Projectile push = projectileStack.push(new Projectile(6, ThreadLocalRandom.current().nextInt(maxSides - minSides + 1) + minSides));
-
             push.thrown(this.battleNpc);
         }
         return projectileStack;
@@ -149,7 +148,7 @@ public class DodgeGame {
     
     /** 
      * Draws the items within the battle, or associated windows: pause, lose, and win.
-     * @param window
+     * @param window The renderwindow
      */
     public void draw(RenderWindow window) {
         if (!wonOrLost) {

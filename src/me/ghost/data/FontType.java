@@ -11,6 +11,10 @@ public enum FontType {
 
     private final Font font = new Font();
 
+    /**
+     * Sole constructor for the FontType Enum
+     * @param path Path of the Font
+     */
     FontType(String path) {
         try {
             this.font.loadFromStream(Game.class.getClassLoader().getResourceAsStream(path));
@@ -19,6 +23,10 @@ public enum FontType {
         }
     }
 
+    /**
+     *
+     * @return Returns the font
+     */
     public Font getFont() {
         return this.font;
     }

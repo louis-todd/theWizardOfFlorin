@@ -41,7 +41,8 @@ public class GameMap {
     }
 
     /**
-     * Attempts to load in tiles (graphical components that make up the map).
+     * Loads the map by reading in the csv and setting an arrayList to store the tileNumber and
+     * creates an ArrayList to store the tiles that are created
      */
     public void loadMap(){
         this.hasLoaded = true;
@@ -75,14 +76,14 @@ public class GameMap {
     }
 
     
-    /** 
+    /** Creates a buffered reader
      * @return BufferedReader
      */
     private BufferedReader returnBufferedReader(){
         return new BufferedReader(new InputStreamReader(getFileStream()));
     }
 
-    /** 
+    /** Creates an InputStream to intput into the bufferedreader
      * @return InputStream
      */
     private InputStream getFileStream()  {
@@ -95,7 +96,8 @@ public class GameMap {
         return fileStream;
     }
 
-    /** 
+    /** Creates the tiles if the tile = -1 it loads a transparent tile otherwise it gets the tile texture from the tileLoader
+     * tiles are set to collideable using this
      * @param rowNumber sets row number.
      * @param rowIndex sets row index.
      */
@@ -108,7 +110,8 @@ public class GameMap {
         }
     }
 
-    /** 
+    /**
+     * Getter for tiles in the tileMap
      * @param x defines the x positino of the file.
      * @param y defines the y positino of the file.
      * @return the requested tile by its coordinates.
@@ -117,21 +120,24 @@ public class GameMap {
         return tileMap.get(x).get(y);
     }
 
-    /** 
+    /**
+     * Gets the width/number of tiles needed to draw the map
      * @return width of the csv.
      */
     public int getDrawWidth() {
         return csvWidth - 1;
     }
 
-    /** 
+    /**
+     * Gets the height/number of tiles needed to draw the map
      * @return height of the csv.
      */
     public int getDrawHeight() {
         return cell.size() - 2;
     }
 
-    /** 
+    /**
+     * Gets the boundaries of the map
      * @return the boundaries of the map
      */
     public FloatRect getMapBounds(){
