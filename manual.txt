@@ -6,6 +6,19 @@ This has been documented as an emergency precaution in case of troubleshooting t
 
 ---------------------------------------------------------------------------
 
+Please do not worry about the verbose output from the ./run.sh script! It is simply updating your JavaDoc documentation.
+
+In terms of troubleshooting, please do not worry if the game does not start on first boot and try again! Please consider which OS you are running the game on as per the top notes on this file, and be patient - theres a lot to load in! Please try reboot the game at least 3 times, and as a last resort, contact one of the developers for support.
+
+---------------------------------------------------------------------------
+
+Launching the game
+
+./buildme.sh
+./runme.sh
+
+---------------------------------------------------------------------------
+
 Story
 1956: The great wizard of Florin passed – the village was left in despair.
 A new wizard was to be selected at the Village’s Annual Pumpkin Community Fair.
