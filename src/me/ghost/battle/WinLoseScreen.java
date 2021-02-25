@@ -13,6 +13,10 @@ public class WinLoseScreen extends RectangleShape {
     private Text buttonText = null;
     private Text winLossText = null;
 
+    /**
+     * Sole constructor which configures the screen.
+     * @param won determines whether the game has been won.
+     */
     public WinLoseScreen(boolean won) {
         this.setSize(new Vector2f(400, 300));
         this.setPosition(new Vector2f(120, 90));
@@ -24,6 +28,9 @@ public class WinLoseScreen extends RectangleShape {
         toDraw.add(this.getWinLossText(won));
     }
 
+    /** 
+     * @return exit button.
+     */
     public RectangleShape getExitButton(){
         if(this.exitButton == null){
             RectangleShape rectangle = new RectangleShape();
@@ -35,6 +42,9 @@ public class WinLoseScreen extends RectangleShape {
         return this.exitButton;
     }
 
+    /** 
+     * @return the text currently displayed on the button.
+     */
     private Text getButtonText(){
         if(this.buttonText == null){
             Text text = new Text();
@@ -48,6 +58,10 @@ public class WinLoseScreen extends RectangleShape {
         return this.buttonText;
     }
 
+    /** 
+     * @param won determines whether the player has won the game.
+     * @return the text currently being displayed.
+     */
     private Text getWinLossText(boolean won) {
         if (this.winLossText == null) {
             Text text = new Text();
@@ -65,6 +79,9 @@ public class WinLoseScreen extends RectangleShape {
         return this.winLossText;
     }
 
+    /** 
+     * @return the items that make up this window.
+     */
     public List<Drawable> getToDraw() {
         return toDraw;
     }

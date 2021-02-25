@@ -8,16 +8,17 @@ import me.ghost.data.TileLoader;
 import me.ghost.map.GameMap;
 import me.ghost.data.FontType;
 import me.ghost.data.TextureType;
-import me.ghost.map.Tile;
 import org.jsfml.graphics.*;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.VideoMode;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+/**
+ * Game is used to control the game loop and main handling/updating of state.
+ */
 
 public class Game {
 
@@ -25,56 +26,44 @@ public class Game {
     private static final Vector2f LOADING_BAR_POSITION = new Vector2f(50, 400);
 
     private final RenderWindow window = new RenderWindow(new VideoMode(640, 480), "Welcome Wizards");
-
     private final List<Drawable> toDraw = new ArrayList<>();
     private final Map<String, Boolean> keyPresses = new CaseInsensitiveMap<>();
-
     private final TileLoader tileLoader = new TileLoader();
-    private final GameMap mapHouse = new GameMap("resources/map._House.csv", 50, tileLoader);
-    private final GameMap currentMap = mapHouse;
     private final View worldView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
     private final View battleView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
     private final View pauseView = new View(window.getDefaultView().getCenter(), window.getDefaultView().getSize());
     private BattleWindow battleWindow = new BattleWindow();
 
-    // private Item axe = new Item("duck", 300, 300, TextureType.DUCK.getTexture());
-    // private Item boot = new Item("ice", 250, 180, TextureType.ICE.getTexture());
-    // private Item heart = new Item("tambourine", 350, 380, TextureType.TAMBOURINE.getTexture());
-    private Item duck = new Item("duck", 150, 200, TextureType.DUCK.getTexture());
-    private Item ice = new Item("ice", 250, 200, TextureType.ICE.getTexture());
-    private Item tambourine = new Item("tambourine", 350, 200, TextureType.TAMBOURINE.getTexture());
-    private Item teddy = new Item("teddy", 450, 200, TextureType.TEDDY.getTexture());
-    private Item whisky = new Item("whisky", 550, 200, TextureType.WHISKY.getTexture());
-    private Item whisky2 = new Item("whisky2", 550, 200, TextureType.WHISKY.getTexture());
-    private Item plank = new Item("plank", 650, 200, TextureType.WOOD.getTexture());
-    private Item yarn = new Item("yarn", 750, 200, TextureType.YARN.getTexture());
-    // private Item tree = new Item("tree", 750, 200, TextureType.TREE.getTexture());
+    private Item duck = new Item("duck", 2914, 2114, TextureType.DUCK.getTexture());
+    private Item ice = new Item("ice", 907, 3582, TextureType.ICE.getTexture());
+    private Item tambourine = new Item("tambourine", 2312, 2413, TextureType.TAMBOURINE.getTexture());
+    private Item teddy = new Item("teddy", 3545, 327, TextureType.TEDDY.getTexture());
+    private Item whisky = new Item("whisky", 1901, 1930, TextureType.WHISKY.getTexture());
+    private Item whisky2 = new Item("whisky2", 2697, 3596, TextureType.WHISKY.getTexture());
+    private Item plank = new Item("plank", 692, 616, TextureType.WOOD.getTexture());
+    private Item yarn = new Item("yarn", 3655, 3895, TextureType.YARN.getTexture());
 
     private Item[] itemArray = { duck, ice, tambourine, teddy, whisky, plank, yarn, whisky2 };
     private ArrayList<Item> ITEMS = new ArrayList<Item>(Arrays.asList(itemArray));
 
     private final MoveableCharacter wizard = new MoveableCharacter("Name Placeholder", 320, 150, TextureType.FRONT1.getTexture(), ITEMS);
 
-    // private final MoveableCharacter whiskers = new MoveableCharacter("Name Placeholder", 300, 170, TextureType.WHISKERS.getTexture(), ITEMS);
-    private Npc whiskers = new Npc("Whiskers", 300, 170, TextureType.WHISKERS.getTexture(), 0);
+    private Npc Whiskers = new Npc("Whiskers", 300, 170, TextureType.WHISKERS.getTexture(), 0, "");
+    private Npc Mayor = new Npc("Mayor", 260, 150, TextureType.GHOST.getTexture(), 0, "");
+    private Npc CrazyJoe = new Npc("CrazyJoe", 3155, 3176, TextureType.GHOST.getTexture(), 4, "");
+    private Npc Gluttony = new Npc("Gluttony", 3029, 1062, TextureType.GHOST.getTexture(), 0, "HARD");
+    private Npc PirateJack = new Npc("PirateJack", 2697, 588, TextureType.GHOST.getTexture(), 1, "");
+    private Npc Sibirius = new Npc("Sibirius", 580, 3727, TextureType.GHOST.getTexture(), 0, "INTERMEDIATE");
+    private Npc Snuffles = new Npc("Snuffles", 349, 140, TextureType.SNUFFLES.getTexture(), 0, "EASY");
+    private Npc Summer = new Npc("Summer", 2402, 1469, TextureType.GHOST.getTexture(), 3, "");
+    private Npc Tree = new Npc("Tree", 990, 1853, TextureType.TREE.getTexture(), 0, "EASY");
 
-    // private Npc npc1 = new Npc("TestPerson", 150, 300, TextureType.GHOST.getTexture(), 3);
-    private Npc mayor = new Npc("Mayor", 250, 300, TextureType.GHOST.getTexture(), 0);
-    private Npc npc3 = new Npc("CrazyJoe", 350, 300, TextureType.GHOST.getTexture(), 4);
-    private Npc npc4 = new Npc("Gluttony", 450, 300, TextureType.GHOST.getTexture(), 0);
-    private Npc npc5 = new Npc("PirateJack", 550, 300, TextureType.GHOST.getTexture(), 1);
-    private Npc npc6 = new Npc("Sibirius", 650, 300, TextureType.GHOST.getTexture(), 0);
-    private Npc npc7 = new Npc("Snuffles", 750, 300, TextureType.SNUFFLES.getTexture(), 0);
-    private Npc npc8 = new Npc("Summer", 850, 300, TextureType.GHOST.getTexture(), 3);
-    private Npc npc9 = new Npc("Tree", 950, 300, TextureType.TREE.getTexture(), 0);
-
-    private Npc[] npcArray = { mayor, npc3, npc4, npc5, npc6, npc7, npc8, npc9, whiskers };
-    // private Npc[] npcArray = { mayor, npc3, npc4, npc5, npc6, npc7, npc8, npc9 };
+    private Npc[] npcArray = { Mayor, CrazyJoe, Gluttony, PirateJack, Sibirius, Snuffles, Summer, Tree, Whiskers };
     private ArrayList<Npc> NPCs = new ArrayList<Npc>(Arrays.asList(npcArray));
 
-    private Drawable[] itemsToDraw = { wizard, mayor, npc3, npc4, npc5, npc6, npc7,  npc8, npc9, whiskers, duck, ice, tambourine, teddy, whisky, plank, yarn, whisky2 };
+    private Drawable[] itemsToDraw = { wizard, Mayor, CrazyJoe, Gluttony, PirateJack, Sibirius, Snuffles,  Summer, Tree, Whiskers, duck, ice, tambourine, teddy, whisky, plank, yarn, whisky2 };
     private final Dialogue interaction = new Dialogue(worldView, FontType.ROBOTO.getFont(), TextureType.BOARD.getTexture(), "REPLACE ME", "Content Placeholder");
-    private Mechanics game = new Mechanics(keyPresses, window, NPCs, ITEMS, interaction, battleWindow);
+    private Mechanics game = new Mechanics(keyPresses, window, NPCs, ITEMS, interaction);
 
     private final Map<String, Integer> drawingBounds = new CaseInsensitiveMap<>();
     private final GameMap baseLayer = new GameMap("resources/finalmapv2_Base_Layer.csv", 250, tileLoader);
@@ -84,23 +73,24 @@ public class Game {
     private Text loadingText = null;
     private RectangleShape loadingBar = null;
 
-    private final List<CircleShape> livesDisplay = new ArrayList<>(Arrays.asList(lifeCircle(1), lifeCircle(2), lifeCircle(3)));
+    private final List<Sprite> liveDisplay = new ArrayList<>(Arrays.asList(createHeart(1), createHeart(2), createHeart(3)));
     private final RectangleShape dashBoard = new RectangleShape(new Vector2f(655, 45));
 
 
     /**
-     * Constructor for the game class
+     * Sole constructor for Game class which sets the view, adds sprites to the game, sets framerate, and adds the dashboard.
      */
     public Game() {
         worldView.setCenter(wizard.getPosition());
         toDraw.addAll(Arrays.asList(itemsToDraw));
-        mayor.setShouldDraw(true);
+        Mayor.setShouldDraw(true);
+        CrazyJoe.setShouldDraw(true);
         window.setFramerateLimit(120);
         this.dashBoard.setFillColor(Color.BLACK);
     }
 
     /**
-     * Runs the window including inputs and updating the window
+     * Updates states depending on which screen the user is viewing.
      */
     public void run() {
         while (window.isOpen()) {
@@ -118,8 +108,11 @@ public class Game {
             }
 
             game.handleEvents(wizard);
+            if(game.isBattleScreenOpen()){
+                game.handleWizardMovement();
+            }
             if (!game.isBattleScreenOpen()) {
-                wizard.moveCharacter(keyPresses, toDraw, worldView, topLayer, whiskers);
+                wizard.moveCharacter(keyPresses, toDraw, worldView, topLayer, Whiskers);
             }
             updateWindow();
             if(game.hasPlayerQuit()){
@@ -127,10 +120,12 @@ public class Game {
                 window.close();
             }
         }
-
         TileLoader.THREADS.shutdown();
     }
-/////
+
+    /**
+     * @param window sets the window in which the loading screen should be drawn on.
+     */
     private void drawLoadingScreen(RenderWindow window) {
         window.clear(Color.BLACK);
 
@@ -144,10 +139,12 @@ public class Game {
         window.display();
     }
 
+    /**
+     * @return the formatted text to be used on the loading screen.
+     */
     private Text getLoadingText() {
         if (this.loadingText == null) {
             Text text = new Text();
-
             text.setPosition(TEXT_POSITION);
             text.setString("Ghost Game v 1.0.0");
             text.setColor(Color.WHITE);
@@ -155,49 +152,55 @@ public class Game {
             text.setFont(FontType.ROBOTO.getFont());
             this.loadingText = text;
         }
-
         return this.loadingText;
     }
+
+    /**
+     * Gets the graphic or a bar loading.
+     * @return the graphic of a bar loading.
+     */
 
     private RectangleShape getLoadingBar() {
         if (this.loadingBar == null) {
             RectangleShape loadingBar = new RectangleShape();
-
             loadingBar.setPosition(LOADING_BAR_POSITION);
             loadingBar.setSize(new Vector2f(loadingBarCounter, 50));
             loadingBar.setFillColor(Color.WHITE);
             this.loadingBar = loadingBar;
         }
-
         return this.loadingBar;
     }
 
     /**
-     * Updates the window
+     * Updates window state based on current screen.
      */
     private void updateWindow() {
         window.clear(Color.RED);
 
             if (game.isBattleScreenOpen()) {
                 window.setView(battleView);
-            }else if (game.isPauseMenuOpen()) {
+            }
+            else if (game.isPauseMenuOpen()) {
                 window.setView(pauseView);
-            }else if(this.game.isWinScreenOpen()){
+            }
+            else if(this.game.isWinScreenOpen()){
                     this.window.clear();
                     this.window.setView(battleView);
                     this.game.getWinScreen().draw(window);
-            }else {
+            }
+            else {
                 drawTiles();
                 window.setView(worldView);
-
                 updateLifePosition(worldView);
                 updateItemPosition(worldView);
 
 
                 updateDashBoardPosition(worldView);
+
                 window.draw(dashBoard);
-                for (CircleShape circleShape : livesDisplay) {
-                    window.draw(circleShape);
+
+                for(Sprite heart : liveDisplay){
+                    window.draw(heart);
                 }
                 for(Item itemToFind : Item.getItemsToDrawOnDashboard()){
                     window.draw(itemToFind);
@@ -214,29 +217,23 @@ public class Game {
                             window.draw(item);
                         }
                     }
-                    // move wizard
                     else {
                         window.draw(item);
                     }
                 }
             }
-
-
-        // if (!game.isBattleScreenOpen()) {
-        //     drawTiles();
-        //     window.setView(worldView);
-        // } else {
-        //     window.setView(battleView);
-        // }
-
     
-        game.isDialogue();
+        game.setWindowStates();
 
         window.display();
-        if (this.livesDisplay.size() > this.game.getOverarchingLives() && this.livesDisplay.size() != 0) {
-            this.livesDisplay.remove(this.livesDisplay.size() - 1);
+        if (this.liveDisplay.size() > this.game.getOverarchingLives() && this.liveDisplay.size() != 0) {
+            this.liveDisplay.remove(this.liveDisplay.size() - 1);
         }
     }
+
+    /**
+     * Draw the tiles in the current view of the map.
+     */
 
     private void drawTiles() {
         initialiseDrawingBounds();
@@ -249,10 +246,11 @@ public class Game {
                 }
             }
         }
-
-
     }
 
+    /**
+     * Set the range of the tiles in the current view.
+     */
     private void initialiseDrawingBounds() {
         int tileSize = 16;
         int cameraWidth = 40;
@@ -266,17 +264,25 @@ public class Game {
                 Math.min((int) (worldView.getCenter().y / tileSize) + (cameraWidth / 2), topLayer.getDrawHeight()));
     }
 
-    private CircleShape lifeCircle(int positionNumber){
-        CircleShape lifeCircle = new CircleShape(6);
-        lifeCircle.setFillColor(Color.RED);
-        lifeCircle.setPosition(640-16*positionNumber, 5);
-        return lifeCircle;
+    /** 
+     * Draws a health unit.
+     * @param positionNumber sets the position of the heart being drawn.
+     * @return the graphic of a heart to represent a health unit.
+     */
+    private Sprite createHeart(int positionNumber){
+        Sprite heartShape = new Sprite(TextureType.HEART.getTexture());
+        heartShape.setPosition(640 - 32 * positionNumber, 5);
+        return heartShape;
     }
 
+    /** 
+     * Update the position of the heart on the dashboard dependent on how many lives are remaining.
+     * @param worldView sets the current world view so the heart is drawn respectively to the view.
+     */
     private void updateLifePosition(View worldView){
         int i = 1;
-        for(CircleShape circleShape : livesDisplay){
-            circleShape.setPosition(worldView.getCenter().x + worldView.getSize().x/2 - i * 16, worldView.getCenter().y + worldView.getSize().y/2 - 25);
+        for(Sprite heart : liveDisplay){
+            heart.setPosition(worldView.getCenter().x + worldView.getSize().x/2 - i * 35, worldView.getCenter().y + worldView.getSize().y/2 - 32);
             i++;
         }
     }
@@ -289,6 +295,10 @@ public class Game {
         }
     }
 
+    /** 
+     * Sets the position of the dashboard in respect to the current view.
+     * @param worldView sets the current view.
+     */
     private void updateDashBoardPosition(View worldView){
         this.dashBoard.setPosition(worldView.getCenter().x - worldView.getSize().x/2 - 10, worldView.getCenter().y + worldView.getSize().y/2 - 35);
 

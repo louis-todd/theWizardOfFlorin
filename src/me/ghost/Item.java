@@ -4,17 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jsfml.graphics.FloatRect;
-
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 
+/**
+ *
+ * {@inheritDoc}
+ * The Item class is used to represent the entities set to collect by the NPCs.
+ * The Item class is also used for the dashboard in showing which items are to be collected
+ * 
+ */
 public class Item extends Sprite {
 
-    private Boolean availableToCollect = false;
-    private Boolean isFound = false;
+    private boolean availableToCollect = false;
+    private boolean isFound = false;
     private String itemName = "placeholder";
     private boolean hasBeenCounted = false;
     private static List<Item> toDrawOnDashboard = new ArrayList<Item>();
+
+    /**
+     * The class Item only has a default constructor which sets the items appearance, position, and name.
+     * @param itemName sets the name of the item.
+     * @param xPosition sets the item's X position of the map.
+     * @param yPosition sets the item's Y position on the map.
+     * @param itemTexture sets the graphic for the item.
+     */
 
     public Item(String itemName, float xPosition, float yPosition, Texture itemTexture) {
         this.setTexture(itemTexture);
@@ -22,18 +36,35 @@ public class Item extends Sprite {
         this.itemName = itemName;
     }
 
+    /**
+     * Gets the name of this Item.
+     * @return the name of the item.
+     */
     public String getName() {
         return itemName;
     }
 
-    public Boolean availableToCollect() {
+    /**
+     * Gets availableToCollect which is set when this item has been included as part of the NPC brief.
+     * @return whether the item is inclued as part of the current fetch quest.
+     */
+    public boolean availableToCollect() {
         return availableToCollect;
     }
 
-    public Boolean isFound() {
+    /**
+     * Gets isFound which is updated when this item is picked up by the user.
+     * @return whether this item has been picked up by the player.
+     */
+
+    public boolean isFound() {
         return isFound;
     }
 
+    /**
+     * Sets availableToCollect once this item has been included as part of the NPC brief.
+     * @param isAvailableToCollect sets whether the item should be availableToCollect.
+     */
     public void setAsAvailableToCollect(Boolean isAvailableToCollect) {
         if(isAvailableToCollect){
             //Check if the array contains an item with this name
@@ -50,7 +81,11 @@ public class Item extends Sprite {
         }
         this.availableToCollect = isAvailableToCollect;
     }
-
+    /**
+     * 
+     * Sets this item to found, intended to be used once an item has been picked up.
+     * @param isFound sets whether the item has been picked up by the player.
+     */
     public void setAsFound(Boolean isFound) {
         if(isFound){
             System.out.println("REMOVING ITEM: " + this.getName());
@@ -67,8 +102,23 @@ public class Item extends Sprite {
         }
         return null;
     }
+    
+    /**
+     * Sets this item to found, intended to be used once an item has been picked up.
+     * @param isFound sets whether the item has been picked up by the player.
+     */
+    public void setAsFound(boolean isFound) {
+        this.isFound = isFound;
+    }
 
-    public FloatRect dialogueArea(float scaleFactor) {
+    /**
+     *
+     * Gets the radius in which a player can interact with an object.
+     * @param scaleFactor sets the scale factor of the radius.
+     * @return the area in which the player can interact with this item.
+     */
+
+    public FloatRect interactionRadius(float scaleFactor) {
         float centrex = this.getGlobalBounds().left + (this.getGlobalBounds().width / 2);
         float centrey = this.getGlobalBounds().top + (this.getGlobalBounds().height / 2);
         float newHeight = this.getGlobalBounds().height * scaleFactor;
@@ -78,10 +128,17 @@ public class Item extends Sprite {
         return new FloatRect(newLeft, newTop, newWidth, newHeight);
     }
     
-    public Boolean hasBeenCounted(){
+    /** 
+     * Gets whether the item has already been included in the total number of items collected from its associated NPC.
+     * @return whether the item has already been included in collected total.
+     */
+    public boolean hasBeenCounted(){
         return hasBeenCounted;
     }
 
+    /** 
+     * Sets counted state to true to track whether this item has been collected.
+     */
     public void setAsCounted(){
         hasBeenCounted=true;
     }

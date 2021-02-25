@@ -52,9 +52,8 @@ public enum TextureType {
 
     HITWIZARD("wizardImages/hit-wizard.png"),
 
-
-    TEST("tiles/tile200.png32")
-    ;
+    HEART("heart.png"),
+    TEST("tiles/tile200.png32");
 
     private final Texture texture = new Texture();
 
@@ -63,7 +62,7 @@ public enum TextureType {
             this.texture.loadFromStream(Game.class.getClassLoader().getResourceAsStream(path));
         } catch (Exception e) {
             // e.printStackTrace();
-             System.out.println("Error loading item from: " + path);
+            System.out.println("Error loading item from: " + path);
         }
     }
 
@@ -71,24 +70,24 @@ public enum TextureType {
         return this.texture;
     }
 
-    public static Texture getLeftTextureByIndex(int index){
-        Texture[] allTextures = {LEFTMOVEMENT1.getTexture(), LEFTMOVEMENT2.getTexture(), LEFTMOVEMENT3.getTexture(), LEFTMOVEMENT4.getTexture(), LEFTMOVEMENT5.getTexture(), 
-            LEFTMOVEMENT6.getTexture(), LEFTMOVEMENT7.getTexture(), LEFTMOVEMENT8.getTexture()};
+    public static Texture getLeftTextureByIndex(int index) {
+        Texture[] allTextures = {LEFTMOVEMENT1.getTexture(), LEFTMOVEMENT2.getTexture(), LEFTMOVEMENT3.getTexture(), LEFTMOVEMENT4.getTexture(), LEFTMOVEMENT5.getTexture(),
+                LEFTMOVEMENT6.getTexture(), LEFTMOVEMENT7.getTexture(), LEFTMOVEMENT8.getTexture()};
         return allTextures[index];
     }
 
-    public static Texture getRightTextureByIndex(int index){
-        Texture[] allTextures = {RIGHTMOVEMENT1.getTexture(), RIGHTMOVEMENT2.getTexture(), RIGHTMOVEMENT3.getTexture(), RIGHTMOVEMENT4.getTexture(), RIGHTMOVEMENT5.getTexture(), 
-            RIGHTMOVEMENT6.getTexture(), RIGHTMOVEMENT7.getTexture(), RIGHTMOVEMENT8.getTexture()};
+    public static Texture getRightTextureByIndex(int index) {
+        Texture[] allTextures = {RIGHTMOVEMENT1.getTexture(), RIGHTMOVEMENT2.getTexture(), RIGHTMOVEMENT3.getTexture(), RIGHTMOVEMENT4.getTexture(), RIGHTMOVEMENT5.getTexture(),
+                RIGHTMOVEMENT6.getTexture(), RIGHTMOVEMENT7.getTexture(), RIGHTMOVEMENT8.getTexture()};
         return allTextures[index];
     }
 
-    public static Texture getBackTextureByIndex(int index){
+    public static Texture getBackTextureByIndex(int index) {
         Texture[] allTextures = {BACK1.getTexture(), BACK2.getTexture(), BACK3.getTexture(), BACK4.getTexture()};
         return allTextures[index];
     }
 
-    public static Texture getFrontTextureByIndex(int index){
+    public static Texture getFrontTextureByIndex(int index) {
         Texture[] allTextures = {FRONT1.getTexture(), FRONT2.getTexture(), FRONT3.getTexture(), FRONT4.getTexture()};
         return allTextures[index];
     }

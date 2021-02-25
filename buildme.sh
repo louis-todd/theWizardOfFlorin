@@ -1,5 +1,4 @@
-#!/bin/bash
+store='src/me/ghost/'
 
-find -name "*.java" > sources.txt
-
-javac -d classes -cp classes:lib/jsfml.jar @sources.txt
+javac -cp lib/jsfml.jar:. $store/*.java $store/map/*.java $store/data/*.java $store/character/*.java $store/battle/*.java $store/battle/dodge/*.java
+javadoc -d ./docs -cp lib/jsfml.jar:. $store/*.java $store/map/*.java $store/data/*.java $store/character/*.java $store/battle/*.java $store/battle/dodge/*.java

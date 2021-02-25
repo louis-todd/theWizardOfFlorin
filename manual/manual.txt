@@ -1,0 +1,73 @@
+n.b. for running this program on a different OS to that intended:
+
+This game uses font styles native to our target operating system and flavour; Linux Ubuntu. If you wish to, you may change the font within the game to Roboto.tff, and move this tff into the build folder. 
+
+This has been documented as an emergency precaution in case of troubleshooting this code on an alternate operating system.
+
+---------------------------------------------------------------------------
+
+Please do not worry about the verbose output from the ./run.sh script! It is simply updating your JavaDoc documentation.
+
+In terms of troubleshooting, please do not worry if the game does not start on first boot and try again! Please consider which OS you are running the game on as per the top notes on this file, and be patient - theres a lot to load in! Please try reboot the game at least 3 times, and as a last resort, contact one of the developers for support.
+
+---------------------------------------------------------------------------
+
+Launching the game
+
+./buildme.sh
+./runme.sh
+
+---------------------------------------------------------------------------
+
+Story
+1956: The great wizard of Florin passed – the village was left in despair.
+A new wizard was to be selected at the Village’s Annual Pumpkin Community Fair.
+The dice turned to you – although it was not you, you were just in her stomach. Your mother was crowned Florins wizard.
+She was well respected and served until she could no longer keep up with the changing spells of Florin.
+
+2020: The Annual Pumpkin Community Fair was in full swing, and your mother declared it was time for her to be succeeded.
+You hung back by the bar, knowing the odds were against you. The dice spun, and spun, and pointed to you.
+Everybody turned wide mouthed, and right there, you were crowned Florin’s next wizard and passed the
+great Florin’s pendant – used to protect one in all battles.
+
+Later that year is where the game story begins...
+
+A number of village children were exploring Florin’s castle where they heard a shrill cry from the catering section
+of the building. They approached the noises and found a tea party of g-g-ghosts.
+Escaping out the window, the children fled the town hall and so began the ancient feud of village folk and the ghosts.
+Your job is to reconcile both parties, resolving the ghosts’ grudges so the castle can be free,
+and the village people can hold their Christmas gathering at the castle once again.
+
+---------------------------------------------------------------------------
+
+Goal of Game:
+The user plays as the great Wizard of Florin with the goal of calming each ghost and resolving their cause of distress.
+To free the ghost, the player will either be prompted into battle, or be prompted to return the missing item tasked
+by the ghost. However, the game is designed to challenge the player, and to do this the difficulty of the battles
+and the tasks becomes challenging after each subsequent ghost encounter.
+
+---------------------------------------------------------------------------
+
+Game Play
+
+The player will be spawned in the center where they can interact with the mayor, and NPCs from this point forward using the space button to step through dialogue. Interacting with each NPC causes a different mission to appear on the map which the player will have to find. For example to get you started; after interacting with Whiskers, he will leave a clue to find the Yarn tree which the player can find towards the South of the map. Using the arrow keys, the player can navigate to a lone tree - note, not the forest trees! - where they can then interact with the tree following space, which again upon completion, will leave the player free to further navigate the map and find the next NPC.
+
+Controls:
+1. Arrow keys to move.
+2. Press space to interact with characters (including ghosts) and picking up items.
+3. Escape button pauses the game.
+4. Mouse click used to step through dialogue, and interact with buttons.
+
+Battle Mechanism:
+The player starts with only three heart shaped health throughout the game which can be lost by losing a battle.
+Losing a battle would deduct one heart from the player and losing all the hearts would mean the player lost the game.
+
+Within each battle a player is given three secondary measures of health which renew every battle.
+Losing those three circled health would cause the player to lose the battle, which would cost a player’s overarching health.
+
+In order to win a battle, the player must use the arrow keys to avoid the incoming projectiles thrown by the NPC. The player wins the game by enduring the time period, whilst not having lost all lives.
+
+---------------------------------------------------------------------------
+
+We hope you enjoy our game as much as we did making it!
+
