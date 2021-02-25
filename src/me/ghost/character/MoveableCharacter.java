@@ -270,9 +270,9 @@ public class MoveableCharacter extends Character {
      */
     public boolean dialogueAreaCollide(Drawable obstacle) {
         if (obstacle instanceof Npc) {
-            return this.getGlobalBounds().intersection(((Npc) obstacle).dialogueArea(4)) != null;
+            return this.getGlobalBounds().intersection(((Npc) obstacle).interactionRadius(4)) != null;
         } else if (obstacle instanceof Item) {
-            return this.getGlobalBounds().intersection(((Item) obstacle).dialogueArea(4)) != null;
+            return this.getGlobalBounds().intersection(((Item) obstacle).interactionRadius(4)) != null;
         }
         return false;
     }

@@ -77,13 +77,12 @@ public class Item extends Sprite {
 
     /**
      *
-     * Gets the radius in which a player can interact with an object. This is named dialogueArea for consistency as it is derived from the area in which
-     * a player can interact with a NPC. 
+     * Gets the radius in which a player can interact with an object.
      * @param scaleFactor sets the scale factor of the radius.
      * @return the area in which the player can interact with this item.
      */
 
-    public FloatRect dialogueArea(float scaleFactor) {
+    public FloatRect interactionRadius(float scaleFactor) {
         float centrex = this.getGlobalBounds().left + (this.getGlobalBounds().width / 2);
         float centrey = this.getGlobalBounds().top + (this.getGlobalBounds().height / 2);
         float newHeight = this.getGlobalBounds().height * scaleFactor;

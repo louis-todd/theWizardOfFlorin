@@ -26,7 +26,7 @@ public class Npc extends Character {
      * @param scaleFactor sets the scale factor of interaction radius.
      * @return the radius around the character in which they can be interacted within.
      */
-    public FloatRect dialogueArea(float scaleFactor) {
+    public FloatRect interactionRadius(float scaleFactor) {
         float centrex = this.getGlobalBounds().left + (this.getGlobalBounds().width / 2);
         float centrey = this.getGlobalBounds().top + (this.getGlobalBounds().height / 2);
         float newHeight = this.getGlobalBounds().height * scaleFactor;
