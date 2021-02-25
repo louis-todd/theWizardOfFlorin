@@ -25,7 +25,7 @@ public class PauseMenu {
     private final RectangleShape exitBackground = createSimpleRectangle(buttonLength, buttonHeight, 165, 300, 120, 119, 161);
     private boolean mouseButtonclicked;
     private Vector2f mousePosition;
-    private Boolean quited = false;
+    private boolean quited = false;
     private Drawable[] itemsToDraw = {background, exitBackground};
     private Text text;
 
@@ -148,7 +148,7 @@ public class PauseMenu {
     /** 
      * @return whether the player has quit the game.
      */
-    public Boolean playerHasQuit() {
+    public boolean playerHasQuit() {
         return quited;
     }
 

@@ -13,8 +13,8 @@ import org.jsfml.graphics.Texture;
  */
 public class Item extends Sprite {
 
-    private Boolean availableToCollect = false;
-    private Boolean isFound = false;
+    private boolean availableToCollect = false;
+    private boolean isFound = false;
     private String itemName = "placeholder";
     private boolean hasBeenCounted = false;
 
@@ -44,7 +44,7 @@ public class Item extends Sprite {
      * Gets availableToCollect which is set when this item has been included as part of the NPC brief.
      * @return whether the item is inclued as part of the current fetch quest.
      */
-    public Boolean availableToCollect() {
+    public boolean availableToCollect() {
         return availableToCollect;
     }
 
@@ -53,7 +53,7 @@ public class Item extends Sprite {
      * @return whether this item has been picked up by the player.
      */
 
-    public Boolean isFound() {
+    public boolean isFound() {
         return isFound;
     }
 
@@ -62,7 +62,7 @@ public class Item extends Sprite {
      * @param isAvailableToCollect sets whether the item should be availableToCollect.
      */
 
-    public void setAsAvailableToCollect(Boolean isAvailableToCollect) {
+    public void setAsAvailableToCollect(boolean isAvailableToCollect) {
         this.availableToCollect = isAvailableToCollect;
     }
 
@@ -71,7 +71,7 @@ public class Item extends Sprite {
      * @param isFound sets whether the item has been picked up by the player.
      */
 
-    public void setAsFound(Boolean isFound) {
+    public void setAsFound(boolean isFound) {
         this.isFound = isFound;
     }
 
@@ -97,7 +97,7 @@ public class Item extends Sprite {
      * Gets whether the item has already been included in the total number of items collected from its associated NPC.
      * @return whether the item has already been included in collected total.
      */
-    public Boolean hasBeenCounted(){
+    public boolean hasBeenCounted(){
         return hasBeenCounted;
     }
 

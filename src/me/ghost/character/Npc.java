@@ -5,7 +5,7 @@ import org.jsfml.graphics.Texture;
 
 public class Npc extends Character {
 
-    private Boolean shouldDraw = false;
+    private boolean shouldDraw = false;
     private String battleDifficulty = "EASY";
 
     /**
@@ -39,14 +39,14 @@ public class Npc extends Character {
     /** 
      * @return whether this NPC should be drawn.
      */
-    public Boolean shouldDraw() {
+    public boolean shouldDraw() {
         return shouldDraw;
     }
 
     /** 
      * @param shouldDraw sets whether this NPC should be drawn.
      */
-    public void setShouldDraw(Boolean shouldDraw) {
+    public void setShouldDraw(boolean shouldDraw) {
         this.shouldDraw = shouldDraw;
     }
 

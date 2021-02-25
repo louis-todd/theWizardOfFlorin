@@ -38,10 +38,10 @@ public class DodgeGame {
     private int collideTime;
     private List<String> battleDialogue = new ArrayList<>();
     private Mechanics game;
-    private Boolean finishedDialogue = false;
+    private boolean finishedDialogue = false;
     private boolean mouseButtonclicked;
     private Vector2f mousePosition;
-    private Boolean attemptedToClose = false;
+    private boolean attemptedToClose = false;
     private int stepIndex = 0;
     private int walkFrameControl = 0;
     private int walkingPace = 2;
@@ -406,14 +406,14 @@ public class DodgeGame {
     /** 
      * @return if the player has stepped through all the set dialogue.
      */
-    public Boolean isFinishedDialogue(){
+    public boolean isFinishedDialogue(){
         return finishedDialogue;
     }
 
     /** 
      * @param isFinished sets whether the battle dialogue has all been stepped through.
      */
-    public void setFinishedDialogue(Boolean isFinished){
+    public void setFinishedDialogue(boolean isFinished){
         finishedDialogue=isFinished;
     }
 
@@ -434,7 +434,7 @@ public class DodgeGame {
     /** 
      * @return whether the player has attempted to close this window
      */
-    public Boolean attemptedToClose(){
+    public boolean attemptedToClose(){
         return attemptedToClose;
     }
 

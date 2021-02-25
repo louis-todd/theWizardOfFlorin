@@ -14,7 +14,7 @@ import me.ghost.Item;
 public abstract class Character extends Sprite {
 
     private static ArrayList<Item> items;
-    private static Boolean taskInProgress = false;
+    private static boolean taskInProgress = false;
     private static Character NPCInProgress = null;
     private static ArrayList<Character>  allCharacters = new ArrayList<Character>();
     private final Map<String, Boolean> characterStates = new CaseInsensitiveMap<>();
@@ -24,7 +24,7 @@ public abstract class Character extends Sprite {
     private int currentIndex = 1;
     private File npcTextFile;
     private ArrayList<Item> associatedItems = new ArrayList<Item>();
-    private Boolean isFirstSuccess = true;
+    private boolean isFirstSuccess = true;
     private int expectedNumberOfItems;
     private int itemsFoundCount=0;
     private int currentBattleIndex = 0;

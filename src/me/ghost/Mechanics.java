@@ -38,7 +38,7 @@ public class Mechanics {
     private int overarchingLives = 3;
     private boolean endScreenClicked = false;
 
-    private Boolean dialogueOpen = false;
+    private boolean dialogueOpen = false;
     private PauseMenu winScreen;
     private boolean winScreenOpen = false;
 
