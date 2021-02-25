@@ -170,7 +170,7 @@ public class Mechanics {
 
                     if (keyEvent.key == Keyboard.Key.SPACE && !pauseMenuOpen) {
                         if (keyPresses.get("SPACE")) {
-                            if (interactingNPC != null & interactingItem == null && interactingNPC.shouldDraw() && !battleScreenOpen) {
+                            if (interactingNPC != null && interactingItem == null && interactingNPC.shouldDraw() && !battleScreenOpen) {
 
                                 if (interactingNPC.getCurrentIndex() < interactingNPC.getScript().size()) {
                                     interaction.setTextContent(String.valueOf(interactingNPC.getScript().get(interactingNPC.getCurrentIndex())));
