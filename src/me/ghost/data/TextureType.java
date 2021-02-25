@@ -4,9 +4,7 @@ import me.ghost.Game;
 import org.jsfml.graphics.Texture;
 
 public enum TextureType {
-    SQUARE16("square-16.png"),
     BOARD("DialogueBoard.png"),
-    PAUSEBACKGROUND("woodenBackground.png"),
 
     LEFTMOVEMENT1("wizardImages/left-movement1.png"),
     LEFTMOVEMENT2("wizardImages/left-movement2.png"),
@@ -51,9 +49,7 @@ public enum TextureType {
     TREE("tree.png"),
 
     HITWIZARD("wizardImages/hit-wizard.png"),
-
-    HEART("heart.png"),
-    TEST("tiles/tile200.png32");
+    HEART("heart.png");
 
     private final Texture texture = new Texture();
 
